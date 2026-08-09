@@ -1,6 +1,6 @@
 # KrippyTech Publishing Standard
 
-Version 1.0
+**Version:** 1.0
 
 ---
 
@@ -58,7 +58,7 @@ Every tutorial should contain the following sections:
 - Verification
 - PowerShell
 - Common Problems
-- MSP Tips
+- Field Notes
 - Real World Notes
 - Lessons Learned
 - Related Tutorials
@@ -79,6 +79,32 @@ Examples include:
 - Production recommendations
 
 These notes are what make KrippyTech unique.
+
+---
+
+## Writing Style
+
+Every tutorial should sound like an experienced engineer helping another technician.
+
+Write:
+
+- Directly
+- Clearly
+- Professionally
+- Practically
+
+Avoid:
+
+- Marketing language
+- Unnecessary filler
+- Long introductions
+- Product hype
+
+Teach enough to understand *why* something works without overwhelming the reader.
+
+Solve the problem first.
+
+Teach second.
 
 ---
 
