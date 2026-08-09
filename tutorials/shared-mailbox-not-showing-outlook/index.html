@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shared Mailbox Not Showing in Outlook | KrippyTech</title>
+
+<meta
+name="description"
+content="How to troubleshoot a shared mailbox that does not appear in Outlook after permissions have already been assigned."
+>
+
+<link rel="stylesheet" href="/styles.css">
+
+</head>
+
+<body>
+
+<header class="site-header">
+<div class="container">
+
+<nav class="site-nav">
+
+<a class="brand" href="/">
+
+<img
+src="/assets/images/krippytech-logo.png"
+alt="KrippyTech logo"
+class="brand-logo">
+
+<span class="brand-text">
+
+<span class="brand-name">KrippyTech</span>
+
+<span class="brand-tagline">
+Practical IT. Real Solutions.
+</span>
+
+</span>
+
+</a>
+
+<div class="nav-links">
+<a href="/consulting/">Consulting</a>
+<a href="/msp-university/">MSP University</a>
+<a href="/tutorials/">Tutorials</a>
+<a href="/azure-journey/">Azure Journey</a>
+<a href="/powershell/">PowerShell Library</a>
+<a href="/downloads/">Downloads</a>
+<a href="/about/">About</a>
+<a href="/contact/">Contact</a>
+</div>
+
+</nav>
+
+</div>
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="container">
+
+<p class="eyebrow">
+Microsoft 365
+</p>
+
+<h1>
+Shared Mailbox Not Showing in Outlook
+</h1>
+
+<p class="hero-text">
+
+A practical troubleshooting guide for when a shared mailbox has been
+assigned correctly but never appears in Outlook.
+
+<span class="highlight">
+
+Real-world troubleshooting.
+Not guesswork.
+
+</span>
+
+</p>
+
+</div>
+
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="grid">
+
+            <article class="card">
+                <p class="card-number">Estimated Time</p>
+                <h3>10–15 Minutes</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Difficulty</p>
+                <h3>Intermediate</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Technologies</p>
+                <h3>Microsoft 365 / Outlook / Exchange Online</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">KT Reference</p>
+                <h3>KT-0000XX</h3>
+            </article>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">The Problem</p>
+
+            <h2>The shared mailbox was assigned, but Outlook never showed it.</h2>
+
+            <p>
+                A user had been granted access to a Microsoft 365 shared mailbox,
+                but the mailbox did not automatically appear in Outlook as expected.
+            </p>
+        </div>
+
+        <div class="mission">
+
+            <p>
+                This can be confusing because the Microsoft 365 permissions may look
+                completely correct in the admin portal while the Outlook client still
+                shows no sign of the mailbox.
+            </p>
+
+            <p>
+                Before rebuilding profiles or making unnecessary changes, the first
+                job is to determine whether the problem is permissions, Exchange
+                propagation, automapping, or Outlook itself.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">Environment</p>
+
+            <h2>Applies To</h2>
+
+            <p>
+                This troubleshooting flow is intended for Microsoft 365 environments
+                using Exchange Online and desktop Outlook with shared mailbox access.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <article class="card">
+                <p class="card-number">Platform</p>
+                <h3>Microsoft 365</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Mail</p>
+                <h3>Exchange Online</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Client</p>
+                <h3>Microsoft Outlook</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Feature</p>
+                <h3>Shared Mailboxes</h3>
+            </article>
+
+        </div>
+
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">Before You Start</p>
+
+            <h2>Verify the basics before changing anything.</h2>
+        </div>
+
+        <div class="mission">
+
+            <p>
+                Confirm that the user has actually been granted the correct shared
+                mailbox permissions in Exchange Online or the Microsoft 365 admin tools.
+            </p>
+
+            <p>
+                Also confirm that enough time has passed for Microsoft 365 changes
+                to propagate. Permission changes are not always immediate.
+            </p>
+
+            <p>
+                If the mailbox is business-critical, avoid rebuilding Outlook profiles
+                or making broad client-side changes until you know the issue is not
+                simply permission propagation or automapping behavior.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">Resolution</p>
+
+            <h2>How We Solved It</h2>
+
+            <p>
+                Start with the server-side configuration before making changes
+                to Outlook. The goal is to confirm that the mailbox and permissions
+                are correct, then determine whether Outlook is simply waiting on
+                automapping or needs the mailbox added manually.
+            </p>
+        </div>
+
+        <div class="mission">
+
+            <h3>Step 1 — Confirm mailbox permissions</h3>
+
+            <p>
+                In the Microsoft 365 or Exchange admin tools, open the shared mailbox
+                and confirm the affected user has the required mailbox permissions.
+            </p>
+
+            <p>
+                For normal shared mailbox access, verify Full Access is assigned.
+                Send As or Send on Behalf permissions are separate and do not by
+                themselves cause the mailbox to appear in Outlook.
+            </p>
+
+            <h3>Step 2 — Allow time for the change to propagate</h3>
+
+            <p>
+                Newly assigned Exchange Online permissions may not appear immediately.
+                If the permissions were just added, allow time for Microsoft 365 to
+                process the change before troubleshooting the Outlook profile.
+            </p>
+
+            <h3>Step 3 — Restart Outlook</h3>
+
+            <p>
+                Close Outlook completely and reopen it. If automapping is working,
+                the shared mailbox may appear automatically after the permission
+                change has propagated.
+            </p>
+
+            <h3>Step 4 — Add the mailbox manually if needed</h3>
+
+            <p>
+                If the mailbox still does not appear but the permissions are confirmed,
+                add the shared mailbox manually in Outlook rather than immediately
+                rebuilding the user's entire Outlook profile.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">Verification</p>
+
+            <h2>Confirm the mailbox is actually usable.</h2>
+        </div>
+
+        <div class="mission">
+
+            <p>
+                Verify that the shared mailbox now appears in Outlook and that the
+                user can open the mailbox folders without permission errors.
+            </p>
+
+            <p>
+                Send a test message from the shared mailbox if Send As or Send on
+                Behalf permissions are part of the configuration.
+            </p>
+
+            <p>
+                If the mailbox was added manually, close and reopen Outlook one more
+                time to confirm the configuration persists.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">Real-World Notes</p>
+
+            <h2>What usually causes wasted time here.</h2>
+        </div>
+
+        <div class="mission">
+
+            <p>
+                The biggest mistake is assuming Outlook is broken simply because the
+                mailbox does not appear immediately.
+            </p>
+
+            <p>
+                Exchange Online permission changes can take time to propagate, and
+                automapping behavior can make a perfectly valid permission assignment
+                look like it failed.
+            </p>
+
+            <p>
+                Rebuilding an Outlook profile too early can create additional work
+                without addressing the actual cause.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">Lessons Learned</p>
+
+            <h2>Verify the service before rebuilding the client.</h2>
+        </div>
+
+        <div class="mission">
+
+            <p>
+                Start with Exchange permissions and propagation before making
+                client-side changes.
+            </p>
+
+            <p>
+                Treat automapping as a convenience, not proof that mailbox permissions
+                are correct or incorrect.
+            </p>
+
+            <p>
+                If permissions are valid and the mailbox is still missing, adding it
+                manually is usually a better next step than immediately rebuilding
+                the entire Outlook profile.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container">
+        © 2026 KrippyTech. Practical IT. Real Solutions.
+    </div>
+</footer>
+
+</body>
+</html>
