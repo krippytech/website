@@ -347,3 +347,155 @@ footer {
         gap: 14px 18px;
     }
 }
+/* =========================================================
+   KrippyTech UI Components v1.0
+   Reusable tutorial callout boxes
+========================================================= */
+
+.callout {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left-width: 4px;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 24px 0;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.callout h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.callout-info {
+    border-left-color: #4da3ff;
+}
+
+.callout-warning {
+    border-left-color: #f0b429;
+}
+
+.callout-realworld {
+    border-left-color: #8b5cf6;
+}
+
+.callout-verification {
+    border-left-color: #34d399;
+}
+.callout-tip {
+    border-left-color: #00d4ff;
+}
+/* =========================================================
+   KrippyTech Code Blocks
+========================================================= */
+
+.code-block {
+    background: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    margin: 24px 0;
+    overflow: hidden;
+}
+
+.code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.code-block pre {
+    margin: 0;
+    padding: 18px;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+/* =========================================================
+   KrippyTech Screenshot Component
+========================================================= */
+
+.screenshot {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.screenshot img {
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+.screenshot figcaption {
+    margin-top: 12px;
+    font-size: .9rem;
+    opacity: .75;
+    font-style: italic;
+}
+/* =========================================================
+   KrippyTech Tables
+========================================================= */
+
+.kt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+
+.kt-table th,
+.kt-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.kt-table th {
+    font-weight: 700;
+}
+
+.kt-table tr:hover {
+    background: rgba(255,255,255,.03);
+}
+/* =========================================================
+   KrippyTech Tutorial Steps
+========================================================= */
+
+.kt-step {
+    margin: 28px 0;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.kt-step-number {
+    margin: 0 0 8px;
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .7;
+}
+
+.kt-step h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.kt-step p:last-child {
+    margin-bottom: 0;
+}
