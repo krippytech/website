@@ -232,112 +232,94 @@ Not guesswork.
             <h2>How We Solved It</h2>
 
             <p>
-                Start with the server-side configuration before making changes
-                to Outlook. The goal is to confirm that the mailbox and permissions
-                are correct, then determine whether Outlook is simply waiting on
-                automapping or needs the mailbox added manually.
+                Start with the server-side configuration before changing Outlook.
+                Confirm the mailbox and permissions are correct, then work outward
+                toward automapping and the Outlook client.
             </p>
         </div>
 
-        <div class="mission">
+        <div class="kt-step">
 
-            <h3>Step 1 — Confirm mailbox permissions</h3>
+            <p class="kt-step-number">Step 1</p>
+
+            <h3>Confirm mailbox permissions</h3>
 
             <p>
-                In the Microsoft 365 or Exchange admin tools, open the shared mailbox
+                In Microsoft 365 or the Exchange admin tools, open the shared mailbox
                 and confirm the affected user has the required mailbox permissions.
             </p>
 
             <p>
-                For normal shared mailbox access, verify Full Access is assigned.
-                Send As or Send on Behalf permissions are separate and do not by
-                themselves cause the mailbox to appear in Outlook.
-            </p>
-
-            <h3>Step 2 — Allow time for the change to propagate</h3>
-
-            <p>
-                Newly assigned Exchange Online permissions may not appear immediately.
-                If the permissions were just added, allow time for Microsoft 365 to
-                process the change before troubleshooting the Outlook profile.
-            </p>
-
-            <h3>Step 3 — Restart Outlook</h3>
-
-            <p>
-                Close Outlook completely and reopen it. If automapping is working,
-                the shared mailbox may appear automatically after the permission
-                change has propagated.
-            </p>
-
-            <h3>Step 4 — Add the mailbox manually if needed</h3>
-
-            <p>
-                If the mailbox still does not appear but the permissions are confirmed,
-                add the shared mailbox manually in Outlook rather than immediately
-                rebuilding the user's entire Outlook profile.
+                Verify Full Access is assigned. Remember that Send As and
+                Send on Behalf are separate permissions and do not control
+                whether the mailbox appears automatically.
             </p>
 
         </div>
 
-    </div>
-</section>
-<section class="section">
-    <div class="container">
+        <div class="kt-step">
 
-        <div class="section-heading">
-            <p class="eyebrow">Verification</p>
+            <p class="kt-step-number">Step 2</p>
 
-            <h2>Confirm the mailbox is actually usable.</h2>
-        </div>
-
-        <div class="mission">
+            <h3>Allow time for Exchange Online propagation</h3>
 
             <p>
-                Verify that the shared mailbox now appears in Outlook and that the
-                user can open the mailbox folders without permission errors.
-            </p>
-
-            <p>
-                Send a test message from the shared mailbox if Send As or Send on
-                Behalf permissions are part of the configuration.
-            </p>
-
-            <p>
-                If the mailbox was added manually, close and reopen Outlook one more
-                time to confirm the configuration persists.
+                Newly assigned permissions are not always immediate.
+                Give Microsoft 365 time to process the change before
+                troubleshooting Outlook.
             </p>
 
         </div>
 
-    </div>
-</section>
+        <div class="callout callout-tip">
 
-<section class="section">
-    <div class="container">
+            <h3>Tip</h3>
 
-        <div class="section-heading">
-            <p class="eyebrow">Real-World Notes</p>
+            <p>
+                If permissions were only added a few minutes ago,
+                don't change five other things while waiting.
+                Let Exchange catch up first.
+            </p>
 
-            <h2>What usually causes wasted time here.</h2>
         </div>
 
-        <div class="mission">
+        <div class="kt-step">
+
+            <p class="kt-step-number">Step 3</p>
+
+            <h3>Restart Outlook</h3>
 
             <p>
-                The biggest mistake is assuming Outlook is broken simply because the
-                mailbox does not appear immediately.
+                Close Outlook completely and reopen it.
+                If automapping is functioning correctly,
+                the mailbox may appear automatically.
             </p>
 
-            <p>
-                Exchange Online permission changes can take time to propagate, and
-                automapping behavior can make a perfectly valid permission assignment
-                look like it failed.
-            </p>
+        </div>
+
+        <div class="kt-step">
+
+            <p class="kt-step-number">Step 4</p>
+
+            <h3>Add the mailbox manually if necessary</h3>
 
             <p>
-                Rebuilding an Outlook profile too early can create additional work
-                without addressing the actual cause.
+                If permissions are confirmed but the mailbox still
+                does not appear, add it manually before rebuilding
+                the Outlook profile.
+            </p>
+
+        </div>
+
+        <div class="callout callout-warning">
+
+            <h3>Warning</h3>
+
+            <p>
+                Do not rebuild an Outlook profile until permissions,
+                propagation time, and automapping have been verified.
+                A profile rebuild often creates extra work without
+                solving the real issue.
             </p>
 
         </div>
@@ -348,28 +330,79 @@ Not guesswork.
 <section class="section">
     <div class="container">
 
-        <div class="section-heading">
-            <p class="eyebrow">Lessons Learned</p>
+        <div class="callout callout-verification">
 
-            <h2>Verify the service before rebuilding the client.</h2>
+            <h3>Verification</h3>
+
+            <p>
+                Confirm the shared mailbox now appears in Outlook.
+            </p>
+
+            <p>
+                Verify folders open successfully and no permission
+                errors are displayed.
+            </p>
+
+            <p>
+                If Send As or Send on Behalf permissions were configured,
+                send a test email to verify functionality.
+            </p>
+
+            <p>
+                Restart Outlook one final time to confirm the mailbox
+                remains available.
+            </p>
+
         </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="callout callout-realworld">
+
+            <h3>Real-World Notes</h3>
+
+            <p>
+                The most common mistake is assuming Outlook is broken.
+            </p>
+
+            <p>
+                In production, Exchange Online propagation delays
+                account for many "missing mailbox" tickets.
+            </p>
+
+            <p>
+                Automapping is convenient, but it should never be
+                treated as proof that permissions are correct.
+            </p>
+
+            <p>
+                Verify Exchange first.
+                Troubleshoot Outlook second.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
 
         <div class="mission">
 
-            <p>
-                Start with Exchange permissions and propagation before making
-                client-side changes.
-            </p>
+            <blockquote>
+                Verify the service before rebuilding the client.
+            </blockquote>
 
             <p>
-                Treat automapping as a convenience, not proof that mailbox permissions
-                are correct or incorrect.
-            </p>
-
-            <p>
-                If permissions are valid and the mailbox is still missing, adding it
-                manually is usually a better next step than immediately rebuilding
-                the entire Outlook profile.
+                Start with Exchange permissions and propagation before
+                making client-side changes. Most shared mailbox problems
+                are resolved without rebuilding Outlook once the server
+                configuration has been verified.
             </p>
 
         </div>
