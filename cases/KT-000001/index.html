@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KT-000001 | Shared Mailbox Not Showing in Outlook | KrippyTech</title>
+
+    <meta
+        name="description"
+        content="KT-000001 documents a Microsoft 365 shared mailbox that did not appear in Outlook after access was assigned, including investigation, resolution, and lessons learned."
+    >
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+
+            <a class="brand" href="/">
+                <img
+                    src="/assets/images/krippytech-logo.png"
+                    alt="KrippyTech logo"
+                    class="brand-logo"
+                >
+
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/">Tutorials</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+
+            <p class="eyebrow">Technical Case — KT-000001</p>
+
+            <h1>Shared Mailbox Not Showing in Outlook</h1>
+
+            <p class="hero-text">
+                A Microsoft 365 user had access to a shared mailbox,
+                but the mailbox did not appear in Outlook as expected.
+
+                <span class="highlight">
+                    Real problem. Real investigation. Real fix.
+                </span>
+            </p>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="grid">
+
+                <article class="card">
+                    <p class="card-number">Case ID</p>
+                    <h3>KT-000001</h3>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Category</p>
+                    <h3>Microsoft 365</h3>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Status</p>
+                    <h3>Resolved</h3>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Technologies</p>
+                    <h3>Exchange Online / Outlook</h3>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Problem</p>
+                <h2>What happened?</h2>
+            </div>
+
+            <div class="mission">
+                <p>
+                    A user had been granted access to a Microsoft 365 shared mailbox,
+                    but the mailbox did not automatically appear in Outlook.
+                </p>
+
+                <p>
+                    The Exchange configuration appeared correct, making it necessary
+                    to determine whether the issue was permissions, propagation,
+                    automapping, or the Outlook client.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Environment</p>
+                <h2>Where did it happen?</h2>
+            </div>
+
+            <div class="grid">
+
+                <article class="card">
+                    <p class="card-number">Platform</p>
+                    <h3>Microsoft 365</h3>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Mail</p>
+                    <h3>Exchange Online</h3>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Client</p>
+                    <h3>Microsoft Outlook</h3>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Feature</p>
+                    <h3>Shared Mailboxes</h3>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Symptoms</p>
+                <h2>What did the technician see?</h2>
+            </div>
+
+            <div class="mission">
+                <p>
+                    The shared mailbox was not visible in the user's Outlook
+                    folder list even though mailbox access had been assigned.
+                </p>
+
+                <p>
+                    No obvious Outlook error identified the underlying cause.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Investigation</p>
+                <h2>How was the problem approached?</h2>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 1</p>
+
+                <h3>Verify Exchange permissions</h3>
+
+                <p>
+                    Confirm the affected user has Full Access to the shared mailbox.
+                    Send As and Send on Behalf permissions were treated separately.
+                </p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 2</p>
+
+                <h3>Account for propagation</h3>
+
+                <p>
+                    Determine whether the mailbox permissions were recently assigned
+                    and allow Exchange Online time to process the change.
+                </p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 3</p>
+
+                <h3>Test Outlook automapping</h3>
+
+                <p>
+                    Restart Outlook after the permission change has had time to
+                    propagate and check whether the mailbox appears automatically.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">What We Tried</p>
+                <h2>Document the dead ends too.</h2>
+            </div>
+
+            <div class="callout callout-realworld">
+                <h3>Real-World Notes</h3>
+
+                <p>
+                    A missing shared mailbox can look like an Outlook problem even
+                    when the client itself is functioning normally.
+                </p>
+
+                <p>
+                    Rebuilding the Outlook profile too early was intentionally avoided
+                    because permissions, propagation, and automapping should be
+                    verified first.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Root Cause</p>
+                <h2>What was actually wrong?</h2>
+            </div>
+
+            <div class="callout callout-warning">
+                <h3>Case Detail To Confirm</h3>
+
+                <p>
+                    The exact production root cause from the original case still
+                    needs to be confirmed before this case is considered final.
+                    Do not replace this section with an assumption.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Resolution</p>
+                <h2>How was it fixed?</h2>
+            </div>
+
+            <div class="mission">
+                <p>
+                    Mailbox permissions were verified first. After allowing for
+                    Exchange Online processing and testing Outlook, the mailbox
+                    could be added manually if automapping did not make it appear.
+                </p>
+
+                <p>
+                    The Outlook profile was not rebuilt as the first troubleshooting
+                    action.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="callout callout-verification">
+                <h3>Verification</h3>
+
+                <p>
+                    Confirm the shared mailbox appears in Outlook and that the user
+                    can open its folders without permission errors.
+                </p>
+
+                <p>
+                    If Send As or Send on Behalf permissions are required, send a
+                    test message to verify those permissions separately.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Lessons Learned</p>
+                <h2>Verify the service before rebuilding the client.</h2>
+            </div>
+
+            <div class="mission">
+
+                <blockquote>
+                    Start with Exchange. Troubleshoot Outlook second.
+                </blockquote>
+
+                <p>
+                    Shared mailbox troubleshooting should begin with permissions,
+                    propagation, and automapping. Client-side reconstruction should
+                    come later, after the service configuration is understood.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="eyebrow">Related Resources</p>
+                <h2>What did this case produce?</h2>
+            </div>
+
+            <div class="grid">
+
+                <article class="card">
+                    <p class="card-number">Tutorial</p>
+
+                    <h3>
+                        <a href="/tutorials/shared-mailbox-not-showing-outlook/">
+                            Shared Mailbox Not Showing in Outlook
+                        </a>
+                    </h3>
+
+                    <p>
+                        Practical troubleshooting guide produced from KT-000001.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">PowerShell</p>
+                    <h3>Coming Later</h3>
+
+                    <p>
+                        Exchange Online permission verification commands can be
+                        linked here when the PowerShell asset is published.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">Guide</p>
+                    <h3>Coming Later</h3>
+
+                    <p>
+                        Related build guides and reference material will be linked
+                        here as the KrippyTech library expands.
+                    </p>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        © 2026 KrippyTech. Practical IT. Real Solutions.
+    </div>
+</footer>
+
+</body>
+</html>
