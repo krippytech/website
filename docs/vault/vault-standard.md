@@ -1,4 +1,6 @@
-# KrippyTech Vault Standard
+# KrippyTech Engineering Repository
+
+(KER)
 
 Version 1.0
 
@@ -6,14 +8,21 @@ Version 1.0
 
 # Purpose
 
-The KrippyTech Vault is the private engineering repository that preserves real-world technical experience while protecting customer privacy.
+The KrippyTech Engineering Repository (KER) is the private engineering
+knowledge system behind KrippyTech.
 
-It exists to transform production IT work into reusable engineering knowledge.
+KER preserves real-world technical experience while protecting customer
+privacy.
 
-Nothing is published directly from the Vault.
+Its purpose is to transform production engineering work into reusable,
+vendor-neutral technical knowledge that can become KT Cases, tutorials,
+PowerShell scripts, build guides, MSP University lessons, consulting
+references, and future educational content.
 
-Every public asset is derived from the Vault through an intentional review and sanitization process.
+Nothing is published directly from KER.
 
+Every public asset is intentionally reviewed, anonymized, and derived
+from KER.
 ---
 
 # Core Principles
@@ -26,7 +35,7 @@ If a detail does not improve the technical lesson, it should not survive into pu
 
 ---
 
-# The Vault Pipeline
+# The Vault Pipeline - KER Publishing Pipeline
 
 Every item follows the same lifecycle.
 
