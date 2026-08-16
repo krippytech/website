@@ -39,7 +39,7 @@
     <a href="/consulting/">Consulting</a>
     <a href="/msp-university/">MSP University</a>
     <a href="/tutorials/">Tutorials</a>
-    <a href="/cases/">Cases</a>
+    <a href="/cases/" aria-current="page">Cases</a>
     <a href="/azure-journey/">Azure Journey</a>
     <a href="/powershell/">PowerShell Library</a>
     <a href="/downloads/">Downloads</a>
@@ -61,13 +61,25 @@
             <h1>Real problems. Documented like an engineer.</h1>
 
             <p class="hero-text">
-                The KrippyTech Case Library documents real-world technical
-                investigations from symptom to resolution.
+                KrippyTech cases record the investigation behind a technical
+                problem: the symptoms, the evidence, the working path, and
+                the verification.
 
                 <span class="highlight">
-                    What happened. What we tried. What actually fixed it.
+                    A tutorial shows a repeatable method. A case explains why
+                    that method mattered in a real investigation.
                 </span>
             </p>
+
+            <div class="buttons">
+                <a class="button button-primary" href="/msp-university/">
+                    MSP University
+                </a>
+
+                <a class="button button-secondary" href="/tutorials/">
+                    Browse Tutorials
+                </a>
+            </div>
 
         </div>
     </section>
@@ -76,46 +88,49 @@
         <div class="container">
 
             <div class="section-heading">
-                <h2>Technical Cases</h2>
+                <h2>Current case record</h2>
 
                 <p>
-                    Each case preserves the investigation, failed paths,
-                    root cause, resolution, verification, and lessons learned.
+                    The library is intentionally small while each record is
+                    reviewed for technical accuracy and public-safe context.
                 </p>
             </div>
 
             <div class="grid">
 
                 <article class="card">
-                    <p class="card-number">KT-000001</p>
+                    <p class="card-number">Microsoft 365</p>
 
-                    <h3>First Case Coming Next</h3>
+                    <h3>Shared Mailbox Not Showing in Outlook</h3>
 
                     <p>
-                        The first official KrippyTech technical case will be
-                        published here and linked to its related tutorial.
+                        An investigation of a mailbox that did not appear in
+                        Outlook after access had been assigned.
+                    </p>
+                    <a class="card-link" href="/cases/KT-000001/">Read KT-000001 <span aria-hidden="true">→</span></a>
+                </article>
+
+                <article class="card">
+                    <p class="card-number">What makes it a case</p>
+
+                    <h3>Investigation, not a shortcut</h3>
+
+                    <p>
+                        Cases preserve the reasoning behind a resolution,
+                        including what needed to be checked before changing
+                        the environment.
                     </p>
                 </article>
 
                 <article class="card">
-                    <p class="card-number">Case Library</p>
+                    <p class="card-number">Public-safe by design</p>
 
-                    <h3>Built From Real Production Work</h3>
-
-                    <p>
-                        Cases are anonymized where necessary and documented
-                        around the technical problem—not the customer.
-                    </p>
-                </article>
-
-                <article class="card">
-                    <p class="card-number">Knowledge Engine</p>
-
-                    <h3>One Case, Multiple Assets</h3>
+                    <h3>Problem first, customer never</h3>
 
                     <p>
-                        A single technical case may produce a tutorial,
-                        PowerShell script, build guide, checklist, or reference.
+                        Cases are written around the technical problem and
+                        reviewed before publication so client and ticket
+                        material stays out of the public record.
                     </p>
                 </article>
 
@@ -134,8 +149,8 @@
                 </blockquote>
 
                 <p>
-                    KrippyTech preserves both so the next technician can solve
-                    the same problem faster.
+                    Start with a tutorial when you need a direct method. Read
+                    a case when the investigation behind the method matters.
                 </p>
 
             </div>
