@@ -264,6 +264,19 @@ h1 {
     color: var(--muted);
 }
 
+.card-link {
+    display: inline-flex;
+    margin-top: 20px;
+    color: var(--accent-light);
+    font-weight: 700;
+    gap: 8px;
+}
+
+.card-link:hover,
+.card-link:focus-visible {
+    color: white;
+}
+
 
 /* ---------- Mission statement ---------- */
 
