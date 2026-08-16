@@ -120,8 +120,8 @@ img {
 .nav-links {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
+    flex-wrap: nowrap;
+    gap: clamp(8px, 1.2vw, 16px);
 }
 
 .nav-links a {
@@ -328,7 +328,21 @@ footer {
 }
 /* ---------- Mobile layout ---------- */
 
-@media (max-width: 800px) {
+@media (min-width: 961px) and (max-width: 1100px) {
+    .site-nav {
+        gap: 16px;
+    }
+
+    .brand-text {
+        display: none;
+    }
+
+    .nav-links a {
+        font-size: 0.86rem;
+    }
+}
+
+@media (max-width: 960px) {
     .grid {
         grid-template-columns: 1fr;
     }
@@ -344,6 +358,7 @@ footer {
     }
 
     .nav-links {
+        flex-wrap: wrap;
         gap: 14px 18px;
     }
 }
