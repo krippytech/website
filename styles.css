@@ -174,6 +174,21 @@ h1 {
     margin-bottom: 34px;
 }
 
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.15rem 0.5rem;
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.article-meta a {
+    color: var(--accent-light);
+    font-weight: 700;
+}
+
 .highlight {
     color: white;
     font-weight: 700;
