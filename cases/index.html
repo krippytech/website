@@ -37,156 +37,124 @@
 </head>
 
 <body>
-
 <header class="site-header">
     <div class="container">
         <nav class="site-nav" aria-label="Primary navigation">
-
             <a class="brand" href="/">
-                <img
-                    src="/assets/images/krippytech-logo.png"
-                    alt="KrippyTech logo"
-                    width="58"
-                    height="46"
-                    class="brand-logo"
-                >
-
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
                 <span class="brand-text">
                     <span class="brand-name">KrippyTech</span>
                     <span class="brand-tagline">Practical IT. Real Solutions.</span>
                 </span>
             </a>
-
             <div class="nav-links">
-    <a href="/consulting/">Consulting</a>
-    <a href="/msp-university/">MSP University</a>
-    <a href="/tutorials/">Tutorials</a>
-    <a href="/cases/" aria-current="page">Cases</a>
-    <a href="/azure-journey/">Azure Journey</a>
-    <a href="/powershell/">PowerShell Library</a>
-    <a href="/downloads/">Downloads</a>
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
-</div>
-
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/">Tutorials</a>
+                <a href="/cases/" aria-current="page">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
         </nav>
     </div>
 </header>
 
 <main>
-
     <section class="hero">
         <div class="container">
-
             <p class="eyebrow">KrippyTech Case Library</p>
-
-            <h1>Real problems. Documented like an engineer.</h1>
-
+            <h1>See how the problem was actually worked.</h1>
             <p class="hero-text">
-                KrippyTech cases record the investigation behind a technical
-                problem: the symptoms, the evidence, the working path, and
-                the verification.
-
-                <span class="highlight">
-                    A tutorial shows a repeatable method. A case explains why
-                    that method mattered in a real investigation.
-                </span>
+                KrippyTech cases preserve the investigation behind technical problems: the symptoms, evidence, decisions, resolution, and verification.
+                <span class="highlight">Tutorials teach the reusable method. Cases show that method under real troubleshooting pressure.</span>
             </p>
-
             <div class="buttons">
-                <a class="button button-primary" href="/msp-university/">
-                    MSP University
-                </a>
-
-                <a class="button button-secondary" href="/tutorials/">
-                    Browse Tutorials
-                </a>
+                <a class="button button-primary" href="#case-flow">See how cases work</a>
+                <a class="button button-secondary" href="/tutorials/">Browse Tutorials</a>
             </div>
+        </div>
+    </section>
 
+    <section class="section" id="case-flow">
+        <div class="container">
+            <div class="section-heading">
+                <h2>From ticket noise to useful evidence</h2>
+                <p>
+                    A good case is not a victory lap after the fix. It records the reasoning that made the fix defensible and reusable.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">01 · Symptoms</p>
+                    <h3>Start with what actually failed</h3>
+                    <p>Capture the behavior that triggered the investigation without assuming the cause too early.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">02 · Evidence</p>
+                    <h3>Inspect the systems that can prove it</h3>
+                    <p>Permissions, configuration, logs, traces, identity, networking, health signals, and user context narrow the problem.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">03 · Resolution</p>
+                    <h3>Change the cause, not the symptom</h3>
+                    <p>The useful part is knowing why the selected change addressed the evidence better than the alternatives.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">04 · Verification</p>
+                    <h3>Prove the original failure is gone</h3>
+                    <p>Re-test the original scenario and document what confirmed the issue was actually resolved.</p>
+                </article>
+            </div>
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-
             <div class="section-heading">
-                <h2>Current case record</h2>
-
+                <h2>Current published case</h2>
                 <p>
-                    The library is intentionally small while each record is
-                    reviewed for technical accuracy and public-safe context.
+                    The public library stays intentionally small while each record is reviewed for technical accuracy, reusable value, and public-safe context.
                 </p>
             </div>
-
             <div class="grid">
-
                 <article class="card">
-                    <p class="card-number">Microsoft 365</p>
-
+                    <p class="card-number">KT-000001 · Microsoft 365</p>
                     <h3>Shared Mailbox Not Showing in Outlook</h3>
-
-                    <p>
-                        An investigation of a mailbox that did not appear in
-                        Outlook after access had been assigned.
-                    </p>
-                    <a class="card-link" href="/cases/KT-000001/">Read KT-000001 <span aria-hidden="true">→</span></a>
+                    <p>An investigation of a mailbox that did not appear in Outlook after access had already been assigned.</p>
+                    <a class="card-link" href="/cases/KT-000001/">Read the Case <span aria-hidden="true">→</span></a>
                 </article>
-
                 <article class="card">
-                    <p class="card-number">What makes it a case</p>
-
-                    <h3>Investigation, not a shortcut</h3>
-
-                    <p>
-                        Cases preserve the reasoning behind a resolution,
-                        including what needed to be checked before changing
-                        the environment.
-                    </p>
+                    <p class="card-number">Related tutorial</p>
+                    <h3>Use the repeatable troubleshooting flow</h3>
+                    <p>The paired tutorial turns the reusable checks from the case into a direct troubleshooting method.</p>
+                    <a class="card-link" href="/tutorials/shared-mailbox-not-showing-outlook/">Open the Tutorial <span aria-hidden="true">→</span></a>
                 </article>
-
                 <article class="card">
                     <p class="card-number">Public-safe by design</p>
-
                     <h3>Problem first, customer never</h3>
-
-                    <p>
-                        Cases are written around the technical problem and
-                        reviewed before publication so client and ticket
-                        material stays out of the public record.
-                    </p>
+                    <p>Cases are rewritten around the technical problem so customer names, ticket exports, credentials, logs, and identifying details stay out of the public record.</p>
                 </article>
-
             </div>
-
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-
             <div class="mission">
-
-                <blockquote>
-                    The fix is useful. The investigation is valuable.
-                </blockquote>
-
+                <blockquote>The tutorial gives you the method. The case gives you the judgment.</blockquote>
                 <p>
-                    Start with a tutorial when you need a direct method. Read
-                    a case when the investigation behind the method matters.
+                    Start with Tutorials when you need a repeatable path. Use Cases when you want to see how evidence, uncertainty, and verification shaped the troubleshooting decision.
                 </p>
-
             </div>
-
         </div>
     </section>
-
 </main>
 
 <footer>
-    <div class="container">
-        © 2026 KrippyTech. Practical IT. Real Solutions.
-    </div>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
 </footer>
-
 </body>
 </html>
