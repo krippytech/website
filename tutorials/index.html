@@ -37,102 +37,107 @@
 </head>
 
 <body>
-
 <header class="site-header">
     <div class="container">
         <nav class="site-nav" aria-label="Primary navigation">
-
             <a class="brand" href="../index.html">
-                <img
-                    src="../assets/images/krippytech-logo.png"
-                    alt="KrippyTech logo"
-                    width="58"
-                    height="46"
-                    class="brand-logo"
-                >
-
+                <img src="../assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
                 <span class="brand-text">
                     <span class="brand-name">KrippyTech</span>
-                    <span class="brand-tagline">
-                        Practical IT. Real Solutions.
-                    </span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
                 </span>
             </a>
-
             <div class="nav-links">
-    <a href="/consulting/">Consulting</a>
-    <a href="/msp-university/">MSP University</a>
-    <a href="/tutorials/" aria-current="page">Tutorials</a>
-    <a href="/cases/">Cases</a>
-    <a href="/azure-journey/">Azure Journey</a>
-    <a href="/powershell/">PowerShell Library</a>
-    <a href="/downloads/">Downloads</a>
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
-</div>
-
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/" aria-current="page">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
         </nav>
     </div>
 </header>
 
 <main>
-
     <section class="hero">
         <div class="container">
             <p class="eyebrow">MSP University Tutorials</p>
-
-            <h1>Practical answers for real IT work.</h1>
-
+            <h1>Use the method. Understand the reason.</h1>
             <p class="hero-text">
-                Step-by-step KrippyTech guidance for technicians and IT
-                administrators who need a clear method, the important checks,
-                and a way to verify the result. Each entry identifies whether
-                it is reviewed or still under review.
+                KrippyTech tutorials turn troubleshooting and administration work into repeatable steps: what to check, what the result means, and how to verify the outcome.
+                <span class="highlight">When a real investigation adds useful context, the related Case shows how that method was applied.</span>
             </p>
+            <div class="buttons">
+                <a class="button button-primary" href="#tutorial-flow">How tutorials are built</a>
+                <a class="button button-secondary" href="/cases/">Browse Cases</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="tutorial-flow">
+        <div class="container">
+            <div class="section-heading">
+                <h2>A repeatable path, not a bag of commands</h2>
+                <p>
+                    A useful tutorial should help a technician make the next decision, not just copy a sequence of clicks.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">01 · Scope</p>
+                    <h3>Define the problem first</h3>
+                    <p>Know the user, system, tenant, service, expected behavior, and authorization before troubleshooting begins.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">02 · Check</p>
+                    <h3>Inspect the evidence that matters</h3>
+                    <p>Use the smallest useful set of permissions, configuration, logs, traces, identity, and connectivity checks.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">03 · Act</p>
+                    <h3>Change only when the evidence supports it</h3>
+                    <p>Separate discovery from remediation and understand the impact before making a production change.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">04 · Verify</p>
+                    <h3>Re-test the original scenario</h3>
+                    <p>Confirm the expected behavior and record enough context for someone else to understand what worked.</p>
+                </article>
+            </div>
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-
             <div class="section-heading">
                 <h2>Current tutorials</h2>
-
                 <p>
-                    The current inventory includes one reviewed troubleshooting
-                    tutorial and one clearly labeled draft. Tutorials focus on
-                    a repeatable task or troubleshooting path; cases explain the
-                    investigation behind a real technical problem.
+                    Reviewed material is presented as usable guidance. Draft material stays clearly labeled until the procedure is ready for public use.
                 </p>
             </div>
-
             <div class="grid">
-
                 <article class="card">
-                    <p class="card-number">Microsoft 365 troubleshooting</p>
-
+                    <p class="card-number">Reviewed · Microsoft 365 troubleshooting</p>
                     <h3>Shared Mailbox Not Showing in Outlook</h3>
-
-                    <p>
-                        A practical troubleshooting flow for checking Exchange
-                        permissions and propagation before changing Outlook.
-                    </p>
+                    <p>A practical flow for checking Exchange permissions and propagation before changing Outlook.</p>
                     <a class="card-link" href="shared-mailbox-not-showing-outlook/">Open Tutorial <span aria-hidden="true">→</span></a>
                 </article>
-
+                <article class="card">
+                    <p class="card-number">Related case · KT-000001</p>
+                    <h3>See the investigation behind the method</h3>
+                    <p>The paired Case shows how the shared-mailbox troubleshooting path mattered in a real technical investigation.</p>
+                    <a class="card-link" href="/cases/KT-000001/">Read the Case <span aria-hidden="true">→</span></a>
+                </article>
                 <article class="card">
                     <p class="card-number">Draft under review</p>
-
                     <h3>Create a Microsoft 365 Shared Mailbox</h3>
-
-                    <p>
-                        The framework and prerequisites are available to read,
-                        but the step-by-step procedure is not yet approved for
-                        production use.
-                    </p>
+                    <p>The framework and prerequisites are available, but the step-by-step procedure is not yet approved for production use.</p>
                     <a class="card-link" href="shared-mailbox/">View Draft Status <span aria-hidden="true">→</span></a>
                 </article>
-
             </div>
         </div>
     </section>
@@ -140,27 +145,17 @@
     <section class="section">
         <div class="container">
             <div class="mission">
-                <blockquote>
-                    Use a tutorial for the method. Use a case for the investigation.
-                </blockquote>
-
+                <blockquote>Tutorials teach the repeatable path. Cases preserve the troubleshooting judgment.</blockquote>
                 <p>
-                    KrippyTech tutorials are written to help someone complete a task
-                    safely and verify the result. Cases document the reasoning behind
-                    a real investigation without publishing client or ticket material.
-                    <a class="card-link" href="/cases/">Visit the Case Library <span aria-hidden="true">→</span></a>
+                    The two sections are designed to work together: learn the method here, then use the Case Library when the investigation behind that method adds useful technical context.
                 </p>
             </div>
         </div>
     </section>
-
 </main>
 
 <footer>
-    <div class="container">
-        © 2026 KrippyTech. MSP University. Real-world IT without the fluff.
-    </div>
+    <div class="container">© 2026 KrippyTech. MSP University. Real-world IT without the fluff.</div>
 </footer>
-
 </body>
 </html>
