@@ -59,16 +59,50 @@
 <main>
     <section class="hero">
         <div class="container">
-            <p class="eyebrow">Cloud learning, published carefully</p>
+            <p class="eyebrow">Cloud skills built from practical IT work</p>
             <h1>Azure Journey</h1>
             <p class="hero-text">
-                Azure Journey is KrippyTech's future space for practical cloud learning for technicians,
-                IT administrators, and MSP professionals who want to understand Azure in context.
-                <span class="highlight">There are no published Azure labs, walkthroughs, or resources yet.</span>
+                Azure Journey is where KrippyTech will turn real infrastructure and Microsoft 365 experience into practical Azure learning.
+                The focus is not memorizing portal clicks. It is understanding how identity, networking, compute, security, and hybrid systems fit together.
+                <span class="highlight">No Azure labs or walkthroughs are publicly released yet.</span>
             </p>
             <div class="buttons">
-                <a class="button button-primary" href="/msp-university/">MSP University</a>
-                <a class="button button-secondary" href="/tutorials/">Browse Tutorials</a>
+                <a class="button button-primary" href="#learning-path">Explore the learning path</a>
+                <a class="button button-secondary" href="/powershell/">PowerShell Library</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="learning-path">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Three learning lanes</h2>
+                <p>
+                    Azure Journey will grow around the parts of cloud work that matter most in day-to-day administration and troubleshooting.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">01 · Azure foundations</p>
+                    <h3>Build the cloud mental model</h3>
+                    <p>
+                        Subscriptions, resource groups, regions, virtual networks, compute, storage, RBAC, monitoring, and the operational choices behind them.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">02 · Identity crossover</p>
+                    <h3>Entra ID meets Azure</h3>
+                    <p>
+                        Identity, Conditional Access, app registrations, service principals, permissions, Microsoft 365 integration, and the security decisions that connect cloud services.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">03 · Hybrid reality</p>
+                    <h3>Connect cloud to existing infrastructure</h3>
+                    <p>
+                        Active Directory, DNS, VPNs, hybrid identity, server workloads, migration planning, and troubleshooting when Azure is only one part of the environment.
+                    </p>
+                </article>
             </div>
         </div>
     </section>
@@ -76,70 +110,32 @@
     <section class="section">
         <div class="container">
             <div class="section-heading">
-                <h2>Current status</h2>
+                <h2>How the material will be built</h2>
                 <p>
-                    Azure Journey is a learning direction, not an existing catalog. Public material appears here only after it is technically reviewed and ready to share.
+                    The goal is to turn study and lab work into reusable technical understanding instead of publishing a pile of disconnected notes.
                 </p>
             </div>
             <div class="grid">
                 <article class="card">
-                    <p class="card-number">Documented learning</p>
-                    <h3>No Azure learning pages yet</h3>
+                    <p class="card-number">Concept</p>
+                    <h3>Understand what the service is doing</h3>
                     <p>
-                        KrippyTech does not currently publish Azure study notes, certification material, or Azure-specific walkthroughs.
+                        Start with the architecture, purpose, dependencies, permissions, and failure points before reaching for a configuration screen.
                     </p>
                 </article>
                 <article class="card">
-                    <p class="card-number">Hands-on labs</p>
-                    <h3>No public labs yet</h3>
+                    <p class="card-number">Lab</p>
+                    <h3>Build it and verify it</h3>
                     <p>
-                        A lab is not published until its steps, checks, and cleanup are clear enough for others to review and follow safely.
+                        Future labs should include prerequisites, build steps, validation checks, expected results, cleanup, and notes about cost or production risk where relevant.
                     </p>
                 </article>
                 <article class="card">
-                    <p class="card-number">Production guidance</p>
-                    <h3>Not a production guide</h3>
+                    <p class="card-number">Troubleshoot</p>
+                    <h3>Break the happy path</h3>
                     <p>
-                        This page does not provide Azure implementation guidance. Future technical material must be tested and reviewed before public use.
+                        Useful cloud knowledge includes knowing what to inspect when authentication fails, traffic does not flow, permissions are wrong, or a deployment behaves differently than expected.
                     </p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="section-heading">
-                <h2>Use what is available now</h2>
-                <p>
-                    Existing KrippyTech content is organized by what it helps you do today, not by an unfinished Azure roadmap.
-                </p>
-            </div>
-            <div class="grid">
-                <article class="card">
-                    <p class="card-number">Practical learning</p>
-                    <h3>MSP University</h3>
-                    <p>
-                        Start with the learning home for the reviewed KrippyTech material that is available now.
-                    </p>
-                    <a class="card-link" href="/msp-university/">Visit MSP University <span aria-hidden="true">→</span></a>
-                </article>
-                <article class="card">
-                    <p class="card-number">Step-by-step guidance</p>
-                    <h3>Tutorials</h3>
-                    <p>
-                        Tutorials provide the practical methods currently documented by KrippyTech.
-                    </p>
-                    <a class="card-link" href="/tutorials/">Browse Tutorials <span aria-hidden="true">→</span></a>
-                </article>
-                <article class="card">
-                    <p class="card-number">Resources under review</p>
-                    <h3>PowerShell and Downloads</h3>
-                    <p>
-                        Script resources and downloadable files are kept separate and listed only when they genuinely exist.
-                    </p>
-                    <a class="card-link" href="/powershell/">View PowerShell Library <span aria-hidden="true">→</span></a>
-                    <a class="card-link" href="/downloads/">View Downloads <span aria-hidden="true">→</span></a>
                 </article>
             </div>
         </div>
@@ -148,10 +144,82 @@
     <section class="section">
         <div class="container">
             <div class="mission">
-                <blockquote>Learn the concept. Test the build. Publish only what is ready.</blockquote>
+                <blockquote>Learn the service. Build the lab. Prove what happened.</blockquote>
                 <p>
-                    Azure Journey will stay honest about what exists. Any future public material should be technically reviewed and tested in the appropriate environment. Private study material remains private. Only independently verified, deliberately adapted, public-ready Azure content may be published.
+                    Azure Journey is intended to document understanding, not just successful screenshots. Public material will be separated from private study notes and published only after the steps and technical claims are reviewed.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Where this connects to KrippyTech</h2>
+                <p>
+                    Azure is not a separate island. The strongest material will connect cloud concepts to the identity, PowerShell, troubleshooting, and infrastructure work already represented across KrippyTech.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Identity &amp; administration</p>
+                    <h3>MSP University</h3>
+                    <p>
+                        Broader technician learning, Microsoft administration, troubleshooting habits, and operational thinking live in MSP University.
+                    </p>
+                    <a class="card-link" href="/msp-university/">Visit MSP University <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Automation</p>
+                    <h3>PowerShell Library</h3>
+                    <p>
+                        Read-only-first discovery and triage tooling provides a natural bridge into Azure and Microsoft Graph administration.
+                    </p>
+                    <a class="card-link" href="/powershell/">Explore PowerShell <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Applied troubleshooting</p>
+                    <h3>Cases &amp; Tutorials</h3>
+                    <p>
+                        As Azure material matures, real troubleshooting lessons can become reviewed tutorials and documented technical cases instead of remaining isolated lab notes.
+                    </p>
+                    <a class="card-link" href="/cases/">Browse Cases <span aria-hidden="true">→</span></a>
+                    <a class="card-link" href="/tutorials/">Browse Tutorials <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Release status</h2>
+                <p>
+                    The learning structure is defined, but Azure Journey remains a work in progress. The page stays noindex and does not claim that labs, certification guides, or production Azure procedures are currently available.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Now</p>
+                    <h3>Learning framework established</h3>
+                    <p>
+                        Azure Journey now has a clear direction for foundations, identity crossover, hybrid infrastructure, labs, and troubleshooting.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Next</p>
+                    <h3>Build the first reviewed lab</h3>
+                    <p>
+                        The first publishable Azure resource should be small enough to test completely and useful enough to establish the standard for everything that follows.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Public release</p>
+                    <h3>No Azure resources published yet</h3>
+                    <p>
+                        Future Azure resources will appear only after they are deliberately adapted, technically reviewed, and ready for public use.
+                    </p>
+                </article>
             </div>
         </div>
     </section>
