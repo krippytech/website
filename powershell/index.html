@@ -59,16 +59,50 @@
 <main>
     <section class="hero">
         <div class="container">
-            <p class="eyebrow">Practical automation, published carefully</p>
+            <p class="eyebrow">Read-only first. Built for real troubleshooting.</p>
             <h1>PowerShell Library</h1>
             <p class="hero-text">
-                The PowerShell Library is KrippyTech's future home for reviewed automation
-                resources for technicians and IT administrators working in Microsoft environments.
-                <span class="highlight">There are no published scripts in the library yet.</span>
+                KrippyTech's PowerShell Library is a growing troubleshooting toolkit for technicians and administrators working across
+                Microsoft 365, Exchange Online, Entra ID, SharePoint and OneDrive, Active Directory, Windows, DNS, and network discovery.
+                <span class="highlight">The current internal baseline is v2.0.</span>
             </p>
             <div class="buttons">
-                <a class="button button-primary" href="/msp-university/">MSP University</a>
+                <a class="button button-primary" href="#library-map">Explore the library</a>
                 <a class="button button-secondary" href="/tutorials/">Browse Tutorials</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="library-map">
+        <div class="container">
+            <div class="section-heading">
+                <h2>What the library covers</h2>
+                <p>
+                    The library is organized around the kinds of discovery and triage work that repeat across real support cases. Public downloads are not available yet; scripts will be released only after review and testing for public use.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Microsoft 365</p>
+                    <h3>Exchange, Entra &amp; SharePoint</h3>
+                    <p>
+                        Mailbox discovery, permissions, message trace, mail flow, licensing, authentication methods, Conditional Access visibility, identity security, SharePoint, and OneDrive checks.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Active Directory</p>
+                    <h3>Domain &amp; server health</h3>
+                    <p>
+                        User and computer discovery, group membership, FSMO roles, domain controllers, replication, SYSVOL and DFSR, time sync, secure channel, GPO inventory, and server health.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Windows &amp; network</p>
+                    <h3>Fast path troubleshooting</h3>
+                    <p>
+                        DNS queries, routes, TCP tests, interface details, event-log snapshots, and reusable network triage for common connectivity and service-access problems.
+                    </p>
+                </article>
             </div>
         </div>
     </section>
@@ -76,34 +110,32 @@
     <section class="section">
         <div class="container">
             <div class="section-heading">
-                <h2>Current status</h2>
+                <h2>From single checks to guided cases</h2>
                 <p>
-                    This is an intentional starting point, not a download catalog. Resources appear here only after they are reviewed for public release.
+                    The toolkit started as reusable discovery scripts and now includes consolidated triage, reporting helpers, and guided troubleshooting scenarios.
                 </p>
             </div>
             <div class="grid">
                 <article class="card">
-                    <p class="card-number">Published resources</p>
-                    <h3>No scripts available yet</h3>
+                    <p class="card-number">Discovery</p>
+                    <h3>Reusable building blocks</h3>
                     <p>
-                        No PowerShell scripts, commands, or automation packages are currently published by KrippyTech.
+                        Focused scripts answer one question at a time: mailbox details, forwarding, delegates, sign-in data, role assignments, AD replication, DNS behavior, and more.
                     </p>
                 </article>
                 <article class="card">
-                    <p class="card-number">Use the guidance that exists</p>
-                    <h3>Start with a tutorial</h3>
+                    <p class="card-number">Triage</p>
+                    <h3>One-command snapshots</h3>
                     <p>
-                        Tutorials provide practical, step-by-step methods for the technical work currently documented on the site.
+                        Consolidated triage tools gather related checks into a single workflow for M365 users, permissions, mail flow, identity security, SharePoint, networks, servers, and domains.
                     </p>
-                    <a class="card-link" href="/tutorials/">Browse Tutorials <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card">
-                    <p class="card-number">Related resources</p>
-                    <h3>Downloads are separate</h3>
+                    <p class="card-number">v2.0</p>
+                    <h3>Guided troubleshooting</h3>
                     <p>
-                        Downloadable files belong in Downloads. That page currently lists only material that is actually available.
+                        A scenario front door sequences the appropriate read-only checks so the technician can focus on the case instead of remembering every individual command.
                     </p>
-                    <a class="card-link" href="/downloads/">View Downloads <span aria-hidden="true">→</span></a>
                 </article>
             </div>
         </div>
@@ -112,10 +144,45 @@
     <section class="section">
         <div class="container">
             <div class="mission">
-                <blockquote>Review the script. Test the result. Use the right permissions.</blockquote>
+                <blockquote>Discover first. Understand the state. Change only with intent.</blockquote>
                 <p>
-                    Any future PowerShell resource should explain its purpose and prerequisites. It still needs review and testing in the appropriate environment before production use.
+                    The current library is read-only-first: tenant, domain, Windows, and network scripts are designed for discovery rather than production changes. Local reports or export bundles are created only when explicitly requested. Always confirm authorization, tenant, account, domain, and target before running troubleshooting tools in a customer or production environment.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Release status</h2>
+                <p>
+                    KrippyTech has an internal v2.0 baseline, but the public library is still being prepared. Individual scripts and packages will not be presented as public downloads until their documentation, prerequisites, safety notes, and release packaging have been reviewed.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Current baseline</p>
+                    <h3>v2.0 built</h3>
+                    <p>
+                        The internal toolkit now spans setup, Exchange, Entra ID, Active Directory, M365, Windows and networking, triage, reports, guided cases, and utilities.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Next step</p>
+                    <h3>Real-world validation</h3>
+                    <p>
+                        The next phase is using the tools against authorized troubleshooting scenarios, refining rough edges, and identifying which scripts are suitable for a public release.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Downloads</p>
+                    <h3>Not published yet</h3>
+                    <p>
+                        When reviewed PowerShell resources are ready for public release, downloadable packages will be listed through the Downloads section.
+                    </p>
+                    <a class="card-link" href="/downloads/">View Downloads <span aria-hidden="true">→</span></a>
+                </article>
             </div>
         </div>
     </section>
