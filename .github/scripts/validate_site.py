@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -10,6 +11,7 @@ import re
 import struct
 import xml.etree.ElementTree as ET
 from urllib.parse import unquote, urlsplit
+import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -67,7 +69,7 @@ SOCIAL_METADATA = {
     },
     "/downloads/": {
         "title": "Downloads | KrippyTech",
-        "description": "KrippyTech Downloads is reserved for reviewed files and reusable resources. No downloads are currently published.",
+        "description": "Download Test-KTDNS v1.0.0, KrippyTech's reviewed read-only DNS troubleshooting release for Windows PowerShell 5.1 and PowerShell 7.",
         "type": "website",
     },
     "/msp-university/": {
@@ -77,7 +79,7 @@ SOCIAL_METADATA = {
     },
     "/powershell/": {
         "title": "PowerShell Library | KrippyTech",
-        "description": "KrippyTech's PowerShell Library is a future home for reviewed, practical automation resources. No scripts are currently published.",
+        "description": "Download Test-KTDNS v1.0.0, KrippyTech's first public PowerShell release for read-only DNS troubleshooting on Windows.",
         "type": "website",
     },
     "/tutorials/": {
@@ -100,6 +102,23 @@ SOCIAL_METADATA = {
         "description": "How to troubleshoot a shared mailbox that does not appear in Outlook after permissions have already been assigned.",
         "type": "article",
     },
+}
+
+TEST_KTDNS_RELEASE = ROOT / "downloads/powershell/test-ktdns/v1.0.0"
+TEST_KTDNS_HASHES = {
+    "LICENSE": "fbbdf22da672c4d3fa5d004c09a2c88e47d0fd66768a83523900df29a236279a",
+    "README.md": "7147a9d6285cb1536a06c24830e9d692618a9c740a49b6cee4c0ed7aead5adb8",
+    "SHA256SUMS.txt": "7bacb7605b636a0f3acbdf0009af4ff163d1099bb707bee14b8bf432f9732fdb",
+    "Test-KTDNS.ps1": "3ba1629a7a8dcf1eb82ce97114a9047529336667bce1fb04f374f028e1340c1f",
+    "Test-KTDNS-v1.0.0.zip": "7c0ed40a1ed5803fa97cc365e1439fdde77545246a2d58f0235c763494ec6c86",
+    "tests/Test-KTDNS.Tests.ps1": "9abd2ef0ced72f33240c74e7ae8bcca50f51f837dee6a2a5f9dce8b3946d384c",
+}
+TEST_KTDNS_ZIP_MEMBERS = {
+    "LICENSE",
+    "README.md",
+    "SHA256SUMS.txt",
+    "Test-KTDNS.ps1",
+    "tests/Test-KTDNS.Tests.ps1",
 }
 
 EXPECTED_HOME_JSON_LD = {
@@ -642,6 +661,143 @@ def validate_crawl_baseline(
         failures.append("sitemap.xml: 404.html must be excluded")
 
 
+def validate_test_ktdns_release(failures: list[str]) -> None:
+    expected_files = set(TEST_KTDNS_HASHES)
+    if not TEST_KTDNS_RELEASE.is_dir():
+        failures.append("Test-KTDNS v1.0.0: release directory is missing")
+        return
+
+    actual_files = {
+        path.relative_to(TEST_KTDNS_RELEASE).as_posix()
+        for path in TEST_KTDNS_RELEASE.rglob("*")
+        if path.is_file()
+    }
+    if actual_files != expected_files:
+        failures.append(
+            "Test-KTDNS v1.0.0: release files differ from the approved set; "
+            f"expected {sorted(expected_files)}, found {sorted(actual_files)}"
+        )
+
+    for relative, expected_hash in TEST_KTDNS_HASHES.items():
+        path = TEST_KTDNS_RELEASE / relative
+        if not path.is_file():
+            continue
+        actual_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual_hash != expected_hash:
+            failures.append(
+                f"Test-KTDNS v1.0.0: SHA-256 mismatch for {relative}; "
+                f"expected {expected_hash}, found {actual_hash}"
+            )
+
+    manifest_path = TEST_KTDNS_RELEASE / "SHA256SUMS.txt"
+    expected_manifest = [
+        f"{TEST_KTDNS_HASHES[relative]}  {relative}"
+        for relative in (
+            "LICENSE",
+            "README.md",
+            "Test-KTDNS.ps1",
+            "tests/Test-KTDNS.Tests.ps1",
+        )
+    ]
+    if manifest_path.is_file():
+        actual_manifest = manifest_path.read_text(encoding="utf-8").splitlines()
+        if actual_manifest != expected_manifest:
+            failures.append(
+                "Test-KTDNS v1.0.0: SHA256SUMS.txt does not exactly match approved files"
+            )
+
+    zip_path = TEST_KTDNS_RELEASE / "Test-KTDNS-v1.0.0.zip"
+    if zip_path.is_file():
+        try:
+            with zipfile.ZipFile(zip_path) as archive:
+                members = {
+                    info.filename
+                    for info in archive.infolist()
+                    if not info.is_dir()
+                }
+                if members != TEST_KTDNS_ZIP_MEMBERS:
+                    failures.append(
+                        "Test-KTDNS v1.0.0: ZIP members differ from the approved set; "
+                        f"expected {sorted(TEST_KTDNS_ZIP_MEMBERS)}, found {sorted(members)}"
+                    )
+                for member in members & TEST_KTDNS_ZIP_MEMBERS:
+                    expected_hash = TEST_KTDNS_HASHES[member]
+                    actual_hash = hashlib.sha256(archive.read(member)).hexdigest()
+                    if actual_hash != expected_hash:
+                        failures.append(
+                            f"Test-KTDNS v1.0.0: ZIP member hash mismatch for {member}"
+                        )
+        except zipfile.BadZipFile:
+            failures.append("Test-KTDNS v1.0.0: release ZIP is invalid")
+
+    script_path = TEST_KTDNS_RELEASE / "Test-KTDNS.ps1"
+    if script_path.is_file():
+        script = script_path.read_text(encoding="utf-8")
+        required_script_text = (
+            "#requires -Version 5.1",
+            "#requires -Modules DnsClient",
+            "Version: 1.0.0",
+            "DnsOnly     = $true",
+            "E1C61B20B5888FE21B583C8E5977351F94D346D584A0DF02CF9B08A65B37F2EC",
+        )
+        for required in required_script_text:
+            if required not in script:
+                failures.append(
+                    f"Test-KTDNS v1.0.0: script is missing approved text {required!r}"
+                )
+        prohibited_commands = re.compile(
+            r"(?im)^\s*(Write-Host|Invoke-WebRequest|Invoke-RestMethod|Start-Process|"
+            r"Set-Content|Add-Content|Out-File|Export-Csv|New-Item|Remove-Item|"
+            r"Set-ExecutionPolicy|Get-Credential|Invoke-Expression)\b"
+        )
+        match = prohibited_commands.search(script)
+        if match:
+            failures.append(
+                f"Test-KTDNS v1.0.0: prohibited command found: {match.group(1)}"
+            )
+
+    readme_path = TEST_KTDNS_RELEASE / "README.md"
+    if readme_path.is_file():
+        readme = readme_path.read_text(encoding="utf-8")
+        required_readme_text = (
+            "# Test-KTDNS v1.0.0",
+            "Unblock-File -LiteralPath .\\Test-KTDNS.ps1",
+            "Do not weaken or bypass the computer's global execution policy.",
+            "Approved seed SHA-256: `E1C61B20B5888FE21B583C8E5977351F94D346D584A0DF02CF9B08A65B37F2EC`",
+        )
+        for required in required_readme_text:
+            if required not in readme:
+                failures.append(
+                    f"Test-KTDNS v1.0.0: README is missing approved text {required!r}"
+                )
+        if "Set-ExecutionPolicy" in readme or "-ExecutionPolicy Bypass" in readme:
+            failures.append(
+                "Test-KTDNS v1.0.0: README must not recommend an execution-policy change or bypass"
+            )
+
+    public_requirements = {
+        ROOT / "powershell/index.html": (
+            "/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip",
+            "/downloads/powershell/test-ktdns/v1.0.0/SHA256SUMS.txt",
+            "This release is not Authenticode-signed.",
+            "use Unblock-File only on Test-KTDNS.ps1",
+        ),
+        ROOT / "downloads/index.html": (
+            "/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip",
+            "/downloads/powershell/test-ktdns/v1.0.0/SHA256SUMS.txt",
+            "The release is not Authenticode-signed.",
+            "use Unblock-File only on the downloaded Test-KTDNS.ps1",
+        ),
+    }
+    for page, required_text in public_requirements.items():
+        source = page.read_text(encoding="utf-8")
+        for required in required_text:
+            if required not in source:
+                failures.append(
+                    f"{page.relative_to(ROOT)}: missing Test-KTDNS release text {required!r}"
+                )
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -674,6 +830,7 @@ def main() -> int:
 
     validate_crawl_baseline(parsers, failures)
     validate_trust_and_sharing(parsers, failures)
+    validate_test_ktdns_release(failures)
 
     if failures:
         print("Static-site validation failed:")
