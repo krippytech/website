@@ -50,6 +50,11 @@ SOCIAL_METADATA = {
         "description": "KT-000001 documents a Microsoft 365 shared mailbox that did not appear in Outlook after access was assigned, including investigation, resolution, and lessons learned.",
         "type": "article",
     },
+    "/cases/KT-000002/": {
+        "title": "KT-000002 | Exchange Online Archive Not Reducing Primary Mailbox | KrippyTech",
+        "description": "KT-000002 documents an Exchange Online mailbox whose archive policy appeared correct but was not reducing the primary mailbox, including the evidence that identified a stale retention hold.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "KrippyTech Consulting | Practical IT Guidance",
         "description": "Contact KrippyTech for an initial conversation about practical technical assessment, troubleshooting, planning, and implementation guidance.",
@@ -455,6 +460,11 @@ def validate_trust_and_sharing(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-08-11">August 11, 2026</time>'
+        ),
+        "/cases/KT-000002/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>'
         ),
     }
     for route, parser in route_parsers.items():
