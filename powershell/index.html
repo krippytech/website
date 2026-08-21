@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, follow">
     <title>PowerShell Library | KrippyTech</title>
-    <meta name="description" content="KrippyTech's PowerShell Library is a future home for reviewed, practical automation resources. No scripts are currently published.">
+    <meta name="description" content="Download Test-KTDNS v1.0.0, KrippyTech's first public PowerShell release for read-only DNS troubleshooting on Windows.">
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
     <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
@@ -13,7 +13,7 @@
     <meta property="og:site_name" content="KrippyTech">
     <meta property="og:title" content="PowerShell Library | KrippyTech">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="KrippyTech&#x27;s PowerShell Library is a future home for reviewed, practical automation resources. No scripts are currently published.">
+    <meta property="og:description" content="Download Test-KTDNS v1.0.0, KrippyTech&#x27;s first public PowerShell release for read-only DNS troubleshooting on Windows.">
     <meta property="og:url" content="https://krippytech.com/powershell/">
     <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
     <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
@@ -23,7 +23,7 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="PowerShell Library | KrippyTech">
-    <meta name="twitter:description" content="KrippyTech&#x27;s PowerShell Library is a future home for reviewed, practical automation resources. No scripts are currently published.">
+    <meta name="twitter:description" content="Download Test-KTDNS v1.0.0, KrippyTech&#x27;s first public PowerShell release for read-only DNS troubleshooting on Windows.">
     <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
     <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
 
@@ -62,13 +62,12 @@
             <p class="eyebrow">Read-only first. Built for real troubleshooting.</p>
             <h1>PowerShell Library</h1>
             <p class="hero-text">
-                KrippyTech's PowerShell Library is a growing troubleshooting toolkit for technicians and administrators working across
-                Microsoft 365, Exchange Online, Entra ID, SharePoint and OneDrive, Active Directory, Windows, DNS, and network discovery.
-                <span class="highlight">The current internal baseline is v2.0.</span>
+                KrippyTech's PowerShell Library provides reviewed troubleshooting tools for technicians and administrators.
+                <span class="highlight">Test-KTDNS v1.0.0 is the first public release: a read-only Windows DNS troubleshooting script.</span>
             </p>
             <div class="buttons">
-                <a class="button button-primary" href="#library-map">Explore the library</a>
-                <a class="button button-secondary" href="/tutorials/">Browse Tutorials</a>
+                <a class="button button-primary" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip" download>Download Test-KTDNS v1.0.0</a>
+                <a class="button button-secondary" href="#test-ktdns-v1">Review release details</a>
             </div>
         </div>
     </section>
@@ -78,7 +77,7 @@
             <div class="section-heading">
                 <h2>What the library covers</h2>
                 <p>
-                    The library is organized around the kinds of discovery and triage work that repeat across real support cases. Public downloads are not available yet; scripts will be released only after review and testing for public use.
+                    The library is organized around discovery and triage work that repeats across real support cases. Public scripts are released individually after their documentation, safety boundaries, tests, and packaging have been reviewed.
                 </p>
             </div>
             <div class="grid">
@@ -103,6 +102,47 @@
                         DNS queries, routes, TCP tests, interface details, event-log snapshots, and reusable network triage for common connectivity and service-access problems.
                     </p>
                 </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="test-ktdns-v1">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">First public PowerShell release</p>
+                <h2>Test-KTDNS v1.0.0</h2>
+                <p>
+                    Test-KTDNS performs read-only DNS troubleshooting and returns normalized PowerShell objects. It does not change DNS, write files, download content, modify configuration, or handle credentials.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Supported queries</p>
+                    <h3>Eight DNS record types</h3>
+                    <p>
+                        Query A, AAAA, CNAME, MX, NS, SRV, TXT, and PTR records through DNS only, without LLMNR or NetBIOS fallback.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Requirements</p>
+                    <h3>Windows PowerShell</h3>
+                    <p>
+                        Requires Windows PowerShell 5.1 or PowerShell 7 on Windows and the built-in DnsClient module. Ordinary DNS queries do not require administrator rights.
+                    </p>
+                    <a class="card-link" href="/downloads/powershell/test-ktdns/v1.0.0/README.md">Read the release README <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Integrity &amp; execution policy</p>
+                    <h3>Verify before running</h3>
+                    <p>
+                        This release is not Authenticode-signed. Review the source and verify its SHA-256 checksum first. If RemoteSigned blocks the downloaded script, use Unblock-File only on Test-KTDNS.ps1. Do not bypass or globally change execution policy.
+                    </p>
+                    <a class="card-link" href="/downloads/powershell/test-ktdns/v1.0.0/SHA256SUMS.txt">View SHA-256 checksums <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+            <div class="buttons">
+                <a class="button button-primary" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip" download>Download ZIP</a>
+                <a class="button button-secondary" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1">Review the script</a>
             </div>
         </div>
     </section>
@@ -157,29 +197,30 @@
             <div class="section-heading">
                 <h2>Release status</h2>
                 <p>
-                    KrippyTech has an internal v2.0 baseline, but the public library is still being prepared. Individual scripts and packages will not be presented as public downloads until their documentation, prerequisites, safety notes, and release packaging have been reviewed.
+                    Test-KTDNS v1.0.0 is the first reviewed script promoted from the internal toolkit to a public package. Other internal scripts remain unavailable until they complete the same review process.
                 </p>
             </div>
             <div class="grid">
                 <article class="card">
-                    <p class="card-number">Current baseline</p>
-                    <h3>v2.0 built</h3>
+                    <p class="card-number">Available now</p>
+                    <h3>Test-KTDNS v1.0.0</h3>
                     <p>
-                        The internal toolkit now spans setup, Exchange, Entra ID, Active Directory, M365, Windows and networking, triage, reports, guided cases, and utilities.
+                        Download the complete reviewed package with the script, tests, README, MIT license, and checksum manifest.
                     </p>
+                    <a class="card-link" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip" download>Download the release <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card">
-                    <p class="card-number">Next step</p>
-                    <h3>Real-world validation</h3>
+                    <p class="card-number">Internal baseline</p>
+                    <h3>v2.0 remains private</h3>
                     <p>
-                        The next phase is using the tools against authorized troubleshooting scenarios, refining rough edges, and identifying which scripts are suitable for a public release.
+                        The broader internal toolkit spans Microsoft 365, Active Directory, Windows, networking, triage, reports, guided cases, and utilities. It is not included in this release.
                     </p>
                 </article>
                 <article class="card">
                     <p class="card-number">Downloads</p>
-                    <h3>Not published yet</h3>
+                    <h3>Release files together</h3>
                     <p>
-                        When reviewed PowerShell resources are ready for public release, downloadable packages will be listed through the Downloads section.
+                        The Downloads page provides the ZIP, checksum manifest, source, and documentation from one versioned location.
                     </p>
                     <a class="card-link" href="/downloads/">View Downloads <span aria-hidden="true">→</span></a>
                 </article>
