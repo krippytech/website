@@ -85,6 +85,11 @@ SOCIAL_METADATA = {
         "description": "Practical KrippyTech Microsoft 365 tutorials, including reviewed troubleshooting guidance and clearly labeled material still under review.",
         "type": "website",
     },
+    "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": {
+        "title": "Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | KrippyTech",
+        "description": "A repeatable Exchange Online PowerShell procedure for diagnosing why an archive mailbox is not reducing primary mailbox usage.",
+        "type": "article",
+    },
     "/tutorials/shared-mailbox/": {
         "title": "Create a Microsoft 365 Shared Mailbox — Draft | KrippyTech",
         "description": "Draft status for a Microsoft 365 shared-mailbox tutorial that is not approved for production use.",
@@ -449,6 +454,13 @@ def validate_trust_and_sharing(
         )
 
     approved_authorship = {
+        "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
         "/tutorials/shared-mailbox-not-showing-outlook/": re.compile(
             r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'

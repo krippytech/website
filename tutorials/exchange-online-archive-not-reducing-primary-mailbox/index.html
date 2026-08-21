@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/exchange-online-archive-not-reducing-primary-mailbox/">
+
+    <title>Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | KrippyTech</title>
+
+    <meta
+        name="description"
+        content="A repeatable Exchange Online PowerShell procedure for diagnosing why an archive mailbox is not reducing primary mailbox usage."
+    >
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="A repeatable Exchange Online PowerShell procedure for diagnosing why an archive mailbox is not reducing primary mailbox usage.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/exchange-online-archive-not-reducing-primary-mailbox/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | KrippyTech">
+    <meta name="twitter:description" content="A repeatable Exchange Online PowerShell procedure for diagnosing why an archive mailbox is not reducing primary mailbox usage.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/">
+                <img
+                    src="/assets/images/krippytech-logo.png"
+                    alt="KrippyTech logo"
+                    width="58"
+                    height="46"
+                    class="brand-logo"
+                >
+
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">Exchange Online</p>
+
+        <h1>Diagnose an Archive Not Reducing Primary Mailbox Usage</h1>
+
+        <p class="hero-text">
+            A repeatable PowerShell procedure for proving whether archive movement is
+            configured, blocked, and actually occurring.
+
+            <span class="highlight">
+                Measure first. Change only what the evidence supports.
+            </span>
+        </p>
+
+        <p class="article-meta">
+            Written by <a href="/about/" rel="author">Michael Miller</a>
+            <span aria-hidden="true">·</span>
+            Published <time datetime="2026-08-21">August 21, 2026</time>
+            <span aria-hidden="true">·</span>
+            Last reviewed <time datetime="2026-08-21">August 21, 2026</time>
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="grid">
+            <article class="card">
+                <p class="card-number">Estimated Time</p>
+                <h3>20–30 Minutes</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Difficulty</p>
+                <h3>Intermediate</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Technologies</p>
+                <h3>Exchange Online / MRM / PowerShell</h3>
+            </article>
+
+            <article class="card">
+                <p class="card-number">KT Reference</p>
+                <h3><a href="/cases/KT-000002/">KT-000002</a></h3>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Goal</p>
+            <h2>Separate configuration from proof of processing.</h2>
+
+            <p>
+                An enabled archive and an assigned retention policy do not prove that
+                eligible items are moving. This procedure captures a baseline, checks
+                the archive and MRM configuration, identifies retention hold state,
+                and measures the mailbox again after processing is requested.
+            </p>
+        </div>
+
+        <div class="mission">
+            <p>
+                All identities, policy names, tag names, measurements, and example
+                output in this tutorial are synthetic. Replace them only with values
+                from the environment you are authorized to administer.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Before You Start</p>
+            <h2>Begin read-only and preserve an attributable baseline.</h2>
+
+            <p>
+                Use an authenticated Exchange Online PowerShell session with the
+                permissions required for the cmdlets shown below. Record when each
+                measurement was taken. Do not remove a hold until its purpose and the
+                authority to change it have been confirmed.
+            </p>
+        </div>
+
+        <div class="callout callout-warning">
+            <h3>Do not treat every hold as the same control</h3>
+
+            <p>
+                This procedure checks several hold-related properties for context, but
+                the state-changing example applies only to
+                <code>RetentionHoldEnabled</code>, the MRM retention hold documented in
+                KT-000002. Do not change litigation, in-place, or other preservation
+                controls as part of this procedure.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Procedure</p>
+            <h2>Diagnose archive movement in six evidence-based steps.</h2>
+        </div>
+
+        <div class="kt-step">
+            <p class="kt-step-number">Step 1</p>
+            <h3>Set the synthetic example identity and capture both mailbox baselines</h3>
+
+            <p>
+                Measure the primary mailbox and its archive with the same fields. Keep
+                the timestamp with the results so later changes can be compared to a
+                specific baseline.
+            </p>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">$mbx = "user01@contoso.com" # Synthetic identity
+
+Get-EXOMailboxStatistics -Identity $mbx |
+    Select-Object DisplayName, TotalItemSize, ItemCount
+
+Get-EXOMailboxStatistics -Identity $mbx -Archive |
+    Select-Object DisplayName, TotalItemSize, ItemCount</code></pre>
+            </div>
+
+            <p>
+                Preserve both results. A later increase in archive item count can be
+                stronger evidence of movement than waiting for a dramatic primary
+                mailbox size decrease.
+            </p>
+        </div>
+
+        <div class="kt-step">
+            <p class="kt-step-number">Step 2</p>
+            <h3>Inspect archive, policy, and hold state together</h3>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">Get-EXOMailbox -Identity $mbx -PropertySets Archive, Hold, Policy, Retention |
+    Select-Object RetentionPolicy,
+                  RetentionHoldEnabled,
+                  LitigationHoldEnabled,
+                  InPlaceHolds,
+                  ArchiveStatus,
+                  ArchiveState,
+                  AutoExpandingArchiveEnabled</code></pre>
+            </div>
+
+            <p>
+                Confirm that the archive is active, note the assigned retention policy,
+                and record every displayed hold property. If
+                <code>RetentionHoldEnabled</code> is <code>True</code>, MRM can continue
+                applying tags while archive and expiration actions for visible mailbox
+                folders remain suspended.
+            </p>
+        </div>
+
+        <div class="kt-step">
+            <p class="kt-step-number">Step 3</p>
+            <h3>Verify the assigned policy and its archive tag</h3>
+
+            <p>
+                Use the actual names observed in the environment. The names below are
+                deliberately synthetic.
+            </p>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">$policyName = "KER-DEMO-Archive-365"             # Synthetic name
+$archiveTagName = "KER-DEMO-MoveToArchive-365"  # Synthetic name
+
+Get-RetentionPolicy -Identity $policyName |
+    Format-List Name, RetentionPolicyTagLinks
+
+Get-RetentionPolicyTag -Identity $archiveTagName |
+    Select-Object Name,
+                  Type,
+                  RetentionEnabled,
+                  AgeLimitForRetention,
+                  RetentionAction</code></pre>
+            </div>
+
+            <p>
+                Verify that the policy links the intended archive tag. Confirm that the
+                tag is enabled and that its action is <code>MoveToArchive</code>. Record
+                the tag type and age limit instead of assuming that the policy name
+                describes its effective behavior.
+            </p>
+        </div>
+
+        <div class="callout callout-verification">
+            <h3>Read-only checkpoint</h3>
+
+            <p>
+                Before changing anything, the evidence should show whether the archive
+                is active, which policy is assigned, whether the policy links the
+                intended archive tag, whether that tag is enabled, and whether
+                <code>RetentionHoldEnabled</code> is blocking the expected action.
+            </p>
+        </div>
+
+        <div class="kt-step">
+            <p class="kt-step-number">Step 4</p>
+            <h3>Remove the MRM retention hold only when approved</h3>
+
+            <p>
+                Run this command only when the hold is confirmed to be stale or
+                unintended and the change has been authorized.
+            </p>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">Set-Mailbox -Identity $mbx -RetentionHoldEnabled $false</code></pre>
+            </div>
+
+            <p>Query the setting again and retain the result as change evidence:</p>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">Get-EXOMailbox -Identity $mbx -PropertySets Policy, Retention |
+    Select-Object RetentionPolicy, RetentionHoldEnabled</code></pre>
+            </div>
+
+            <p>
+                Continue only after the output confirms
+                <code>RetentionHoldEnabled=False</code> and the intended policy remains
+                assigned.
+            </p>
+        </div>
+
+        <div class="kt-step">
+            <p class="kt-step-number">Step 5</p>
+            <h3>Request Managed Folder Assistant processing</h3>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">Start-ManagedFolderAssistant -Identity $mbx</code></pre>
+            </div>
+
+            <p>
+                The command requests processing; it does not make mailbox statistics
+                change instantly. Record when it was run and allow time before drawing
+                a conclusion from the next measurement.
+            </p>
+        </div>
+
+        <div class="kt-step">
+            <p class="kt-step-number">Step 6</p>
+            <h3>Measure primary and archive statistics again</h3>
+
+            <div class="code-block">
+                <pre><code class="language-powershell">Get-EXOMailboxStatistics -Identity $mbx |
+    Select-Object DisplayName, TotalItemSize, ItemCount
+
+Get-EXOMailboxStatistics -Identity $mbx -Archive |
+    Select-Object DisplayName, TotalItemSize, ItemCount</code></pre>
+            </div>
+
+            <p>
+                Compare the second result with the original baseline. Look for archive
+                item-count or size growth while the policy and tag remain correct. Do
+                not declare failure solely because the primary mailbox size is
+                unchanged immediately after requesting processing.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Interpretation</p>
+            <h2>Use the evidence to choose the next action.</h2>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <p class="card-number">Archive State</p>
+                <h3>Not active</h3>
+                <p>Stop. Archive movement cannot be proven until the archive state is corrected through the appropriate approved process.</p>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Policy or Tag</p>
+                <h3>Missing or mismatched</h3>
+                <p>Stop. Document the mismatch and correct the intended MRM configuration through a separately approved change.</p>
+            </article>
+
+            <article class="card">
+                <p class="card-number">MRM Retention Hold</p>
+                <h3>Enabled</h3>
+                <p>Confirm why it exists. Remove only when it is stale or unintended and authorization is documented.</p>
+            </article>
+
+            <article class="card">
+                <p class="card-number">Configuration Valid</p>
+                <h3>No immediate movement</h3>
+                <p>Preserve the timestamps, allow processing time, and compare another measured interval before escalating.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="callout callout-verification">
+            <h3>Final verification checklist</h3>
+
+            <p><strong>Archive:</strong> active and associated with the expected mailbox.</p>
+            <p><strong>Policy:</strong> the intended retention policy remains assigned.</p>
+            <p><strong>Archive tag:</strong> linked, enabled, and configured with <code>MoveToArchive</code>.</p>
+            <p><strong>MRM hold:</strong> <code>RetentionHoldEnabled=False</code> when removal was approved.</p>
+            <p><strong>Processing:</strong> Managed Folder Assistant was requested and timestamped.</p>
+            <p><strong>Movement:</strong> primary and archive statistics were compared across at least two attributable measurements.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="callout callout-realworld">
+            <h3>Real-World Notes</h3>
+
+            <p>
+                Configuration is not the same as execution. A policy can be assigned,
+                a tag can be correct, and the archive can be active while an MRM
+                retention hold still prevents visible-folder items from moving.
+            </p>
+
+            <p>
+                Preserve before-and-after measurements. A single screenshot or a
+                single mailbox size is not enough to prove that archiving is working
+                or broken.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Microsoft References</p>
+            <h2>Current documentation for every command used.</h2>
+        </div>
+
+        <div class="mission">
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/get-exomailbox?view=exchange-ps">Get-EXOMailbox</a> — <code>-Identity</code> and <code>-PropertySets</code>.</li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/exchange/cmdlet-property-sets?view=exchange-ps">Exchange Online PowerShell property sets</a> — Archive, Hold, Policy, and Retention properties.</li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/get-exomailboxstatistics?view=exchange-ps">Get-EXOMailboxStatistics</a> — <code>-Identity</code> and <code>-Archive</code>.</li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/get-retentionpolicy?view=exchange-ps">Get-RetentionPolicy</a> — <code>-Identity</code>.</li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/get-retentionpolicytag?view=exchange-ps">Get-RetentionPolicyTag</a> — <code>-Identity</code> and displayed archive-tag properties.</li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/set-mailbox?view=exchange-ps">Set-Mailbox</a> — <code>-Identity</code> and <code>-RetentionHoldEnabled</code>.</li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/start-managedfolderassistant?view=exchange-ps">Start-ManagedFolderAssistant</a> — <code>-Identity</code>.</li>
+                <li><a href="https://learn.microsoft.com/en-us/exchange/security-and-compliance/messaging-records-management/mailbox-retention-hold">Mailbox retention hold behavior</a>.</li>
+                <li><a href="https://learn.microsoft.com/en-us/exchange/security-and-compliance/messaging-records-management/retention-tags-and-policies">Retention tags and policies in Exchange Online</a>.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Related Case</p>
+            <h2>See the investigation and judgment behind this procedure.</h2>
+        </div>
+
+        <div class="card">
+            <p class="card-number">KT-000002</p>
+
+            <h3>
+                <a href="/cases/KT-000002/">
+                    Exchange Online Archive Not Reducing Primary Mailbox
+                </a>
+            </h3>
+
+            <p>
+                The case preserves the evidence chain, competing explanations,
+                confirmed root cause, authorized remediation, and final verification.
+                This tutorial extracts only the repeatable technical procedure.
+            </p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container">
+        © 2026 KrippyTech. Practical IT. Real Solutions.
+    </div>
+</footer>
+
+</body>
+</html>
