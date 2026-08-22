@@ -142,6 +142,11 @@ SOCIAL_METADATA = {
         "description": "Learn how to download, verify, review, and run Test-KTDNS v1.0.0 for read-only DNS troubleshooting on Windows.",
         "type": "article",
     },
+    "/tutorials/get-ktnetworkconfig-v1.0.0/": {
+        "title": "Inspecting Local Windows Network Configuration with Get-KTNetworkConfig | KrippyTech",
+        "description": "Learn how to verify, run, and interpret Get-KTNetworkConfig v1.0.0 before choosing the next Windows network diagnostic step.",
+        "type": "article",
+    },
     "/windows-hybrid/": {
         "title": "Windows & Hybrid | KrippyTech",
         "description": "Explore KrippyTech's Windows and hybrid learning lanes and the published Test-KTDNS read-only DNS troubleshooting tool.",
@@ -583,6 +588,13 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
             r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
             r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
+        "/tutorials/get-ktnetworkconfig-v1.0.0/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>'
         ),
         "/cases/KT-000001/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
@@ -1067,6 +1079,100 @@ def validate_get_ktnetworkconfig_release(failures: list[str]) -> None:
                 failures.append(
                     f"{page.relative_to(ROOT)}: missing Get-KTNetworkConfig release text {required!r}"
                 )
+
+
+def validate_get_ktnetworkconfig_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/get-ktnetworkconfig-v1.0.0/"
+    page = ROOT / "tutorials/get-ktnetworkconfig-v1.0.0/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Inspecting Local Windows Network Configuration with Get-KTNetworkConfig",
+        "Real symptom",
+        "Local evidence",
+        "The script accepts no parameters.",
+        "performs local discovery only",
+        "associated adapter reports <code>Up</code>",
+        "returns one structured PowerShell object",
+        "Windows PowerShell 5.1 or PowerShell 7 on Windows",
+        "Administrator rights are normally unnecessary",
+        "built-in <code>NetTCPIP</code> module",
+        "does not modify network configuration, write files, test connectivity, contact remote systems",
+        "$networkConfig = &amp; .\\Get-KTNetworkConfig.ps1",
+        "InterfaceAlias",
+        "InterfaceIndex",
+        "Adapter",
+        "IPv4Address",
+        "IPv6Address",
+        "IPv4Gateway",
+        "DnsServers",
+        "NetProfile",
+        "System.String[]",
+        "empty array",
+        "<code>$null</code>",
+        "192.0.2.20",
+        "2001:db8::20",
+        "does not prove that DNS resolution, routing, Internet access, domain health, DHCP, VPN connectivity, or application connectivity works",
+        "Do not paste raw output into public channels",
+        "Do not bypass or globally change PowerShell execution policy.",
+        "Unblock-File -LiteralPath .\\Get-KTNetworkConfig.ps1",
+        "EADA2BBDDE5C0B62BB97D82D4DB4A70259CB8CC8DC9D65CA9D52E9384FF2C5C1",
+        "/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig-v1.0.0.zip",
+        "/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig.ps1",
+        "/downloads/powershell/get-ktnetworkconfig/v1.0.0/README.md",
+        "/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt",
+        "/powershell/#get-ktnetworkconfig-v1",
+        "/downloads/#get-ktnetworkconfig-v1",
+        "/tutorials/test-ktdns-v1.0.0/",
+        "/tutorials/dns-active-directory-domain-health/",
+        "/windows-hybrid/",
+        "/msp-university/#learning-path",
+        "https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netipconfiguration?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/netadapter/get-netadapter?view=windowsserver2022-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.6",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/unblock-file?view=powershell-7.5",
+        "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(
+                f"{route}: missing required Get-KTNetworkConfig tutorial text {required!r}"
+            )
+
+    forbidden = (
+        "Set-ExecutionPolicy",
+        "-ExecutionPolicy Bypass",
+        "Set-NetIPAddress",
+        "Set-NetIPInterface",
+        "Set-DnsClientServerAddress",
+        "New-NetRoute",
+        "Remove-NetRoute",
+        "Restart-NetAdapter",
+        "Disable-NetAdapter",
+        "Enable-NetAdapter",
+        "ipconfig /release",
+        "ipconfig /renew",
+        "netsh winsock reset",
+    )
+    for prohibited in forbidden:
+        if prohibited in source:
+            failures.append(
+                f"{route}: prohibited configuration-changing guidance found: {prohibited!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "get-ktnetworkconfig-v1.0.0/",
+        ROOT / "windows-hybrid/index.html": "/tutorials/get-ktnetworkconfig-v1.0.0/",
+        ROOT / "sitemap.xml": "https://krippytech.com/tutorials/get-ktnetworkconfig-v1.0.0/",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing Get-KTNetworkConfig tutorial integration {required!r}"
+            )
 
 
 def validate_dns_ad_domain_health_tutorial(failures: list[str]) -> None:
@@ -1719,6 +1825,7 @@ def main() -> int:
     validate_trust_and_sharing(parsers, failures)
     validate_test_ktdns_release(failures)
     validate_get_ktnetworkconfig_release(failures)
+    validate_get_ktnetworkconfig_tutorial(failures)
     validate_dns_ad_domain_health_tutorial(failures)
     validate_entra_signin_ca_tutorial(failures)
     validate_windows_server_low_disk_tutorial(failures)
