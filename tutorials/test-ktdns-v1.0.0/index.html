@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/test-ktdns-v1.0.0/">
+
+    <title>Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting | KrippyTech</title>
+    <meta name="description" content="Learn how to download, verify, review, and run Test-KTDNS v1.0.0 for read-only DNS troubleshooting on Windows.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="Learn how to download, verify, review, and run Test-KTDNS v1.0.0 for read-only DNS troubleshooting on Windows.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/test-ktdns-v1.0.0/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting | KrippyTech">
+    <meta name="twitter:description" content="Learn how to download, verify, review, and run Test-KTDNS v1.0.0 for read-only DNS troubleshooting on Windows.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Windows DNS / PowerShell</p>
+            <h1>Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting</h1>
+            <p class="hero-text">
+                Download, verify, review, and run KrippyTech's first public PowerShell tool without changing DNS or system configuration.
+                <span class="highlight">Treat each result as evidence from one DNS query—not proof of overall domain or network health.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-21">August 21, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-21">August 21, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Estimated Time</p>
+                    <h3>15–20 Minutes</h3>
+                </article>
+                <article class="card">
+                    <p class="card-number">Difficulty</p>
+                    <h3>Beginner / Intermediate</h3>
+                </article>
+                <article class="card">
+                    <p class="card-number">Technologies</p>
+                    <h3>Windows / DNS / PowerShell</h3>
+                </article>
+                <article class="card">
+                    <p class="card-number">Release</p>
+                    <h3>Test-KTDNS v1.0.0</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Goal</p>
+                <h2>Ask a specific DNS question and preserve a clear result.</h2>
+                <p>
+                    Test-KTDNS passes a name, record type, and optional resolver to the Windows <code>DnsClient</code> module. It returns stable PowerShell objects so the same fields can be reviewed interactively or used by automation.
+                </p>
+            </div>
+            <div class="mission">
+                <p>
+                    The script is read-only. It does not change DNS, write files, download content, modify configuration, or handle credentials. DNS resolvers can log query names, so use only authorized resolvers and do not send sensitive internal names to an untrusted resolver.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Before You Start</p>
+                <h2>Confirm the platform and security boundaries.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">PowerShell</p>
+                    <h3>Windows PowerShell 5.1 or PowerShell 7 on Windows</h3>
+                    <p>The Windows <code>DnsClient</code> module and its <code>Resolve-DnsName</code> cmdlet are required. The script is not supported on Linux or macOS.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Privilege</p>
+                    <h3>Standard user is enough</h3>
+                    <p>Ordinary DNS queries do not require administrator rights.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Signature</p>
+                    <h3>Review and verify first</h3>
+                    <p>This release is not Authenticode-signed. Verify the checksum and review the source before running it.</p>
+                </article>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Do not weaken execution policy</h3>
+                <p>Do not weaken, bypass, or globally change execution policy. If <code>RemoteSigned</code> blocks the verified browser-downloaded script, use targeted <code>Unblock-File</code> only as described below.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Procedure</p>
+                <h2>Use the release in eight deliberate steps.</h2>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 1</p>
+                <h3>Download the versioned release files</h3>
+                <p>Use either the complete ZIP or the direct script. Keep the checksum manifest and README with the script so the approved release can be verified and reviewed.</p>
+                <div class="buttons">
+                    <a class="button button-primary" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip" download>Download the ZIP</a>
+                    <a class="button button-secondary" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1" download>Download the script</a>
+                </div>
+                <p>
+                    Supporting files: <a href="/downloads/powershell/test-ktdns/v1.0.0/README.md">release README</a> and <a href="/downloads/powershell/test-ktdns/v1.0.0/SHA256SUMS.txt">SHA-256 manifest</a>.
+                </p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 2</p>
+                <h3>Verify the script checksum before running it</h3>
+                <p>From the release folder, use the manifest to compare the expected script checksum with the file you downloaded or extracted.</p>
+                <div class="code-block">
+                    <pre><code class="language-powershell">$expected = (Select-String -LiteralPath .\SHA256SUMS.txt -Pattern '  Test-KTDNS.ps1$').Line.Split()[0]
+$actual = (Get-FileHash -LiteralPath .\Test-KTDNS.ps1 -Algorithm SHA256).Hash
+$actual -eq $expected</code></pre>
+                </div>
+                <p>The result must be <code>True</code>. The approved Test-KTDNS.ps1 SHA-256 is:</p>
+                <div class="code-block">
+                    <pre><code>3BA1629A7A8DCF1EB82CE97114A9047529336667BCE1FB04F374F028E1340C1F</code></pre>
+                </div>
+                <p>If the comparison is false, stop and obtain the release again from the <a href="/downloads/">KrippyTech Downloads page</a>.</p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 3</p>
+                <h3>Review the source and its boundaries</h3>
+                <p>Read <a href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1">Test-KTDNS.ps1</a> before execution. Confirm that the parameters, supported types, <code>DnsOnly</code> setting, stable output object, and terminating-error behavior match the task you intend to perform.</p>
+                <p>The script performs DNS queries only. It does not use LLMNR or NetBIOS fallback, launch programs, or accept pipeline input.</p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 4</p>
+                <h3>Use targeted Unblock-File only when appropriate</h3>
+                <p>Windows may mark a browser-downloaded script as originating from the Internet. After the checksum is verified and the source is reviewed, <code>RemoteSigned</code> may permit the script after removing that mark from this file only.</p>
+                <div class="code-block">
+                    <pre><code class="language-powershell">Unblock-File -LiteralPath .\Test-KTDNS.ps1</code></pre>
+                </div>
+                <p>This step is not a substitute for checksum verification or source review. Do not apply a broad unblock operation and do not bypass or globally change execution policy.</p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 5</p>
+                <h3>Run a basic DNS query</h3>
+                <p>The default record type is <code>A</code>. These documentation-safe examples come from the script's approved help.</p>
+                <div class="code-block">
+                    <pre><code class="language-powershell">.\Test-KTDNS.ps1 -Name example.com
+
+.\Test-KTDNS.ps1 -Name example.com -Type MX
+
+.\Test-KTDNS.ps1 -Name localhost -Type A</code></pre>
+                </div>
+                <p>Supported record types are <code>A</code>, <code>AAAA</code>, <code>CNAME</code>, <code>MX</code>, <code>NS</code>, <code>PTR</code>, <code>SRV</code>, and <code>TXT</code>.</p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 6</p>
+                <h3>Query a specifically approved DNS resolver</h3>
+                <p>When <code>-Server</code> is omitted, Windows uses DNS servers configured on the active network interface. Use the optional parameter only for an approved resolver.</p>
+                <div class="code-block">
+                    <pre><code class="language-powershell">.\Test-KTDNS.ps1 -Name example.com -Type TXT -Server '&lt;dns-server-ip&gt;'</code></pre>
+                </div>
+                <p>Replace the placeholder with the authorized DNS server IP address or host name. Do not send internal names to an untrusted resolver.</p>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 7</p>
+                <h3>Read the normalized output</h3>
+                <p>Every returned record uses the same property set. Fields that do not apply to the record type are <code>$null</code>.</p>
+                <div class="grid">
+                    <article class="card">
+                        <p class="card-number">Request</p>
+                        <h3>Query / QueryServer</h3>
+                        <p>The requested name and either the selected resolver or <code>System default</code>.</p>
+                    </article>
+                    <article class="card">
+                        <p class="card-number">Answer</p>
+                        <h3>RecordName / RecordType / Value</h3>
+                        <p>The returned name, actual record type, and normalized primary value.</p>
+                    </article>
+                    <article class="card">
+                        <p class="card-number">DNS context</p>
+                        <h3>TTL / Section</h3>
+                        <p>The time to live in seconds and the DNS response section.</p>
+                    </article>
+                    <article class="card">
+                        <p class="card-number">Type-specific fields</p>
+                        <h3>Preference / Priority / Weight / Port</h3>
+                        <p>MX preference and SRV routing fields when they apply.</p>
+                    </article>
+                </div>
+                <div class="code-block">
+                    <pre><code class="language-powershell">.\Test-KTDNS.ps1 -Name example.com -Type A |
+    Format-Table RecordName, RecordType, TTL, Value</code></pre>
+                </div>
+            </div>
+
+            <div class="kt-step">
+                <p class="kt-step-number">Step 8</p>
+                <h3>Treat expected failures as evidence</h3>
+                <p>Invalid names, resolvers, or unsupported record types fail during parameter binding. DNS failures are terminating errors because the approved script calls <code>Resolve-DnsName</code> with <code>-ErrorAction Stop</code>.</p>
+                <div class="code-block">
+                    <pre><code class="language-powershell">try {
+    $result = .\Test-KTDNS.ps1 -Name example.com -Type A
+}
+catch {
+    Write-Error "DNS query failed: $($_.Exception.Message)"
+}</code></pre>
+                </div>
+                <p>A failure may indicate that the name or requested type has no answer, the resolver cannot be reached, the request was refused, or another DNS or connectivity condition interrupted the query. Read the error in the context of the exact name, record type, resolver, and time tested.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Interpretation</p>
+                <h2>Use one result to choose the next safe check.</h2>
+                <p>A successful lookup confirms only that the selected resolver returned that response for the requested name and type at that moment.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Unexpected value</p>
+                    <h3>Compare the answer with the intended record</h3>
+                    <p>Check <code>RecordType</code>, <code>Value</code>, <code>TTL</code>, and <code>Section</code>. Confirm that the query asked for the correct type before treating the value as wrong.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Resolver difference</p>
+                    <h3>Compare only authorized resolver paths</h3>
+                    <p>If the system-default and a specifically approved resolver differ, preserve which resolver produced each result and investigate DNS scope, delegation, caching, or replication through authorized tools.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">No answer or error</p>
+                    <h3>Separate name, type, resolver, and connectivity</h3>
+                    <p>Confirm the intended name and record type, then determine whether the resolver was reachable and permitted to answer. Do not assume that a single error identifies the root cause.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Positive answer</p>
+                    <h3>Continue testing the original dependency</h3>
+                    <p>A DNS answer does not prove authentication, Active Directory, application, server, or end-to-end network health. Continue with the narrowest authorized check for the original symptom.</p>
+                </article>
+            </div>
+            <div class="callout callout-verification">
+                <h3>Verification checklist</h3>
+                <p><strong>Source:</strong> the versioned KrippyTech release was used.</p>
+                <p><strong>Integrity:</strong> the script checksum matched the manifest before execution.</p>
+                <p><strong>Resolver:</strong> the system default or a specifically approved resolver was used.</p>
+                <p><strong>Query:</strong> the name and record type matched the question being tested.</p>
+                <p><strong>Interpretation:</strong> the result was kept within the limits of one DNS response.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Related Resources</p>
+                <h2>Review the release and its learning path.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Release details</p>
+                    <h3>PowerShell Library</h3>
+                    <p>Review supported queries, requirements, integrity guidance, and the Authenticode limitation.</p>
+                    <a class="card-link" href="/powershell/#test-ktdns-v1">Open Test-KTDNS release details <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Versioned files</p>
+                    <h3>Downloads</h3>
+                    <p>Access the ZIP, script, README, and checksum manifest from the published v1.0.0 location.</p>
+                    <a class="card-link" href="/downloads/">Open Downloads <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Topic hub</p>
+                    <h3>Windows &amp; Hybrid</h3>
+                    <p>Place DNS evidence in the wider context of Active Directory, networking, services, and hybrid dependencies.</p>
+                    <a class="card-link" href="/windows-hybrid/">Explore Windows &amp; Hybrid <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Learning method</p>
+                    <h3>MSP University</h3>
+                    <p>Use the understand, investigate, resolve, and verify sequence for the larger troubleshooting task.</p>
+                    <a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>
