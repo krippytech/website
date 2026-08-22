@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/azure-vm-connectivity-investigation/">
+
+    <title>Investigating Azure VM Connectivity | KrippyTech</title>
+    <meta name="description" content="An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Investigating Azure VM Connectivity | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/azure-vm-connectivity-investigation/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investigating Azure VM Connectivity | KrippyTech">
+    <meta name="twitter:description" content="An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/navigation.js"></script>
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/" aria-current="page">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/" aria-current="page">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Azure / Virtual machines / Connectivity / Investigation</p>
+            <h1>Investigating Azure VM Connectivity</h1>
+            <p class="hero-text">
+                Define the traffic flow, compare Azure control-plane evidence with the guest operating system, and find the earliest point where observed behavior diverges from the expected path.
+                <span class="highlight">This is an investigation guide, not a connectivity repair or Azure deployment procedure.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card"><p class="card-number">Purpose</p><h3>Locate the failed layer</h3><p>Determine whether evidence first diverges at Azure resource state, addressing, policy, routing, an intermediary, DNS, the guest firewall, or the application listener.</p></article>
+                <article class="card"><p class="card-number">Boundary</p><h3>Observe before changing</h3><p>No NSG, route, IP, firewall, load balancer, DNS, appliance, guest, credential, or Azure role is changed by this guide.</p></article>
+                <article class="card"><p class="card-number">Example</p><h3>Synthetic lab only</h3><p><code>KrippyTech Lab</code>, <code>rg-krippytech-lab</code>, and <code>LAB-VM-01</code> are documentation-safe placeholders.</p></article>
+                <article class="card"><p class="card-number">Method</p><h3>One flow at one time</h3><p>Record source, destination, protocol, port, direction, UTC time, and expected path before interpreting any control.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">1 · Investigation question</p>
+                <h2>What is this investigation designed to answer?</h2>
+                <p>Identify the exact traffic flow that failed, establish which Azure and guest controls should affect it, and record the earliest layer where the evidence stops matching the expected design.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>What was tested?</h3><p>Separate RDP, SSH, application ports, internet egress, private service access, hybrid traffic, and load-balanced traffic. They can follow different paths.</p></article>
+                <article class="card"><h3>Where did it diverge?</h3><p>Compare source and destination state, IP placement, effective policy, effective route, intermediary health, DNS, guest policy, and listener evidence.</p></article>
+                <article class="card"><h3>How broad is it?</h3><p>Determine whether one source, one VM, one subnet, one frontend, one region, or every comparable path is affected.</p></article>
+                <article class="card"><h3>What remains unknown?</h3><p>A single successful or failed test rarely proves which layer owns the symptom. Preserve uncertainty until independent evidence agrees.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">2 · Common symptoms</p>
+                <h2>The same report can represent different network paths.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Remote administration</h3><p>RDP or SSH cannot reach the VM, or Azure shows the VM as running while the guest or management service remains unreachable.</p></article>
+                <article class="card"><h3>Application access</h3><p>An application port, internal service, or load-balanced frontend is unavailable even though some other traffic succeeds.</p></article>
+                <article class="card"><h3>East-west traffic</h3><p>One VM cannot reach another, or connectivity succeeds from one subnet but fails from another.</p></article>
+                <article class="card"><h3>Internet and hybrid paths</h3><p>The VM cannot reach the internet, a VPN or ExpressRoute path behaves unexpectedly, or a route appears to use the wrong appliance.</p></article>
+                <article class="card"><h3>Public versus private</h3><p>Private connectivity works while public access fails, or a public path works while an internal service or private endpoint does not.</p></article>
+                <article class="card"><h3>Name resolution and timing</h3><p>A hostname returns an unexpected address, connectivity is intermittent, or failures cluster around a specific source, destination, or change window.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">3 · Boundaries and safety</p>
+                <h2>Evidence should be collected before changing the network path.</h2>
+                <p>Use only accounts and diagnostic operations authorized for the affected resources. Viewing a resource is not the same permission as running a Network Watcher diagnostic action. Microsoft documents specific actions for each capability; do not assume the Reader role is sufficient.</p>
+            </div>
+            <div class="mission">
+                <p><strong>Keep the layers separate.</strong> Azure fabric, effective network policy, routing, intermediaries, guest firewall, and application listener are distinct evidence sources.</p>
+                <p>A broad allow rule is not an acceptable diagnostic shortcut. Do not open RDP or SSH to the internet, disable a guest firewall, or bypass an appliance to make a test pass.</p>
+                <p>Network Watcher diagnostics can generate test traffic and require regional service availability and RBAC permissions. Obtain authorization before running them. Packet capture is deliberately excluded because it may collect sensitive traffic and create diagnostic resources.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">4 · Define the flow</p>
+                <h2>“The VM cannot connect” is not a complete test definition.</h2>
+                <p>Record the exact attempted flow before reviewing controls. If the symptom is intermittent, record both a failed attempt and a comparable successful attempt.</p>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Synthetic Azure traffic-flow definition" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Field</th><th scope="col">Synthetic example</th><th scope="col">Why it matters</th></tr></thead>
+                    <tbody>
+                        <tr><td>Source resource or device</td><td><code>ADMIN-WS-01</code></td><td>Identifies the starting policy, route, and network context.</td></tr>
+                        <tr><td>Source IP</td><td><code>10.20.4.25</code></td><td>Required for NSG, appliance, hybrid, and return-path analysis.</td></tr>
+                        <tr><td>Destination resource</td><td><code>LAB-VM-01</code></td><td>Connects the test to the correct NIC and guest.</td></tr>
+                        <tr><td>Destination</td><td><code>10.20.8.20</code> or <code>app.example.com</code></td><td>Distinguishes IP connectivity from name resolution.</td></tr>
+                        <tr><td>Protocol and port</td><td>TCP 443</td><td>NSGs, probes, listeners, and tests are protocol- and port-specific.</td></tr>
+                        <tr><td>Direction</td><td>Inbound to <code>LAB-VM-01</code></td><td>Determines which source, destination, and rule direction to evaluate.</td></tr>
+                        <tr><td>UTC timestamp</td><td><code>2026-08-22T14:00:00Z</code></td><td>Correlates the attempt with logs, health, and changes.</td></tr>
+                        <tr><td>Expected path</td><td><code>ADMIN-WS-01 → peering → subnet-workloads → nic-lab-vm-01</code></td><td>Provides a hypothesis that evidence can confirm or reject.</td></tr>
+                        <tr><td>Path type</td><td>Private and peered</td><td>Public, private, hybrid, load-balanced, and appliance-routed flows have different dependencies.</td></tr>
+                        <tr><td>Scope and frequency</td><td>Constant; one source subnet</td><td>Separates a path-specific failure from a destination-wide failure.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">5 · Initial evidence</p>
+                <h2>Build a minimum Azure record before interpreting controls.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Scope</p><h3>Resource identity</h3><p>Record subscription <code>KrippyTech Lab</code>, resource group <code>rg-krippytech-lab</code>, VM <code>LAB-VM-01</code>, region, guest OS, and accountable workload owner.</p></article>
+                <article class="card"><p class="card-number">Compute</p><h3>State and health</h3><p>Record resource existence, provisioning state, power state, Resource Health or platform-health evidence, guest responsiveness, expected service, and port.</p></article>
+                <article class="card"><p class="card-number">Interface</p><h3>Address placement</h3><p>Record <code>nic-lab-vm-01</code>, primary and secondary IP configurations, private IP allocation, public IP association if present, accelerated networking, and IP forwarding state.</p></article>
+                <article class="card"><p class="card-number">Network</p><h3>VNet and subnet</h3><p>Record <code>vnet-lab</code>, <code>subnet-workloads</code>, address prefixes, peering, route-table association, custom DNS, VPN, ExpressRoute, and private-endpoint involvement.</p></article>
+                <article class="card"><p class="card-number">Policy</p><h3>Applied controls</h3><p>Record NSGs on the NIC and subnet, Application Security Groups, effective security rules, and any Azure Virtual Network Manager security admin rules.</p></article>
+                <article class="card"><p class="card-number">Intermediaries</p><h3>Frontend and transit</h3><p>Record load-balancer membership, health probe, Azure Firewall or NVA involvement, user-defined routes, NAT or outbound method, and the expected return path.</p></article>
+                <article class="card"><p class="card-number">Change context</p><h3>Time and ownership</h3><p>Record relevant Azure Activity Log changes, deployment events, guest changes, application releases, monitoring gaps, and ownership near the failure window.</p></article>
+                <article class="card"><p class="card-number">Test definition</p><h3>Repeatable evidence</h3><p>Preserve the exact source, destination, protocol, port, direction, UTC time, result, and whether the test was local, remote, public, private, or load-balanced.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">6 · Virtual-machine state</p>
+                <h2>Running is a power-state observation, not an application-health result.</h2>
+                <p>Azure distinguishes provisioning state from power state. Provisioning state describes the latest control-plane operation; power state is the last known instance state. Resource Health, guest responsiveness, and application availability add separate evidence.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Resource existence</h3><p>The VM resource exists in the expected subscription and resource group. This does not prove that it started successfully or has a working guest.</p></article>
+                <article class="card"><h3>Provisioning state</h3><p><code>Succeeded</code> means the last control-plane operation completed. It does not prove that a current application process is healthy.</p></article>
+                <article class="card"><h3>Power state</h3><p><code>Running</code> means Azure reports the VM as up. It does not prove that Windows, Linux, RDP, SSH, a firewall, or an application listener is responsive.</p></article>
+                <article class="card"><h3>Platform and guest evidence</h3><p>Compare Resource Health or platform incidents with guest heartbeat, boot diagnostics already available under authorization, monitoring, and application checks. Do not infer one layer from another.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">7 · NIC and IP configuration</p>
+                <h2>Confirm that the tested address belongs to the expected interface and subnet.</h2>
+                <p>From the VM networking view, identify the attached NIC and inspect its IP configurations. Compare the primary configuration, any secondary configurations, private allocation method and address, public IP association, subnet, accelerated networking, and IP forwarding state with the documented design.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Observe only</h3>
+                <p>Do not change IP allocation, attach a public IP, move the interface, change subnet membership, enable IP forwarding, or edit DNS settings. Multi-NIC and multi-IP systems also require guest route and binding evidence; the first NIC shown is not automatically the path used by the application.</p>
+            </div>
+            <p>Record whether DNS servers are inherited from the virtual network or explicitly configured on the NIC. Microsoft notes that NIC-level DNS settings take precedence over virtual-network settings. Do not edit adapter DNS settings inside the guest as a substitute for reviewing Azure configuration.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">8 · VNet and subnet placement</p>
+                <h2>Address space defines location; it does not grant reachability.</h2>
+                <p>Confirm that <code>nic-lab-vm-01</code> is in <code>subnet-workloads</code>, that the IP fits the subnet prefix, and that the VNet, subscription, region, and peering relationships match the intended architecture.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Same VNet</h3><p>System routes generally provide VNet reachability, but NSGs, security admin rules, guest controls, and appliances can still affect traffic.</p></article>
+                <article class="card"><h3>Peered VNet</h3><p>Peering carries traffic over Microsoft’s backbone. Review both peering directions, address spaces, NSGs, gateway transit, and service-chaining expectations.</p></article>
+                <article class="card"><h3>Hybrid network</h3><p>VPN and ExpressRoute introduce gateways, BGP-learned routes, on-premises policy, edge devices, and return-path ownership beyond the VM’s VNet.</p></article>
+                <article class="card"><h3>Private endpoint</h3><p>Private endpoints add a private NIC, approval state, DNS mapping, subnet controls, and path-specific routing. Escalate when ownership or Private DNS behavior is unclear.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">9 · Network security groups</p>
+                <h2>Evaluate the complete rule match, not a rule name.</h2>
+                <p>An NSG rule includes direction, priority, source, destination, protocol, source port, destination port, and allow or deny action. Lower numeric priorities are processed first; evaluation stops at the first match. Azure default rules have lower precedence than custom rules.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Inbound and outbound</h3><p>Check the relevant direction at both ends. An inbound allow does not prove that source egress, return traffic, or a listener is correct.</p></article>
+                <article class="card"><h3>NIC and subnet</h3><p>When NSGs exist on both, traffic must satisfy both layers. Reviewing only <code>nsg-lab-workloads</code> is incomplete if the NIC has another NSG.</p></article>
+                <article class="card"><h3>Defaults and admin rules</h3><p>Include Azure default rules and Virtual Network Manager security admin rules. An admin <code>Deny</code> or <code>Always allow</code> can terminate evaluation before ordinary NSG rules.</p></article>
+                <article class="card"><h3>Application Security Groups</h3><p>An ASG represents grouped NICs in rule sources or destinations. Confirm actual membership rather than treating an ASG name as proof that the VM is included.</p></article>
+            </div>
+            <div class="callout callout-warning">
+                <h3>No broad diagnostic exceptions</h3>
+                <p>Do not create Any-to-Any rules or expose management ports to the internet. A passing test after a broad exception would not identify the original control and may create unauthorized exposure.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">10 · Effective security rules</p>
+                <h2>Aggregated policy is stronger evidence than isolated NSG objects.</h2>
+                <p>Network Watcher’s Effective security rules view aggregates inbound and outbound rules applied to a NIC, including rules from NIC and subnet NSGs and applicable security admin rules. Azure generally requires the VM to be running and an NSG to be associated with the NIC or subnet before effective NSG rules are shown.</p>
+            </div>
+            <p>In the Azure portal, use Network Watcher’s <strong>Effective security rules</strong> view or the NIC’s effective-security view, depending on the current portal experience. Select the correct subscription, resource group, VM, and NIC. Record expanded source and destination prefixes, priorities, and the responsible rule.</p>
+            <div class="mission">
+                <p><strong>What it proves:</strong> the aggregated Azure security and admin rules reported for that NIC at that time.</p>
+                <p><strong>What it does not prove:</strong> route selection, appliance policy, return-path symmetry, DNS correctness, guest firewall behavior, or an application listener.</p>
+                <p><strong>Permissions:</strong> viewing and diagnostic actions require the documented Microsoft.Network permissions. Owner, Contributor, or Network Contributor may satisfy many Network Watcher operations; a custom role must include the capability-specific actions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">11 · Routes and effective routes</p>
+                <h2>Inspect the route Azure selected for the exact destination prefix.</h2>
+                <p>Effective routes combine Azure system routes, user-defined routes, and routes propagated through a virtual-network gateway using BGP. For a given destination, Azure uses longest-prefix match; when prefixes are equal, route-source precedence and documented exceptions determine the selected route.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>System routes</h3><p>Azure creates routes for the VNet, peering, service endpoints, and default paths. Their presence does not override a more specific applicable path in every scenario.</p></article>
+                <article class="card"><h3>User-defined routes</h3><p>A UDR can direct traffic to a virtual appliance, virtual-network gateway, internet, or no route. Record the route table, prefix, source, state, and next hop.</p></article>
+                <article class="card"><h3>BGP-learned routes</h3><p>VPN or ExpressRoute gateways can propagate on-premises prefixes. Confirm which prefix was learned and whether the expected return route exists.</p></article>
+                <article class="card"><h3>Forced tunneling</h3><p>A <code>0.0.0.0/0</code> route to a gateway or appliance can move internet-bound traffic through another control point and affect management return paths.</p></article>
+            </div>
+            <p>For a running VM, select its NIC and review <strong>Effective routes</strong>. Record the matching address prefix, next-hop type, next-hop address when present, route source, and state. Next-hop types can include Virtual network, Virtual network peering, Virtual appliance, Virtual network gateway, Internet, and None.</p>
+            <div class="callout callout-warning"><h3>Do not modify the route to test a theory</h3><p>An unexpected appliance or gateway is an escalation clue, not authorization to add, delete, disable, or replace a route.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">12 · Public and private connectivity</p>
+                <h2>A VM does not automatically need a public IP.</h2>
+                <p>Private IP connectivity can use the same VNet, peering, VPN, ExpressRoute, Bastion, a load balancer, or another authorized access path. Public IP connectivity is a separate design choice and exposure boundary.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Private IP</h3><p>Validate private addressing, route, policy, peering or hybrid transit, DNS, and the guest listener. No public IP is required for a valid private path.</p></article>
+                <article class="card"><h3>Public IP</h3><p>A public IP association alone does not prove an inbound rule, return path, NAT relationship, guest policy, or listener. Use <code>198.51.100.24</code> only as a documentation example.</p></article>
+                <article class="card"><h3>Bastion and load balancing</h3><p>Bastion and load balancers provide indirect access patterns. Review their frontend, backend, policy, probe, and route evidence rather than expecting a NIC public IP.</p></article>
+                <article class="card"><h3>Outbound internet</h3><p>Record the explicit egress design: NAT gateway, load-balancer outbound rules, public IP, Azure Firewall, or NVA. For VNet API versions after March 31, 2026, new VNets default to private subnets; older VNets can retain legacy default outbound behavior.</p></article>
+            </div>
+            <p>Private endpoints use private IPs for Azure services and commonly depend on Private DNS. DNS returning a private address does not prove that NSGs, routes, firewalls, the service connection state, or the application path are correct.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">13 · Load balancers, firewalls, and appliances</p>
+                <h2>Intermediaries add their own forwarding and health evidence.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Azure Load Balancer</h3><p>Record frontend IP and protocol, load-balancing rule, backend pool membership, health probe protocol and port or path, backend health, and any inbound NAT rule.</p></article>
+                <article class="card"><h3>Health probes</h3><p>A successful probe shows that the configured probe received the expected response from that backend. It does not prove every client path, application transaction, DNS answer, or frontend rule.</p></article>
+                <article class="card"><h3>Azure Firewall</h3><p>Record the expected policy owner, UDR, source and destination translation, rule collection, available logs, and both directions of the path. Do not infer policy from the route alone.</p></article>
+                <article class="card"><h3>Network virtual appliance</h3><p>Record NICs, IP forwarding state, UDR next hop, vendor health, policy, logs, high-availability design, and return route. Azure IP forwarding and guest forwarding are separate requirements.</p></article>
+                <article class="card"><h3>Asymmetric routing</h3><p>A forward flow and its reply can select different appliances, gateways, or interfaces. Stateful devices can drop a flow even when each individual route looks plausible.</p></article>
+                <article class="card"><h3>Authorization boundary</h3><p>Do not change rules, probes, backend pools, NAT, forwarding, or appliance configuration. Preserve the evidence and route remediation through the owner.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">14 · Azure and guest evidence</p>
+                <h2>Azure can deliver traffic to the NIC while the guest still rejects it.</h2>
+                <p>Use authorized guest access and record access-denied results. These Windows commands read current state; they do not change networking or firewall configuration.</p>
+            </div>
+            <div class="code-block"><pre><code>ipconfig /all
+route print
+
+Get-NetIPConfiguration -Detailed
+Test-NetConnection -ComputerName app.example.com -Port 443 -InformationLevel Detailed
+Get-NetTCPConnection -LocalPort 443 -State Listen
+Resolve-DnsName -Name app.example.com -Type A -DnsOnly
+Get-NetFirewallProfile -PolicyStore ActiveStore
+Get-NetFirewallRule -PolicyStore ActiveStore -Enabled True -Direction Inbound |
+    Where-Object DisplayName -Like '*Remote Desktop*' |
+    Select-Object DisplayName, Enabled, Profile, Direction, Action</code></pre></div>
+            <ul>
+                <li><code>ipconfig /all</code> and <code>Get-NetIPConfiguration -Detailed</code> show guest addressing, gateways, interfaces, and DNS-server evidence.</li>
+                <li><code>route print</code> shows the guest route table; it is not the Azure NIC effective-route table.</li>
+                <li><code>Test-NetConnection</code> tests the specified TCP destination and reports name, source-interface, route, and connection evidence. Test the required port, not just ping.</li>
+                <li><code>Get-NetTCPConnection -LocalPort 443 -State Listen</code> asks whether a local TCP listener exists on the synthetic service port. A listener does not prove remote reachability or application health.</li>
+                <li><code>Resolve-DnsName -DnsOnly</code> avoids LLMNR and NetBIOS fallback. A successful answer does not prove the returned address is intended or the port is reachable.</li>
+                <li><code>Get-NetFirewallProfile</code> and the focused <code>Get-NetFirewallRule</code> query display active guest policy evidence. Rule properties such as ports and addresses can require associated filter cmdlets for complete interpretation.</li>
+            </ul>
+            <div class="mission">
+                <p>The Azure path may be allowed while the guest firewall blocks traffic. The guest firewall may allow traffic while no application listens. A local listener may exist while an NSG, route, appliance, load balancer, or return path blocks remote access.</p>
+                <p>Linux guest evidence should answer the same questions—assigned addresses, routes, resolver configuration, firewall policy, listener, and application health—using commands supported by that distribution. This guide does not prescribe Linux configuration changes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">15 · DNS evidence</p>
+                <h2>Separate name resolution from port connectivity.</h2>
+                <p>When the test uses a hostname, record the queried name, resolver, returned A or AAAA address, TTL when available, source network, UTC time, and whether the answer matches the intended public, private, or hybrid path.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>No answer</h3><p>Investigate resolver reachability, suffix and forwarding design, Private DNS links, record existence, and custom DNS health. Do not treat it as an NSG conclusion.</p></article>
+                <article class="card"><h3>Unexpected address</h3><p>Compare Azure-provided DNS, custom DNS, Private DNS, split-horizon, and caching evidence. A syntactically valid answer can still select the wrong path.</p></article>
+                <article class="card"><h3>Correct address, failed port</h3><p>Name resolution succeeded. Continue with policy, route, intermediary, guest firewall, listener, and application evidence.</p></article>
+                <article class="card"><h3>Azure-provided versus custom</h3><p>Azure-provided DNS is scoped and basic; custom DNS, Private Resolver, and Private DNS add forwarding, zone-link, and ownership dependencies.</p></article>
+            </div>
+            <p>Ping success or failure is not conclusive application evidence. ICMP behavior must not be generalized to the required TCP or UDP flow.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">16 · Network Watcher</p>
+                <h2>Choose the diagnostic tool that answers the narrowest question.</h2>
+                <p>Network Watcher is regional and is normally enabled automatically when a VNet is created or updated unless the subscription opted out. Confirm an instance exists in the VM’s region and confirm capability-specific RBAC before running a diagnostic.</p>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Azure Network Watcher diagnostic-tool comparison" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Tool</th><th scope="col">Question and inputs</th><th scope="col">What success proves</th><th scope="col">Limitations and prerequisites</th></tr></thead>
+                    <tbody>
+                        <tr><td>Connection troubleshoot</td><td>Can this supported Azure source reach a VM, FQDN, URI, or IP using the tested TCP or ICMP input?</td><td>The diagnostic probes completed and Azure reported the tested point-in-time path and findings.</td><td>Requires supported source/destination types and capability RBAC. Agentless operation is currently preview; extension requirements can vary. It is not permanent monitoring or full application validation.</td></tr>
+                        <tr><td>IP flow verify</td><td>Would configured Azure security and admin rules allow or deny this TCP or UDP tuple?</td><td>Azure reports allow or deny and the responsible rule for the supplied direction, addresses, protocol, and ports.</td><td>Requires Network Watcher in the VM region and IP-flow permissions. It does not test ICMP, routes, appliances, guest firewall, or listeners.</td></tr>
+                        <tr><td>Next hop</td><td>Which next-hop type, IP, and route-table source apply from this VM to one destination IP?</td><td>Azure reports the selected next-hop information for that specific input.</td><td>Requires next-hop plus VM and NIC read permissions. It does not prove that the next hop forwards traffic or that the return path is symmetric.</td></tr>
+                        <tr><td>Effective security rules</td><td>Which aggregated inbound and outbound rules apply to this NIC?</td><td>The reported NIC, subnet, and applicable security-admin policy is visible together.</td><td>The VM generally must be running and an NSG must be associated. It does not test a live application flow.</td></tr>
+                        <tr><td>Effective routes</td><td>Which system, UDR, and BGP routes are effective on this running VM’s NIC?</td><td>The route inventory and selected prefixes visible to the NIC are recorded.</td><td>Available for a NIC attached to a running VM. It does not prove appliance health, guest routes, or return routing.</td></tr>
+                        <tr><td>Topology</td><td>Which supported Azure resources and relationships appear within the selected scope?</td><td>Azure Resource Graph reports the displayed resource relationships.</td><td>Requires topology RBAC and supported resource types. Configuration changes can take up to 30 hours to appear; topology is context, not packet-path proof.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="callout callout-warning"><h3>Packet capture is excluded</h3><p>Packet capture can collect sensitive payload or endpoint information and can create diagnostic resources. Escalate when packet-level evidence is required.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">17 · Complete network path</p>
+                <h2>Correlate the evidence in a fixed sequence.</h2>
+            </div>
+            <ol>
+                <li>Define source, destination, protocol, port, direction, UTC time, frequency, and expected path.</li>
+                <li>Verify VM resource, provisioning, power, platform, guest, and application state separately.</li>
+                <li>Verify the tested IP belongs to the expected NIC, IP configuration, VNet, and subnet.</li>
+                <li>Review NIC and subnet NSGs, security admin rules, ASG membership, and effective security rules.</li>
+                <li>Review effective routes and the next hop for the exact destination.</li>
+                <li>Review load balancers, probes, firewalls, appliances, peering, VPN, ExpressRoute, NAT, and both directions of the path.</li>
+                <li>When a hostname is involved, verify the resolver and returned address before testing the required port.</li>
+                <li>Review guest IP configuration, guest routes, firewall policy, expected listener, and application health.</li>
+                <li>Compare Azure evidence with guest and application evidence at the same UTC window.</li>
+                <li>Record the earliest point where expected behavior diverges from observed behavior, plus what remains unverified.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">18 · Evidence correlation</p>
+                <h2>Separate observations from conclusions.</h2>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Azure VM connectivity evidence correlation table" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Observation</th><th scope="col">What it may indicate</th><th scope="col">What it does not prove</th><th scope="col">Safest next investigation step</th></tr></thead>
+                    <tbody>
+                        <tr><td>VM is running but RDP or SSH fails.</td><td>A management-port path, guest service, firewall, route, policy, credential, or application-state issue.</td><td>That Azure networking or the guest is healthy.</td><td>Define the exact source and port, then correlate effective policy, route, guest listener, firewall, and platform health.</td></tr>
+                        <tr><td>IP flow verify reports a deny.</td><td>The reported Azure security or admin rule denies the supplied tuple.</td><td>That changing the rule is authorized or that no other failure exists.</td><td>Preserve the tuple and responsible rule; confirm ownership and expected policy.</td></tr>
+                        <tr><td>NSG objects look correct but effective rules differ.</td><td>Another NIC, subnet, admin rule, expanded prefix, or ASG membership changes the effective policy.</td><td>Which configuration should be modified.</td><td>Identify the contributing control and its owner.</td></tr>
+                        <tr><td>Effective route points to an unexpected appliance.</td><td>A UDR, BGP route, forced tunnel, or service-chaining design is active.</td><td>That the appliance is faulty or the route is unauthorized.</td><td>Record the matching prefix, route source, next hop, appliance health, and return path.</td></tr>
+                        <tr><td>DNS resolves but the port test fails.</td><td>Name resolution completed while policy, route, listener, guest firewall, or application evidence diverges later.</td><td>End-to-end connectivity or application health.</td><td>Test the returned address and required port, then continue down the path.</td></tr>
+                        <tr><td>TCP reaches the VM but the application is unavailable.</td><td>The network path may be open while protocol, binding, dependency, certificate, or application health fails.</td><td>A healthy application transaction.</td><td>Correlate listener ownership and application logs without changing configuration.</td></tr>
+                        <tr><td>Application listens locally but remote access fails.</td><td>A remote policy, route, intermediary, binding address, guest firewall, or return path is involved.</td><td>That the listener is reachable from the tested source.</td><td>Compare local binding with the destination address and remote flow evidence.</td></tr>
+                        <tr><td>Private access works but public access fails.</td><td>The private path is valid while public IP, frontend, NAT, policy, return route, or exposure design differs.</td><td>That the VM should receive a public IP.</td><td>Confirm the approved public-access architecture and its owner.</td></tr>
+                        <tr><td>One subnet works while another fails.</td><td>Source-specific NSGs, routes, peering, DNS, appliance policy, or return routing differs.</td><td>That the destination is universally healthy.</td><td>Compare otherwise identical tests from both sources at the same time.</td></tr>
+                        <tr><td>Load-balancer health probe fails.</td><td>The backend did not satisfy the configured probe because of listener, path, NSG, protocol, port, or application response.</td><td>That the backend VM is completely unhealthy.</td><td>Match probe configuration, backend membership, effective policy, and local listener evidence.</td></tr>
+                        <tr><td>Backend VM is healthy but frontend is unavailable.</td><td>Frontend IP, rule, probe, backend association, NAT, policy, or client path can differ.</td><td>That Load Balancer delivered the client flow.</td><td>Trace frontend-to-rule-to-backend evidence and test the documented frontend tuple.</td></tr>
+                        <tr><td>No public IP exists.</td><td>The VM may be intentionally private and accessed through Bastion, peering, hybrid, or load balancing.</td><td>A misconfiguration or missing internet egress.</td><td>Confirm the approved access and outbound design.</td></tr>
+                        <tr><td>Public IP exists but connectivity fails.</td><td>Association exists while NSG, NAT, route, guest firewall, listener, or application evidence remains incomplete.</td><td>That an inbound path or listener exists.</td><td>Correlate the public frontend with the private NIC and required port.</td></tr>
+                        <tr><td>Azure checks pass but the guest firewall blocks traffic.</td><td>Azure fabric delivered or allowed the tested path farther than the guest policy.</td><td>Authorization to disable the firewall.</td><td>Identify the active profile, responsible rule, policy source, and security owner.</td></tr>
+                        <tr><td>Connectivity is intermittent.</td><td>Multiple backends, DNS answers, asymmetric paths, SNAT pressure, transient health, appliance state, or application saturation.</td><td>That the last successful test represents every path.</td><td>Correlate repeated UTC-stamped tests with backend, route, DNS, metric, and log changes.</td></tr>
+                        <tr><td>Hybrid connectivity is involved.</td><td>Azure plus gateway, BGP, on-premises firewall, carrier, and return-path dependencies affect the flow.</td><td>That the Azure NIC is the failing boundary.</td><td>Escalate with both endpoint prefixes, effective routes, circuit or tunnel state, and accountable owners.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">19 · Escalation</p>
+                <h2>Stop when ownership, impact, or change authority exceeds investigation.</h2>
+                <p>Preserve the flow definition, UTC timestamps, Azure state, effective policy, routes, diagnostics, guest evidence, and remaining unknowns, then escalate when any of these conditions appears:</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Service impact</h3><p>A production outage, multiple workloads, widespread intermittent failure, or active business impact is present.</p></article>
+                <article class="card"><h3>Network ownership</h3><p>NSG, route, peering, firewall, appliance, load balancer, application gateway, private endpoint, or Private DNS ownership is unknown.</p></article>
+                <article class="card"><h3>Hybrid complexity</h3><p>VPN, ExpressRoute, BGP, forced tunneling, asymmetric routing, gateway transit, or on-premises policy is involved.</p></article>
+                <article class="card"><h3>Platform or security</h3><p>An Azure platform incident, compromise, unauthorized public exposure, suspicious route or rule, or missing monitoring is suspected.</p></article>
+                <article class="card"><h3>Evidence risk</h3><p>Packet capture is required, logs are missing, the tested path cannot be reproduced safely, or no verified recovery plan exists.</p></article>
+                <article class="card"><h3>Change required</h3><p>Any production NSG, route, IP, peering, firewall, appliance, load balancer, DNS, guest, application, credential, role, restart, or redeployment change is required.</p></article>
+                <article class="card"><h3>Ownership unclear</h3><p>Business, application, subscription, network, security, or recovery ownership cannot be verified.</p></article>
+                <article class="card"><h3>Private service path</h3><p>Private endpoint connection state, Private DNS, service-specific policy, or hub-spoke routing requires a specialist determination.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">20 · Intentionally excluded</p>
+                <h2>This guide does not provide connectivity repair or deployment procedures.</h2>
+            </div>
+            <div class="mission">
+                <p>Excluded actions include creating or modifying NSG rules; opening RDP or SSH to the internet; adding or removing public IPs; changing NIC IP configurations or subnet placement; adding, deleting, or changing routes or route tables; enabling IP forwarding; modifying peering, VPN, ExpressRoute, Azure Firewall, or an NVA; changing load-balancer rules, probes, NAT rules, or backend pools; changing Azure DNS or Private DNS; disabling guest firewalls; restarting or redeploying a VM; resetting remote access; deploying Bastion; capturing packets; changing applications or credentials; and granting Azure roles.</p>
+                <p>Those actions require separate authorization, change control, confirmed ownership, rollback planning, verified recovery readiness, and environment-specific remediation.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">21 · Related resources</p>
+                <h2>Continue through the appropriate KrippyTech path.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Topic hub</p><h3>Azure Journey</h3><p>Place this evidence-first investigation within KrippyTech’s developing Azure foundations, identity, networking, and hybrid learning path.</p><a class="card-link" href="/azure-journey/">Open Azure Journey <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Learning method</p><h3>MSP University</h3><p>Use the understand, investigate, resolve, and verify sequence while keeping this guide in the investigation phase.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Related investigation</p><h3>DNS, Active Directory, and domain health</h3><p>Use the domain-health guide when Azure VM connectivity overlaps domain discovery, secure channels, replication, time, or service evidence.</p><a class="card-link" href="/tutorials/dns-active-directory-domain-health/">Open the domain-health guide <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Focused DNS method</p><h3>Test-KTDNS tutorial</h3><p>Use the published read-only DNS resource for a bounded query after recording the resolver, expected address, and path.</p><a class="card-link" href="/tutorials/test-ktdns-v1.0.0/">Open the Test-KTDNS tutorial <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Read-only tooling</p><h3>PowerShell Library</h3><p>Review KrippyTech’s published tooling standards and current read-only release without treating a DNS result as complete network health.</p><a class="card-link" href="/powershell/">Open the PowerShell Library <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Microsoft sources</p>
+                <h2>Primary documentation used for this guide.</h2>
+            </div>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing">States and billing status of Azure Virtual Machines</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview">Azure network security groups overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/effective-security-rules-overview">Effective security rules overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview">Azure virtual network traffic routing</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/manage-route-table#view-effective-routes">View effective routes</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/ip-flow-verify-overview">IP flow verify overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/next-hop-overview">Next hop overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/connection-troubleshoot-overview">Connection troubleshoot overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/network-insights-topology">View Network Watcher topology</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/required-rbac-permissions">Azure RBAC permissions for Network Watcher</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-create">Enable or disable Network Watcher</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/default-outbound-access">Default outbound access in Azure</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/load-balancer/load-balancer-custom-probe-overview">Azure Load Balancer health probes</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview">Azure virtual network peering</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-name-resolution-for-vms-and-role-instances">DNS name resolution for Azure virtual networks</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview">Azure Private Endpoint overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig">ipconfig</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/route_ws2008">route</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netipconfiguration?view=windowsserver2025-ps">Get-NetIPConfiguration</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2025-ps">Test-NetConnection</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-nettcpconnection?view=windowsserver2025-ps">Get-NetTCPConnection</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/dnsclient/resolve-dnsname?view=windowsserver2025-ps">Resolve-DnsName</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/netsecurity/get-netfirewallprofile?view=windowsserver2025-ps">Get-NetFirewallProfile</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/netsecurity/get-netfirewallrule?view=windowsserver2025-ps">Get-NetFirewallRule</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>

@@ -39,7 +39,7 @@ SOCIAL_METADATA = {
     },
     "/azure-journey/": {
         "title": "Azure Journey | KrippyTech",
-        "description": "Azure Journey is KrippyTech's future home for reviewed Azure learning. No Azure labs, walkthroughs, or resources are currently published.",
+        "description": "Azure Journey connects KrippyTech's published Azure VM connectivity investigation with developing Azure foundations, identity, networking, and hybrid learning.",
         "type": "website",
     },
     "/cases/": {
@@ -89,8 +89,13 @@ SOCIAL_METADATA = {
     },
     "/tutorials/": {
         "title": "Tutorials | KrippyTech",
-        "description": "Practical KrippyTech tutorials for Microsoft 365 and Windows troubleshooting, including reviewed procedures and clearly labeled drafts.",
+        "description": "Practical KrippyTech tutorials for Microsoft 365, Windows, and Azure troubleshooting, including reviewed procedures and clearly labeled drafts.",
         "type": "website",
+    },
+    "/tutorials/azure-vm-connectivity-investigation/": {
+        "title": "Investigating Azure VM Connectivity | KrippyTech",
+        "description": "An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.",
+        "type": "article",
     },
     "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": {
         "title": "Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | KrippyTech",
@@ -1164,6 +1169,85 @@ def validate_onedrive_sharepoint_sync_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_azure_vm_connectivity_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/azure-vm-connectivity-investigation/"
+    page = ROOT / "tutorials/azure-vm-connectivity-investigation/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Investigating Azure VM Connectivity",
+        "Evidence should be collected before changing the network path",
+        "Running is a power-state observation, not an application-health result",
+        "Effective security rules",
+        "Effective routes",
+        "Connection troubleshoot",
+        "IP flow verify",
+        "Next hop",
+        "This guide does not provide connectivity repair or deployment procedures",
+        "Observation",
+        "What it may indicate",
+        "What it does not prove",
+        "Safest next investigation step",
+        "ipconfig /all",
+        "route print",
+        "Get-NetIPConfiguration -Detailed",
+        "Test-NetConnection -ComputerName app.example.com -Port 443 -InformationLevel Detailed",
+        "Get-NetTCPConnection -LocalPort 443 -State Listen",
+        "Resolve-DnsName -Name app.example.com -Type A -DnsOnly",
+        "Get-NetFirewallProfile -PolicyStore ActiveStore",
+        "Get-NetFirewallRule -PolicyStore ActiveStore -Enabled True -Direction Inbound",
+        "198.51.100.24",
+        "/azure-journey/",
+        "/msp-university/#learning-path",
+        "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing",
+        "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/effective-security-rules-overview",
+        "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/ip-flow-verify-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/next-hop-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/connection-troubleshoot-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/required-rbac-permissions",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required guide text {required!r}")
+
+    prohibited_commands = (
+        "New-AzNetworkSecurityRuleConfig",
+        "Set-AzNetworkSecurityGroup",
+        "Remove-AzNetworkSecurityRuleConfig",
+        "New-AzRouteConfig",
+        "Set-AzRouteTable",
+        "Restart-AzVM",
+        "Disable-NetFirewallRule",
+        "Set-NetFirewallProfile",
+        "New-NetFirewallRule",
+        "Set-NetIPInterface",
+        "ipconfig /renew",
+        "az network nsg rule create",
+        "az network route-table route create",
+    )
+    for prohibited in prohibited_commands:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited configuration-changing command found {prohibited!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "azure-vm-connectivity-investigation/",
+        ROOT / "azure-journey/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing Azure VM connectivity tutorial integration {required!r}"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -1368,6 +1452,7 @@ def main() -> int:
     validate_entra_signin_ca_tutorial(failures)
     validate_windows_server_low_disk_tutorial(failures)
     validate_onedrive_sharepoint_sync_tutorial(failures)
+    validate_azure_vm_connectivity_tutorial(failures)
     validate_grouped_navigation(failures)
 
     if failures:
