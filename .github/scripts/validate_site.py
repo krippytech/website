@@ -107,6 +107,11 @@ SOCIAL_METADATA = {
         "description": "An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.",
         "type": "article",
     },
+    "/tutorials/windows-server-low-disk-space-investigation/": {
+        "title": "Investigating Low Disk Space on Windows Server | KrippyTech",
+        "description": "An evidence-first guide for investigating low disk space on Windows Server before deleting data, changing retention, or expanding storage.",
+        "type": "article",
+    },
     "/tutorials/shared-mailbox/": {
         "title": "Create a Microsoft 365 Shared Mailbox — Draft | KrippyTech",
         "description": "Draft status for a Microsoft 365 shared-mailbox tutorial that is not approved for production use.",
@@ -511,6 +516,13 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
             r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
             r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
+        "/tutorials/windows-server-low-disk-space-investigation/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>'
         ),
         "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": re.compile(
             r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
@@ -1000,6 +1012,74 @@ def validate_entra_signin_ca_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_windows_server_low_disk_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/windows-server-low-disk-space-investigation/"
+    page = ROOT / "tutorials/windows-server-low-disk-space-investigation/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Investigating Low Disk Space on Windows Server",
+        "This is an investigation guide, not an automated cleanup or remediation procedure",
+        "Do not invent one universal threshold",
+        "Large does not mean unnecessary",
+        "Old does not automatically mean safe to delete",
+        "Get-Volume",
+        "Get-PSDrive -PSProvider FileSystem",
+        "Get-CimInstance -ClassName Win32_LogicalDisk",
+        "fsutil volume diskfree C:",
+        "DISM /Online /Cleanup-Image /AnalyzeComponentStore",
+        "Get-WinEvent -ListLog *",
+        "vssadmin list shadowstorage",
+        "vssadmin list shadows",
+        "Recursive scans can be expensive",
+        "Observation",
+        "What it may indicate",
+        "What it does not prove",
+        "Safest next investigation step",
+        "This guide does not provide cleanup or remediation procedures",
+        "/msp-university/#learning-path",
+        "/windows-hybrid/",
+        "/tutorials/dns-active-directory-domain-health/",
+        "/tutorials/test-ktdns-v1.0.0/",
+        "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-volume",
+        "https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/determine-the-actual-size-of-the-winsxs-folder",
+        "https://learn.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required guide text {required!r}")
+
+    prohibited_text = (
+        "Remove-Item",
+        "/StartComponentCleanup",
+        "/ResetBase",
+        "vssadmin delete",
+        "vssadmin resize",
+        "Clear-EventLog",
+        "Resize-Partition",
+        "Restart-Computer",
+    )
+    for prohibited in prohibited_text:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited remediation command found {prohibited!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "windows-server-low-disk-space-investigation/",
+        ROOT / "windows-hybrid/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing Windows Server storage tutorial integration {required!r}"
+            )
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -1035,6 +1115,7 @@ def main() -> int:
     validate_test_ktdns_release(failures)
     validate_dns_ad_domain_health_tutorial(failures)
     validate_entra_signin_ca_tutorial(failures)
+    validate_windows_server_low_disk_tutorial(failures)
 
     if failures:
         print("Static-site validation failed:")

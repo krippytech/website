@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/windows-server-low-disk-space-investigation/">
+
+    <title>Investigating Low Disk Space on Windows Server | KrippyTech</title>
+    <meta name="description" content="An evidence-first guide for investigating low disk space on Windows Server before deleting data, changing retention, or expanding storage.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Investigating Low Disk Space on Windows Server | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="An evidence-first guide for investigating low disk space on Windows Server before deleting data, changing retention, or expanding storage.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/windows-server-low-disk-space-investigation/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investigating Low Disk Space on Windows Server | KrippyTech">
+    <meta name="twitter:description" content="An evidence-first guide for investigating low disk space on Windows Server before deleting data, changing retention, or expanding storage.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/" aria-current="page">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Windows Server / Storage / Investigation</p>
+            <h1>Investigating Low Disk Space on Windows Server</h1>
+            <p class="hero-text">
+                Confirm the affected volume, measure the condition, and identify credible growth evidence before planning a change.
+                <span class="highlight">This is an investigation guide, not an automated cleanup or remediation procedure.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-22">August 22, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-22">August 22, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card"><p class="card-number">Purpose</p><h3>Explain the alert</h3><p>Identify which volume is constrained, how quickly it changed, and which workload or storage consumer best matches the evidence.</p></article>
+                <article class="card"><p class="card-number">Boundary</p><h3>Measure before changing</h3><p>No files, logs, snapshots, databases, checkpoints, retention settings, services, or volumes are changed by this guide.</p></article>
+                <article class="card"><p class="card-number">Example</p><h3>Synthetic server only</h3><p><code>LAB-SRV-01</code> and its example values are documentation-safe placeholders, not production-derived evidence.</p></article>
+                <article class="card"><p class="card-number">Method</p><h3>Role, trend, consumer</h3><p>Interpret capacity together with server role, backup state, recent changes, service impact, and the rate of growth.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">1 · Investigation question</p>
+                <h2>What is this investigation designed to answer?</h2>
+                <p>Determine whether one volume is genuinely constrained, whether consumption was sudden or gradual, what category of data is growing, and which accountable owner should evaluate the safest remediation.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Which volume?</h3><p>Match the alert to the exact drive letter, mount point, volume label, capacity, and current free space.</p></article>
+                <article class="card"><h3>What changed?</h3><p>Compare prior measurements and recent patching, software, backup, logging, workload, and application changes.</p></article>
+                <article class="card"><h3>What owns the data?</h3><p>Connect the likely consumer to the server role and the team responsible for its application, retention, backup, and recovery requirements.</p></article>
+                <article class="card"><h3>What remains unknown?</h3><p>File size alone does not establish whether data is active, recoverable, duplicated, safe to move, or safe to delete.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">2 · Alert context</p>
+                <h2>Low disk alerts require both percentage and absolute context.</h2>
+                <p>Ten percent free on a 100 GB volume and ten percent free on a 10 TB volume describe very different operating buffers. Record both values, the workload's growth rate, and the space required for updates, logs, databases, checkpoints, backups, and recovery operations.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Do not invent one universal threshold</h3>
+                <p>Alert thresholds should reflect the server role, expected growth, service requirements, storage architecture, and recovery plan. A percentage alone does not prove an outage, and a large absolute value does not prove the remaining buffer is adequate.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">3 · Boundaries and safety</p>
+                <h2>Collect evidence before files are removed.</h2>
+                <p>Use an account authorized to read the relevant volume and application paths. Some volume, event-log, VSS, and servicing details require an elevated session. Record access-denied results instead of treating unreadable paths as empty.</p>
+            </div>
+            <div class="mission">
+                <p><strong>Large does not mean unnecessary.</strong> Old does not automatically mean safe to delete. Server role and backup state must be known before remediation.</p>
+                <p>A successful cleanup does not explain why growth occurred. Freeing space without correcting recurring growth only delays the next alert.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">4 · Initial evidence</p>
+                <h2>Build a minimum record before testing.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">System</p><h3>Role and platform</h3><p>Record the server role, operating-system version, whether it is virtual or physical, and whether storage expansion is technically available.</p></article>
+                <article class="card"><p class="card-number">Capacity</p><h3>Volume and measurements</h3><p>Record the affected volume, total capacity, available space, percentage free, alert timestamp, and previous free-space measurements.</p></article>
+                <article class="card"><p class="card-number">Recent work</p><h3>Changes near the alert</h3><p>Record recent patching, software installation, application deployment, backup changes, logging changes, exports, imports, and maintenance activity.</p></article>
+                <article class="card"><p class="card-number">Safety</p><h3>Backup and impact</h3><p>Confirm whether backups are current and verified, and whether users, services, databases, replication, updates, or recovery operations are affected now.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">5 · Affected volume</p>
+                <h2>Confirm that the alert and the measured object are the same volume.</h2>
+                <p>Drive letters, mount points, cluster storage, virtual disks, pass-through storage, and mapped file-system drives can produce different views. Start with the alert's identifier, then compare volume labels, drive letters, paths, and capacity before investigating directories.</p>
+            </div>
+            <div class="code-block"><pre><code>Get-Volume |
+    Select-Object DriveLetter, FileSystemLabel, FileSystem, HealthStatus,
+        SizeRemaining, Size</code></pre></div>
+            <p><code>Get-Volume</code> is provided by the Windows Storage module and returns volume objects. It is useful for local volume identity, health status, and remaining capacity; not every volume has a drive letter.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">6 · Current capacity</p>
+                <h2>Measure the same condition through the appropriate interface.</h2>
+            </div>
+            <h3>PowerShell file-system drives</h3>
+            <div class="code-block"><pre><code>Get-PSDrive -PSProvider FileSystem |
+    Select-Object Name, Root,
+        @{Name='UsedGB'; Expression={[math]::Round($_.Used / 1GB, 2)}},
+        @{Name='FreeGB'; Expression={[math]::Round($_.Free / 1GB, 2)}}</code></pre></div>
+            <p>This reports drives exposed by the PowerShell FileSystem provider, including mapped and session drives. It is convenient, but it is not a substitute for identifying the underlying local volume.</p>
+
+            <h3>Local fixed logical disks</h3>
+            <div class="code-block"><pre><code>Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType=3" |
+    Select-Object DeviceID, VolumeName,
+        @{Name='SizeGB'; Expression={[math]::Round($_.Size / 1GB, 2)}},
+        @{Name='FreeGB'; Expression={[math]::Round($_.FreeSpace / 1GB, 2)}},
+        @{Name='PercentFree'; Expression={
+            [math]::Round(($_.FreeSpace / $_.Size) * 100, 2)
+        }}</code></pre></div>
+            <p><code>Win32_LogicalDisk</code> exposes logical-disk size and free-space properties. The <code>DriveType=3</code> filter limits this example to local fixed disks.</p>
+
+            <h3>Native volume query</h3>
+            <div class="code-block"><pre><code>fsutil volume diskfree C:</code></pre></div>
+            <p>This native command reports free-space values in bytes for the selected volume. Microsoft documents <code>fsutil</code> as an administrative tool; use it from an elevated Command Prompt or PowerShell session. It does not calculate a friendly percentage.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">7 · Growth pattern</p>
+                <h2>Determine whether consumption was sudden or gradual.</h2>
+                <p>Compare monitoring history at consistent intervals. Align the first material change with patching, installs, deployments, backup jobs, application activity, log rotation, database maintenance, imports, exports, checkpoints, or user activity.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Sudden drop</h3><p>Look for one bounded event: a dump, failed backup staging run, new virtual disk or checkpoint, database growth, installation, export, or runaway log.</p></article>
+                <article class="card"><h3>Gradual decline</h3><p>Look for retention drift, normal workload growth, missing log rotation, accumulating profiles, backup history, or a volume sized below the workload's trend.</p></article>
+                <article class="card"><h3>Alert without matching use</h3><p>Confirm the monitored object, collection time, agent health, mount point, quota, and whether the alert is delayed or still open after recovery.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">8 · Common consumers</p>
+                <h2>Investigate categories; do not treat them as automatic deletion targets.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Windows</h3><p>Component store, Windows Update data, temporary directories, event logs, crash dumps, installer caches, Recycle Bin, and user profiles.</p></article>
+                <article class="card"><h3>Applications</h3><p>IIS logs, application logs, exports, caches, monitoring and RMM agent data, and antivirus or EDR quarantine.</p></article>
+                <article class="card"><h3>Data platforms</h3><p>SQL Server data files, transaction logs, backup files, and application-owned databases whose file size does not reveal internal free space.</p></article>
+                <article class="card"><h3>Virtualization and protection</h3><p>Hyper-V virtual disks and checkpoints, backup-agent caches and staging data, repositories, and Volume Shadow Copy storage.</p></article>
+                <article class="card"><h3>File services</h3><p>File-server shares, redirected folders, profile containers, quotas, departmental data, and client-accessible previous versions.</p></article>
+            </div>
+
+            <h3>Start bounded</h3>
+            <div class="code-block"><pre><code>Get-ChildItem -LiteralPath 'C:\' -Directory -Force -ErrorAction SilentlyContinue |
+    Select-Object FullName, LastWriteTime, Attributes</code></pre></div>
+            <p>This one-level inventory identifies known top-level locations without sizing every file. Choose a role-relevant root next. Confirm that the selected root is not an unexpected junction, reparse point, or mount point before recursion.</p>
+
+            <h3>Measure one approved location</h3>
+            <div class="code-block"><pre><code>$Path = 'C:\inetpub\logs\LogFiles'
+$Files = Get-ChildItem -LiteralPath $Path -File -Recurse -Force `
+    -ErrorAction SilentlyContinue
+
+[pscustomobject]@{
+    Path       = $Path
+    FileCount  = $Files.Count
+    SizeGB     = [math]::Round(($Files | Measure-Object Length -Sum).Sum / 1GB, 2)
+    OldestFile = ($Files | Sort-Object LastWriteTime | Select-Object -First 1).LastWriteTime
+    NewestFile = ($Files | Sort-Object LastWriteTime -Descending | Select-Object -First 1).LastWriteTime
+}</code></pre></div>
+            <div class="callout callout-warning">
+                <h3>Recursive scans can be expensive</h3>
+                <p>This example is read-only but can still produce substantial I/O on a large or busy path. Limit the root, use an appropriate window, monitor impact, avoid following reparse-point or junction targets, and record access-denied paths. Do not start with an unrestricted recursive scan of the entire system drive.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">9 · Component store</p>
+                <h2>Use the servicing analysis instead of trusting Explorer size.</h2>
+                <p>WinSxS uses hard links, so an Explorer or generic recursive total can overstate its independent disk consumption. Microsoft provides a servicing analysis that reports the component store's actual size and whether cleanup is recommended.</p>
+            </div>
+            <div class="code-block"><pre><code>DISM /Online /Cleanup-Image /AnalyzeComponentStore</code></pre></div>
+            <p>Run the command from an elevated session. It creates a report; it does not perform cleanup. A recommendation in the report is evidence for a separately authorized maintenance decision, not permission to delete WinSxS content or run cleanup immediately.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">10 · Log growth</p>
+                <h2>Separate configured capacity, current file size, and event volume.</h2>
+                <p>Review Windows logs and application-owned logs independently. A large circular event log can be correctly configured; a rapidly growing application log can indicate a repeated failure even when its retention is working as designed.</p>
+            </div>
+            <div class="code-block"><pre><code>Get-WinEvent -ListLog * -ErrorAction SilentlyContinue |
+    Where-Object FileSize |
+    Sort-Object FileSize -Descending |
+    Select-Object -First 20 LogName, RecordCount, FileSize,
+        MaximumSizeInBytes, LogMode, LogFilePath</code></pre></div>
+            <p><code>Get-WinEvent -ListLog</code> returns event-log configuration objects, including current file size, maximum size, mode, and path when available. Reading some logs can require elevation. Record the largest logs and correlate their timestamps and providers; do not clear them as an investigative shortcut.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">11 · Shadow copies and backups</p>
+                <h2>Review protection dependencies before treating shadow storage as waste.</h2>
+                <p>VSS is used by Windows features and many backup products. Shadow storage can be legitimate, can reside on another volume, and can affect previous versions, backup, restore, and application-consistent operations.</p>
+            </div>
+            <div class="code-block"><pre><code>vssadmin list shadowstorage
+vssadmin list shadows</code></pre></div>
+            <p>These commands list shadow-storage associations and existing shadow copies. Run them from an elevated session. Record the source volume, storage volume, used and maximum allocation, providers, timestamps, and backup ownership. Do not resize storage or delete shadow copies without understanding restore requirements and application dependencies.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">12 · Server roles</p>
+                <h2>The same directory can have very different importance on another server.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Domain controllers</h3><p>Escalate storage pressure involving the OS volume, NTDS database or logs, SYSVOL, DFS Replication, DNS, or backup state. Never treat directory-service paths as general file cleanup.</p></article>
+                <article class="card"><h3>DNS and DHCP</h3><p>Separate service databases, audit logs, debug logs, backups, and exported configuration from ordinary temporary data. Confirm service ownership before any retention decision.</p></article>
+                <article class="card"><h3>SQL Server</h3><p>Database, transaction-log, tempdb, and backup growth require database context. A full transaction log can restrict updates, and shrinking a file does not resolve why log reuse is blocked.</p></article>
+                <article class="card"><h3>Exchange Server</h3><p>Mailbox databases, transaction logs, transport queues, search data, and backup truncation are application-critical. Escalate through the Exchange and backup owners.</p></article>
+                <article class="card"><h3>Hyper-V hosts</h3><p>VHDX and AVHDX files belong to virtual-disk chains. Checkpoints can grow and merge operations require working space; never delete virtual-disk files directly.</p></article>
+                <article class="card"><h3>File servers</h3><p>Shares, quotas, previous versions, redirected folders, profile containers, deduplication, and business retention determine whether apparent growth is expected.</p></article>
+                <article class="card"><h3>RDS Session Hosts</h3><p>User profiles, profile containers, temporary data, application caches, spool files, and session density can distribute ownership across user, platform, and application teams.</p></article>
+                <article class="card"><h3>Backup repositories</h3><p>Capacity, retention, immutability, synthetic fulls, staging, deduplication, and catalog dependencies belong to the backup design. Do not remove restore data to silence an alert.</p></article>
+                <article class="card"><h3>IIS and application servers</h3><p>Correlate site logs, failed-request traces, dumps, deployment packages, application logs, caches, and data paths with application ownership and retention.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">13 · Evidence correlation</p>
+                <h2>Separate observations from conclusions.</h2>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Windows Server disk-space evidence correlation table" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Observation</th><th scope="col">What it may indicate</th><th scope="col">What it does not prove</th><th scope="col">Safest next investigation step</th></tr></thead>
+                    <tbody>
+                        <tr><td>Free space dropped suddenly.</td><td>A bounded event such as a dump, backup stage, checkpoint, database growth, install, export, or runaway log.</td><td>Which file is unnecessary or that deletion is safe.</td><td>Align the first drop with change, job, application, and modification-time evidence.</td></tr>
+                        <tr><td>Free space declined gradually.</td><td>Normal workload growth, retention drift, accumulating logs, profiles, backups, or undersized storage.</td><td>That the monitoring threshold is wrong.</td><td>Calculate the trend and compare it with documented retention and capacity forecasts.</td></tr>
+                        <tr><td>Event logs are unusually large.</td><td>Configured maximums, high event volume, or a repeated provider condition.</td><td>That the logs are disposable or caused the original issue.</td><td>Record size, maximum, mode, path, providers, and event timing before involving the service owner.</td></tr>
+                        <tr><td>Component-store analysis recommends cleanup.</td><td>Windows servicing reports reclaimable component-store content.</td><td>That manual deletion is safe or cleanup explains recurring growth.</td><td>Preserve the report and route a separate servicing-maintenance decision.</td></tr>
+                        <tr><td>SQL transaction logs are large.</td><td>Normal allocation, active work, recovery model, missing log backups, replication, availability, or blocked reuse.</td><td>That the file can be deleted, truncated, or shrunk safely.</td><td>Escalate to the database owner with volume, database, backup, and SQL log-reuse evidence.</td></tr>
+                        <tr><td>Hyper-V checkpoints exist.</td><td>Planned change protection, backup activity, or an incomplete checkpoint lifecycle.</td><td>That AVHDX files are orphaned or can be removed directly.</td><td>Match checkpoints to VMs, backup jobs, timestamps, disk chains, and available merge space.</td></tr>
+                        <tr><td>Shadow storage consumes substantial space.</td><td>Previous versions, backup, restore, or application-consistent snapshot activity.</td><td>That shadow copies are stale or unnecessary.</td><td>Identify the protected and storage volumes, providers, backup owner, restore need, and configured allocation.</td></tr>
+                        <tr><td>Temporary directories contain old files.</td><td>An application, installer, update, or job did not remove intermediate data.</td><td>That age alone makes the files safe to delete.</td><td>Identify file ownership, open handles, creation source, backup need, and supported cleanup path.</td></tr>
+                        <tr><td>Backup staging data remains.</td><td>An active job, failed cleanup, retry, restore point, or repository workflow.</td><td>That the backup is complete or the staging data is expendable.</td><td>Correlate the path with job history, catalog state, retention, and the backup vendor or owner.</td></tr>
+                        <tr><td>One user profile is unusually large.</td><td>Application caches, profile containers, downloads, offline data, or user-owned content.</td><td>That the profile is abandoned or unneeded.</td><td>Confirm ownership, session state, profile technology, policy, and business retention.</td></tr>
+                        <tr><td>Disk use appears normal but the alert persists.</td><td>A stale alert, wrong monitored object, agent problem, mount point, quota, or collection delay.</td><td>That monitoring can be ignored.</td><td>Match the monitor's volume identifier and timestamp to fresh local measurements and agent health.</td></tr>
+                        <tr><td>The affected volume is not the system drive.</td><td>An application, database, VM, backup, share, or mounted workload volume is constrained.</td><td>That operating-system health and service availability are unaffected.</td><td>Map the volume to its paths, services, workload owner, backup, and expansion options.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">14 · Escalation</p>
+                <h2>Stop when service risk, data ownership, or change authority exceeds investigation.</h2>
+                <p>Preserve measurements, timestamps, paths, owners, recent changes, and backup evidence, then escalate through the accountable platform, application, database, virtualization, security, or backup path when any of these conditions appears:</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Immediate service risk</h3><p>A system volume is critically constrained, services are failing, updates or logging cannot complete, or users are actively affected.</p></article>
+                <article class="card"><h3>Protected workloads</h3><p>Database or transaction-log growth, Hyper-V checkpoint or virtual-disk concerns, domain-controller storage, or Exchange Server storage is involved.</p></article>
+                <article class="card"><h3>Recovery risk</h3><p>Backups are missing or unverified, a backup repository is constrained, or shadow-copy ownership and restore dependencies are unclear.</p></article>
+                <article class="card"><h3>Security or integrity</h3><p>Files are rapidly growing, unexpectedly encrypted, unknown, or associated with possible ransomware, compromise, filesystem errors, or corruption.</p></article>
+                <article class="card"><h3>Ownership unknown</h3><p>The application, data, retention policy, backup job, monitoring source, or responsible team cannot be identified.</p></article>
+                <article class="card"><h3>Change required</h3><p>Any next step requires deletion, cleanup, resize, migration, retention change, application change, service interruption, or reboot.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">15 · Intentionally excluded</p>
+                <h2>This guide does not provide cleanup or remediation procedures.</h2>
+            </div>
+            <div class="mission">
+                <p>Excluded actions include manually deleting WinSxS or Windows Installer content; deleting Windows Update data, databases, transaction logs, Hyper-V checkpoints, virtual disks, shadow copies, backup catalogs, restore data, or active logs; clearing event logs; shrinking shadow storage; removing updates; changing retention; disabling services or security software; moving application data; resizing or extending volumes; running component-store cleanup; modifying the registry; or rebooting the server.</p>
+                <p>Those actions require separate authorization, verified backups, change control, application ownership, rollback planning, and an environment-specific remediation plan.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">16 · Related resources</p>
+                <h2>Continue through the appropriate KrippyTech path.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Learning method</p><h3>MSP University</h3><p>Use the understand, investigate, resolve, and verify sequence while keeping this guide in the investigation phase.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Topic hub</p><h3>Windows &amp; Hybrid</h3><p>Place storage evidence alongside Windows Server, Active Directory, DNS, services, event logs, and hybrid dependencies.</p><a class="card-link" href="/windows-hybrid/">Open the Windows &amp; Hybrid hub <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Related investigation</p><h3>DNS, Active Directory, and domain health</h3><p>Use the domain-health guide when a low-space condition overlaps domain-controller services, replication, time, DNS, or directory evidence.</p><a class="card-link" href="/tutorials/dns-active-directory-domain-health/">Open the domain-health guide <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Focused tool</p><h3>Test-KTDNS v1.0.0</h3><p>Use the published read-only DNS tool only when the investigation also requires a bounded name-resolution check.</p><a class="card-link" href="/tutorials/test-ktdns-v1.0.0/">Open the Test-KTDNS tutorial <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Microsoft sources</p>
+                <h2>Primary documentation used for this guide.</h2>
+            </div>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/storage/get-volume?view=windowsserver2025-ps">Get-Volume</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-psdrive?view=powershell-7.5">Get-PSDrive</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/cimcmdlets/get-ciminstance?view=powershell-7.5">Get-CimInstance</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logicaldisk">Win32_LogicalDisk class</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-volume">fsutil volume</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/determine-the-actual-size-of-the-winsxs-folder">Determine the actual size of the WinSxS folder</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent?view=powershell-7.5">Get-WinEvent</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/vssadmin">vssadmin</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service">Volume Shadow Copy Service</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/checkpoints">Hyper-V checkpoints</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/virtualization/hyper-v-snapshots-checkpoints-differencing-disks">Troubleshoot Hyper-V checkpoints and differencing disks</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/sql/relational-databases/logs/troubleshoot-a-full-transaction-log-sql-server-error-9002?view=sql-server-ver17">Troubleshoot a full SQL Server transaction log</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>
