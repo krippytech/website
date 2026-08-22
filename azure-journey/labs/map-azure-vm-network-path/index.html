@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/azure-journey/labs/map-azure-vm-network-path/">
+
+    <title>Map the Network Path to an Azure VM | KrippyTech</title>
+    <meta name="description" content="A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Map the Network Path to an Azure VM | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.">
+    <meta property="og:url" content="https://krippytech.com/azure-journey/labs/map-azure-vm-network-path/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Map the Network Path to an Azure VM | KrippyTech">
+    <meta name="twitter:description" content="A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/navigation.js"></script>
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/" aria-current="page">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/" aria-current="page">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Azure Journey / Lab / Evidence analysis</p>
+            <h1>Map the Network Path to an Azure VM</h1>
+            <p class="hero-text">
+                Trace one synthetic TCP flow through Azure and guest layers, identify the earliest point where evidence diverges, and write a finding an accountable owner can act on.
+                <span class="highlight">No Azure subscription, deployment, payment, tenant access, or production environment is required.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card"><p class="card-number">Lab type</p><h3>Evidence analysis</h3><p>Everything needed to solve the scenario appears on this page. You will not sign in to Azure or run a live diagnostic.</p></article>
+                <article class="card"><p class="card-number">Method</p><h3>Map before concluding</h3><p>Define the flow, compare each layer, and stop at the earliest supported divergence.</p></article>
+                <article class="card"><p class="card-number">Boundary</p><h3>No remediation</h3><p>The result is a documented finding and escalation recommendation, not approval to change a network control.</p></article>
+                <article class="card"><p class="card-number">Scenario</p><h3>Entirely synthetic</h3><p>Names, private addresses, rules, timestamps, and results were created for this lab and describe no customer environment.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="objectives">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">1 · Learning objectives</p><h2>What you should be able to do.</h2></div>
+            <ul>
+                <li>Define a network test by source, destination, protocol, port, direction, and UTC timestamp.</li>
+                <li>Separate DNS, VM state, effective policy, effective route, guest firewall, listener, and application evidence.</li>
+                <li>Mark each layer as supported, contradicted, or unknown without filling gaps with assumptions.</li>
+                <li>Write an escalation-quality conclusion that identifies evidence and preserves change authority.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section" id="prerequisites">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">2 · Prerequisite knowledge</p><h2>Bring concepts, not cloud access.</h2></div>
+            <p>You should recognize IPv4 subnets, TCP ports, DNS A records, Windows listeners, network security groups, and effective routes. Review <a href="/tutorials/azure-vm-connectivity-investigation/">Investigating Azure VM Connectivity</a> first if those layers are unfamiliar.</p>
+        </div>
+    </section>
+
+    <section class="section" id="rules">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">3 · Investigation rules</p><h2>Evidence first; authority stays separate.</h2></div>
+            <div class="mission">
+                <p><strong>Use only the supplied packet.</strong> Do not invent a route, rule, owner, health result, or approval.</p>
+                <p><strong>One flow only.</strong> A result for TCP 443 from <code>10.20.1.4</code> at one time does not establish behavior for another source, port, or timestamp.</p>
+                <p><strong>No configuration activity.</strong> This lab contains no procedure for creating resources, opening ports, changing NSGs or routes, modifying DNS or firewalls, restarting a VM, granting roles, or capturing packets.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="environment">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">4 · Synthetic environment</p><h2>Two VMs, one VNet, one defined application flow.</h2></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Source</p><h3>LAB-ADMIN-01</h3><p>Private IP <code>10.20.1.4</code><br>Subnet <code>subnet-admin</code><br>VNet <code>vnet-krippytech-lab</code></p></article>
+                <article class="card"><p class="card-number">Destination</p><h3>LAB-WEB-01</h3><p>Private IP <code>10.20.2.4</code><br>Subnet <code>subnet-app</code><br>VNet <code>vnet-krippytech-lab</code></p></article>
+                <article class="card"><p class="card-number">Service</p><h3>app.lab.example</h3><p>Required protocol <code>TCP</code><br>Required port <code>443</code><br>Path type: private, same VNet</p></article>
+                <article class="card"><p class="card-number">Time</p><h3>Investigation window</h3><p><code>2026-08-22T15:30:00Z</code><br>Symptom: constant from the defined source during the supplied window.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="defined-flow">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">5 · Defined traffic flow</p><h2>State the tuple before reading controls.</h2></div>
+            <div class="table-wrap" role="region" aria-label="Defined traffic flow" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table"><thead><tr><th scope="col">Source</th><th scope="col">Destination</th><th scope="col">Protocol</th><th scope="col">Port</th><th scope="col">Direction</th><th scope="col">UTC time</th><th scope="col">Expected result</th></tr></thead><tbody><tr><td>LAB-ADMIN-01<br><code>10.20.1.4</code></td><td>app.lab.example<br>LAB-WEB-01<br><code>10.20.2.4</code></td><td>TCP</td><td>443</td><td>Outbound from source; inbound to destination</td><td><code>2026-08-22T15:30:00Z</code></td><td>HTTPS TCP connection succeeds</td></tr></tbody></table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="topology">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">6 · Topology and inventory</p><h2>Follow the expected path in order.</h2><p>The numbered cards and the equivalent table describe the same path for visual and screen-reader review.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">01 · Source VM</p><h3>LAB-ADMIN-01</h3><p><code>10.20.1.4</code></p></article>
+                <article class="card"><p class="card-number">02 · Source subnet</p><h3>subnet-admin</h3><p><code>10.20.1.0/24</code></p></article>
+                <article class="card"><p class="card-number">03 · VNet routing</p><h3>VirtualNetwork</h3><p>System route for <code>10.20.0.0/16</code></p></article>
+                <article class="card"><p class="card-number">04 · Destination subnet</p><h3>subnet-app</h3><p><code>10.20.2.0/24</code></p></article>
+                <article class="card"><p class="card-number">05 · Destination NIC</p><h3>nic-lab-web-01</h3><p><code>10.20.2.4</code></p></article>
+                <article class="card"><p class="card-number">06 · Guest firewall</p><h3>Windows Firewall</h3><p>Focused inbound HTTPS rule</p></article>
+                <article class="card"><p class="card-number">07 · Listener</p><h3>HTTPS</h3><p><code>0.0.0.0:443</code> listening</p></article>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Text equivalent of the expected network path" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table"><thead><tr><th scope="col">Order</th><th scope="col">Layer</th><th scope="col">Expected handoff</th></tr></thead><tbody>
+                    <tr><td>1</td><td>Source VM and NIC</td><td>LAB-ADMIN-01 sends TCP 443 from 10.20.1.4.</td></tr>
+                    <tr><td>2</td><td>Source subnet controls</td><td>Outbound flow is permitted from subnet-admin.</td></tr>
+                    <tr><td>3</td><td>VNet routing</td><td>The 10.20.0.0/16 VirtualNetwork route selects same-VNet delivery.</td></tr>
+                    <tr><td>4</td><td>Destination subnet controls</td><td>Inbound flow must be permitted by nsg-lab-app.</td></tr>
+                    <tr><td>5</td><td>Destination NIC controls</td><td>Inbound flow must also be permitted by nsg-lab-web-nic.</td></tr>
+                    <tr><td>6</td><td>Guest firewall</td><td>Windows Firewall permits the defined source and port.</td></tr>
+                    <tr><td>7</td><td>Application listener</td><td>A process accepts TCP 443 on LAB-WEB-01.</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="evidence">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">7 · Evidence packet</p><h2>All evidence required to solve the lab.</h2><p>Outputs are synthetic snapshots for the defined UTC window. They are not commands to run against an environment.</p></div>
+
+            <h3>DNS and resource state</h3>
+            <div class="grid">
+                <article class="card"><p class="card-number">DNS result</p><h3>app.lab.example</h3><p><code>Name: app.lab.example<br>Type: A<br>IPAddress: 10.20.2.4<br>Response: Success</code></p><p>This identifies an address; it does not test TCP 443.</p></article>
+                <article class="card"><p class="card-number">Source VM</p><h3>LAB-ADMIN-01</h3><p>Provisioning: <code>Succeeded</code><br>Power: <code>Running</code><br>NIC: <code>nic-lab-admin-01</code><br>Private IP: <code>10.20.1.4</code></p></article>
+                <article class="card"><p class="card-number">Destination VM</p><h3>LAB-WEB-01</h3><p>Provisioning: <code>Succeeded</code><br>Power: <code>Running</code><br>NIC: <code>nic-lab-web-01</code><br>Private IP: <code>10.20.2.4</code></p></article>
+                <article class="card"><p class="card-number">Subnet placement</p><h3>Expected associations</h3><p><code>nic-lab-admin-01</code> → <code>subnet-admin</code><br><code>nic-lab-web-01</code> → <code>subnet-app</code><br>Both subnets → <code>vnet-krippytech-lab</code></p></article>
+            </div>
+
+            <h3>Attached network security groups</h3>
+            <div class="table-wrap" role="region" aria-label="NSG attachment inventory" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table"><thead><tr><th scope="col">Attachment point</th><th scope="col">NSG</th><th scope="col">Relevant observation</th></tr></thead><tbody>
+                    <tr><td>Source subnet: subnet-admin</td><td>nsg-lab-admin</td><td>Explicit outbound HTTPS allow for the application subnet.</td></tr>
+                    <tr><td>Source NIC: nic-lab-admin-01</td><td>None</td><td>No NIC-level NSG is attached.</td></tr>
+                    <tr><td>Destination subnet: subnet-app</td><td>nsg-lab-app</td><td>Explicit inbound deny matches the source subnet and TCP 443.</td></tr>
+                    <tr><td>Destination NIC: nic-lab-web-01</td><td>nsg-lab-web-nic</td><td>Explicit inbound HTTPS allow matches the source subnet.</td></tr>
+                </tbody></table>
+            </div>
+
+            <h3>Relevant NSG rules</h3>
+            <div class="table-wrap" role="region" aria-label="Synthetic NSG rule evidence" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table"><thead><tr><th scope="col">NSG and attachment</th><th scope="col">Rule</th><th scope="col">Priority</th><th scope="col">Direction</th><th scope="col">Protocol</th><th scope="col">Source</th><th scope="col">Destination</th><th scope="col">Port</th><th scope="col">Action</th></tr></thead><tbody>
+                    <tr><td>nsg-lab-admin<br>source subnet</td><td>AllowAppHttpsOut</td><td>200</td><td>Outbound</td><td>TCP</td><td>10.20.1.0/24</td><td>10.20.2.0/24</td><td>443</td><td>Allow</td></tr>
+                    <tr><td>nsg-lab-app<br>destination subnet</td><td>DenyAdminHttps</td><td>200</td><td>Inbound</td><td>TCP</td><td>10.20.1.0/24</td><td>10.20.2.4</td><td>443</td><td>Deny</td></tr>
+                    <tr><td>nsg-lab-app<br>destination subnet</td><td>AllowApprovedHttps</td><td>300</td><td>Inbound</td><td>TCP</td><td>10.20.3.0/24</td><td>10.20.2.4</td><td>443</td><td>Allow</td></tr>
+                    <tr><td>nsg-lab-web-nic<br>destination NIC</td><td>AllowAdminHttps</td><td>300</td><td>Inbound</td><td>TCP</td><td>10.20.1.0/24</td><td>10.20.2.4</td><td>443</td><td>Allow</td></tr>
+                </tbody></table>
+            </div>
+            <p>Priorities are evaluated within each NSG, with lower numbers processed first. For inbound traffic, both the destination subnet NSG and destination NIC NSG must permit the flow. A NIC-level allow does not override a deny at the subnet gate.</p>
+
+            <h3>Effective security and route evidence</h3>
+            <div class="grid">
+                <article class="card"><p class="card-number">Effective security rules</p><h3>Destination NIC view</h3><p>Aggregated result for TCP 443 from <code>10.20.1.4</code> to <code>10.20.2.4</code>: <strong>Deny</strong>.</p><p>Responsible rule: <code>DenyAdminHttps</code><br>Origin: <code>nsg-lab-app</code><br>Attachment: destination subnet</p></article>
+                <article class="card"><p class="card-number">Source effective route</p><h3>Expected next hop</h3><p>Prefix: <code>10.20.0.0/16</code><br>Next hop: <code>VirtualNetwork</code><br>Source: <code>Default</code><br>State: <code>Active</code></p></article>
+                <article class="card"><p class="card-number">Destination effective route</p><h3>Return path represented</h3><p>Prefix: <code>10.20.0.0/16</code><br>Next hop: <code>VirtualNetwork</code><br>Source: <code>Default</code><br>State: <code>Active</code></p></article>
+                <article class="card"><p class="card-number">IP flow verify</p><h3>Access denied</h3><p>Direction: <code>Inbound</code><br>Protocol: <code>TCP</code><br>Remote: <code>10.20.1.4:55024</code><br>Local: <code>10.20.2.4:443</code><br>Rule: <code>DenyAdminHttps</code></p></article>
+            </div>
+
+            <h3>Guest and focused connection evidence</h3>
+            <div class="table-wrap" role="region" aria-label="Synthetic guest and connection evidence" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table"><thead><tr><th scope="col">Evidence</th><th scope="col">Synthetic result</th><th scope="col">Interpretation boundary</th></tr></thead><tbody>
+                    <tr><td>Guest IP configuration</td><td>LAB-WEB-01 owns <code>10.20.2.4/24</code> on Ethernet.</td><td>Confirms guest addressing, not remote reachability.</td></tr>
+                    <tr><td>Guest firewall profile</td><td>Domain profile enabled; focused rule <code>LAB HTTPS Inbound</code> enabled, TCP local port 443, remote <code>10.20.1.0/24</code>, Allow.</td><td>Supports guest policy for this tuple; it does not override Azure NSGs.</td></tr>
+                    <tr><td>TCP listener</td><td><code>0.0.0.0:443 LISTEN</code> on LAB-WEB-01.</td><td>A listener does not prove application health or remote path reachability.</td></tr>
+                    <tr><td>Local port test</td><td><code>localhost:443 TcpTestSucceeded: True</code></td><td>Confirms a local TCP handshake only.</td></tr>
+                    <tr><td>Source-side focused test</td><td><code>ComputerName: app.lab.example<br>RemoteAddress: 10.20.2.4<br>RemotePort: 443<br>SourceAddress: 10.20.1.4<br>TcpTestSucceeded: False</code></td><td>Confirms the defined remote attempt failed; it does not identify the blocking layer by itself.</td></tr>
+                </tbody></table>
+            </div>
+
+            <h3>Known and unknown evidence</h3>
+            <div class="grid">
+                <article class="card"><p class="card-number">Known</p><h3>Supported observations</h3><p>DNS answer, VM states, NIC placement, same-VNet routes, effective NSG deny, IP-flow deny, guest firewall allow, listener, and failed remote TCP test are supplied for one UTC window.</p></article>
+                <article class="card"><p class="card-number">Unknown</p><h3>Preserved uncertainty</h3><p>NSG business intent and owner approval, application health beyond the listener, behavior from other sources, and whether another fault appears after the demonstrated deny are not established.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="tasks">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">8 · Learner tasks</p><h2>Build the finding from the packet.</h2></div>
+            <ol>
+                <li>Write the exact source, destination, protocol, port, direction, and UTC timestamp.</li>
+                <li>Draw or restate the expected seven-layer path.</li>
+                <li>Mark every layer Supported, Contradicted, or Unknown.</li>
+                <li>State exactly what the DNS result proves.</li>
+                <li>State exactly what the VM power states prove.</li>
+                <li>Evaluate the effective route and next hop.</li>
+                <li>Evaluate source and destination NSG evidence without treating one rule as the whole policy.</li>
+                <li>Evaluate guest firewall and listener evidence.</li>
+                <li>Identify the earliest evidenced divergence.</li>
+                <li>List what remains unknown.</li>
+                <li>Write a concise finding that separates evidence from inference.</li>
+                <li>Recommend the accountable escalation owner without proposing an unauthorized change.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="section" id="worksheet">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">9 · Network-path worksheet</p><h2>Complete this before opening the answer key.</h2></div>
+            <div class="table-wrap" role="region" aria-label="Network path investigation worksheet" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table"><thead><tr><th scope="col">Layer</th><th scope="col">Expected behavior</th><th scope="col">Evidence reviewed</th><th scope="col">Observed result</th><th scope="col">Status</th><th scope="col">What this proves</th><th scope="col">What this does not prove</th></tr></thead><tbody>
+                    <tr><td>DNS</td><td>Hostname returns 10.20.2.4</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>VM and NIC state</td><td>Both VMs running; expected addresses and subnets</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>Source policy</td><td>Outbound TCP 443 permitted</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>VNet route</td><td>VirtualNetwork next hop</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>Destination policy</td><td>Inbound TCP 443 permitted at subnet and NIC</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>Guest firewall</td><td>Defined source and port permitted</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>Listener</td><td>TCP 443 listening</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                    <tr><td>Application health</td><td>HTTPS transaction completes</td><td>________________</td><td>________________</td><td>Supported / Contradicted / Unknown</td><td>________________</td><td>________________</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="questions">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">10 · Interpretation questions</p><h2>Test the boundaries of each observation.</h2></div>
+            <ol>
+                <li>Why does a correct A record not establish TCP 443 reachability?</li>
+                <li>Which VM facts are platform or control-plane observations, and which guest facts are separate?</li>
+                <li>Why must both subnet and NIC NSG gates be evaluated?</li>
+                <li>Does the VirtualNetwork next hop prove that every policy layer permits the flow?</li>
+                <li>What does IP flow verify add beyond reading the NSG objects?</li>
+                <li>Why does a local listener not prove a successful application transaction?</li>
+                <li>Who should determine whether <code>DenyAdminHttps</code> reflects intended policy?</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="section" id="conclusion-template">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">11 · Final conclusion template</p><h2>Write a finding another technician can verify.</h2></div>
+            <div class="mission">
+                <p><strong>Defined flow:</strong> At [UTC time], [source and IP] attempted [protocol and port] to [destination and IP].</p>
+                <p><strong>Supported layers:</strong> [List evidence that matched the expected path.]</p>
+                <p><strong>Earliest divergence:</strong> [Name the first contradicted layer and the exact evidence.]</p>
+                <p><strong>What remains unknown:</strong> [List unverified health, intent, ownership, and downstream behavior.]</p>
+                <p><strong>Escalation:</strong> [Name the accountable owner and the determination needed, without authorizing a change.]</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="answer-key">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">12 · Expandable answer key</p><h2>Compare your evidence chain.</h2><p>Each native disclosure is keyboard accessible and remains readable without JavaScript.</p></div>
+            <details><summary>Why is DNS not the evidenced failure?</summary><p>The A record resolves <code>app.lab.example</code> to the destination’s confirmed address, <code>10.20.2.4</code>. DNS does not test Azure policy, routes, guest policy, a listener, or the HTTPS application.</p></details>
+            <details><summary>Why is VM power not the evidenced failure?</summary><p>Both VMs are reported Running, and their provisioning states are Succeeded. Those facts support platform state only; they do not establish guest or application health. Separate guest evidence is supplied.</p></details>
+            <details><summary>Why is the effective route not the evidenced failure?</summary><p>The source and return evidence show an active <code>10.20.0.0/16</code> system route with the expected <code>VirtualNetwork</code> next hop. That supports same-VNet route selection but does not bypass NSGs.</p></details>
+            <details><summary>Why is the listener not the evidenced failure?</summary><p>LAB-WEB-01 owns the expected address and a process listens on <code>0.0.0.0:443</code>. The local test succeeds. This supports listener availability at the guest, not remote reachability or complete application health.</p></details>
+            <details><summary>Why is the guest firewall not the evidenced failure?</summary><p>The focused active rule allows inbound TCP 443 from <code>10.20.1.0/24</code>. That supports the defined guest-policy requirement. It cannot override an Azure NSG deny.</p></details>
+            <details><summary>Which effective rule blocks the defined flow?</summary><p><code>DenyAdminHttps</code> in <code>nsg-lab-app</code>, attached to destination subnet <code>subnet-app</code>, denies inbound TCP 443 from <code>10.20.1.0/24</code> to <code>10.20.2.4</code>. Effective security and IP-flow evidence identify the same rule.</p></details>
+            <details><summary>Why is the NSG the earliest demonstrated divergence?</summary><p>Source state and policy, DNS, address placement, and the expected route are supported before traffic reaches the destination subnet gate. The destination subnet NSG contradicts the expected allow. Later guest evidence may be healthy, but the flow is already denied at that earlier layer.</p></details>
+            <details><summary>What additional evidence would still be useful?</summary><p>Confirm the NSG’s accountable owner, intended application-access policy, relevant change history, and whether a later issue appears after an authorized policy determination. Application health beyond the listener also remains unknown.</p></details>
+            <details><summary>Why does this lab not authorize changing the rule?</summary><p>A technically explanatory rule can still be intentional. Ownership, security intent, business need, approval, change control, rollback, and validation remain outside this evidence packet.</p></details>
+        </div>
+    </section>
+
+    <section class="section" id="sample-finding">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">13 · Escalation-quality sample</p><h2>A concise professional finding.</h2></div>
+            <div class="mission"><blockquote>The defined TCP 443 flow from LAB-ADMIN-01 at 10.20.1.4 to LAB-WEB-01 at 10.20.2.4 resolves correctly and follows the expected VirtualNetwork route. LAB-WEB-01 is running, owns the expected address, and has an HTTPS listener. Effective security and IP-flow evidence identify destination-subnet rule DenyAdminHttps as the earliest demonstrated point blocking the defined flow. The NSG owner must confirm policy intent and authorized application access before any change is proposed.</blockquote></div>
+        </div>
+    </section>
+
+    <section class="section" id="limits">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">14 · What the evidence does not prove</p><h2>Keep the conclusion bounded.</h2></div>
+            <ul>
+                <li>The application is healthy beyond its listener.</li>
+                <li>Every source can or cannot connect.</li>
+                <li>The NSG rule is incorrect, should be deleted, or should be weakened.</li>
+                <li>No other path issue exists after the demonstrated deny.</li>
+                <li>Production change approval exists.</li>
+                <li>The same result applies to another port, address, subnet, or timestamp.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section" id="related">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">15 · Related resources</p><h2>Continue the method without changing the scenario.</h2></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Methodology</p><h3>Investigating Azure VM Connectivity</h3><p>Review the complete evidence-first method behind this lab.</p><a class="card-link" href="/tutorials/azure-vm-connectivity-investigation/">Open Tutorial <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Azure learning</p><h3>Azure Journey</h3><p>Return to the published Azure guidance and developing learning lanes.</p><a class="card-link" href="/azure-journey/">Open Azure Journey <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Investigation model</p><h3>MSP University</h3><p>Apply the understand, investigate, resolve, and verify sequence.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">Microsoft sources</p><h2>Authoritative behavior used by this lab.</h2></div>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing">States and billing status of Azure Virtual Machines</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview">Azure network security groups overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/effective-security-rules-overview">Effective security rules overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview">Azure virtual network traffic routing</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/azure/network-watcher/ip-flow-verify-overview">IP flow verify overview</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2025-ps">Test-NetConnection</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-nettcpconnection?view=windowsserver2025-ps">Get-NetTCPConnection</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/netsecurity/get-netfirewallrule?view=windowsserver2025-ps">Get-NetFirewallRule</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer><div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div></footer>
+</body>
+</html>
