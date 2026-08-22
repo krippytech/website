@@ -1164,6 +1164,173 @@ def validate_onedrive_sharepoint_sync_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_grouped_navigation(failures: list[str]) -> None:
+    navigation_script = ROOT / "navigation.js"
+    stylesheet = ROOT / "styles.css"
+
+    if not navigation_script.is_file():
+        failures.append("navigation.js: shared navigation behavior is missing")
+        return
+    if not stylesheet.is_file():
+        failures.append("styles.css: shared navigation styling is missing")
+        return
+
+    script_source = navigation_script.read_text(encoding="utf-8")
+    style_source = stylesheet.read_text(encoding="utf-8")
+
+    required_script = (
+        'document.documentElement.classList.add("js")',
+        'event.key === "Escape"',
+        'event.key === "ArrowDown"',
+        'event.key === "ArrowUp"',
+        'event.target.closest("[data-dropdown]")',
+        'group.addEventListener("pointerenter"',
+        'group.addEventListener("pointerleave"',
+        'mobileToggle.setAttribute("aria-expanded"',
+        'mobileToggle.focus()',
+        "window.innerWidth > 840",
+    )
+    for required in required_script:
+        if required not in script_source:
+            failures.append(f"navigation.js: missing required behavior {required!r}")
+
+    required_style = (
+        "html:not(.js) .dropdown-group:hover .dropdown-menu",
+        "html:not(.js) .dropdown-group:focus-within .dropdown-menu",
+        ".js .mobile-panel.is-open",
+        "@media (max-width: 840px)",
+        "@media (prefers-reduced-motion: reduce)",
+        ':where(a, button):focus-visible',
+        '.nav-link[aria-current="page"]',
+        ".contact-link",
+    )
+    for required in required_style:
+        if required not in style_source:
+            failures.append(f"styles.css: missing grouped-navigation style {required!r}")
+    if re.search(r"transition\s*:\s*all(?:\s|;)", style_source, re.IGNORECASE):
+        failures.append("styles.css: grouped navigation must not use transition: all")
+
+    required_links = {
+        "/": 1,
+        "/consulting/": 2,
+        "/msp-university/": 2,
+        "/azure-journey/": 2,
+        "/tutorials/": 2,
+        "/cases/": 2,
+        "/powershell/": 2,
+        "/downloads/": 2,
+        "/about/": 2,
+        "/contact/": 2,
+    }
+
+    def expected_active(route: str | None) -> str | None:
+        if route == "/":
+            return "/"
+        if route in {"/msp-university/", "/microsoft-365/", "/windows-hybrid/"}:
+            return "/msp-university/"
+        if route and route.startswith("/tutorials/"):
+            return "/tutorials/"
+        if route and route.startswith("/cases/"):
+            return "/cases/"
+        if route in {
+            "/consulting/",
+            "/azure-journey/",
+            "/powershell/",
+            "/downloads/",
+            "/about/",
+            "/contact/",
+        }:
+            return route
+        return None
+
+    navigation_pages = [
+        ROOT / "404.html",
+        *sorted(ROOT.glob("**/index.html")),
+        ROOT / ".github/templates/case-template.html",
+    ]
+    for page in navigation_pages:
+        source = page.read_text(encoding="utf-8")
+        route = public_route(page)
+        relative = page.relative_to(ROOT)
+        header_match = re.search(
+            r'<header class="site-header">.*?</header>', source, re.DOTALL
+        )
+        if not header_match:
+            failures.append(f"{relative}: grouped site header is missing")
+            continue
+        header_source = header_match.group(0)
+
+        required_markup = (
+            '<nav class="site-nav" aria-label="Primary navigation">',
+            '<ul class="desktop-nav">',
+            'class="dropdown-menu" id="learn-menu"',
+            'class="dropdown-menu" id="solutions-menu"',
+            'class="dropdown-menu" id="tools-menu"',
+            'aria-controls="learn-menu"',
+            'aria-controls="solutions-menu"',
+            'aria-controls="tools-menu"',
+            'aria-haspopup="true"',
+            'aria-controls="mobile-navigation"',
+            'aria-label="Open navigation menu"',
+            'class="mobile-panel" id="mobile-navigation"',
+            'id="mobile-learn-label"',
+            'id="mobile-solutions-label"',
+            'id="mobile-tools-label"',
+            'class="nav-link contact-link"',
+        )
+        for required in required_markup:
+            if required not in header_source:
+                failures.append(f"{relative}: missing navigation markup {required!r}")
+
+        if 'class="nav-links"' in header_source:
+            failures.append(f"{relative}: legacy flat navigation remains")
+        if source.count('<script src="/navigation.js"></script>') != 1:
+            failures.append(
+                f"{relative}: must load shared navigation.js exactly once"
+            )
+
+        for href, count in required_links.items():
+            actual = header_source.count(f'href="{href}"')
+            if actual != count:
+                failures.append(
+                    f"{relative}: navigation href {href!r} appears {actual} times; expected {count}"
+                )
+
+        active_hrefs = re.findall(
+            r'href="([^"]+)"[^>]*\saria-current="page"', header_source
+        )
+        expected = (
+            "/cases/"
+            if relative.as_posix() == ".github/templates/case-template.html"
+            else expected_active(route)
+        )
+        expected_count = 1 if expected == "/" else 2 if expected else 0
+        if active_hrefs != ([expected] * expected_count if expected else []):
+            failures.append(
+                f"{relative}: active navigation is {active_hrefs!r}; expected "
+                f"{([expected] * expected_count if expected else [])!r}"
+            )
+
+        expected_group = None
+        if expected in {"/msp-university/", "/azure-journey/"}:
+            expected_group = "learn-menu"
+        elif expected in {"/tutorials/", "/cases/"}:
+            expected_group = "solutions-menu"
+        elif expected in {"/powershell/", "/downloads/"}:
+            expected_group = "tools-menu"
+
+        current_groups = re.findall(
+            r'<li class="dropdown-group has-current" data-dropdown>\s*'
+            r'<button[^>]+aria-controls="([^"]+)"',
+            header_source,
+        )
+        if current_groups != ([expected_group] if expected_group else []):
+            failures.append(
+                f"{relative}: current group is {current_groups!r}; expected "
+                f"{([expected_group] if expected_group else [])!r}"
+            )
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -1201,6 +1368,7 @@ def main() -> int:
     validate_entra_signin_ca_tutorial(failures)
     validate_windows_server_low_disk_tutorial(failures)
     validate_onedrive_sharepoint_sync_tutorial(failures)
+    validate_grouped_navigation(failures)
 
     if failures:
         print("Static-site validation failed:")
