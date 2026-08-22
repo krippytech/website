@@ -89,7 +89,7 @@ SOCIAL_METADATA = {
     },
     "/tutorials/": {
         "title": "Tutorials | KrippyTech",
-        "description": "Practical KrippyTech Microsoft 365 tutorials, including reviewed troubleshooting guidance and clearly labeled material still under review.",
+        "description": "Practical KrippyTech tutorials for Microsoft 365 and Windows troubleshooting, including reviewed procedures and clearly labeled drafts.",
         "type": "website",
     },
     "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": {
@@ -105,6 +105,11 @@ SOCIAL_METADATA = {
     "/tutorials/shared-mailbox-not-showing-outlook/": {
         "title": "Shared Mailbox Not Showing in Outlook | KrippyTech",
         "description": "How to troubleshoot a shared mailbox that does not appear in Outlook after permissions have already been assigned.",
+        "type": "article",
+    },
+    "/tutorials/test-ktdns-v1.0.0/": {
+        "title": "Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting | KrippyTech",
+        "description": "Learn how to download, verify, review, and run Test-KTDNS v1.0.0 for read-only DNS troubleshooting on Windows.",
         "type": "article",
     },
     "/windows-hybrid/": {
@@ -497,6 +502,13 @@ def validate_trust_and_sharing(
             r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
             r'<time datetime="2026-08-16">August 16, 2026</time>'
         ),
+        "/tutorials/test-ktdns-v1.0.0/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
         "/cases/KT-000001/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
@@ -797,6 +809,28 @@ def validate_test_ktdns_release(failures: list[str]) -> None:
             "/downloads/powershell/test-ktdns/v1.0.0/SHA256SUMS.txt",
             "The release is not Authenticode-signed.",
             "use Unblock-File only on the downloaded Test-KTDNS.ps1",
+        ),
+        ROOT / "tutorials/test-ktdns-v1.0.0/index.html": (
+            "/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS-v1.0.0.zip",
+            "/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1",
+            "/downloads/powershell/test-ktdns/v1.0.0/README.md",
+            "/downloads/powershell/test-ktdns/v1.0.0/SHA256SUMS.txt",
+            "/powershell/#test-ktdns-v1",
+            "/downloads/",
+            "/windows-hybrid/",
+            "This release is not Authenticode-signed.",
+            "Ordinary DNS queries do not require administrator rights.",
+            "does not change DNS, write files, download content, modify configuration, or handle credentials",
+            "Do not weaken, bypass, or globally change execution policy.",
+            "3BA1629A7A8DCF1EB82CE97114A9047529336667BCE1FB04F374F028E1340C1F",
+        ),
+        ROOT / "tutorials/index.html": (
+            "test-ktdns-v1.0.0/",
+        ),
+        ROOT / "windows-hybrid/index.html": (
+            "/tutorials/test-ktdns-v1.0.0/",
+            "Published tutorial · DNS",
+            "Additional Windows troubleshooting guides",
         ),
     }
     for page, required_text in public_requirements.items():
