@@ -107,6 +107,11 @@ SOCIAL_METADATA = {
         "description": "An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.",
         "type": "article",
     },
+    "/tutorials/onedrive-sharepoint-sync-investigation/": {
+        "title": "Investigating OneDrive and SharePoint Sync Problems | KrippyTech",
+        "description": "An evidence-first guide for investigating OneDrive and SharePoint synchronization problems before changing accounts, relationships, files, or permissions.",
+        "type": "article",
+    },
     "/tutorials/windows-server-low-disk-space-investigation/": {
         "title": "Investigating Low Disk Space on Windows Server | KrippyTech",
         "description": "An evidence-first guide for investigating low disk space on Windows Server before deleting data, changing retention, or expanding storage.",
@@ -518,6 +523,13 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-08-21">August 21, 2026</time>'
         ),
         "/tutorials/windows-server-low-disk-space-investigation/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>'
+        ),
+        "/tutorials/onedrive-sharepoint-sync-investigation/": re.compile(
             r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-08-22">August 22, 2026</time>\s*'
@@ -1080,6 +1092,78 @@ def validate_windows_server_low_disk_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_onedrive_sharepoint_sync_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/onedrive-sharepoint-sync-investigation/"
+    page = ROOT / "tutorials/onedrive-sharepoint-sync-investigation/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Investigating OneDrive and SharePoint Sync Problems",
+        "This is an investigation guide, not a repair, migration, or data-reconciliation procedure",
+        "Synchronization is not a backup",
+        "Synchronization cannot decide ownership",
+        "A file visible locally does not prove it reached OneDrive or SharePoint",
+        "A file visible in the browser does not prove it synchronized",
+        "Matching filenames do not prove matching content",
+        "Modified timestamps alone should not determine",
+        "Add shortcut to OneDrive",
+        "Known Folder Move",
+        "It does not redirect Windows Documents directly into a SharePoint document library",
+        "Online-only",
+        "Locally available",
+        "Always available",
+        "Sync pending",
+        "Sync error",
+        "Duplicate organization folders",
+        "Bulk overwrite is unsafe",
+        "Observation",
+        "What it may indicate",
+        "What it does not prove",
+        "Safest next investigation step",
+        "This guide does not provide repair or reconciliation procedures",
+        "/msp-university/#learning-path",
+        "/microsoft-365/",
+        "/tutorials/entra-signin-conditional-access-investigation/",
+        "https://support.microsoft.com/en-us/onedrive/save-disk-space-with-onedrive-files-on-demand-for-windows",
+        "https://support.microsoft.com/en-us/office/restrictions-and-limitations-in-onedrive-and-sharepoint-64883a5d-228e-48f5-b3d2-eb39e07630fa",
+        "https://learn.microsoft.com/en-us/sharepoint/redirect-known-folders",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required guide text {required!r}")
+
+    prohibited_text = (
+        "OneDrive.exe /reset",
+        "cmdkey /delete",
+        "reg delete",
+        "Remove-Item",
+        "Stop-Process",
+        "taskkill",
+        "Unlink this PC",
+        "Start-Process",
+        "Set-ItemProperty",
+    )
+    for prohibited in prohibited_text:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited remediation instruction found {prohibited!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "onedrive-sharepoint-sync-investigation/",
+        ROOT / "microsoft-365/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing OneDrive and SharePoint tutorial integration {required!r}"
+            )
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -1116,6 +1200,7 @@ def main() -> int:
     validate_dns_ad_domain_health_tutorial(failures)
     validate_entra_signin_ca_tutorial(failures)
     validate_windows_server_low_disk_tutorial(failures)
+    validate_onedrive_sharepoint_sync_tutorial(failures)
 
     if failures:
         print("Static-site validation failed:")

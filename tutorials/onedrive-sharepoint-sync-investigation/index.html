@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/onedrive-sharepoint-sync-investigation/">
+
+    <title>Investigating OneDrive and SharePoint Sync Problems | KrippyTech</title>
+    <meta name="description" content="An evidence-first guide for investigating OneDrive and SharePoint synchronization problems before changing accounts, relationships, files, or permissions.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Investigating OneDrive and SharePoint Sync Problems | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="An evidence-first guide for investigating OneDrive and SharePoint synchronization problems before changing accounts, relationships, files, or permissions.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/onedrive-sharepoint-sync-investigation/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investigating OneDrive and SharePoint Sync Problems | KrippyTech">
+    <meta name="twitter:description" content="An evidence-first guide for investigating OneDrive and SharePoint synchronization problems before changing accounts, relationships, files, or permissions.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/" aria-current="page">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Microsoft 365 / OneDrive / SharePoint / Investigation</p>
+            <h1>Investigating OneDrive and SharePoint Sync Problems</h1>
+            <p class="hero-text">
+                Identify the authoritative location, compare web and local evidence, and explain the failed boundary before changing client state.
+                <span class="highlight">This is an investigation guide, not a repair, migration, or data-reconciliation procedure.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-22">August 22, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-22">August 22, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card"><p class="card-number">Purpose</p><h3>Explain the mismatch</h3><p>Determine which identity, storage location, sync relationship, item restriction, permission, or migration boundary matches the symptom.</p></article>
+                <article class="card"><p class="card-number">Boundary</p><h3>Preserve before changing</h3><p>No accounts, credentials, relationships, files, permissions, retention settings, or OneDrive configuration are changed by this guide.</p></article>
+                <article class="card"><p class="card-number">Examples</p><h3>Synthetic evidence only</h3><p><code>alex.taylor@example.com</code>, <code>Example Research</code>, and <code>Project Atlas</code> are documentation-safe placeholders.</p></article>
+                <article class="card"><p class="card-number">Method</p><h3>Web, local, identity</h3><p>Compare the intended cloud location with the actual local root and the account shown by the OneDrive sync app.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">1 · Investigation question</p><h2>What is this investigation designed to answer?</h2><p>Determine where the expected item should live, where each observed copy actually lives, whether the correct account and relationship are active, and whether the evidence points to access, client state, an item restriction, storage pressure, or post-migration drift.</p></div>
+            <div class="grid">
+                <article class="card"><h3>Which boundary failed?</h3><p>Separate browser access, library availability, local folder visibility, individual-item synchronization, and Office application behavior.</p></article>
+                <article class="card"><h3>How wide is it?</h3><p>Establish whether one item, one folder, one library, one device, one user, or every synchronized location is affected.</p></article>
+                <article class="card"><h3>What remains unknown?</h3><p>A status icon or matching name alone does not prove that every expected item and byte is present in both locations.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">2 · Safety boundary</p><h2>Preserve evidence before changing client state.</h2><p>Synchronization is not a backup. A change made in a synchronized folder can propagate to the cloud and other devices. Record the exact paths, identity, activity state, errors, timestamps, and local-only data before proposing remediation.</p></div>
+            <div class="mission">
+                <p>A green status icon does not prove every expected file is present and current. A duplicate folder must not be deleted until its identity, relationship, and contents are verified.</p>
+                <p>Do not collect passwords, tokens, browser cookies, authentication databases, Windows credential secrets, private tenant URLs, or customer identifiers.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">3 · Source of truth</p><h2>Establish the intended authoritative location first.</h2><p>Ask the data owner where work is supposed to occur now: the user's OneDrive, a SharePoint document library, a local-only folder, an approved migration destination, an older source, or another user's synchronized copy. Record the decision and its owner.</p></div>
+            <div class="callout callout-warning"><h3>Synchronization cannot decide ownership.</h3><p>Do not use the newest timestamp, a green icon, or whichever folder is easiest to reach to guess which version is authoritative. Web, local, migrated, and other-device copies must be compared before reconciliation.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">4 · Symptom record</p><h2>Capture enough context to reproduce the comparison.</h2></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Identity</p><h3>User and account</h3><p>Record synthetic user and device labels, the expected Microsoft 365 account, and the exact account currently shown in OneDrive.</p></article>
+                <article class="card"><p class="card-number">Cloud</p><h3>Site and library</h3><p>Record the SharePoint site, document library, browser location, whether the item exists, and whether it opens successfully.</p></article>
+                <article class="card"><p class="card-number">Local</p><h3>Root and item</h3><p>Record expected and actual sync roots, the file or folder name, local location, size, modified time, and Files On-Demand icon.</p></article>
+                <article class="card"><p class="card-number">Client</p><h3>State and error</h3><p>Record whether sync is running, paused, signed out, or showing an error, plus the exact displayed activity and error text.</p></article>
+                <article class="card"><p class="card-number">Scope</p><h3>Impact radius</h3><p>Record whether one item, folder, library, or every location is affected and whether other users or devices reproduce it.</p></article>
+                <article class="card"><p class="card-number">Context</p><h3>Capacity and changes</h3><p>Record available local disk space and known migration, account, permission, rename, move, Windows-profile, or device changes.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">5 · Web versus local</p><h2>Compare the item in the browser and File Explorer.</h2><p>Record whether the item exists in each location, whether both copies open, their sizes and modified times, available version history, content differences, Files On-Demand state, and any pending or failed indicator.</p></div>
+            <div class="grid">
+                <article class="card"><h3>Local is not proof of upload</h3><p>A file visible locally does not prove it reached OneDrive or SharePoint.</p></article>
+                <article class="card"><h3>Web is not proof of every device</h3><p>A file visible in the browser does not prove it synchronized to this device or every other device.</p></article>
+                <article class="card"><h3>Name is not content</h3><p>Matching filenames do not prove matching content. Open and compare the intended document where authorization permits.</p></article>
+                <article class="card"><h3>Time is not ownership</h3><p>Modified timestamps alone should not determine which version replaces another.</p></article>
+            </div>
+            <p>Whole-file hashes prove whether bytes match. Different hashes for Office documents require careful interpretation because document content, properties, or package metadata can differ; preserve both copies and use content-aware comparison before drawing a conclusion.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">6 · Signed-in identity</p><h2>Confirm which Microsoft 365 account OneDrive is using.</h2><p>Select the OneDrive cloud icon in the Windows notification area, open OneDrive settings, and review the accounts and organizations displayed. Microsoft supports multiple work or school accounts, so do not assume the visible folder belongs to the expected organization.</p></div>
+            <div class="grid">
+                <article class="card"><h3>Expected identity</h3><p>Compare the expected account with the account listed for the affected relationship.</p></article>
+                <article class="card"><h3>Multiple organizations</h3><p>Record every connected work or school organization and which local root belongs to each.</p></article>
+                <article class="card"><h3>Privacy boundary</h3><p>Record only the minimum account label needed for the private case. Never collect credentials, cookies, tokens, or authentication secrets.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">7 · Local root</p><h2>Identify the folder's actual relationship.</h2><p>Record the full local path and organization label. Determine whether it belongs to the user's OneDrive, a device-specific SharePoint library sync, a shortcut surfaced through OneDrive, a manually copied folder, a migrated destination, or an obsolete Windows profile.</p></div>
+            <div class="callout callout-warning"><h3>Similar names can point to different storage.</h3><p>Account names, site names, library names, and organization folders can look alike while resolving to different locations. Duplicate organization folders are evidence to identify—not automatic deletion targets.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">8 · Architecture</p><h2>Distinguish OneDrive, library sync, shortcuts, and copied folders.</h2></div>
+            <div class="grid">
+                <article class="card"><h3>User's OneDrive</h3><p>Work or school storage associated with that user's account. Its File Explorer root normally includes the organization name.</p></article>
+                <article class="card"><h3>SharePoint library sync</h3><p>The OneDrive sync app connects a selected SharePoint document library to this particular device.</p></article>
+                <article class="card"><h3>Add shortcut to OneDrive</h3><p>A SharePoint or shared-folder shortcut appears in the user's OneDrive and can follow the user across devices. It is not the same topology as device-specific Sync.</p></article>
+                <article class="card"><h3>Manual local copy</h3><p>A copied folder outside an active root does not gain synchronization merely because its name resembles a library.</p></article>
+                <article class="card"><h3>Migration destination</h3><p>A destination becomes authoritative only through the approved migration decision and cutoff—not because a sync relationship exists.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">9 · Files On-Demand</p><h2>Interpret the current status icons without treating cloud-only as broken.</h2></div>
+            <div class="grid">
+                <article class="card"><h3>Online-only</h3><p>A blue cloud means the item is available online and downloads when opened. It is not necessarily missing or unhealthy.</p></article>
+                <article class="card"><h3>Locally available</h3><p>A green check indicates the item has downloaded and can be opened offline; storage management can return it to online-only.</p></article>
+                <article class="card"><h3>Always available</h3><p>A solid green circle with a white check means <em>Always keep on this device</em> is selected and the item consumes local space.</p></article>
+                <article class="card"><h3>Sync pending</h3><p>Circular arrows mean synchronization is in progress or pending. Record how long the state persists and the related activity text.</p></article>
+                <article class="card"><h3>Sync error</h3><p>A red circle with a white cross means an item cannot synchronize. Open the OneDrive activity area and record the exact item and error.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">10 · Known Folder Move</p><h2>Keep Windows known-folder protection separate from SharePoint libraries.</h2><p>Known Folder Move protects Windows Desktop, Documents, and Pictures by moving them into the user's OneDrive. It does not redirect Windows Documents directly into a SharePoint document library. Record whether the observed path is the user's OneDrive known folder, an ordinary local folder, or a separate SharePoint relationship.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">11 · Access</p><h2>Separate permissions from synchronization.</h2><p>Test access in the browser before treating the client as the cause. Record whether the user cannot reach the site, can view but not edit, can use the web library but cannot see it locally, or can synchronize the library except for one item.</p></div>
+            <div class="grid">
+                <article class="card"><h3>Browser access fails</h3><p>Investigate identity, site or library permissions, licensing, sharing boundaries, or service availability before client state.</p></article>
+                <article class="card"><h3>Browser works; local missing</h3><p>Investigate whether the correct relationship and folders are configured for this account and device.</p></article>
+                <article class="card"><h3>One item fails</h3><p>Investigate its name, path, size, lock, checkout, metadata, permissions, or applicable security and compliance controls.</p></article>
+                <article class="card"><h3>Read but not edit</h3><p>Confirm the effective permission and whether checkout, validation, draft security, retention, or sensitivity behavior is involved.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">12 · Restrictions</p><h2>Check the maintained Microsoft limitations before blaming the client.</h2><p>Compare the exact item against Microsoft's current restrictions for invalid characters, reserved names, decoded path length, individual file size, item-count and performance considerations, unsupported content, permission requirements, and library or tenant settings.</p></div>
+            <div class="callout"><h3>Limits change.</h3><p>This guide intentionally does not reproduce fixed numeric limits. Use Microsoft's maintained <a href="https://support.microsoft.com/en-us/office/restrictions-and-limitations-in-onedrive-and-sharepoint-64883a5d-228e-48f5-b3d2-eb39e07630fa">Restrictions and limitations in OneDrive and SharePoint</a> during the investigation.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">13 · Client evidence</p><h2>Use the OneDrive activity surface before proposing a reset.</h2><p>Select the relevant OneDrive cloud icon in the Windows notification area. Record the displayed identity, whether synchronization is current, processing, paused, signed out, or in error, the affected item, current activity, and exact message. Confirm the OneDrive process is running and compare the same item in the browser.</p></div>
+            <div class="grid">
+                <article class="card"><h3>Activity and errors</h3><p>Capture exact text and timestamps rather than paraphrasing a transient notification.</p></article>
+                <article class="card"><h3>Account listing</h3><p>Record which organizations and locations appear in OneDrive settings without collecting secrets.</p></article>
+                <article class="card"><h3>Diagnostic boundary</h3><p>Keep available Windows or OneDrive diagnostic evidence in the approved private case location. Do not publish logs or tenant details.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">14 · Duplicate roots</p><h2>Identify duplicate folders and stale relationships without deleting them.</h2><p>Duplicate organization or library folders can result from another account, an older Windows profile, a changed organization label, a shortcut, a re-established sync, or a manually copied tree. For each root, record its path, account, relationship type, cloud destination, item count, recent activity, and local-only differences.</p></div>
+            <p>A stale-looking folder may contain unsynchronized work. Preserve evidence and confirm that a root is inactive before routing any cleanup through a separately approved procedure.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">15 · Post-migration drift</p><h2>Investigate work that continued in an older location after migration.</h2><p>Record the migration cutoff, approved destination, old source, affected user and path, and all changes made after cutoff. Preserve both versions while comparing size, timestamps, version history, hashes, and document content.</p></div>
+            <div class="mission">
+                <p>Bulk overwrite is unsafe. File movement can destroy timestamps, version context, sharing relationships, or conflict evidence.</p>
+                <p>Document every conflict and exception. Copy, overwrite, restoration, or reconciliation requires a separate approved migration procedure with ownership, backups, change control, and verification.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">16 · Evidence correlation</p><h2>Separate observations from conclusions.</h2></div>
+            <div class="table-wrap" role="region" aria-label="OneDrive and SharePoint synchronization evidence correlation table" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Observation</th><th scope="col">What it may indicate</th><th scope="col">What it does not prove</th><th scope="col">Safest next investigation step</th></tr></thead>
+                    <tbody>
+                        <tr><td>File exists in SharePoint but not locally.</td><td>The folder is not selected, the relationship is absent or stale, or an item restriction blocks it.</td><td>That the cloud file is lost or the client must be reset.</td><td>Confirm identity, relationship type, sync root, folder selection, activity, and exact error.</td></tr>
+                        <tr><td>File exists locally but not in SharePoint.</td><td>A local-only copy, pending upload, failed item, wrong root, or old profile.</td><td>That it is safe to move, delete, or force-upload.</td><td>Preserve it and identify the root, account, intended destination, and error.</td></tr>
+                        <tr><td>Both locations have different content.</td><td>Divergent edits, stale sync, conflict handling, or post-migration drift.</td><td>Which copy should replace the other.</td><td>Preserve both and compare ownership, history, content, hashes, and cutoff evidence.</td></tr>
+                        <tr><td>Browser access works but local sync does not.</td><td>A client, account, selected-folder, relationship, device, or item restriction.</td><td>That permissions and identity are correct for editing every item.</td><td>Record effective web behavior, client identity, local root, activity, and scope.</td></tr>
+                        <tr><td>User is signed into the wrong organization.</td><td>The visible root may belong to another work or school account.</td><td>That the other account or its data can be removed.</td><td>Map every account and root to its organization and cloud destination.</td></tr>
+                        <tr><td>Duplicate organization folders exist.</td><td>Multiple accounts, profiles, shortcuts, relationships, renamed organizations, or copied data.</td><td>That either folder is stale or disposable.</td><td>Inventory identity, relationship, destination, activity, and local-only data for each.</td></tr>
+                        <tr><td>One library fails while others synchronize.</td><td>A library relationship, permission, setting, volume, or item set is specific to the failure.</td><td>That OneDrive is globally unhealthy.</td><td>Compare the failing library with one working library under the same identity.</td></tr>
+                        <tr><td>One file fails while the library synchronizes.</td><td>A name, path, size, lock, checkout, permission, metadata, or content restriction.</td><td>That the library relationship must be rebuilt.</td><td>Compare the item with current Microsoft restrictions and its browser behavior.</td></tr>
+                        <tr><td>A blue cloud is mistaken for missing data.</td><td>The item is online-only under Files On-Demand.</td><td>That it is available offline or current on every device.</td><td>Confirm it opens in the browser and record its actual status and sync activity.</td></tr>
+                        <tr><td>Synchronization remains pending.</td><td>Queued work, open files, connectivity, storage, a restriction, or client processing.</td><td>That waiting indefinitely or resetting will preserve every local change.</td><td>Record duration, activity, affected scope, disk space, and exact errors.</td></tr>
+                        <tr><td>Local disk space is constrained.</td><td>Downloads or client work may be unable to complete.</td><td>That cloud content is missing or local data is safe to remove.</td><td>Record capacity and Files On-Demand state, then route capacity remediation separately.</td></tr>
+                        <tr><td>An invalid-name or path error appears.</td><td>The item conflicts with a maintained OneDrive or SharePoint restriction.</td><td>That every item or the entire library is affected.</td><td>Compare the exact item and full path with Microsoft's current restrictions.</td></tr>
+                        <tr><td>Permissions changed recently.</td><td>Access or edit capability may differ from the established local relationship.</td><td>That the client cached the wrong credential or should be unlinked.</td><td>Verify browser access and effective permission with the site owner.</td></tr>
+                        <tr><td>An old Windows profile has the expected files.</td><td>Work may remain in an obsolete or unsynchronized local root.</td><td>That the files reached the approved cloud destination.</td><td>Preserve the profile data and compare it with the authoritative cloud location.</td></tr>
+                        <tr><td>Post-migration edits exist in the old location.</td><td>Users continued working after cutoff or the workflow transition was incomplete.</td><td>That bulk overwrite is safe.</td><td>Build an approved exception inventory and route reconciliation separately.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">17 · Escalation</p><h2>Stop when ownership, recovery, identity, or service scope exceeds investigation.</h2></div>
+            <div class="grid">
+                <article class="card"><h3>Data integrity</h3><p>Conflicting versions have unclear ownership, possible data loss exists, or backups and recovery capability are missing or unverified.</p></article>
+                <article class="card"><h3>Broad impact</h3><p>Multiple users or libraries are affected, or evidence suggests a tenant-wide Microsoft 365 service issue.</p></article>
+                <article class="card"><h3>Migration</h3><p>Large-scale post-migration drift or any bulk copy, overwrite, deletion, restoration, or migration is required.</p></article>
+                <article class="card"><h3>Compliance</h3><p>Retention, sensitivity, legal hold, records management, or another compliance control may govern the item.</p></article>
+                <article class="card"><h3>Security</h3><p>Ransomware, unauthorized mass changes, compromise, or unexplained broad modification is suspected.</p></article>
+                <article class="card"><h3>Client or profile change</h3><p>An unknown profile, credential cleanup, reset, unlink, account removal, library removal, or shortcut removal is required.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">18 · Intentionally excluded</p><h2>This guide does not provide repair or reconciliation procedures.</h2></div>
+            <div class="mission">
+                <p>Excluded actions include resetting OneDrive; unlinking the computer; signing users out; removing accounts, credentials, configuration data, sync roots, library relationships, or shortcuts; editing the registry; renaming, moving, deleting, restoring, bulk-copying, or overwriting production files; deleting duplicate folders; changing permissions, Files On-Demand, Known Folder Move, retention, sensitivity, or compliance settings; reinstalling OneDrive; and resolving conflicts automatically.</p>
+                <p>These actions require separate authorization, verified backups, confirmed ownership, change control, and an environment-specific remediation plan.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">19 · Related resources</p><h2>Continue through the appropriate KrippyTech path.</h2></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Learning method</p><h3>MSP University</h3><p>Keep evidence collection in the investigation phase before authorizing a change.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Topic hub</p><h3>Microsoft 365 &amp; Identity</h3><p>Connect SharePoint and OneDrive behavior with identity, access, and collaboration boundaries.</p><a class="card-link" href="/microsoft-365/">Open the Microsoft 365 hub <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Related investigation</p><h3>Microsoft Entra sign-ins</h3><p>Use the Entra guide when sign-in or Conditional Access evidence may explain access behavior.</p><a class="card-link" href="/tutorials/entra-signin-conditional-access-investigation/">Open the Entra guide <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Tutorial catalog</p><h3>Reviewed procedures</h3><p>Browse the complete set of published KrippyTech investigations and procedures.</p><a class="card-link" href="/tutorials/">Browse tutorials <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><p class="eyebrow">Microsoft sources</p><h2>Primary documentation used for this guide.</h2></div>
+            <ul>
+                <li><a href="https://support.microsoft.com/en-us/sharepoint/sync/sync-sharepoint-and-teams-files-with-your-computer">Sync SharePoint and Teams files with your computer</a></li>
+                <li><a href="https://support.microsoft.com/en-us/office/view-sharepoint-files-in-file-explorer-66b574bb-08b4-46b6-a6a0-435fd98194cc">View SharePoint files in File Explorer</a></li>
+                <li><a href="https://support.microsoft.com/en-us/onedrive/add-shortcuts-to-shared-folders-in-onedrive">Add shortcuts to shared folders in OneDrive</a></li>
+                <li><a href="https://support.microsoft.com/en-us/onedrive/how-to-add-an-account-in-microsoft-onedrive">Add an account in Microsoft OneDrive</a></li>
+                <li><a href="https://support.microsoft.com/en-us/onedrive/save-disk-space-with-onedrive-files-on-demand-for-windows">Files On-Demand for Windows</a></li>
+                <li><a href="https://support.microsoft.com/en-us/onedrive/what-do-the-onedrive-icons-mean">What do the OneDrive icons mean?</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/sharepoint/redirect-known-folders">Redirect and move Windows known folders to OneDrive</a></li>
+                <li><a href="https://support.microsoft.com/en-us/office/restrictions-and-limitations-in-onedrive-and-sharepoint-64883a5d-228e-48f5-b3d2-eb39e07630fa">Restrictions and limitations in OneDrive and SharePoint</a></li>
+                <li><a href="https://support.microsoft.com/en-us/office/view-the-version-history-of-an-item-or-file-in-a-list-or-library-53262060-5092-424d-a50b-c798b0ec32b1">View version history in a list or library</a></li>
+                <li><a href="https://support.microsoft.com/en-us/sharepoint/libraries/check-out-or-check-in-files-in-a-document-library">Check out or check in files in a document library</a></li>
+                <li><a href="https://support.microsoft.com/en-us/sharepoint/sharepoint-sharing-and-permissions/see-who-a-file-is-shared-with-in-onedrive-or-sharepoint">See who a file is shared with in OneDrive or SharePoint</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>
