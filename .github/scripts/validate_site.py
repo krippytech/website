@@ -166,6 +166,23 @@ TEST_KTDNS_ZIP_MEMBERS = {
     "tests/Test-KTDNS.Tests.ps1",
 }
 
+GET_KTNETWORKCONFIG_RELEASE = ROOT / "downloads/powershell/get-ktnetworkconfig/v1.0.0"
+GET_KTNETWORKCONFIG_HASHES = {
+    "Get-KTNetworkConfig.ps1": "eada2bbdde5c0b62bb97d82d4db4a70259cb8cc8dc9d65ca9d52e9384ff2c5c1",
+    "README.md": "48b4ee70ac398ea5ac6ba070614d10dce8c6b69de5117528b776b4896cf9b3e1",
+    "LICENSE": "fbbdf22da672c4d3fa5d004c09a2c88e47d0fd66768a83523900df29a236279a",
+    "SHA256SUMS.txt": "72c7d8b381bd83f48228bf822c77e4f23b88d87e44724cf3d18ecb13f12de8a8",
+    "tests/Get-KTNetworkConfig.Tests.ps1": "d0fde152de0a6c79e1601ebf3ec3aadb5735ad193cdb8ad6b76deaec3b1c31b1",
+    "Get-KTNetworkConfig-v1.0.0.zip": "8b93938eef5ab39bcff393330b5666d1a52d45e95933500b75934e0b520f0fda",
+}
+GET_KTNETWORKCONFIG_ZIP_MEMBERS = {
+    "Get-KTNetworkConfig.ps1",
+    "README.md",
+    "LICENSE",
+    "SHA256SUMS.txt",
+    "tests/Get-KTNetworkConfig.Tests.ps1",
+}
+
 EXPECTED_HOME_JSON_LD = {
     "@context": "https://schema.org",
     "@graph": [
@@ -900,6 +917,158 @@ def validate_test_ktdns_release(failures: list[str]) -> None:
                 )
 
 
+def validate_get_ktnetworkconfig_release(failures: list[str]) -> None:
+    expected_files = set(GET_KTNETWORKCONFIG_HASHES)
+    if not GET_KTNETWORKCONFIG_RELEASE.is_dir():
+        failures.append("Get-KTNetworkConfig v1.0.0: release directory is missing")
+        return
+
+    actual_files = {
+        path.relative_to(GET_KTNETWORKCONFIG_RELEASE).as_posix()
+        for path in GET_KTNETWORKCONFIG_RELEASE.rglob("*")
+        if path.is_file()
+    }
+    if actual_files != expected_files:
+        failures.append(
+            "Get-KTNetworkConfig v1.0.0: release files differ from the approved set; "
+            f"expected {sorted(expected_files)}, found {sorted(actual_files)}"
+        )
+
+    for relative, expected_hash in GET_KTNETWORKCONFIG_HASHES.items():
+        path = GET_KTNETWORKCONFIG_RELEASE / relative
+        if not path.is_file():
+            continue
+        actual_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual_hash != expected_hash:
+            failures.append(
+                f"Get-KTNetworkConfig v1.0.0: SHA-256 mismatch for {relative}; "
+                f"expected {expected_hash}, found {actual_hash}"
+            )
+
+    manifest_path = GET_KTNETWORKCONFIG_RELEASE / "SHA256SUMS.txt"
+    expected_manifest = [
+        f"{GET_KTNETWORKCONFIG_HASHES[relative].upper()}  {relative}"
+        for relative in (
+            "Get-KTNetworkConfig.ps1",
+            "README.md",
+            "LICENSE",
+            "tests/Get-KTNetworkConfig.Tests.ps1",
+        )
+    ]
+    if manifest_path.is_file():
+        actual_manifest = manifest_path.read_text(encoding="utf-8").splitlines()
+        if actual_manifest != expected_manifest:
+            failures.append(
+                "Get-KTNetworkConfig v1.0.0: SHA256SUMS.txt does not exactly match approved files"
+            )
+
+    zip_path = GET_KTNETWORKCONFIG_RELEASE / "Get-KTNetworkConfig-v1.0.0.zip"
+    if zip_path.is_file():
+        try:
+            with zipfile.ZipFile(zip_path) as archive:
+                members = {
+                    info.filename
+                    for info in archive.infolist()
+                    if not info.is_dir()
+                }
+                if members != GET_KTNETWORKCONFIG_ZIP_MEMBERS:
+                    failures.append(
+                        "Get-KTNetworkConfig v1.0.0: ZIP members differ from the approved set; "
+                        f"expected {sorted(GET_KTNETWORKCONFIG_ZIP_MEMBERS)}, found {sorted(members)}"
+                    )
+                for member in members & GET_KTNETWORKCONFIG_ZIP_MEMBERS:
+                    expected_hash = GET_KTNETWORKCONFIG_HASHES[member]
+                    actual_hash = hashlib.sha256(archive.read(member)).hexdigest()
+                    if actual_hash != expected_hash:
+                        failures.append(
+                            f"Get-KTNetworkConfig v1.0.0: ZIP member hash mismatch for {member}"
+                        )
+        except zipfile.BadZipFile:
+            failures.append("Get-KTNetworkConfig v1.0.0: release ZIP is invalid")
+
+    script_path = GET_KTNETWORKCONFIG_RELEASE / "Get-KTNetworkConfig.ps1"
+    if script_path.is_file():
+        script = script_path.read_text(encoding="utf-8")
+        required_script_text = (
+            "#requires -Version 5.1",
+            "#requires -Modules NetTCPIP",
+            "Version: 1.0.0",
+            "Get-NetIPConfiguration -ErrorAction Stop",
+            "26496D1395902B08BDAEE2E3BBFCBDBD8F3D37415680715459F3EDBB869FA0CF",
+        )
+        for required in required_script_text:
+            if required not in script:
+                failures.append(
+                    f"Get-KTNetworkConfig v1.0.0: script is missing approved text {required!r}"
+                )
+        prohibited_commands = re.compile(
+            r"(?im)^\s*(Write-Host|Invoke-WebRequest|Invoke-RestMethod|Start-Process|"
+            r"Set-Content|Add-Content|Out-File|Export-Csv|New-Item|Remove-Item|"
+            r"Set-ExecutionPolicy|Get-Credential|Invoke-Expression|Invoke-Command|"
+            r"Set-DnsClientServerAddress|Set-NetIPAddress|Set-NetIPInterface|Set-NetRoute)\b"
+        )
+        match = prohibited_commands.search(script)
+        if match:
+            failures.append(
+                f"Get-KTNetworkConfig v1.0.0: prohibited command found: {match.group(1)}"
+            )
+
+    readme_path = GET_KTNETWORKCONFIG_RELEASE / "README.md"
+    if readme_path.is_file():
+        readme = readme_path.read_text(encoding="utf-8")
+        required_readme_text = (
+            "# Get-KTNetworkConfig v1.0.0",
+            "Unblock-File -LiteralPath .\\Get-KTNetworkConfig.ps1",
+            "Do not bypass or globally weaken PowerShell execution policy.",
+            "Approved seed SHA-256:",
+            "26496D1395902B08BDAEE2E3BBFCBDBD8F3D37415680715459F3EDBB869FA0CF",
+        )
+        for required in required_readme_text:
+            if required not in readme:
+                failures.append(
+                    f"Get-KTNetworkConfig v1.0.0: README is missing approved text {required!r}"
+                )
+        if "Set-ExecutionPolicy" in readme or "-ExecutionPolicy Bypass" in readme:
+            failures.append(
+                "Get-KTNetworkConfig v1.0.0: README must not recommend an execution-policy change or bypass"
+            )
+
+    public_requirements = {
+        ROOT / "powershell/index.html": (
+            "Get-KTNetworkConfig v1.0.0 is a read-only Windows PowerShell tool for discovering the local network configuration of active adapters.",
+            "It returns structured PowerShell objects containing the interface alias and index, adapter description, IPv4 and IPv6 addresses, IPv4 gateways, DNS servers, and network profile.",
+            "The script performs local discovery only. It does not change network settings, write files, contact remote systems, test connectivity, modify configuration, or handle credentials.",
+            "Network configuration can contain internal IP addresses, gateways, DNS servers, adapter names, and network-profile information.",
+            "This release is not Authenticode-signed.",
+            "use Unblock-File only on Get-KTNetworkConfig.ps1",
+            "Do not bypass or globally change execution policy.",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig-v1.0.0.zip",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig.ps1",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/README.md",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt",
+        ),
+        ROOT / "downloads/index.html": (
+            "Get-KTNetworkConfig v1.0.0 is KrippyTech’s second downloadable PowerShell release.",
+            "Verify the package. Review the script. Run only what you understand.",
+            "This release is not Authenticode-signed.",
+            "use Unblock-File only on Get-KTNetworkConfig.ps1",
+            "Do not bypass or globally change execution policy.",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig-v1.0.0.zip",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig.ps1",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/README.md",
+            "/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt",
+            "/powershell/#get-ktnetworkconfig-v1",
+        ),
+    }
+    for page, required_text in public_requirements.items():
+        source = page.read_text(encoding="utf-8")
+        for required in required_text:
+            if required not in source:
+                failures.append(
+                    f"{page.relative_to(ROOT)}: missing Get-KTNetworkConfig release text {required!r}"
+                )
+
+
 def validate_dns_ad_domain_health_tutorial(failures: list[str]) -> None:
     route = "/tutorials/dns-active-directory-domain-health/"
     page = ROOT / "tutorials/dns-active-directory-domain-health/index.html"
@@ -1549,6 +1718,7 @@ def main() -> int:
     validate_crawl_baseline(parsers, failures)
     validate_trust_and_sharing(parsers, failures)
     validate_test_ktdns_release(failures)
+    validate_get_ktnetworkconfig_release(failures)
     validate_dns_ad_domain_health_tutorial(failures)
     validate_entra_signin_ca_tutorial(failures)
     validate_windows_server_low_disk_tutorial(failures)

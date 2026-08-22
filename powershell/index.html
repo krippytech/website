@@ -162,6 +162,58 @@
         </div>
     </section>
 
+    <section class="section" id="get-ktnetworkconfig-v1">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Second public PowerShell release</p>
+                <h2>Get-KTNetworkConfig v1.0.0</h2>
+                <p>
+                    Get-KTNetworkConfig v1.0.0 is a read-only Windows PowerShell tool for discovering the local network configuration of active adapters.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Structured discovery</p>
+                    <h3>Eight stable properties</h3>
+                    <p>
+                        It returns structured PowerShell objects containing the interface alias and index, adapter description, IPv4 and IPv6 addresses, IPv4 gateways, DNS servers, and network profile.
+                    </p>
+                    <p>
+                        The script performs local discovery only. It does not change network settings, write files, contact remote systems, test connectivity, modify configuration, or handle credentials.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Requirements</p>
+                    <h3>Windows and NetTCPIP</h3>
+                    <p>
+                        Requires Windows PowerShell 5.1 or PowerShell 7 on Windows and the built-in NetTCPIP module. The script has no parameters and normally runs without administrator rights.
+                    </p>
+                    <a class="card-link" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/README.md">Read the release README <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Privacy</p>
+                    <h3>Review output before sharing</h3>
+                    <p>
+                        Network configuration can contain internal IP addresses, gateways, DNS servers, adapter names, and network-profile information. Review output before copying it into tickets, reports, public posts, or support requests.
+                    </p>
+                    <a class="card-link" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt">View SHA-256 checksums <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+            <div class="mission">
+                <blockquote>Review the source and verify the package before running it.</blockquote>
+                <p>
+                    This release is not Authenticode-signed. Review the source and verify its SHA-256 checksum before running it. If RemoteSigned blocks the verified downloaded script, use Unblock-File only on Get-KTNetworkConfig.ps1. Do not bypass or globally change execution policy.
+                </p>
+            </div>
+            <div class="buttons">
+                <a class="button button-primary" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig-v1.0.0.zip" download>Download ZIP</a>
+                <a class="button button-secondary" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig.ps1">Review the script</a>
+                <a class="button button-secondary" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/README.md">Read the README</a>
+                <a class="button button-secondary" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt">Verify SHA-256</a>
+            </div>
+        </div>
+    </section>
+
     <section class="section" id="test-ktdns-v1">
         <div class="container">
             <div class="section-heading">
