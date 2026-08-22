@@ -77,6 +77,11 @@ SOCIAL_METADATA = {
         "description": "Practical KrippyTech learning for technicians, solo IT administrators, and MSP professionals working in Microsoft environments.",
         "type": "website",
     },
+    "/microsoft-365/": {
+        "title": "Microsoft 365 & Identity | KrippyTech",
+        "description": "Explore KrippyTech's published Microsoft 365 tutorials and anonymized cases across Exchange Online, identity, permissions, collaboration, and PowerShell.",
+        "type": "website",
+    },
     "/powershell/": {
         "title": "PowerShell Library | KrippyTech",
         "description": "Download Test-KTDNS v1.0.0, KrippyTech's first public PowerShell release for read-only DNS troubleshooting on Windows.",
@@ -101,6 +106,11 @@ SOCIAL_METADATA = {
         "title": "Shared Mailbox Not Showing in Outlook | KrippyTech",
         "description": "How to troubleshoot a shared mailbox that does not appear in Outlook after permissions have already been assigned.",
         "type": "article",
+    },
+    "/windows-hybrid/": {
+        "title": "Windows & Hybrid | KrippyTech",
+        "description": "Explore KrippyTech's Windows and hybrid learning lanes and the published Test-KTDNS read-only DNS troubleshooting tool.",
+        "type": "website",
     },
 }
 
