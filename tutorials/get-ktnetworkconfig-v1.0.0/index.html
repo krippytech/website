@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/get-ktnetworkconfig-v1.0.0/">
+
+    <title>Inspecting Local Windows Network Configuration with Get-KTNetworkConfig | KrippyTech</title>
+    <meta name="description" content="Learn how to verify, run, and interpret Get-KTNetworkConfig v1.0.0 before choosing the next Windows network diagnostic step.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Inspecting Local Windows Network Configuration with Get-KTNetworkConfig | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="Learn how to verify, run, and interpret Get-KTNetworkConfig v1.0.0 before choosing the next Windows network diagnostic step.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/get-ktnetworkconfig-v1.0.0/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Inspecting Local Windows Network Configuration with Get-KTNetworkConfig | KrippyTech">
+    <meta name="twitter:description" content="Learn how to verify, run, and interpret Get-KTNetworkConfig v1.0.0 before choosing the next Windows network diagnostic step.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/navigation.js"></script>
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/" aria-current="page">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/" aria-current="page">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Windows Networking / PowerShell</p>
+            <h1>Inspecting Local Windows Network Configuration with Get-KTNetworkConfig</h1>
+            <p class="hero-text">
+                Collect a structured snapshot from the affected Windows computer before attempting remediation.
+                <span class="highlight">Move from the real symptom to local configuration evidence, interpret it carefully, state its limits, and choose the next diagnostic step.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-22">August 22, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-22">August 22, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Estimated Time</p>
+                    <h3>15–20 Minutes</h3>
+                </article>
+                <article class="card">
+                    <p class="card-number">Difficulty</p>
+                    <h3>Beginner / Intermediate</h3>
+                </article>
+                <article class="card">
+                    <p class="card-number">Technologies</p>
+                    <h3>Windows / NetTCPIP / PowerShell</h3>
+                </article>
+                <article class="card">
+                    <p class="card-number">Release</p>
+                    <h3>Get-KTNetworkConfig v1.0.0</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">What the tool does</p>
+                <h2>Capture the active local configuration as evidence.</h2>
+                <p>Get-KTNetworkConfig calls <code>Get-NetIPConfiguration</code> on the local Windows computer, evaluates configurations whose associated adapter reports <code>Up</code>, and returns one structured PowerShell object for each retained configuration.</p>
+            </div>
+            <div class="mission">
+                <p>The script accepts no parameters. It performs local discovery only and does not modify network configuration, write files, test connectivity, contact remote systems, collect credentials, or prove that any network service works.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">When to use it</p>
+                <h2>Start with the reported symptom, then preserve the local state.</h2>
+                <p>Use the snapshot when a technician needs to understand which active adapters, addresses, gateways, DNS servers, and network profiles Windows currently reports before selecting a narrower test.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Real symptom</p>
+                    <h3>Define what failed</h3>
+                    <p>Record the affected computer, user-visible behavior, destination, application, time, expected result, and whether the problem is continuous or intermittent.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Local evidence</p>
+                    <h3>Collect without changing</h3>
+                    <p>Run the script on the affected Windows computer and retain the objects long enough to compare the configuration with the reported path.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Next decision</p>
+                    <h3>Choose a targeted check</h3>
+                    <p>Use the evidence to decide whether the next question concerns DNS, routing, a destination port, VPN state, DHCP, domain dependencies, or the application itself.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Requirements and safety boundary</p>
+                <h2>Confirm the platform before running the script.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">PowerShell</p>
+                    <h3>Windows PowerShell 5.1 or PowerShell 7 on Windows</h3>
+                    <p>The built-in <code>NetTCPIP</code> module and <code>Get-NetIPConfiguration</code> must be available. Linux and macOS are not supported.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Privilege</p>
+                    <h3>Administrator rights are normally unnecessary</h3>
+                    <p>Ordinary local discovery normally works for a standard user, although organizational controls can restrict access.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Signature</p>
+                    <h3>Verify and review first</h3>
+                    <p>The release is not Authenticode-signed. Verify its SHA-256 value and review the source before execution.</p>
+                </article>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Do not weaken execution policy</h3>
+                <p>Do not bypass or globally change PowerShell execution policy. After checksum and source review, targeted <code>Unblock-File</code> may be appropriate only for this downloaded script when <code>RemoteSigned</code> blocks it.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Download and checksum verification</p>
+                <h2>Confirm the exact release before running it.</h2>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Step 1</p>
+                <h3>Download the versioned package or script</h3>
+                <p>Keep the README and checksum manifest with the release so its source, security boundaries, and approved hash remain available during review.</p>
+                <div class="buttons">
+                    <a class="button button-primary" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig-v1.0.0.zip" download>Download the ZIP</a>
+                    <a class="button button-secondary" href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/Get-KTNetworkConfig.ps1" download>Download the script</a>
+                </div>
+                <p>Supporting files: <a href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/README.md">release README</a> and <a href="/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt">SHA-256 manifest</a>.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Step 2</p>
+                <h3>Compare the script with the approved SHA-256 value</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">$expected = (Select-String -LiteralPath .\SHA256SUMS.txt -Pattern '  Get-KTNetworkConfig.ps1$').Line.Split()[0]
+$actual = (Get-FileHash -LiteralPath .\Get-KTNetworkConfig.ps1 -Algorithm SHA256).Hash
+$actual -eq $expected</code></pre>
+                </div>
+                <p>The result must be <code>True</code>. The approved script SHA-256 is:</p>
+                <div class="code-block">
+                    <pre><code>EADA2BBDDE5C0B62BB97D82D4DB4A70259CB8CC8DC9D65CA9D52E9384FF2C5C1</code></pre>
+                </div>
+                <p>If the comparison is false, stop. Do not run the file.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Step 3</p>
+                <h3>Review the source and use targeted unblocking only if needed</h3>
+                <p>Confirm that the script has an empty parameter block, calls local <code>Get-NetIPConfiguration</code>, keeps only associated adapters reporting <code>Up</code>, and emits the documented eight-property objects.</p>
+                <div class="code-block">
+                    <pre><code class="language-powershell">Unblock-File -LiteralPath .\Get-KTNetworkConfig.ps1</code></pre>
+                </div>
+                <p>Use this command only after verification and only when the downloaded script is blocked under <code>RemoteSigned</code>. It is not a substitute for organizational policy.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Running the script</p>
+                <h2>Store the structured objects for deliberate review.</h2>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">$networkConfig = &amp; .\Get-KTNetworkConfig.ps1
+$networkConfig</code></pre>
+            </div>
+            <p>The script accepts no parameters. Do not add computer names, credentials, destinations, export paths, or remote-session arguments; they are not part of this release.</p>
+            <div class="code-block">
+                <pre><code class="language-powershell">$networkConfig |
+    Select-Object InterfaceAlias, InterfaceIndex, Adapter, IPv4Address,
+        IPv6Address, IPv4Gateway, DnsServers, NetProfile</code></pre>
+            </div>
+            <p><code>Select-Object</code> changes only the caller's display or downstream selection. The script itself returns ordinary structured objects and does not format or export them.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Understanding the output</p>
+                <h2>Read all eight properties together.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Scalar</p><h3>InterfaceAlias</h3><p>The Windows interface alias. It may be <code>$null</code> and can reveal local naming conventions.</p></article>
+                <article class="card"><p class="card-number">Scalar</p><h3>InterfaceIndex</h3><p>The local integer interface index. It identifies the interface only in the observed computer's current context and may be <code>$null</code>.</p></article>
+                <article class="card"><p class="card-number">Scalar</p><h3>Adapter</h3><p>The associated adapter description. It may identify physical, virtual, or VPN technology and may be <code>$null</code>.</p></article>
+                <article class="card"><p class="card-number">String array</p><h3>IPv4Address</h3><p>Zero or more reported IPv4 addresses. An empty array means no value was available in this snapshot.</p></article>
+                <article class="card"><p class="card-number">String array</p><h3>IPv6Address</h3><p>Zero or more reported IPv6 addresses. Presence or absence alone does not prove IPv6 path health.</p></article>
+                <article class="card"><p class="card-number">String array</p><h3>IPv4Gateway</h3><p>Zero or more reported IPv4 next-hop values. Configuration does not prove reachability or route selection.</p></article>
+                <article class="card"><p class="card-number">String array</p><h3>DnsServers</h3><p>Zero or more configured DNS-server addresses. A listed resolver is not proof that it responds or answers correctly.</p></article>
+                <article class="card"><p class="card-number">Scalar</p><h3>NetProfile</h3><p>The reported network-profile name. It may be <code>$null</code> and does not prove trust, reachability, or application health.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Array-valued properties</p>
+                <h2>Preserve multiple values instead of flattening them.</h2>
+                <p><code>IPv4Address</code>, <code>IPv6Address</code>, <code>IPv4Gateway</code>, and <code>DnsServers</code> are <code>System.String[]</code> arrays. Missing multivalue information appears as an empty array; missing scalar information appears as <code>$null</code>.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">foreach ($item in $networkConfig) {
+    [pscustomobject]@{
+        InterfaceAlias = $item.InterfaceAlias
+        IPv4Count      = $item.IPv4Address.Count
+        GatewayCount   = $item.IPv4Gateway.Count
+        DnsServerCount = $item.DnsServers.Count
+    }
+}</code></pre>
+            </div>
+            <p>This read-only projection helps distinguish no reported value from one or several values without changing the collected objects or joining arrays into ambiguous text.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Synthetic example</p>
+                <h2>Read the snapshot as configuration evidence—not a health verdict.</h2>
+                <p>The following documentation-only values use reserved example address ranges and do not represent a customer or production environment.</p>
+            </div>
+            <div class="code-block">
+                <pre><code>InterfaceAlias : Lab Ethernet
+InterfaceIndex : 12
+Adapter        : Synthetic Ethernet Adapter
+IPv4Address    : {192.0.2.20}
+IPv6Address    : {2001:db8::20}
+IPv4Gateway    : {192.0.2.1}
+DnsServers     : {192.0.2.53, 2001:db8::53}
+NetProfile     : Example Lab</code></pre>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Observation</p>
+                    <h3>Windows reported one retained configuration</h3>
+                    <p>The associated adapter reported <code>Up</code>, and the object contains address, gateway, DNS, and profile values at collection time.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Inference</p>
+                    <h3>The configuration is relevant to the symptom</h3>
+                    <p>If the reported application should use this interface, these values identify plausible DNS and routing dependencies for the next check.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Unknown</p>
+                    <h3>No service has been tested</h3>
+                    <p>The snapshot does not show whether the gateway, resolvers, destination, VPN, domain, Internet, or application can actually be reached.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Common evidence patterns</p>
+                <h2>Explain the observation before deciding what it means.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Several objects</p><h3>More than one adapter reports Up</h3><p>Ethernet, Wi-Fi, VPN, and virtual adapters can coexist. Multiple objects are not automatically a fault; determine which path relates to the symptom.</p></article>
+                <article class="card"><p class="card-number">No gateway value</p><h3>The array is empty</h3><p>Some active adapters do not need an IPv4 default gateway. Preserve the observation and compare it with the adapter's intended role.</p></article>
+                <article class="card"><p class="card-number">Several DNS servers</p><h3>Configuration provides multiple resolvers</h3><p>The list does not reveal which resolver answers a particular query, whether answers agree, or whether any resolver is reachable.</p></article>
+                <article class="card"><p class="card-number">No returned objects</p><h3>No configuration met the retained-state rule</h3><p>The script returns no objects when no configuration has an associated adapter reporting exactly <code>Up</code>. That result alone does not identify the cause.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Evidence limits</p>
+                <h2>Separate what the output proves from what remains unknown.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">What it proves</p>
+                    <h3>A local observation was returned</h3>
+                    <p>For each emitted object, the script observed an associated adapter reporting <code>Up</code> and normalized the available eight properties at that time.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">What it does not prove</p>
+                    <h3>Configuration is not end-to-end health</h3>
+                    <p>The output does not prove that DNS resolution, routing, Internet access, domain health, DHCP, VPN connectivity, or application connectivity works.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">What remains unknown</p>
+                    <h3>The path and service still need testing</h3>
+                    <p>The snapshot omits route selection, DNS query results, destination-port tests, prefix length, DNS suffix, computer name, and remote-system evidence.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Privacy and ticket handling</p>
+                <h2>Redact local network details before sharing.</h2>
+                <p>Interface names, adapter descriptions, IP addresses, gateways, DNS servers, and network-profile names can reveal internal design, products, providers, or organizational naming.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Do not paste raw output into public channels</h3>
+                <p>Keep the original evidence only in an authorized case location. For tickets or escalation, include the minimum relevant properties, redact identifiers that the recipient does not need, identify the collection time, and state that the values came from one local snapshot.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Escalation and next diagnostic steps</p>
+                <h2>Choose one check that answers the next unresolved question.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">DNS question</p>
+                    <h3>Test the specific name and resolver path</h3>
+                    <p>Use the published Test-KTDNS procedure when the next question is whether an authorized resolver returns the expected record type and value.</p>
+                    <a class="card-link" href="/tutorials/test-ktdns-v1.0.0/">Open the DNS tutorial <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Path or port question</p>
+                    <h3>Define the destination before testing</h3>
+                    <p>Record the source interface, destination name or address, protocol, and port. Then use an approved route or connectivity test without treating ping or DNS alone as application proof.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Domain dependency</p>
+                    <h3>Correlate DNS and Active Directory evidence</h3>
+                    <p>Use the domain-health investigation when client DNS, locator records, secure channel, controller health, replication, or time may affect the symptom.</p>
+                    <a class="card-link" href="/tutorials/dns-active-directory-domain-health/">Open the domain-health guide <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+            <div class="mission">
+                <p>Escalate before changing configuration when ownership is unclear, the evidence suggests widespread impact, the affected path involves VPN or security controls, a production outage is active, compromise is suspected, or remediation would change addresses, DNS, gateways, routes, adapters, profiles, services, or organizational policy.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Related KrippyTech resources</p>
+                <h2>Continue from local evidence to a focused investigation.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Release</p><h3>Get-KTNetworkConfig v1.0.0</h3><p>Review the immutable script, README, checksum manifest, and versioned package.</p><a class="card-link" href="/powershell/#get-ktnetworkconfig-v1">Open PowerShell Library details <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Downloads</p><h3>Verify the published files</h3><p>Use the versioned ZIP and direct release links from the KrippyTech Downloads page.</p><a class="card-link" href="/downloads/#get-ktnetworkconfig-v1">Open Downloads <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Learning hub</p><h3>Windows &amp; Hybrid</h3><p>Connect local configuration evidence with DNS, Active Directory, server, and hybrid troubleshooting paths.</p><a class="card-link" href="/windows-hybrid/">Open Windows &amp; Hybrid <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Method</p><h3>MSP University</h3><p>Use the understand, investigate, resolve, and verify sequence without jumping from symptom to change.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Official Microsoft references</p>
+                <h2>Verify the underlying Windows and PowerShell behavior.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Get-NetIPConfiguration</h3><p>Microsoft's reference for retrieving local IP network configuration through the NetTCPIP module.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netipconfiguration?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-NetAdapter</h3><p>Microsoft's reference for basic network-adapter properties and identifiers.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/netadapter/get-netadapter?view=windowsserver2022-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-FileHash</h3><p>Microsoft's reference for calculating SHA-256 and other supported file hashes.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.6">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Unblock-File</h3><p>Microsoft's guidance for reviewing and removing the Internet-zone mark from a specific downloaded file.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/unblock-file?view=powershell-7.5">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>PowerShell execution policies</h3><p>Microsoft's explanation of policy scopes, precedence, signing behavior, and <code>RemoteSigned</code>.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. MSP University. Real-world IT without the fluff.</div>
+</footer>
+</body>
+</html>
