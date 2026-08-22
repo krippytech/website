@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/dns-active-directory-domain-health/">
+
+    <title>Investigating DNS, Active Directory, and Domain Health | KrippyTech</title>
+    <meta name="description" content="An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Investigating DNS, Active Directory, and Domain Health | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/dns-active-directory-domain-health/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investigating DNS, Active Directory, and Domain Health | KrippyTech">
+    <meta name="twitter:description" content="An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/" aria-current="page">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Windows / Active Directory / Investigation</p>
+            <h1>Investigating DNS, Active Directory, and Domain Health</h1>
+            <p class="hero-text">
+                Follow the dependency chain from one affected client to DNS, domain-controller discovery, secure channels, replication, time, services, and logs.
+                <span class="highlight">This guide collects and correlates evidence. It does not automate repairs or treat one command as proof of domain health.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-21">August 21, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-21">August 21, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Purpose</p>
+                    <h3>Investigation, not repair</h3>
+                    <p>Separate client, DNS, discovery, replication, time, service, and connectivity evidence before planning a change.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Audience</p>
+                    <h3>Working Windows administrators</h3>
+                    <p>Use the guide when domain symptoms cross more than one infrastructure dependency.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Examples</p>
+                    <h3>Synthetic only</h3>
+                    <p>The names <code>corp.example</code>, <code>DC01</code>, and <code>CLIENT01</code> are documentation-safe placeholders.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Method</p>
+                    <h3>Observe, compare, correlate</h3>
+                    <p>Record the target, time, resolver, command, and result before drawing a conclusion.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">1 · Investigation question</p>
+                <h2>What is this investigation designed to answer?</h2>
+                <p>Determine whether the observed symptom is associated with client configuration, AD DNS data, domain-controller discovery, a member-computer secure channel, domain-controller advertising or services, replication, time synchronization, authentication, or network connectivity.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Common symptom</p>
+                    <h3>Sign-in or trust errors</h3>
+                    <p>A user or computer cannot authenticate, reports a trust problem, or behaves differently when disconnected from the network.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Common symptom</p>
+                    <h3>Policies or directory changes lag</h3>
+                    <p>Group Policy, password, group-membership, or directory-object changes appear on some systems but not others.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Common symptom</p>
+                    <h3>Intermittent domain access</h3>
+                    <p>SYSVOL, NETLOGON, LDAP-dependent tools, or domain-aware applications work from one location but fail from another.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Common symptom</p>
+                    <h3>Conflicting health signals</h3>
+                    <p>DNS resolves while authentication fails, or replication looks healthy while one application remains unavailable.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">2–4 · Boundaries and preparation</p>
+                <h2>Set the safety boundary and record the starting state.</h2>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Keep discovery separate from remediation</h3>
+                <p>Use an authorized account and the least privilege needed for each read. Do not change DNS settings, restart services, repair trust relationships, force replication, edit directory data, or restore a domain controller while following this guide.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Minimum record</p>
+                    <h3>Scope and time</h3>
+                    <p>Record affected devices, users, sites, subnets, and services; when the symptom began; time zone; recurrence; and the last known working time.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Minimum record</p>
+                    <h3>Recent change context</h3>
+                    <p>Record known network, DNS, firewall, virtualization, update, backup, restore, site, or domain-controller changes without assuming that the newest change caused the issue.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Minimum record</p>
+                    <h3>Test identity</h3>
+                    <p>Record the computer, interface, current user context, domain, selected DNS server, target domain controller, exact command, and test time.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Data handling</p>
+                    <h3>Protect environment evidence</h3>
+                    <p>Command output, logs, host names, addresses, site names, and directory details are sensitive operational data. Store them only in the approved private case location.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 1 · Establish scope</p>
+                <h2>Decide how wide the symptom is before testing deeply.</h2>
+                <p>Compare one known-affected system with one known-unaffected system where practical. Determine whether the issue follows an endpoint, subnet, site, domain controller, user, or service.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Scope questions</p>
+                <h3>Move from smallest impact to largest.</h3>
+                <p>Does the issue affect one endpoint, every endpoint on one subnet, clients in one AD site, requests handled by one domain controller, or the entire domain? A domain-wide conclusion requires domain-wide evidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 2 · Client DNS and network configuration</p>
+                <h2>Confirm what the affected client is actually using.</h2>
+                <p>Run these commands on the affected member computer. They identify the host and user context, interface configuration, gateway, suffixes, and configured DNS servers without changing them.</p>
+            </div>
+            <div class="code-block">
+                <pre><code>hostname
+whoami
+ipconfig /all</code></pre>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">Get-NetIPConfiguration
+Get-DnsClientServerAddress</code></pre>
+            </div>
+            <div class="callout callout-info">
+                <h3>Why the configured DNS servers matter</h3>
+                <p>AD DS uses DNS so clients can locate domain controllers and domain controllers can communicate. Domain members should normally query approved DNS servers that host or correctly resolve the AD namespace. Public or ISP resolvers generally cannot answer private AD locator records; internal DNS can forward external queries when that design is approved.</p>
+            </div>
+            <p>Check the active interface, IP address, prefix, default gateway, DNS suffix, and ordered DNS-server list. A public resolver on a domain member is strong configuration evidence, but still record which interface is active and whether another resolver or policy is involved before concluding it is the only cause.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 3 · DNS resolution and AD locator records</p>
+                <h2>Ask DNS questions that match Active Directory discovery.</h2>
+                <p>Use the published <a href="/tutorials/test-ktdns-v1.0.0/">Test-KTDNS tutorial</a> before running the script. Test-KTDNS v1.0.0 accepts <code>Name</code>, <code>Type</code>, and optional <code>Server</code> parameters and performs DNS-only queries.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Host record</p>
+                <h3>Confirm a domain-controller name resolves.</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">.\Test-KTDNS.ps1 -Name DC01.corp.example -Type A</code></pre>
+                </div>
+                <p>A successful A-record lookup proves only that the selected resolver returned an address for that name. It does not prove domain-controller advertising, authentication, replication, RPC, SMB, time, or overall domain health.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">AD locator record</p>
+                <h3>Query the LDAP domain-controller SRV record.</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">.\Test-KTDNS.ps1 -Name _ldap._tcp.dc._msdcs.corp.example -Type SRV</code></pre>
+                </div>
+                <p>SRV locator records are more meaningful than one host A record when evaluating domain discovery because DC Locator queries records that advertise services and suitable domain controllers.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Resolver comparison</p>
+                <h3>Compare approved internal DNS servers explicitly.</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">.\Test-KTDNS.ps1 -Name _ldap._tcp.dc._msdcs.corp.example -Type SRV -Server '192.0.2.53'
+.\Test-KTDNS.ps1 -Name _ldap._tcp.dc._msdcs.corp.example -Type SRV -Server '192.0.2.54'</code></pre>
+                </div>
+                <p>The addresses are documentation-only placeholders. Replace them only with approved internal resolvers, record which server produced each answer, and do not send private names to an untrusted resolver.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Built-in comparison</p>
+                <h3>Use Resolve-DnsName when you need the native record shape.</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">Resolve-DnsName -Name _ldap._tcp.dc._msdcs.corp.example -Type SRV -Server 192.0.2.53 -DnsOnly</code></pre>
+                </div>
+                <p><code>Resolve-DnsName</code> is the Windows cmdlet underneath Test-KTDNS. Test-KTDNS adds validation, DNS-only behavior, and normalized output; the built-in cmdlet is useful when you need its native response fields.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Interpret external-name failures separately</h3>
+                <p>A failed public internet lookup does not automatically prove AD DNS is unhealthy. Internal locator resolution and external forwarding are different questions and should be tested and recorded separately.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 4 · Domain-controller discovery</p>
+                <h2>Ask Windows which domain controllers it can locate.</h2>
+            </div>
+            <div class="code-block">
+                <pre><code>nltest /dsgetdc:corp.example
+nltest /dclist:corp.example</code></pre>
+            </div>
+            <p><code>/dsgetdc</code> exercises DC Locator for the named domain and returns a suitable domain controller and flags when discovery succeeds. <code>/dclist</code> lists domain controllers known for the domain. Successful discovery shows that the client could locate and contact a candidate through the locator process at that time; it does not prove that every controller is healthy, replication is current, authentication will succeed, or an application dependency is available.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 5 · Member-computer secure channel</p>
+                <h2>Test the secure channel only where the cmdlet is supported.</h2>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">Test-ComputerSecureChannel -Verbose</code></pre>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Member computers only</h3>
+                <p>Microsoft documents this cmdlet for domain-member computers and warns that running it on domain controllers can return false-positive errors. Run it from an elevated PowerShell session on the affected member computer. This guide intentionally performs no repair.</p>
+            </div>
+            <p>A <code>True</code> result supports that this member computer's secure channel worked for the test. It does not prove DNS, Group Policy, user authentication, SYSVOL access, replication, or every domain controller is healthy. A failure is a finding to correlate with DNS, discovery, time, connectivity, and logs before any repair is attempted.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 6 · Domain-controller service and advertising checks</p>
+                <h2>Run focused DCDiag tests and read each result in context.</h2>
+                <p>Use a domain controller or an administrative workstation with the AD DS management tools installed. Use an elevated prompt and credentials permitted to query the target controller and read required resources. Verbose output can be substantial, and remote tests depend on services and network paths such as RPC and SMB.</p>
+            </div>
+            <div class="code-block">
+                <pre><code>dcdiag /test:dns /v
+dcdiag /test:advertising
+dcdiag /test:services
+dcdiag /test:sysvolcheck
+dcdiag /test:netlogons</code></pre>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">DNS</p>
+                    <h3>Configuration and registration evidence</h3>
+                    <p>The DNS test covers basic connectivity, DNS client configuration, service and zone checks, and—depending on the selected subtests—record registration and other DNS functions.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Advertising</p>
+                    <h3>Locator role evidence</h3>
+                    <p>The Advertising test checks whether the controller advertises the roles it should. A pass still does not prove every dependent port or authentication path works.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Services</p>
+                    <h3>Required service-state evidence</h3>
+                    <p>The Services test checks AD-dependent service state and startup expectations. A stopped service is evidence to investigate, not automatically the root cause.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">SYSVOL and NETLOGON</p>
+                    <h3>Different tests, different meaning</h3>
+                    <p>SysVolCheck validates the controller's SYSVOL-ready registry state. NetLogons validates that the running user can connect to and read the SYSVOL and NETLOGON shares.</p>
+                </article>
+            </div>
+            <p>Review every failure with the target controller, site, time, permissions, and network path. Do not turn a single warning into a repair instruction.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 7 · Active Directory replication</p>
+                <h2>Summarize the forest, then inspect failing inbound partners.</h2>
+                <p>Run Repadmin on a domain controller or a workstation with the AD DS RSAT tools installed. These commands report replication state; they do not force replication.</p>
+            </div>
+            <div class="code-block">
+                <pre><code>repadmin /replsummary
+repadmin /showrepl</code></pre>
+            </div>
+            <p><code>/replsummary</code> provides a high-level view of failures and replication age. <code>/showrepl</code> shows inbound replication status and the last attempt for each naming context and partner. Preserve the error code, source and destination controller, naming context, last success, failure count, and test time.</p>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Possible category</p>
+                    <h3>Name resolution</h3>
+                    <p>A controller cannot resolve a partner's required DNS name or locator data.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Possible category</p>
+                    <h3>RPC or connectivity</h3>
+                    <p>The destination cannot reach the source through the required network path or service endpoint.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Possible category</p>
+                    <h3>Authentication or time</h3>
+                    <p>Access-denied, trust, Kerberos, or time-skew evidence may interrupt replication without identifying one universal cause.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Possible category</p>
+                    <h3>Lifecycle or topology</h3>
+                    <p>A controller may have been offline too long, restored improperly, or decommissioned incompletely, or the configured topology may not match connectivity.</p>
+                </article>
+            </div>
+            <p>If you add Active Directory PowerShell cmdlets to a separate investigation, install the Active Directory module through the applicable AD DS RSAT capability first. This guide does not require those cmdlets.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Phase 8 · Time, services, and logs</p>
+                <h2>Check supporting signals over the same time window.</h2>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Time synchronization</p>
+                <h3>Record status and the current source.</h3>
+                <div class="code-block">
+                    <pre><code>w32tm /query /status
+w32tm /query /source</code></pre>
+                </div>
+                <p>Record the source, last successful synchronization, stratum, and any visible offset or error. Time-related authentication problems require comparison between the affected member, its selected controller, and the domain time hierarchy; one source string alone is not a complete health test.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Domain-controller services</p>
+                <h3>Inspect role-relevant services without changing them.</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">Get-Service -Name NTDS,DNS,Netlogon,Kdc,W32Time,ADWS,DFSR -ErrorAction SilentlyContinue |
+    Select-Object Name, DisplayName, Status, StartType</code></pre>
+                </div>
+                <p>The list covers Active Directory Domain Services, DNS Server, Netlogon, Kerberos Key Distribution Center, Windows Time, Active Directory Web Services, and DFS Replication where those roles and services are installed. Missing or stopped entries must be interpreted against the controller's installed roles and the original symptom.</p>
+            </div>
+            <div class="kt-step">
+                <p class="kt-step-number">Focused event review</p>
+                <h3>Use a bounded time window and preserve provider context.</h3>
+                <div class="code-block">
+                    <pre><code class="language-powershell">$since = (Get-Date).AddHours(-4)
+
+Get-WinEvent -FilterHashtable @{LogName='Directory Service'; StartTime=$since; Level=2,3} -MaxEvents 100
+Get-WinEvent -FilterHashtable @{LogName='DNS Server'; StartTime=$since; Level=2,3} -MaxEvents 100
+Get-WinEvent -FilterHashtable @{LogName='System'; StartTime=$since; Level=2,3} -MaxEvents 100
+Get-WinEvent -FilterHashtable @{LogName='DFS Replication'; StartTime=$since; Level=2,3} -MaxEvents 100</code></pre>
+                </div>
+                <p>These are the Directory Service, DNS Server, System, and DFS Replication logs. Focus on events aligned with the symptom and other findings. A warning or stopped service without matching impact, timing, and dependency evidence is not proof of root cause.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">13 · Evidence correlation</p>
+                <h2>Separate what was observed from what it may mean.</h2>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Evidence correlation table" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Observation</th>
+                            <th scope="col">What it may indicate</th>
+                            <th scope="col">What it does not prove</th>
+                            <th scope="col">Safest next investigation step</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Client points to a public DNS resolver.</td>
+                            <td>The client may be unable to resolve the private AD namespace and locator records.</td>
+                            <td>That DNS configuration is the only issue.</td>
+                            <td>Confirm the active interface and compare its configuration with an approved, working peer.</td>
+                        </tr>
+                        <tr>
+                            <td>AD SRV records do not resolve.</td>
+                            <td>The selected resolver lacks, cannot reach, or cannot return required locator data.</td>
+                            <td>Every domain controller or the directory database has failed.</td>
+                            <td>Query the same record through each approved internal resolver and review registration and zone scope.</td>
+                        </tr>
+                        <tr>
+                            <td>One internal DNS server answers while another does not.</td>
+                            <td>Resolver data, reachability, zone loading, delegation, or AD-integrated replication may differ.</td>
+                            <td>Which server contains the authoritative correct state.</td>
+                            <td>Preserve both responses and correlate them with DNS-server health and AD replication.</td>
+                        </tr>
+                        <tr>
+                            <td>Domain-controller discovery fails.</td>
+                            <td>DNS locator data, Netlogon, site awareness, LDAP reachability, or client connectivity may be involved.</td>
+                            <td>The secure channel is broken or the domain is unavailable everywhere.</td>
+                            <td>Compare SRV results, client DNS configuration, site/subnet scope, and locator behavior from a working peer.</td>
+                        </tr>
+                        <tr>
+                            <td>Replication summary shows failures.</td>
+                            <td>A named source/destination pair and naming context has a current replication problem.</td>
+                            <td>One universal root cause or that all authentication must fail.</td>
+                            <td>Use <code>repadmin /showrepl</code> and matching Directory Service events to preserve the exact error context.</td>
+                        </tr>
+                        <tr>
+                            <td>Replication is healthy but user authentication remains affected.</td>
+                            <td>The issue may be local to discovery, time, secure channel, account state, Kerberos, connectivity, or the application.</td>
+                            <td>Authentication or DNS is healthy.</td>
+                            <td>Trace the affected user's actual client, selected controller, time, and service path.</td>
+                        </tr>
+                        <tr>
+                            <td>Time source or status appears incorrect.</td>
+                            <td>The member or controller may not be following the intended domain time hierarchy.</td>
+                            <td>Time is the sole cause of the reported symptom.</td>
+                            <td>Compare status, source, and event timing across the affected system and relevant controller.</td>
+                        </tr>
+                        <tr>
+                            <td>A retired domain controller still appears in DNS or AD.</td>
+                            <td>Decommissioning may be incomplete or stale data may remain.</td>
+                            <td>That deleting the visible record is safe or sufficient.</td>
+                            <td>Stop and review lifecycle records, role ownership, replication, backups, and metadata with an experienced AD administrator.</td>
+                        </tr>
+                        <tr>
+                            <td>DNS tests pass but application connectivity still fails.</td>
+                            <td>Name resolution is only one completed dependency.</td>
+                            <td>RPC, SMB, LDAP, TLS, authentication, firewall, routing, or the application is healthy.</td>
+                            <td>Continue with the narrowest authorized connectivity and service check for the original application path.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">14 · Escalation</p>
+                <h2>Stop when the evidence exceeds routine investigation.</h2>
+                <p>Escalate with the evidence collected so far when any of the following applies:</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Broad controller failure</h3><p>Multiple domain controllers fail simultaneously, replication failures are widespread, or SYSVOL or NETLOGON availability is uncertain.</p></article>
+                <article class="card"><h3>Role or lifecycle uncertainty</h3><p>FSMO role ownership is unclear, a controller may be stale or improperly restored, or decommissioning appears incomplete.</p></article>
+                <article class="card"><h3>Complex directory recovery</h3><p>Lingering objects, metadata cleanup, unsupported restoration, SYSVOL repair, or directory recovery may be involved.</p></article>
+                <article class="card"><h3>Security concern</h3><p>Credentials, compromise, ransomware, unauthorized change, or evidence-integrity concerns require incident-response handling.</p></article>
+                <article class="card"><h3>Recovery readiness unknown</h3><p>The operator cannot confirm current backups, recovery capability, change approval, or an accountable owner for remediation.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">15 · Intentionally excluded</p>
+                <h2>This guide does not provide operational repair steps.</h2>
+            </div>
+            <div class="mission">
+                <p>Excluded actions include changing DNS server addresses; restarting domain services; resetting secure channels; forcing replication; seizing or transferring FSMO roles; metadata cleanup; removing domain controllers; editing AD-integrated DNS zones; modifying registry settings; repairing SYSVOL or DFS Replication; disabling security controls; restoring domain controllers; or bypassing authentication or execution policy.</p>
+                <p>Those actions require a separately scoped remediation plan, current backups, change approval, rollback and recovery planning, and environment-specific review by an experienced owner.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">16 · Related KrippyTech resources</p>
+                <h2>Continue with the appropriate learning or tool path.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">DNS procedure</p>
+                    <h3>Use Test-KTDNS v1.0.0</h3>
+                    <p>Review checksum verification, approved parameters, normalized output, DNS-only behavior, and safe interpretation.</p>
+                    <a class="card-link" href="/tutorials/test-ktdns-v1.0.0/">Open the Test-KTDNS tutorial <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Published source</p>
+                    <h3>Review Test-KTDNS.ps1</h3>
+                    <p>Read the immutable v1.0.0 script before using it in an authorized environment.</p>
+                    <a class="card-link" href="/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1">Open the published script <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Tool library</p>
+                    <h3>PowerShell Library</h3>
+                    <p>Review release requirements, supported records, packaging, and integrity guidance.</p>
+                    <a class="card-link" href="/powershell/#test-ktdns-v1">Open release details <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Learning hub</p>
+                    <h3>Windows &amp; Hybrid</h3>
+                    <p>Place DNS and domain evidence in the wider Windows infrastructure dependency chain.</p>
+                    <a class="card-link" href="/windows-hybrid/">Explore Windows &amp; Hybrid <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Investigation method</p>
+                    <h3>MSP University</h3>
+                    <p>Return to the understand, investigate, resolve, and verify framework.</p>
+                    <a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Microsoft technical references</p>
+                <h2>Primary documentation used for this guide.</h2>
+            </div>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/dc-locator">Locating domain controllers in Windows and Windows Server</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/best-practices-for-dns-client-settings">Recommendations for DNS client settings</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/dnsclient/resolve-dnsname?view=windowsserver2025-ps">Resolve-DnsName</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netipconfiguration?view=windowsserver2025-ps">Get-NetIPConfiguration</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/dnsclient/get-dnsclientserveraddress?view=windowsserver2025-ps">Get-DnsClientServerAddress</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/test-computersecurechannel?view=powershell-5.1">Test-ComputerSecureChannel</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dcdiag">DCDiag</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/diagnose-replication-failures">Diagnose Active Directory replication failures</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows-server/networking/windows-time-service/windows-server-2016-improvements">Windows Time service troubleshooting and hierarchy</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent?view=powershell-7.5">Get-WinEvent</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>

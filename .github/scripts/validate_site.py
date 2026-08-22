@@ -97,6 +97,11 @@ SOCIAL_METADATA = {
         "description": "A repeatable Exchange Online PowerShell procedure for diagnosing why an archive mailbox is not reducing primary mailbox usage.",
         "type": "article",
     },
+    "/tutorials/dns-active-directory-domain-health/": {
+        "title": "Investigating DNS, Active Directory, and Domain Health | KrippyTech",
+        "description": "An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.",
+        "type": "article",
+    },
     "/tutorials/shared-mailbox/": {
         "title": "Create a Microsoft 365 Shared Mailbox — Draft | KrippyTech",
         "description": "Draft status for a Microsoft 365 shared-mailbox tutorial that is not approved for production use.",
@@ -488,6 +493,13 @@ def validate_trust_and_sharing(
         )
 
     approved_authorship = {
+        "/tutorials/dns-active-directory-domain-health/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
         "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": re.compile(
             r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
@@ -842,6 +854,75 @@ def validate_test_ktdns_release(failures: list[str]) -> None:
                 )
 
 
+def validate_dns_ad_domain_health_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/dns-active-directory-domain-health/"
+    page = ROOT / "tutorials/dns-active-directory-domain-health/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Investigating DNS, Active Directory, and Domain Health",
+        "This guide collects and correlates evidence. It does not automate repairs",
+        "hostname",
+        "whoami",
+        "ipconfig /all",
+        "Get-NetIPConfiguration",
+        "Get-DnsClientServerAddress",
+        ".\\Test-KTDNS.ps1 -Name DC01.corp.example -Type A",
+        ".\\Test-KTDNS.ps1 -Name _ldap._tcp.dc._msdcs.corp.example -Type SRV",
+        "Resolve-DnsName -Name _ldap._tcp.dc._msdcs.corp.example -Type SRV -Server 192.0.2.53 -DnsOnly",
+        "nltest /dsgetdc:corp.example",
+        "nltest /dclist:corp.example",
+        "Test-ComputerSecureChannel -Verbose",
+        "dcdiag /test:dns /v",
+        "dcdiag /test:advertising",
+        "dcdiag /test:services",
+        "dcdiag /test:sysvolcheck",
+        "dcdiag /test:netlogons",
+        "repadmin /replsummary",
+        "repadmin /showrepl",
+        "w32tm /query /status",
+        "w32tm /query /source",
+        "Get-Service -Name NTDS,DNS,Netlogon,Kdc,W32Time,ADWS,DFSR",
+        "Get-WinEvent -FilterHashtable",
+        "/tutorials/test-ktdns-v1.0.0/",
+        "/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1",
+        "/powershell/#test-ktdns-v1",
+        "/windows-hybrid/",
+        "/msp-university/#learning-path",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required guide text {required!r}")
+
+    prohibited_text = (
+        "Test-ComputerSecureChannel -Repair",
+        "dcdiag /fix",
+        "repadmin /syncall",
+        "Set-DnsClientServerAddress",
+        "Set-ExecutionPolicy",
+        "-ExecutionPolicy Bypass",
+    )
+    for prohibited in prohibited_text:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited remediation command found {prohibited!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "dns-active-directory-domain-health/",
+        ROOT / "windows-hybrid/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing domain-health tutorial integration {required!r}"
+            )
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -875,6 +956,7 @@ def main() -> int:
     validate_crawl_baseline(parsers, failures)
     validate_trust_and_sharing(parsers, failures)
     validate_test_ktdns_release(failures)
+    validate_dns_ad_domain_health_tutorial(failures)
 
     if failures:
         print("Static-site validation failed:")
