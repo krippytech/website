@@ -39,8 +39,13 @@ SOCIAL_METADATA = {
     },
     "/azure-journey/": {
         "title": "Azure Journey | KrippyTech",
-        "description": "Azure Journey connects KrippyTech's published Azure VM connectivity investigation with developing Azure foundations, identity, networking, and hybrid learning.",
+        "description": "Azure Journey connects KrippyTech's published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.",
         "type": "website",
+    },
+    "/azure-journey/labs/map-azure-vm-network-path/": {
+        "title": "Map the Network Path to an Azure VM | KrippyTech",
+        "description": "A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.",
+        "type": "article",
     },
     "/cases/": {
         "title": "KrippyTech Case Library",
@@ -1248,6 +1253,100 @@ def validate_azure_vm_connectivity_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_azure_vm_network_path_lab(failures: list[str]) -> None:
+    route = "/azure-journey/labs/map-azure-vm-network-path/"
+    page = ROOT / "azure-journey/labs/map-azure-vm-network-path/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: lab page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Map the Network Path to an Azure VM",
+        "No Azure subscription, deployment, payment, tenant access, or production environment is required.",
+        "1 · Learning objectives",
+        "2 · Prerequisite knowledge",
+        "3 · Investigation rules",
+        "4 · Synthetic environment",
+        "5 · Defined traffic flow",
+        "6 · Topology and inventory",
+        "7 · Evidence packet",
+        "8 · Learner tasks",
+        "9 · Network-path worksheet",
+        "10 · Interpretation questions",
+        "11 · Final conclusion template",
+        "12 · Expandable answer key",
+        "13 · Escalation-quality sample",
+        "14 · What the evidence does not prove",
+        "15 · Related resources",
+        "LAB-ADMIN-01",
+        "LAB-WEB-01",
+        "app.lab.example",
+        "10.20.1.4",
+        "10.20.2.4",
+        "DenyAdminHttps",
+        "nsg-lab-app",
+        "VirtualNetwork",
+        "Access denied",
+        "Supported / Contradicted / Unknown",
+        "earliest demonstrated point blocking the defined flow",
+        "/tutorials/azure-vm-connectivity-investigation/",
+        "/azure-journey/",
+        "/msp-university/#learning-path",
+        "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing",
+        "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/effective-security-rules-overview",
+        "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview",
+        "https://learn.microsoft.com/en-us/azure/network-watcher/ip-flow-verify-overview",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required lab text {required!r}")
+
+    if source.count("<details>") != 9 or source.count("<summary>") != 9:
+        failures.append(
+            f"{page.relative_to(ROOT)}: answer key must contain exactly nine native details/summary disclosures"
+        )
+
+    prohibited_commands = (
+        "New-AzNetworkSecurityRuleConfig",
+        "Set-AzNetworkSecurityGroup",
+        "Remove-AzNetworkSecurityRuleConfig",
+        "New-AzRouteConfig",
+        "Set-AzRouteTable",
+        "Restart-AzVM",
+        "Disable-NetFirewallRule",
+        "Set-NetFirewallProfile",
+        "New-NetFirewallRule",
+        "Set-NetIPInterface",
+        "ipconfig /renew",
+        "az network nsg rule create",
+        "az network route-table route create",
+        "Start-AzNetworkWatcherPacketCapture",
+    )
+    for prohibited in prohibited_commands:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited configuration-changing command found {prohibited!r}"
+            )
+
+    if re.search(r"\b[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\b", source, re.I):
+        failures.append(f"{page.relative_to(ROOT)}: GUID-like identifier found in synthetic lab")
+    if "/subscriptions/" in source.lower():
+        failures.append(f"{page.relative_to(ROOT)}: Azure subscription resource path found in synthetic lab")
+
+    integrations = {
+        ROOT / "azure-journey/index.html": route,
+        ROOT / "tutorials/azure-vm-connectivity-investigation/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing Azure VM network-path lab integration {required!r}"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -1312,6 +1411,8 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             return "/"
         if route in {"/msp-university/", "/microsoft-365/", "/windows-hybrid/"}:
             return "/msp-university/"
+        if route and route.startswith("/azure-journey/labs/"):
+            return "/azure-journey/"
         if route and route.startswith("/tutorials/"):
             return "/tutorials/"
         if route and route.startswith("/cases/"):
@@ -1453,6 +1554,7 @@ def main() -> int:
     validate_windows_server_low_disk_tutorial(failures)
     validate_onedrive_sharepoint_sync_tutorial(failures)
     validate_azure_vm_connectivity_tutorial(failures)
+    validate_azure_vm_network_path_lab(failures)
     validate_grouped_navigation(failures)
 
     if failures:
