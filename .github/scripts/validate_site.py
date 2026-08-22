@@ -102,6 +102,11 @@ SOCIAL_METADATA = {
         "description": "An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.",
         "type": "article",
     },
+    "/tutorials/entra-signin-conditional-access-investigation/": {
+        "title": "Investigating Microsoft Entra Sign-ins and Conditional Access Results | KrippyTech",
+        "description": "An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.",
+        "type": "article",
+    },
     "/tutorials/shared-mailbox/": {
         "title": "Create a Microsoft 365 Shared Mailbox — Draft | KrippyTech",
         "description": "Draft status for a Microsoft 365 shared-mailbox tutorial that is not approved for production use.",
@@ -494,6 +499,13 @@ def validate_trust_and_sharing(
 
     approved_authorship = {
         "/tutorials/dns-active-directory-domain-health/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
+        "/tutorials/entra-signin-conditional-access-investigation/": re.compile(
             r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-08-21">August 21, 2026</time>\s*'
@@ -923,6 +935,71 @@ def validate_dns_ad_domain_health_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_entra_signin_ca_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/entra-signin-conditional-access-investigation/"
+    page = ROOT / "tutorials/entra-signin-conditional-access-investigation/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Investigating Microsoft Entra Sign-ins and Conditional Access Results",
+        "This is an investigation guide. It does not change users",
+        "Reports Reader as the least-privileged role for activity logs",
+        "Interactive user sign-ins",
+        "Non-interactive user sign-ins",
+        "Service principal sign-ins",
+        "Managed identity sign-ins",
+        "Previously satisfied claims",
+        "A successful MFA event does not automatically prove the entire sign-in succeeded",
+        "Not applied",
+        "Report-only records potential impact without enforcing access",
+        "A successful sign-in does not prove the device is correctly managed or compliant",
+        "A blank field does not automatically prove the device is unknown, unmanaged, or malicious",
+        "Observation",
+        "What it may indicate",
+        "What it does not prove",
+        "Safest next investigation step",
+        "Excluded actions include disabling users",
+        "/msp-university/#learning-path",
+        "/microsoft-365/",
+        "/tutorials/shared-mailbox-not-showing-outlook/",
+        "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/",
+        "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins",
+        "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only",
+        "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-reports-data-retention",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required guide text {required!r}")
+
+    prohibited_text = (
+        "Revoke-MgUserSignInSession",
+        "Update-MgIdentityConditionalAccessPolicy",
+        "Remove-MgDevice",
+        "Set-MgUserAuthenticationMethod",
+        "Set-MgPolicyIdentitySecurityDefaultEnforcementPolicy",
+        "New-MgRoleManagementDirectoryRoleAssignment",
+    )
+    for prohibited in prohibited_text:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited tenant-changing command found {prohibited!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "entra-signin-conditional-access-investigation/",
+        ROOT / "microsoft-365/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing Entra tutorial integration {required!r}"
+            )
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -957,6 +1034,7 @@ def main() -> int:
     validate_trust_and_sharing(parsers, failures)
     validate_test_ktdns_release(failures)
     validate_dns_ad_domain_health_tutorial(failures)
+    validate_entra_signin_ca_tutorial(failures)
 
     if failures:
         print("Static-site validation failed:")

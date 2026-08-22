@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/entra-signin-conditional-access-investigation/">
+
+    <title>Investigating Microsoft Entra Sign-ins and Conditional Access Results | KrippyTech</title>
+    <meta name="description" content="An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Investigating Microsoft Entra Sign-ins and Conditional Access Results | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/entra-signin-conditional-access-investigation/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investigating Microsoft Entra Sign-ins and Conditional Access Results | KrippyTech">
+    <meta name="twitter:description" content="An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="/consulting/">Consulting</a>
+                <a href="/msp-university/">MSP University</a>
+                <a href="/tutorials/" aria-current="page">Tutorials</a>
+                <a href="/cases/">Cases</a>
+                <a href="/azure-journey/">Azure Journey</a>
+                <a href="/powershell/">PowerShell Library</a>
+                <a href="/downloads/">Downloads</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Microsoft Entra ID / Conditional Access / Investigation</p>
+            <h1>Investigating Microsoft Entra Sign-ins and Conditional Access Results</h1>
+            <p class="hero-text">
+                Select the correct sign-in event, preserve its identity and access signals, and correlate what Microsoft Entra evaluated.
+                <span class="highlight">This is an investigation guide. It does not change users, authentication methods, sessions, devices, applications, locations, or policies.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-21">August 21, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-21">August 21, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card"><p class="card-number">Purpose</p><h3>Investigation, not remediation</h3><p>Preserve one evaluated event before considering any user-impacting or policy change.</p></article>
+                <article class="card"><p class="card-number">Audience</p><h3>Working Microsoft 365 administrators</h3><p>Use the guide when authentication, access policy, device, network, or application evidence overlaps.</p></article>
+                <article class="card"><p class="card-number">Examples</p><h3>Synthetic only</h3><p><code>alex.taylor@example.com</code>, <code>LAB-WIN11-01</code>, and <code>192.0.2.44</code> are documentation-safe placeholders.</p></article>
+                <article class="card"><p class="card-number">Method</p><h3>Match, record, correlate</h3><p>Treat the exact time, identity, application, resource, and correlation information as the event boundary.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">1 · Investigation question</p>
+                <h2>What is this investigation designed to answer?</h2>
+                <p>Determine what Microsoft Entra recorded for one sign-in attempt and whether authentication, Conditional Access, device, network, client, application, resource, risk, or licensing evidence helps explain the reported symptom.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Which event represents the symptom?</h3><p>Find the row that matches the reported UTC time, identity, application, resource, sign-in type, and available request or correlation ID.</p></article>
+                <article class="card"><h3>Where did the attempt stop?</h3><p>Separate primary authentication, additional authentication, policy evaluation, token issuance, and downstream application access.</p></article>
+                <article class="card"><h3>What was actually evaluated?</h3><p>Record the event's user, device, client, location, application, resource, risk, and policy context without generalizing to another session.</p></article>
+                <article class="card"><h3>What remains unknown?</h3><p>A sign-in log can narrow the problem without proving the final application, network, device-management, or security root cause.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">2 · Boundaries and access</p>
+                <h2>Use read access and keep discovery separate from change.</h2>
+                <p>In the Microsoft Entra admin center, sign-in logs are under <strong>Entra ID → Monitoring &amp; health → Sign-in logs</strong>. Microsoft documents Reports Reader as the least-privileged role for activity logs. Seeing Conditional Access policy details can require a role that can read both the sign-in logs and the policies.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Licenses and views affect available evidence</h3>
+                <p>Sign-in logs are available across Microsoft Entra editions, but features, risk fields, Conditional Access, programmatic access, retention, and portal views vary by license and role. Conditional Access requires Microsoft Entra ID P1 or an eligible suite. Some properties can be hidden when the required license is absent.</p>
+            </div>
+            <p>Default sign-in retention is currently seven days for Microsoft Entra ID Free and 30 days for P1 or P2. Retention upgrades are not retroactive. If the event is missing, record the searched window, category, filters, current license boundary, and whether logs were previously routed elsewhere; do not infer that the sign-in never happened.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">3 · Evidence before troubleshooting</p>
+                <h2>Build a minimum event record before interpreting it.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Event identity</p><h3>Time, user, application, resource</h3><p>Record the exact UTC timestamp, synthetic UPN such as <code>alex.taylor@example.com</code>, application, target resource, sign-in type, status, failure reason, and error code.</p></article>
+                <article class="card"><p class="card-number">Trace identifiers</p><h3>Request and correlation IDs</h3><p>Preserve the request ID and correlation ID exactly. Synthetic examples in this guide use <code>11111111-1111-4111-8111-111111111111</code> and <code>22222222-2222-4222-8222-222222222222</code>.</p></article>
+                <article class="card"><p class="card-number">Connection context</p><h3>IP, location, client, browser, OS</h3><p>Record the source IP, displayed location indicators, client application, browser, and operating system as event evidence—not as verified physical attribution.</p></article>
+                <article class="card"><p class="card-number">Device context</p><h3>ID, join, managed, compliant</h3><p>Record the device ID, join type, managed indicator, and compliant indicator exactly as displayed, including blank or unavailable values.</p></article>
+                <article class="card"><p class="card-number">Authentication</p><h3>Requirement, methods, steps</h3><p>Record the authentication requirement, methods used, sequence, step results, MFA satisfaction details, and any interrupted or failed step.</p></article>
+                <article class="card"><p class="card-number">Access policy</p><h3>Policies and controls</h3><p>Record each policy evaluated, its result, relevant conditions, grant controls, session controls, and report-only result where available.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">4 · Select the event</p>
+                <h2>Match the reported attempt before opening conclusions.</h2>
+                <p>Filter by a narrow UTC time range, user, application, resource, status, and sign-in category. Then compare request and correlation information from the user-visible error or support record when available.</p>
+            </div>
+            <div class="mission">
+                <p><strong>Synthetic event:</strong> <code>2026-08-21T14:32:18Z</code> · <code>alex.taylor@example.com</code> · Finance Portal Sandbox · Microsoft Graph · Interactive user sign-in · correlation ID <code>22222222-2222-4222-8222-222222222222</code>.</p>
+                <p>Similar rows near the same time are not interchangeable. Select the event matching the correct timestamp, user, application, resource, and correlation information.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">5 · Sign-in categories</p>
+                <h2>Start in the category that represents the actor and flow.</h2>
+                <p>The current sign-in logs experience distinguishes four categories. The legacy experience only includes interactive user sign-ins, and category visibility, fields, grouping, downloads, and related reports can vary by portal experience and license.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">User</p><h3>Interactive user sign-ins</h3><p>A user supplies an authentication factor to Microsoft Entra ID or a helper application, such as a password, MFA response, biometric gesture, or federated assertion.</p></article>
+                <article class="card"><p class="card-number">User</p><h3>Non-interactive user sign-ins</h3><p>A client or operating-system component acts on behalf of a user without a new interactive factor, such as using a refresh token. Identical events can be grouped; expand grouped rows to inspect their individual timestamps.</p></article>
+                <article class="card"><p class="card-number">Workload</p><h3>Service principal sign-ins</h3><p>An application or service principal authenticates without a user, commonly with its own certificate or client secret. Similar events can be aggregated.</p></article>
+                <article class="card"><p class="card-number">Workload</p><h3>Managed identity sign-ins</h3><p>An Azure resource uses an identity whose credentials Azure manages. These entries are separate from service principal sign-in logs and can also be grouped.</p></article>
+            </div>
+            <p>Interactive success and non-interactive failure can coexist because they represent different requests, times, resources, clients, token state, and policy context. For non-interactive confidential-client events, Microsoft notes that the displayed IP can reflect the original token issuance rather than the current refresh-token source.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">6 · Authentication details</p>
+                <h2>Read the requirement and every recorded step.</h2>
+                <p>Open Authentication Details for the selected event. Record the authentication requirement, method sequence, success or failure of each step, result detail, and whether Microsoft reports that a requirement was satisfied by an existing claim.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Requirement</h3><p>Distinguish single-factor, multifactor, passwordless, or other displayed requirements from the individual methods that happened to appear.</p></article>
+                <article class="card"><h3>Methods and sequence</h3><p>Preserve each method, timestamp, success indicator, and detail. One successful step can precede a later interruption or failure.</p></article>
+                <article class="card"><h3>Previously satisfied claims</h3><p>Microsoft can report that MFA or another requirement was satisfied by a claim already present in the token. That is evidence about this evaluation, not proof that a new prompt occurred.</p></article>
+                <article class="card"><h3>Outcome boundary</h3><p>A successful MFA event does not automatically prove the entire sign-in succeeded, a token reached the intended application, or the application granted access.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">7 · Conditional Access</p>
+                <h2>Interpret every policy in the selected event's context.</h2>
+                <p>The Conditional Access details list policies that could be evaluated for the event, including policies that did not apply. Multiple policies can evaluate the same sign-in, and one policy's success does not override another policy's failure.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Scope</p><h3>Applied or not applied</h3><p>An applied policy matched the relevant assignments and conditions for evaluation. <strong>Not applied</strong> means the sign-in did not meet that policy's criteria, such as an exclusion or a nonmatching application, platform, client, risk, or location; it is not automatically malfunctioning.</p></article>
+                <article class="card"><p class="card-number">Enforced result</p><h3>Success or failure</h3><p>Success means the applied policy's requirements were met and that policy would allow the sign-in to proceed. Failure means its requirements were not met and it would block the sign-in. Another policy or another stage can still determine the overall outcome.</p></article>
+                <article class="card"><p class="card-number">Simulation</p><h3>Report-only results</h3><p>Report-only records potential impact without enforcing access. Results can include success, failure, user action required, or not applied; interactive controls are not prompted by a report-only policy.</p></article>
+                <article class="card"><p class="card-number">Controls</p><h3>Conditions, grants, sessions</h3><p>Record the matched user or workload, target resource, location, device platform, client app, risk and other conditions, then record grant controls and session controls separately.</p></article>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Correlate before concluding</h3>
+                <p>Conditional Access results must be interpreted with authentication, device, application, user, risk, location, and client details. Sign-in-log evidence describes the evaluated event and should not be generalized to unrelated sessions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">8 · Device evidence</p>
+                <h2>Treat device fields as event signals, not a complete inventory.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Device ID and join type</h3><p>The device ID can associate the event with a directory device record; join type describes the relationship Microsoft recorded. Confirm the value against the intended device before correlating other records.</p></article>
+                <article class="card"><h3>Managed and compliant</h3><p>These indicators reflect what the sign-in record received for that evaluation. A successful sign-in does not prove the device is correctly managed or compliant outside that event.</p></article>
+                <article class="card"><h3>Operating system and browser</h3><p>These values describe reported client context and can help compare flows. They are not a complete device-security assessment.</p></article>
+                <article class="card"><h3>Blank fields</h3><p>Missing device information can result from the flow, client, token, category, privacy behavior, or unavailable signal. A blank field does not automatically prove the device is unknown, unmanaged, or malicious.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">9 · Network, location, and client</p>
+                <h2>Preserve the displayed context without overstating attribution.</h2>
+                <p>Record the source IP, displayed city, region, country, named-location result, client application, browser, operating system, and original transfer method when available. A synthetic source such as <code>192.0.2.44</code> is documentation-only.</p>
+            </div>
+            <p>IP geolocation is an indicator, not proof of a person's physical location. VPNs, proxies, carrier networks, secure access services, egress architecture, token flows, and grouped non-interactive events can affect what appears. Compare the event with approved network architecture and adjacent events before escalating or dismissing it.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">10 · Application and resource</p>
+                <h2>Separate the requesting client from the target resource.</h2>
+                <p>Record both the application and resource display names and IDs where available, plus the home and resource tenant context for cross-tenant activity. The client asking for a token and the API or service receiving it can be different.</p>
+            </div>
+            <p>An application or resource mismatch can explain why a policy appears outside the administrator's first expectation. It does not by itself prove incorrect consent, permissions, ownership, or compromise. Correlate the IDs with the approved enterprise application and resource records before drawing that conclusion.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">11 · Errors and identifiers</p>
+                <h2>Preserve exact values for the next investigation layer.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Error code and failure reason</h3><p>Use the event's numeric error code, failure reason, and additional details together. Similar user-facing symptoms can produce different codes and investigation paths.</p></article>
+                <article class="card"><h3>Request ID</h3><p>Preserve the request ID shown for the attempt. Microsoft support and diagnostics can use it with the time and tenant context to identify the request.</p></article>
+                <article class="card"><h3>Correlation ID</h3><p>Use the correlation ID to match the reported attempt and related activity. Microsoft cautions that the same value appearing in multiple logs does not automatically make those logs joinable across services.</p></article>
+                <article class="card"><h3>Similar events</h3><p>Two rows with different correlation IDs are distinct events even when their user, application, and minute appear similar. Compare them; do not silently substitute one for the other.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">12 · Evidence correlation</p>
+                <h2>Separate observations from conclusions.</h2>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Microsoft Entra evidence correlation table" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Observation</th><th scope="col">What it may indicate</th><th scope="col">What it does not prove</th><th scope="col">Safest next investigation step</th></tr></thead>
+                    <tbody>
+                        <tr><td>Invalid username or password.</td><td>The submitted credential or identifier was not accepted for this attempt.</td><td>Account compromise, a directory outage, or the user's intent.</td><td>Match the exact event and compare its error code, identifier, client, and adjacent authorized activity.</td></tr>
+                        <tr><td>MFA requirement not completed.</td><td>The recorded multifactor step was interrupted, timed out, denied, or otherwise incomplete.</td><td>Why the user did not complete it or that every authentication method is broken.</td><td>Review the authentication step details, requirement, method, timing, and user-reported experience.</td></tr>
+                        <tr><td>Conditional Access failure.</td><td>At least one applied policy requirement was not met or a block control applied.</td><td>That the policy is misconfigured.</td><td>Identify the failing policy, matched conditions, controls, and the event's user, device, location, client, risk, app, and resource.</td></tr>
+                        <tr><td>Policy not applied.</td><td>The event did not match that policy's assignments or conditions.</td><td>That Conditional Access malfunctioned or no other policy applied.</td><td>Review that policy's inclusion, exclusion, resource, platform, client, location, risk, and state for this event.</td></tr>
+                        <tr><td>Device not marked compliant.</td><td>A compliant-device signal was false or unavailable for the evaluated request.</td><td>That the device is malicious, unenrolled, or currently noncompliant in every system.</td><td>Match the device ID and flow, then compare authorized device-management evidence at the event time.</td></tr>
+                        <tr><td>Device information missing.</td><td>The flow or client might not have supplied device claims.</td><td>That the device is unknown, unmanaged, or malicious.</td><td>Confirm the sign-in category, client, browser, token flow, and whether a working comparison event contains device data.</td></tr>
+                        <tr><td>Unexpected source location.</td><td>The displayed IP or geolocation differs from the expected network path.</td><td>The user's physical location or account compromise.</td><td>Preserve the event and compare approved VPN, proxy, egress, carrier, risk, and adjacent sign-in evidence.</td></tr>
+                        <tr><td>Legacy or unsupported client appears.</td><td>The request used a client category or protocol different from the expected modern flow.</td><td>Which application component generated it or that changing policy is safe.</td><td>Correlate client, application, resource, sign-in type, user report, and supported authentication path.</td></tr>
+                        <tr><td>User sign-in succeeds but application access still fails.</td><td>Microsoft Entra authentication completed while a downstream authorization, consent, resource, session, network, or application dependency did not.</td><td>End-to-end application health or correct permissions.</td><td>Trace the same application and resource IDs into the narrowest authorized downstream evidence.</td></tr>
+                        <tr><td>Interactive sign-in succeeds while non-interactive activity fails.</td><td>The background token request had different time, resource, client, token, or policy context.</td><td>That the successful interactive event should make every later request succeed.</td><td>Expand grouped non-interactive rows and compare exact timestamps, IDs, resources, clients, and error details.</td></tr>
+                        <tr><td>Application or resource mismatch.</td><td>The token request targeted a different client or resource than first reported.</td><td>Incorrect consent, malicious use, or wrong ownership.</td><td>Verify display names and IDs against approved enterprise application and resource records.</td></tr>
+                        <tr><td>Similar events have different correlation IDs.</td><td>They are separate requests with potentially different evaluation context.</td><td>That either row represents the user's reported attempt.</td><td>Use the exact UTC time, request ID, correlation ID, application, and resource to select the correct event.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">13 · Interpretation mistakes</p>
+                <h2>Avoid conclusions that the event cannot support.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>“MFA succeeded, so access succeeded.”</h3><p>MFA can be one successful step before another policy, token, resource, or application failure.</p></article>
+                <article class="card"><h3>“The sign-in succeeded, so the device is healthy.”</h3><p>A successful sign-in does not prove correct management, compliance, configuration, or security posture.</p></article>
+                <article class="card"><h3>“Not applied means broken.”</h3><p>A policy can correctly remain outside the event because an assignment or condition did not match.</p></article>
+                <article class="card"><h3>“Report-only blocked the user.”</h3><p>Report-only evaluates potential impact and does not enforce access.</p></article>
+                <article class="card"><h3>“One row proves the root cause.”</h3><p>The row records one evaluated event; downstream access and adjacent requests can have different evidence.</p></article>
+                <article class="card"><h3>“Blank device data proves danger.”</h3><p>Missing claims have several routine technical explanations and require correlation.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">14 · Escalation</p>
+                <h2>Stop when evidence, risk, or authority exceeds routine investigation.</h2>
+                <p>Preserve the event record and escalate through the approved security, identity, application, or service-support path when any of the following applies:</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Security concern</h3><p>Suspected compromise, impossible or unexplained activity, high-risk detections, or authentication-method registration anomalies appear.</p></article>
+                <article class="card"><h3>Protected identities</h3><p>A break-glass or emergency-access account, privileged identity, or evidence-integrity concern is involved.</p></article>
+                <article class="card"><h3>Broad policy impact</h3><p>Conditional Access failures are widespread, a policy changed without known ownership, or verified emergency access is uncertain.</p></article>
+                <article class="card"><h3>Workload identity</h3><p>A service-principal or managed-identity failure requires credential, permission, consent, ownership, or production application review.</p></article>
+                <article class="card"><h3>Evidence limitation</h3><p>Required audit evidence is missing, outside retention, hidden by licensing, or unavailable in the current portal or export.</p></article>
+                <article class="card"><h3>Change required</h3><p>Any next step would modify policy, identity, authentication, device, application, consent, session, or user access.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">15 · Intentionally excluded</p>
+                <h2>This guide does not provide user-impacting or tenant-changing procedures.</h2>
+            </div>
+            <div class="mission">
+                <p>Excluded actions include disabling users; resetting passwords; changing authentication methods; revoking sessions; changing Conditional Access policies; excluding users from policies; modifying named locations; changing device compliance; deleting devices; granting administrative roles; changing application permissions or consent; disabling security defaults; bypassing MFA; or otherwise weakening tenant security.</p>
+                <p>Those actions require separate authorization, change control, verified emergency access, rollback planning, and environment-specific review by accountable identity and security owners.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">16 · Related resources</p>
+                <h2>Continue through the appropriate KrippyTech path.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Learning method</p><h3>MSP University</h3><p>Use the understand, investigate, resolve, and verify sequence while keeping this guide in the investigation phase.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Topic hub</p><h3>Microsoft 365 &amp; Identity</h3><p>Place sign-in evidence alongside Exchange Online, permissions, applications, and other Microsoft 365 dependencies.</p><a class="card-link" href="/microsoft-365/">Open the Microsoft 365 hub <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Related procedure</p><h3>Shared mailbox not showing</h3><p>Use the Exchange procedure when authentication succeeds but the reported symptom concerns mailbox permission propagation or Outlook behavior.</p><a class="card-link" href="/tutorials/shared-mailbox-not-showing-outlook/">Open the shared-mailbox tutorial <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Related procedure</p><h3>Archive processing</h3><p>Use the archive tutorial when the issue is mailbox processing rather than sign-in or Conditional Access evaluation.</p><a class="card-link" href="/tutorials/exchange-online-archive-not-reducing-primary-mailbox/">Open the archive tutorial <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Microsoft sources</p>
+                <h2>Primary documentation used for this guide.</h2>
+            </div>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins">Sign-in logs in Microsoft Entra ID</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-in-log-activity-details">Sign-in log activity details</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-interactive-sign-ins">Interactive user sign-ins</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-noninteractive-sign-ins">Non-interactive user sign-ins</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-service-principal-sign-ins">Service principal sign-ins</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-managed-identity-sign-ins">Managed identity sign-ins</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-troubleshoot-sign-in-errors">Troubleshoot Microsoft Entra sign-in errors</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-activity-log-schemas">Microsoft Entra activity-log schemas</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/how-to-view-applied-conditional-access-policies">Conditional Access and activity logs</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only">Conditional Access report-only mode</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-access-activity-logs">Access Microsoft Entra activity logs</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-reports-data-retention">Microsoft Entra data retention</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/licensing">Microsoft Entra licensing</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>
