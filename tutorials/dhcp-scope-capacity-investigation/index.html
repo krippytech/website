@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/tutorials/dhcp-scope-capacity-investigation/">
+
+    <title>Investigating DHCP Scope Capacity and Address Exhaustion | KrippyTech</title>
+    <meta name="description" content="Investigate DHCP scope utilization, leases, reservations, exclusions, failover, and monitoring evidence before planning a capacity change.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Investigating DHCP Scope Capacity and Address Exhaustion | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="Investigate DHCP scope utilization, leases, reservations, exclusions, failover, and monitoring evidence before planning a capacity change.">
+    <meta property="og:url" content="https://krippytech.com/tutorials/dhcp-scope-capacity-investigation/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investigating DHCP Scope Capacity and Address Exhaustion | KrippyTech">
+    <meta name="twitter:description" content="Investigate DHCP scope utilization, leases, reservations, exclusions, failover, and monitoring evidence before planning a capacity change.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/navigation.js"></script>
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/" aria-current="page">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/" aria-current="page">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Windows Server / DHCP / Capacity</p>
+            <h1>Investigating DHCP Scope Capacity and Address Exhaustion</h1>
+            <p class="hero-text">
+                Determine whether a capacity alert reflects genuine address pressure, complete exhaustion, stale lease evidence, or a monitoring mismatch.
+                <span class="highlight">Move from the alert to authoritative scope evidence, interpret allocation carefully, state what remains unknown, and escalate before changing production DHCP.</span>
+            </p>
+            <p class="article-meta">
+                Written by <a href="/about/" rel="author">Michael Miller</a>
+                <span aria-hidden="true">·</span>
+                Published <time datetime="2026-08-22">August 22, 2026</time>
+                <span aria-hidden="true">·</span>
+                Last reviewed <time datetime="2026-08-22">August 22, 2026</time>
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <article class="card"><p class="card-number">Estimated Time</p><h3>25–35 Minutes</h3></article>
+                <article class="card"><p class="card-number">Difficulty</p><h3>Intermediate</h3></article>
+                <article class="card"><p class="card-number">Technologies</p><h3>Windows Server / DHCP / PowerShell</h3></article>
+                <article class="card"><p class="card-number">Change Boundary</p><h3>Evidence Collection Only</h3></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Capacity alert</p>
+                <h2>Translate the percentage into an operational question.</h2>
+                <p>A DHCP capacity alert usually means a monitoring system calculated that a scope crossed a utilization threshold. It does not, by itself, establish exhaustion, identify which addresses are consuming capacity, or prove that clients cannot obtain leases.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">High utilization</p>
+                    <h3>Some capacity may remain</h3>
+                    <p>A scope can exceed a warning threshold while still reporting free addresses. Record the threshold, free count, scope state, evidence time, and whether clients are affected.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Complete exhaustion</p>
+                    <h3>No allocatable address is available</h3>
+                    <p>Confirm this with authoritative DHCP statistics captured at the same time as the symptom. A full scope still does not explain why addresses are consumed.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Monitoring mismatch</p>
+                    <h3>The calculation may use different inputs</h3>
+                    <p>The alert may target another server, scope, failover partner, or timestamp, or may calculate capacity without correctly accounting for exclusions, reservations, or lease states.</p>
+                </article>
+            </div>
+            <div class="mission">
+                <p><strong>Investigation sequence:</strong> Capacity alert → scope evidence → allocation analysis → operational impact → verified conclusion → escalation boundary.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Requirements and authorization</p>
+                <h2>Confirm the management boundary before querying DHCP.</h2>
+                <p>Use Windows PowerShell on a supported Windows administrative system with the DHCP Server tools or RSAT DHCP components and the <code>DhcpServer</code> module available. PowerShell 7 may use compatible Windows modules on Windows, but these examples are validated against the Windows PowerShell behavior documented for the module.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Authorization is required</h3>
+                <p>The account and computer must be authorized to read the target DHCP server. Organizational permissions, firewall policy, remoting requirements, and server hardening can restrict retrieval even though every command in this guide is read-only. Do not request broader access than the investigation requires.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">Get-Module -ListAvailable -Name DhcpServer
+Get-Command -Name Get-DhcpServerv4Scope, Get-DhcpServerv4ScopeStatistics,
+    Get-DhcpServerv4Lease, Get-DhcpServerv4Reservation,
+    Get-DhcpServerv4ExclusionRange, Get-DhcpServerv4OptionValue,
+    Get-DhcpServerv4Failover, Get-DhcpServerv4Superscope</code></pre>
+            </div>
+            <p>If the module or commands are unavailable, stop and use the approved tooling process. This tutorial does not install management components or alter access.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Investigation scope</p>
+                <h2>Use one synthetic server and scope throughout the examples.</h2>
+                <p>Replace these documentation-only values only after confirming the authorized DHCP server and affected scope. Do not substitute a client address for the scope identifier.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">$dhcpServer = 'LAB-DHCP-01.example.test'
+$scopeId = '192.0.2.0'</code></pre>
+            </div>
+            <p><code>LAB-DHCP-01.example.test</code> and <code>192.0.2.0/24</code> are synthetic documentation values. They do not identify a customer, tenant, server, or production network.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Scope evidence</p>
+                <h2>Confirm boundaries, state, and lease duration first.</h2>
+                <p>The start and end ranges define the inclusive address span configured for the scope. The total span is the end address minus the start address plus one. Exclusions are not offered, and reservations commit addresses to designated clients, so both reduce capacity available to general dynamic clients.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">$scope = Get-DhcpServerv4Scope -ComputerName $dhcpServer -ScopeId $scopeId
+$scope | Select-Object ScopeId, Name, State, StartRange, EndRange,
+    SubnetMask, LeaseDuration</code></pre>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Start and end</p><h3>Define the configured span</h3><p>Count the range inclusively, then account for exclusions and reservations before describing capacity available to general dynamic clients.</p></article>
+                <article class="card"><p class="card-number">Scope state</p><h3>Separate availability from utilization</h3><p>An inactive scope and an exhausted active scope are different operational conditions. Neither condition alone explains the cause.</p></article>
+                <article class="card"><p class="card-number">Lease duration</p><h3>Record policy without changing it</h3><p>Lease duration affects how long assignments can remain valid. A shorter duration is not automatically the correct response to pressure.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Authoritative statistics</p>
+                <h2>Compare percentage in use with the absolute free count.</h2>
+                <p>Percentage and free-address count answer different questions. Capture them together and include failover-related statistics when the scope participates in a failover relationship.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">$statistics = Get-DhcpServerv4ScopeStatistics -ComputerName $dhcpServer `
+    -ScopeId $scopeId -Failover
+$statistics | Select-Object ScopeId, Free, InUse, PercentageInUse,
+    Reserved, Pending, SuperscopeName</code></pre>
+            </div>
+            <div class="callout">
+                <h3>Do not conclude from the percentage alone</h3>
+                <p>High utilization does not automatically prove exhaustion. Confirm the absolute free count, current scope state, alert timestamp, authoritative DHCP timestamp, lease states, reservations, exclusions, and operational symptoms.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Lease allocation</p>
+                <h2>Group lease states instead of exposing complete records.</h2>
+                <p>Without <code>-AllLeases</code>, the lease cmdlet returns active leases for the scope. Use <code>-AllLeases</code> when the approved investigation requires active and nonactive states, then group the result so client names, identifiers, and individual addresses are not displayed unnecessarily.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">$leaseStateTotals = Get-DhcpServerv4Lease -ComputerName $dhcpServer `
+    -ScopeId $scopeId -AllLeases |
+    Group-Object -Property AddressState |
+    Sort-Object -Property Name |
+    Select-Object Name, Count
+$leaseStateTotals</code></pre>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Active</p><h3>A current lease record exists</h3><p>This supports allocation analysis, but it does not prove the client is physically present, reachable, authorized, or still using the address.</p></article>
+                <article class="card"><p class="card-number">Offered, declined, or expired</p><h3>State changes the interpretation</h3><p>Nonactive records can explain why raw record counts differ from current use. Preserve the state and timestamp rather than labeling every record stale.</p></article>
+                <article class="card"><p class="card-number">Counts only</p><h3>Minimize sensitive output</h3><p>Escalate with grouped totals unless an authorized reviewer needs a specific lease record to answer a defined question.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Reservations and exclusions</p>
+                <h2>Account for addresses that are not generally allocatable.</h2>
+                <p>Reservations dedicate addresses to known clients, while exclusions prevent DHCP from offering specified ranges. Count reservations and review exclusion boundaries without displaying client identifiers.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">$reservationCount = @(
+    Get-DhcpServerv4Reservation -ComputerName $dhcpServer -ScopeId $scopeId
+).Count
+
+$exclusions = Get-DhcpServerv4ExclusionRange -ComputerName $dhcpServer `
+    -ScopeId $scopeId
+$exclusions | Select-Object ScopeId, StartRange, EndRange
+
+[pscustomobject]@{ ReservationCount = $reservationCount }</code></pre>
+            </div>
+            <p>Do not assume that every reservation is actively leased or that every excluded address is incorrectly configured. These objects establish allocation boundaries; intent and ownership still require review.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Options, superscopes, and failover</p>
+                <h2>Understand the wider DHCP relationship without changing it.</h2>
+                <p>Scope options can identify the router, DNS servers, and domain information delivered to clients, but they do not measure capacity. Superscopes group scopes administratively, and failover changes how partner state and ownership should be interpreted.</p>
+            </div>
+            <div class="code-block">
+                <pre><code class="language-powershell">Get-DhcpServerv4OptionValue -ComputerName $dhcpServer -ScopeId $scopeId `
+    -OptionId 3, 6, 15 |
+    Select-Object OptionId, Value
+
+Get-DhcpServerv4Superscope -ComputerName $dhcpServer |
+    Select-Object SuperscopeName, ScopeId
+
+Get-DhcpServerv4Failover -ComputerName $dhcpServer -ScopeId $scopeId |
+    Select-Object Name, PartnerServer, Mode, State, ScopeId</code></pre>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Multiple scopes</p><h3>Investigate each scope separately</h3><p>Capacity in one scope does not automatically satisfy clients on another subnet. Confirm the affected subnet, relay path, and scope identifier.</p></article>
+                <article class="card"><p class="card-number">Superscope</p><h3>Administrative grouping is not one flat pool</h3><p>Identify associated scopes and subnet intent before combining totals or assuming that addresses can be used interchangeably.</p></article>
+                <article class="card"><p class="card-number">Failover</p><h3>Partner state affects interpretation</h3><p>Compare relationship mode, state, partner, and failover-aware statistics. Do not treat one server's local perspective as the entire relationship.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Allocation analysis</p>
+                <h2>Separate genuine demand from stale or mismatched evidence.</h2>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Evidence suggesting demand</p>
+                    <h3>Aligned growth and active use</h3>
+                    <p>Scope statistics show sustained growth at aligned timestamps, active lease totals rise with known device demand, free capacity falls, and server evidence agrees with monitoring.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Evidence suggesting stale records</p>
+                    <h3>Nonactive states dominate the discrepancy</h3>
+                    <p>Expired, declined, or offered records explain a raw lease count that exceeds authoritative in-use statistics. This is a reason to investigate, not permission to delete leases.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Evidence suggesting monitoring error</p>
+                    <h3>Inputs, target, or time do not match</h3>
+                    <p>The alert uses another scope, partner, timestamp, or calculation, or it treats exclusions and reservations differently from the DHCP server's authoritative statistics.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Synthetic evidence table</p>
+                <h2>Correlate the alert with one minimized DHCP snapshot.</h2>
+                <p>Every value below is invented and documentation-safe. The table illustrates evidence structure, not a production threshold or prescribed response.</p>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Synthetic DHCP scope capacity evidence table" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead>
+                        <tr><th scope="col">Evidence</th><th scope="col">Synthetic value</th><th scope="col">Interpretation boundary</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Scope state</td><td>Active</td><td>The scope is enabled; this does not prove free capacity.</td></tr>
+                        <tr><td>Configured range</td><td>192.0.2.20–192.0.2.220</td><td>201 addresses in the inclusive span before exclusions and reservations.</td></tr>
+                        <tr><td>Percentage in use</td><td>94%</td><td>High utilization; not complete exhaustion by itself.</td></tr>
+                        <tr><td>Free-address count</td><td>11</td><td>Addresses remain according to this server snapshot.</td></tr>
+                        <tr><td>Lease-state totals</td><td>Active 171; Offered 1; Declined 2; Expired 4</td><td>Records have different meanings; counts do not prove device presence.</td></tr>
+                        <tr><td>Reservations</td><td>12</td><td>Reserved addresses are not generally allocatable to other clients.</td></tr>
+                        <tr><td>Exclusions</td><td>192.0.2.20–192.0.2.29</td><td>Ten addresses are excluded from DHCP offers.</td></tr>
+                        <tr><td>Lease duration</td><td>8 days</td><td>Policy evidence only; shortening it is not automatically appropriate.</td></tr>
+                        <tr><td>Failover state</td><td>Load balance; Normal</td><td>Partner evidence is still needed before a relationship-wide conclusion.</td></tr>
+                        <tr><td>Monitoring timestamp</td><td>2026-08-22 14:00 UTC</td><td>Compare with the alert's collection method and target.</td></tr>
+                        <tr><td>DHCP evidence timestamp</td><td>2026-08-22 14:07 UTC</td><td>The seven-minute difference limits direct comparison.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mission">
+                <p><strong>Supported conclusion for this synthetic snapshot:</strong> High utilization with remaining capacity. Complete exhaustion is not confirmed. The monitoring calculation and failover partner view remain required next checks.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Conclusion model</p>
+                <h2>Name the evidence state without prescribing a fix.</h2>
+            </div>
+            <div class="table-wrap" role="region" aria-label="DHCP scope capacity conclusion model" tabindex="0" style="max-width: 100%; overflow-x: auto;">
+                <table class="kt-table">
+                    <thead><tr><th scope="col">Conclusion</th><th scope="col">Minimum support</th><th scope="col">Boundary</th></tr></thead>
+                    <tbody>
+                        <tr><td>Confirmed exhaustion</td><td>Authoritative free count is zero at the relevant time and scope.</td><td>The cause and approved response remain separate questions.</td></tr>
+                        <tr><td>High utilization with remaining capacity</td><td>Threshold exceeded while the authoritative free count is above zero.</td><td>Do not describe the scope as exhausted.</td></tr>
+                        <tr><td>Monitoring mismatch</td><td>Monitor and server differ in target, inputs, timestamps, or calculation.</td><td>Reconcile the measurement before planning a change.</td></tr>
+                        <tr><td>Capacity reduced by reservations or exclusions</td><td>Authoritative objects show addresses unavailable to general dynamic clients.</td><td>Do not assume those boundaries are incorrect.</td></tr>
+                        <tr><td>Evidence incomplete</td><td>Required scope, lease, relationship, timing, or symptom evidence is missing.</td><td>State the unknown; do not fill it with an assumption.</td></tr>
+                        <tr><td>Change planning required</td><td>Demand and risk justify evaluating an environment-specific response.</td><td>Separate written scope, ownership, testing, rollback, and approval are required.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Evidence limits</p>
+                <h2>State what the snapshot proves and what it cannot prove.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Observation</p><h3>DHCP reported specific values</h3><p>The captured objects establish scope configuration, statistics, lease-state totals, reservations, exclusions, options, and relationship data returned by the queried server at collection time.</p></article>
+                <article class="card"><p class="card-number">Possible interpretation</p><h3>Demand or measurement may explain the alert</h3><p>Aligned growth may suggest genuine demand; nonactive lease states or mismatched inputs may suggest stale or inaccurate monitoring.</p></article>
+                <article class="card"><p class="card-number">Unknown</p><h3>The cause and client impact remain open</h3><p>A full scope does not identify why addresses are consumed. Lease counts do not prove every device is present, and scope data does not prove relay, VLAN, routing, DNS, or application health.</p></article>
+                <article class="card"><p class="card-number">Required next check</p><h3>Answer the narrow unresolved question</h3><p>Align timestamps, confirm the affected scope and partner, correlate client symptoms, and compare authoritative server data with the monitoring formula.</p></article>
+                <article class="card"><p class="card-number">Change requiring approval</p><h3>Plan outside this investigation</h3><p>Expanding the range, shortening lease duration, deleting leases, changing exclusions or reservations, modifying options or failover, or altering the subnet requires separate planning and authorization.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Privacy and ticket handling</p>
+                <h2>Collect the minimum DHCP evidence needed.</h2>
+                <p>DHCP data can expose client names, IP addresses, MAC addresses or client identifiers, reservations, server names, domain information, and network ranges.</p>
+            </div>
+            <div class="callout callout-warning">
+                <h3>Do not retain full live lease records unnecessarily</h3>
+                <p>Prefer grouped state totals and targeted fields. Keep raw authorized evidence only in the approved case location, redact unrelated identifiers before escalation, record who collected it and when, and never paste live DHCP output into public channels or repositories.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Escalation and change planning</p>
+                <h2>Preserve service stability while the evidence is reviewed.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Client impact</p><h3>Escalate active allocation failures</h3><p>Escalate when authorized evidence shows zero free capacity, clients cannot obtain leases, multiple scopes are affected, or an outage is active.</p></article>
+                <article class="card"><p class="card-number">Ownership</p><h3>Escalate unclear network intent</h3><p>Stop when reservations, exclusions, relay paths, superscopes, failover ownership, subnet boundaries, or monitoring calculations are not understood.</p></article>
+                <article class="card"><p class="card-number">Risk</p><h3>Escalate before disruption</h3><p>Deleting leases can disrupt legitimate clients. Expanding a range without subnet and routing review can create conflicts. Shortening lease duration can increase renewal traffic and is not an automatic fix.</p></article>
+            </div>
+            <div class="mission">
+                <p>This guide authorizes evidence collection only. Any production change requires an identified owner, impact analysis, subnet and routing review where applicable, failover review, testing, rollback planning, maintenance coordination, and explicit approval.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Related KrippyTech resources</p>
+                <h2>Continue with the dependency that matches the evidence.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Local evidence</p><h3>Inspect Windows network configuration</h3><p>Capture active adapter, address, gateway, DNS-server, and network-profile evidence from the affected client.</p><a class="card-link" href="/tutorials/get-ktnetworkconfig-v1.0.0/">Open Get-KTNetworkConfig tutorial <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Domain dependencies</p><h3>Investigate DNS and Active Directory</h3><p>Correlate client DNS, locator records, domain discovery, replication, time, services, and logs.</p><a class="card-link" href="/tutorials/dns-active-directory-domain-health/">Open domain-health investigation <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">DNS query</p><h3>Use Test-KTDNS safely</h3><p>Verify one resolver, record type, and normalized result without treating DNS alone as end-to-end health.</p><a class="card-link" href="/tutorials/test-ktdns-v1.0.0/">Open Test-KTDNS tutorial <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Learning hub</p><h3>Windows &amp; Hybrid</h3><p>Connect addressing evidence with Windows, DNS, Active Directory, server, and hybrid dependencies.</p><a class="card-link" href="/windows-hybrid/">Open Windows &amp; Hybrid <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Method</p><h3>MSP University</h3><p>Use the understand, investigate, resolve, and verify sequence without jumping from alert to change.</p><a class="card-link" href="/msp-university/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Tools</p><h3>PowerShell Library</h3><p>Review KrippyTech's published read-only troubleshooting tools and their verification guidance.</p><a class="card-link" href="/powershell/">Open PowerShell Library <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Official Microsoft references</p>
+                <h2>Verify every DHCP command and scope concept.</h2>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>DhcpServer module</h3><p>Microsoft's cmdlet inventory for DHCP Server management.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>DHCP scopes</h3><p>Microsoft's scope, range, exclusion, reservation, option, and superscope planning guidance.</p><a class="card-link" href="https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-scopes">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Scope</h3><p>Retrieves IPv4 scope configuration.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4scope?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Scope<wbr>Statistics</h3><p>Retrieves scope statistics and optional failover-related values.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4scopestatistics?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Lease</h3><p>Retrieves active or all lease states for a specified scope.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4lease?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Reservation</h3><p>Retrieves reservations by scope, address, or client identifier.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4reservation?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Exclusion<wbr>Range</h3><p>Retrieves excluded ranges for specified scope identifiers.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4exclusionrange?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Option<wbr>Value</h3><p>Retrieves IPv4 option values at server, scope, or reservation level.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4optionvalue?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Failover</h3><p>Retrieves failover relationships by name or scope identifier.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4failover?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+                <article class="card"><h3>Get-<wbr>Dhcp<wbr>Server<wbr>v4<wbr>Superscope</h3><p>Retrieves superscope configuration and associated scopes.</p><a class="card-link" href="https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4superscope?view=windowsserver2025-ps">Read Microsoft Learn <span aria-hidden="true">→</span></a></article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 KrippyTech. MSP University. Real-world IT without the fluff.</div>
+</footer>
+</body>
+</html>

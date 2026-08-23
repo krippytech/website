@@ -112,6 +112,11 @@ SOCIAL_METADATA = {
         "description": "An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.",
         "type": "article",
     },
+    "/tutorials/dhcp-scope-capacity-investigation/": {
+        "title": "Investigating DHCP Scope Capacity and Address Exhaustion | KrippyTech",
+        "description": "Investigate DHCP scope utilization, leases, reservations, exclusions, failover, and monitoring evidence before planning a capacity change.",
+        "type": "article",
+    },
     "/tutorials/entra-signin-conditional-access-investigation/": {
         "title": "Investigating Microsoft Entra Sign-ins and Conditional Access Results | KrippyTech",
         "description": "An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.",
@@ -555,6 +560,13 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-08-21">August 21, 2026</time>'
         ),
         "/tutorials/windows-server-low-disk-space-investigation/": re.compile(
+            r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>\s*'
+            r'<span aria-hidden="true">·</span>\s*Last reviewed\s*'
+            r'<time datetime="2026-08-22">August 22, 2026</time>'
+        ),
+        "/tutorials/dhcp-scope-capacity-investigation/": re.compile(
             r'Written by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-08-22">August 22, 2026</time>\s*'
@@ -1377,6 +1389,105 @@ def validate_windows_server_low_disk_tutorial(failures: list[str]) -> None:
             )
 
 
+def validate_dhcp_scope_capacity_tutorial(failures: list[str]) -> None:
+    route = "/tutorials/dhcp-scope-capacity-investigation/"
+    page = ROOT / "tutorials/dhcp-scope-capacity-investigation/index.html"
+    if not page.is_file():
+        failures.append(f"{route}: tutorial page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Investigating DHCP Scope Capacity and Address Exhaustion",
+        "High utilization does not automatically prove exhaustion",
+        "Percentage and free-address count answer different questions",
+        "LAB-DHCP-01.example.test",
+        "192.0.2.0/24",
+        "Get-DhcpServerv4Scope -ComputerName $dhcpServer -ScopeId $scopeId",
+        "Get-DhcpServerv4ScopeStatistics -ComputerName $dhcpServer",
+        "Get-DhcpServerv4Lease -ComputerName $dhcpServer",
+        "Get-DhcpServerv4Reservation -ComputerName $dhcpServer -ScopeId $scopeId",
+        "Get-DhcpServerv4ExclusionRange -ComputerName $dhcpServer",
+        "Get-DhcpServerv4OptionValue -ComputerName $dhcpServer -ScopeId $scopeId",
+        "Get-DhcpServerv4Failover -ComputerName $dhcpServer -ScopeId $scopeId",
+        "Get-DhcpServerv4Superscope -ComputerName $dhcpServer",
+        "Observation",
+        "Possible interpretation",
+        "Unknown",
+        "Required next check",
+        "Change requiring approval",
+        "This guide authorizes evidence collection only",
+        "/tutorials/get-ktnetworkconfig-v1.0.0/",
+        "/tutorials/test-ktdns-v1.0.0/",
+        "/windows-hybrid/",
+        "/msp-university/#learning-path",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-scopes",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4scope?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4scopestatistics?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4lease?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4reservation?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4exclusionrange?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4optionvalue?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4failover?view=windowsserver2025-ps",
+        "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4superscope?view=windowsserver2025-ps",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing required guide text {required!r}")
+
+    prohibited_text = (
+        "Set-DhcpServer",
+        "Add-DhcpServer",
+        "Remove-DhcpServer",
+        "Clear-DhcpServer",
+        "Restart-Service",
+        "Stop-Service",
+        "Start-Service",
+    )
+    for prohibited in prohibited_text:
+        if prohibited.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: prohibited DHCP change command found {prohibited!r}"
+            )
+
+    synthetic_boundaries = (
+        "LAB-DHCP-01.example.test",
+        "192.0.2.0",
+        "Every value below is invented and documentation-safe",
+    )
+    for required in synthetic_boundaries:
+        if required not in source:
+            failures.append(
+                f"{page.relative_to(ROOT)}: missing synthetic-example boundary {required!r}"
+            )
+
+    forbidden_environment_markers = (
+        "10.0.",
+        "10.1.",
+        "172.16.",
+        ".local",
+        "contoso.com",
+        "fabrikam.com",
+    )
+    for marker in forbidden_environment_markers:
+        if marker.lower() in source.lower():
+            failures.append(
+                f"{page.relative_to(ROOT)}: non-approved environment marker found {marker!r}"
+            )
+
+    integrations = {
+        ROOT / "tutorials/index.html": "dhcp-scope-capacity-investigation/",
+        ROOT / "windows-hybrid/index.html": route,
+        ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
+    }
+    for integration, required in integrations.items():
+        if required not in integration.read_text(encoding="utf-8"):
+            failures.append(
+                f"{integration.relative_to(ROOT)}: missing DHCP capacity tutorial integration {required!r}"
+            )
+
+
 def validate_onedrive_sharepoint_sync_tutorial(failures: list[str]) -> None:
     route = "/tutorials/onedrive-sharepoint-sync-investigation/"
     page = ROOT / "tutorials/onedrive-sharepoint-sync-investigation/index.html"
@@ -1829,6 +1940,7 @@ def main() -> int:
     validate_dns_ad_domain_health_tutorial(failures)
     validate_entra_signin_ca_tutorial(failures)
     validate_windows_server_low_disk_tutorial(failures)
+    validate_dhcp_scope_capacity_tutorial(failures)
     validate_onedrive_sharepoint_sync_tutorial(failures)
     validate_azure_vm_connectivity_tutorial(failures)
     validate_azure_vm_network_path_lab(failures)

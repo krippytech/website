@@ -133,7 +133,7 @@
         <div class="container">
             <div class="section-heading">
                 <h2>Start here</h2>
-                <p>Begin with a focused published guide: inspect local network configuration, test one DNS question, investigate server storage, or follow the domain-health path when multiple Windows dependencies overlap.</p>
+                <p>Begin with a focused published guide: inspect local network configuration, test one DNS question, investigate DHCP capacity or server storage, or follow the domain-health path when multiple Windows dependencies overlap.</p>
             </div>
             <div class="grid">
                 <article class="card">
@@ -141,6 +141,12 @@
                     <h3>Investigate low disk space safely</h3>
                     <p>Confirm the affected volume, measure capacity and growth, and correlate Windows, application, database, virtualization, backup, and role evidence before planning a change.</p>
                     <a class="card-link" href="/tutorials/windows-server-low-disk-space-investigation/">Open the storage guide <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Published investigation guide · DHCP</p>
+                    <h3>Investigate scope capacity safely</h3>
+                    <p>Compare scope statistics with lease states, reservations, exclusions, failover, and client impact before planning a capacity change.</p>
+                    <a class="card-link" href="/tutorials/dhcp-scope-capacity-investigation/">Open the DHCP capacity guide <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card">
                     <p class="card-number">Published investigation guide · Active Directory</p>
@@ -196,9 +202,10 @@
                     <a class="card-link" href="/powershell/#test-ktdns-v1">Use the read-only DNS tool <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card">
-                    <p class="card-number">Content in development</p>
+                    <p class="card-number">Published investigation guide</p>
                     <h3>DHCP</h3>
                     <p>Scopes, leases, options, reservations, relay paths, and the client configuration that connects addressing to DNS and routing.</p>
+                    <a class="card-link" href="/tutorials/dhcp-scope-capacity-investigation/">Investigate scope capacity <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card">
                     <p class="card-number">Published storage investigation guide</p>
@@ -246,7 +253,7 @@
         <div class="container">
             <div class="section-heading">
                 <h2>Troubleshoot the dependency chain</h2>
-                <p>Four published guides now cover local network configuration, focused DNS testing, broader Active Directory health, and evidence-first Windows Server storage investigation. Additional Windows and hybrid procedures remain in development.</p>
+                <p>Five published guides now cover local network configuration, focused DNS testing, DHCP scope capacity, broader Active Directory health, and evidence-first Windows Server storage investigation. Additional Windows and hybrid procedures remain in development.</p>
             </div>
             <div class="grid">
                 <article class="card">
@@ -260,6 +267,12 @@
                     <h3>Interpret local configuration before testing the path</h3>
                     <p>Collect active adapter, address, gateway, DNS-server, and profile evidence without treating configuration as proof of connectivity.</p>
                     <a class="card-link" href="/tutorials/get-ktnetworkconfig-v1.0.0/">Use the Get-KTNetworkConfig procedure <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Published investigation guide · DHCP</p>
+                    <h3>Correlate scope capacity with allocation evidence</h3>
+                    <p>Compare percentage and absolute free capacity with lease states, reservations, exclusions, failover, and current client impact.</p>
+                    <a class="card-link" href="/tutorials/dhcp-scope-capacity-investigation/">Open the DHCP capacity investigation <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card">
                     <p class="card-number">Published investigation guide · Active Directory</p>
