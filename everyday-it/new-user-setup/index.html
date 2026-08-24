@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/everyday-it/new-user-setup/">
+
+    <title>New User Setup | Everyday IT | KrippyTech</title>
+    <meta name="description" content="A practical new-user onboarding guide for office IT: Active Directory, Microsoft 365 licensing, groups, email, access, devices, verification, and common mistakes.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="/navigation.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Everyday IT · New Users &amp; Onboarding</p>
+            <h1>Set up a new user without guessing.</h1>
+            <p class="hero-text">
+                A new hire usually needs more than an account and a password. The job is to reproduce the access their role requires, verify each layer, and avoid giving them more access than they should have.
+                <span class="highlight">Use a known-good employee in the same role as your reference, then verify instead of blindly copying.</span>
+            </p>
+            <div class="buttons">
+                <a class="button button-primary" href="#checklist">Start the setup</a>
+                <a class="button button-secondary" href="/everyday-it/office-it-admin-survival-guide/">Back to Survival Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>The quick answer</h2>
+                <p>A reliable new-user setup follows the same basic path in most small and midsize Microsoft environments.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">01</p>
+                    <h3>Find the right comparison user</h3>
+                    <p>Choose someone with the same job function, department, location, and access needs. Their setup is a reference, not an automatic template.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">02</p>
+                    <h3>Create the identity in the right place</h3>
+                    <p>Determine whether the organization creates users in on-premises Active Directory, directly in Microsoft 365 / Entra ID, or through another identity workflow.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">03</p>
+                    <h3>Assign groups, license and access</h3>
+                    <p>Match the role, not the person. Add only the groups, applications, mailbox access, SharePoint access, and license the employee actually needs.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">04</p>
+                    <h3>Verify before calling it done</h3>
+                    <p>Confirm sign-in, mailbox creation, required group membership, file access, applications, MFA registration, and device readiness.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="checklist">
+        <div class="container">
+            <div class="section-heading">
+                <h2>New employee setup checklist</h2>
+                <p>Before touching the environment, collect enough information to know what you are building.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Identity</p>
+                    <h3>Who is the employee?</h3>
+                    <p>Confirm legal/display name, preferred username format, job title, department, manager, location, start date, and whether an account already exists.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Role</p>
+                    <h3>Who already does this job?</h3>
+                    <p>Ask for a current employee with the same role. This gives you a practical reference for groups, applications, shared resources, printers, and licensing.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Access</p>
+                    <h3>What do they actually need?</h3>
+                    <p>Identify file shares, SharePoint sites, shared mailboxes, distribution lists, line-of-business applications, VPN or remote access, printers, and any privileged access.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Device</p>
+                    <h3>Where will they work?</h3>
+                    <p>Confirm workstation or laptop assignment, office or remote location, docking needs, phone or mobile requirements, and whether the device is already prepared.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Step 1: Find a known-good comparison user</h2>
+                <p>Copying a working role is often safer than inventing a configuration from memory, but only when the comparison user is actually comparable.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Good comparison</p>
+                    <h3>Same role, same location, same responsibilities</h3>
+                    <p>If the new employee is a Tampa paralegal, another Tampa paralegal is usually a better model than the office manager or a partner.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Bad comparison</p>
+                    <h3>Do not copy somebody just because they sit nearby</h3>
+                    <p>Long-term employees often accumulate extra groups and one-off permissions. Blindly duplicating them can reproduce years of permission sprawl.</p>
+                </article>
+            </div>
+            <div class="mission">
+                <blockquote>Copy the role. Do not copy the history.</blockquote>
+                <p>Use the existing employee to identify likely access, then verify each important membership before assigning it to the new account.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Step 2: Create the account in the authoritative system</h2>
+                <p>The correct starting point depends on how the organization manages identity.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Hybrid environment</p>
+                    <h3>On-premises AD may be the source</h3>
+                    <p>If users synchronize from Active Directory to Microsoft Entra ID, create the user where the organization normally creates synchronized identities, place the account in the correct OU, and allow the established sync process to create the cloud identity.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Cloud-only environment</p>
+                    <h3>Microsoft 365 / Entra may be the source</h3>
+                    <p>If the tenant is cloud-only, create the account through the organization's normal Microsoft 365 or Entra administration workflow and follow its naming, location, and licensing standards.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Before creation</p>
+                    <h3>Check the naming convention</h3>
+                    <p>Look at existing users before choosing a username, UPN, display name, email alias, or description. Consistency beats creativity.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Password</p>
+                    <h3>Use the organization's onboarding process</h3>
+                    <p>Follow the approved temporary-password or onboarding method, require the appropriate password change behavior, and never send credentials through an insecure channel just because it is convenient.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Step 3: Groups first, access second</h2>
+                <p>This is the mental model that makes onboarding easier to understand and easier to support later.</p>
+            </div>
+            <div class="mission">
+                <blockquote>User → Group → Access</blockquote>
+                <p>Whenever possible, put users into the group that grants the required access instead of assigning permissions directly to the individual user.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Active Directory</p>
+                    <h3>Review group membership</h3>
+                    <p>Compare role-based security groups carefully. Watch for administrative, legacy, project-specific, or temporary groups that should not carry over.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Email</p>
+                    <h3>Check distribution and shared resources</h3>
+                    <p>Identify required distribution lists, Microsoft 365 groups, shared mailboxes, calendars, and send-as or send-on-behalf permissions where applicable.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Files</p>
+                    <h3>Match file and SharePoint access</h3>
+                    <p>Use existing security or Microsoft 365 groups when possible. Avoid creating a direct permission entry for every new employee.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Applications</p>
+                    <h3>Do not forget line-of-business systems</h3>
+                    <p>Document systems that do not inherit access from AD or Microsoft 365. Accounting, legal, CRM, timekeeping, VPN, phone, and industry-specific applications often require separate provisioning.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Step 4: Microsoft 365 license and mailbox</h2>
+                <p>A user existing in Microsoft 365 does not automatically mean every Microsoft 365 service is ready.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">License</p>
+                    <h3>Match the required service level</h3>
+                    <p>Compare with users in the same role and confirm the employee needs the services included in that license. Do not assign a larger license simply because one is available.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Mailbox</p>
+                    <h3>Allow provisioning time</h3>
+                    <p>After the appropriate Exchange Online service is assigned, mailbox creation and other cloud-side changes may require time to provision. Avoid repeatedly changing settings because the result is not instant.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Address</p>
+                    <h3>Verify the primary email address</h3>
+                    <p>Confirm the expected domain, aliases, display name, and address format before handing the account to the user.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">MFA</p>
+                    <h3>Plan first sign-in</h3>
+                    <p>Know how the organization handles MFA registration, Temporary Access Pass or other onboarding methods, Conditional Access, and mobile enrollment before the employee's first login.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Step 5: Verify the setup</h2>
+                <p>Provisioning is not complete until the account can do what the role requires.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Sign-in</p>
+                    <h3>Can the user authenticate?</h3>
+                    <p>Confirm the account is enabled, the expected username works, the password flow behaves correctly, and MFA can be completed.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Email</p>
+                    <h3>Is the mailbox available?</h3>
+                    <p>Confirm the mailbox exists and required shared mailboxes, groups, aliases, and Outlook access are present or actively provisioning.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Resources</p>
+                    <h3>Can they reach what they need?</h3>
+                    <p>Test the essential file locations, SharePoint sites, applications, VPN, printers, and other role-specific resources.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Documentation</p>
+                    <h3>Record what was assigned</h3>
+                    <p>Document the account, license, important groups, special access, device, exceptions, and anything still waiting on another person or system.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Common new-user failures</h2>
+                <p>When onboarding goes wrong, these are some of the first things worth checking.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Problem</p>
+                    <h3>User exists on-prem but not in Microsoft 365</h3>
+                    <p>Check whether the organization uses directory synchronization, whether the user is in synchronization scope, whether required attributes are valid, and whether the normal sync cycle has completed.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Problem</p>
+                    <h3>Email is not ready</h3>
+                    <p>Confirm the correct license and Exchange service are assigned, the account is synchronized if required, and enough provisioning time has passed before assuming something is broken.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Problem</p>
+                    <h3>Access denied</h3>
+                    <p>Compare the required group membership to the known-good role, confirm the access is actually group-based, and remember that some tokens or cloud permissions may require sign-out, sign-in, or propagation.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Problem</p>
+                    <h3>Everything looks right, but the user still cannot work</h3>
+                    <p>Separate identity from device configuration. The account may be correct while Outlook, OneDrive, a mapped drive, VPN, printer, or local profile still needs configuration.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>What not to do casually</h2>
+                <p>New-user onboarding should be routine. If the setup requires broad or risky changes, stop treating it like a normal onboarding task.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Avoid</p>
+                    <h3>Giving direct permissions everywhere</h3>
+                    <p>Direct user permissions are harder to audit, harder to remove during offboarding, and easier to forget. Prefer the organization's existing access groups.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Avoid</p>
+                    <h3>Copying privileged memberships</h3>
+                    <p>Do not duplicate Domain Admin, local administrator, elevated Entra roles, security administration, finance access, or other privileged memberships simply because the comparison user has them.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Avoid</p>
+                    <h3>Changing global policies to fix one onboarding issue</h3>
+                    <p>A new user failing MFA, mail, sync, or sign-in is not a reason to weaken Conditional Access, authentication, mail flow, or tenant-wide security settings.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Avoid</p>
+                    <h3>Deleting and recreating immediately</h3>
+                    <p>If provisioning is delayed, investigate first. Repeatedly deleting and rebuilding identities can create duplicate objects, synchronization conflicts, mailbox issues, and more cleanup.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>When to escalate</h2>
+                <p>Escalation is part of good administration, not a failure to troubleshoot.</p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Escalate</p>
+                    <h3>Synchronization errors you do not understand</h3>
+                    <p>If the identity is duplicated, conflicting, excluded unexpectedly, or showing directory synchronization errors, gather evidence and escalate before changing synchronization configuration.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Escalate</p>
+                    <h3>Privileged or sensitive access</h3>
+                    <p>Administrative roles, executive mailboxes, finance systems, HR data, security tools, and other sensitive access should have clear authorization before assignment.</p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Escalate</p>
+                    <h3>The fix appears tenant-wide</h3>
+                    <p>If solving one user's onboarding appears to require changes to Conditional Access, synchronization, DNS, mail flow, domain settings, or global security policy, stop and involve the appropriate administrator.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="mission">
+                <blockquote>Good onboarding is boring, repeatable, and easy to explain.</blockquote>
+                <p>If you can identify the correct role, create the identity in the right system, assign access through groups, verify the result, and document the exceptions, you have the foundation of a reliable new-user process.</p>
+            </div>
+            <div class="buttons">
+                <a class="button button-primary" href="/everyday-it/">Explore Everyday IT</a>
+                <a class="button button-secondary" href="/everyday-it/office-it-admin-survival-guide/">View the full Survival Guide</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        © 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.
+    </div>
+</footer>
+
+</body>
+</html>
