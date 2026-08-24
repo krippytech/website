@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/everyday-it/printers/">
+
+    <title>Printer Troubleshooting | Everyday IT | KrippyTech</title>
+    <meta name="description" content="A practical office printer troubleshooting guide covering drivers, ports, queues, spooler issues, test prints, network checks, and safe escalation.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="/navigation.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text"><span class="brand-name">KrippyTech</span><span class="brand-tagline">Practical IT. Real Solutions.</span></span>
+            </a>
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">Learn <span class="chevron" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">Solutions <span class="chevron" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu" id="solutions-menu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/">Cases</a></li></ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">Tools <span class="chevron" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu" id="tools-menu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></button>
+        </nav>
+    </div>
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label"><span class="mobile-group-label" id="mobile-learn-label">Learn</span><ul class="mobile-submenu"><li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label"><span class="mobile-group-label" id="mobile-solutions-label">Solutions</span><ul class="mobile-submenu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/">Cases</a></li></ul></li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label"><span class="mobile-group-label" id="mobile-tools-label">Tools</span><ul class="mobile-submenu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Everyday IT · Printers</p>
+            <h1>Troubleshoot printers without starting over every time.</h1>
+            <p class="hero-text">Printer problems get easier when you separate the printer, the network path, the queue, the port, and the driver instead of treating printing as one giant mystery.<span class="highlight">First find where the failure is. Then fix only that layer.</span></p>
+            <div class="buttons"><a class="button button-primary" href="#quick-path">Start troubleshooting</a><a class="button button-secondary" href="/everyday-it/">Back to Everyday IT</a></div>
+        </div>
+    </section>
+
+    <section class="section" id="quick-path">
+        <div class="container">
+            <div class="section-heading"><h2>The quick troubleshooting path</h2><p>Answer these questions in order before removing drivers, deleting queues, or changing anything server-side.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">01</p><h3>Is the printer itself healthy?</h3><p>Check power, paper, toner, display errors, jams, and whether the printer can produce an internal configuration or status page.</p></article>
+                <article class="card"><p class="card-number">02</p><h3>Can the computer reach it?</h3><p>If it is a network printer, confirm the expected IP address or print-server path and test basic network reachability before touching the driver.</p></article>
+                <article class="card"><p class="card-number">03</p><h3>Is Windows sending to the right queue and port?</h3><p>Verify the selected printer, queue status, pending jobs, offline state, and port assignment.</p></article>
+                <article class="card"><p class="card-number">04</p><h3>Is the driver appropriate?</h3><p>Use the manufacturer-supported driver for the exact model and operating system when available, then test before trying another driver family.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>Step 1: Find out whether this is one PC or everybody</h2><p>This single question can save a huge amount of time.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">One computer</p><h3>Think local first</h3><p>Focus on that workstation's queue, port, driver, spooler, Windows profile, and application-specific printing behavior.</p></article>
+                <article class="card"><p class="card-number">Multiple computers</p><h3>Think shared dependency</h3><p>Check the printer itself, print server, network path, shared queue, driver deployment, or a recent infrastructure change.</p></article>
+                <article class="card"><p class="card-number">One application</p><h3>Do not blame the printer immediately</h3><p>If Windows test pages and other applications print correctly, the failure may be inside the application, page setup, PDF renderer, or saved print settings.</p></article>
+                <article class="card"><p class="card-number">Intermittent</p><h3>Look for a pattern</h3><p>Capture whether failures line up with sleep/wake, VPN use, wireless roaming, IP changes, large jobs, or print-server availability.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>Step 2: Get the correct driver</h2><p>The fastest install is not always the cleanest install. Start with the manufacturer's support page when you know the exact printer model.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Preferred</p><h3>Manufacturer → model → operating system</h3><p>Match the exact printer or device family and the workstation/server OS. Avoid random driver-download sites.</p></article>
+                <article class="card"><p class="card-number">PCL</p><h3>Common office default</h3><p>PCL drivers are widely used for normal office printing and are often a good starting point for business documents when the manufacturer supports them.</p></article>
+                <article class="card"><p class="card-number">PostScript</p><h3>Useful for specific workflows</h3><p>PS drivers can be preferable for some graphics, publishing, Adobe, or cross-platform workflows, but they are not automatically better for every office printer.</p></article>
+                <article class="card"><p class="card-number">Universal</p><h3>Useful, but not magic</h3><p>A vendor universal driver can simplify fleets, but model-specific features such as stapling, finishing, trays, accounting codes, or secure print may require extra configuration or a model-specific driver.</p></article>
+            </div>
+            <div class="mission"><blockquote>Do not switch drivers randomly until something works.</blockquote><p>Know which driver is installed, why you are changing it, and what symptom the change is supposed to correct.</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>Step 3: Check the port and path</h2><p>A perfect driver cannot print if Windows is sending the job to the wrong place.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Direct IP</p><h3>Confirm the printer IP</h3><p>Compare the Windows port with the printer's current network configuration. If the device received a different address, the old port may still look valid but point nowhere useful.</p></article>
+                <article class="card"><p class="card-number">Print server</p><h3>Confirm the shared queue</h3><p>Determine whether the workstation should connect to a server share such as \\PRINTSERVER\OfficePrinter instead of directly to the printer.</p></article>
+                <article class="card"><p class="card-number">WSD</p><h3>Know what was auto-discovered</h3><p>WSD can work, but when troubleshooting business printers, a known TCP/IP port or approved print-server queue is often easier to identify and support consistently.</p></article>
+                <article class="card"><p class="card-number">Address changes</p><h3>Do not create a recurring problem</h3><p>If the printer's network address keeps changing, correct the underlying addressing or reservation strategy rather than repeatedly rebuilding user queues.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>Step 4: Clear a stuck queue safely</h2><p>When jobs are stuck, start with the least disruptive action.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Queue</p><h3>Cancel obvious failed jobs</h3><p>Open the print queue, identify the stuck document, cancel it, and see whether later jobs begin moving.</p></article>
+                <article class="card"><p class="card-number">Spooler</p><h3>Restart the Print Spooler when appropriate</h3><p>If the local queue is frozen, restarting the Windows Print Spooler can clear a stalled state. On a print server, understand that restarting the service can affect many users.</p></article>
+                <article class="card"><p class="card-number">Test</p><h3>Use a Windows test page</h3><p>A successful test page proves more than repeatedly printing the same broken PDF or application document.</p></article>
+                <article class="card"><p class="card-number">Rebuild</p><h3>Remove and reinstall only after isolation</h3><p>If the port and printer are reachable but the local queue or driver is clearly damaged, remove the affected printer and reinstall it using the known-good path and driver.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>Why it works on one PC but not another</h2><p>Compare the working and broken workstation instead of guessing.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Compare</p><h3>Driver name and version</h3><p>Different driver packages can behave differently even when both printers have the same display name.</p></article>
+                <article class="card"><p class="card-number">Compare</p><h3>Port or server path</h3><p>One machine may use a print server while another points directly to an old IP address.</p></article>
+                <article class="card"><p class="card-number">Compare</p><h3>Queue settings</h3><p>Look at default paper size, tray, duplex, finishing, color, and any vendor-specific settings.</p></article>
+                <article class="card"><p class="card-number">Compare</p><h3>User or application context</h3><p>Check whether the problem follows the user, the workstation, or one application. That tells you which layer to investigate next.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>Common mistakes</h2><p>Printer troubleshooting often takes too long because too much is changed at once.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Mistake</p><h3>Deleting everything first</h3><p>Removing every printer, driver, and port destroys useful evidence and can make a simple queue problem harder to understand.</p></article>
+                <article class="card"><p class="card-number">Mistake</p><h3>Using whichever driver appears first</h3><p>Windows discovery may install something functional but not ideal for the device or its advanced features.</p></article>
+                <article class="card"><p class="card-number">Mistake</p><h3>Ignoring the printer display</h3><p>A workstation fix will not resolve a jam, offline NIC, empty tray, toner condition, authentication prompt, or hardware fault on the device.</p></article>
+                <article class="card"><p class="card-number">Mistake</p><h3>Restarting shared services casually</h3><p>Restarting a print server or spooler can interrupt many users. Know the scope before making a shared change.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading"><h2>When to escalate</h2><p>Stop treating it as a basic workstation printer issue when the evidence points somewhere larger.</p></div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Escalate</p><h3>Many users or queues fail together</h3><p>Investigate the print server, network, deployment system, policy, or infrastructure change rather than rebuilding workstations one at a time.</p></article>
+                <article class="card"><p class="card-number">Escalate</p><h3>Driver changes affect production</h3><p>Shared print-server driver replacement, package changes, and large-scale deployment should follow the organization's change process.</p></article>
+                <article class="card"><p class="card-number">Escalate</p><h3>The device has a hardware or firmware fault</h3><p>Persistent error codes, finishing-unit faults, physical feed issues, and vendor service conditions belong with the printer vendor or hardware support path.</p></article>
+                <article class="card"><p class="card-number">Escalate</p><h3>Secure or regulated printing is involved</h3><p>Badge release, accounting, print-management platforms, or sensitive workflows may have dependencies that should not be bypassed just to make a test job print.</p></article>
+            </div>
+            <div class="mission"><blockquote>Printer troubleshooting is isolation, not ritual.</blockquote><p>Printer → network → queue → port → driver → application. Find the broken layer, verify the fix, and leave the working layers alone.</p></div>
+        </div>
+    </section>
+</main>
+
+<footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
+</body>
+</html>
