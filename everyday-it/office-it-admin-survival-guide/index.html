@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/everyday-it/office-it-admin-survival-guide/">
+
+    <title>Office IT Admin Survival Guide | KrippyTech</title>
+    <meta name="description" content="A practical real-world course outline covering new-user onboarding, Active Directory, permissions, Microsoft 365, printers, SharePoint, OneDrive, MFA, troubleshooting, and escalation.">
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="/navigation.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">Learn <span class="chevron" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">Solutions <span class="chevron" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">Tools <span class="chevron" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label"><span class="mobile-group-label" id="mobile-solutions-label">Solutions</span><ul class="mobile-submenu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/">Cases</a></li></ul></li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label"><span class="mobile-group-label" id="mobile-tools-label">Tools</span><ul class="mobile-submenu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Everyday IT · Flagship learning path</p>
+            <h1>Office IT Admin Survival Guide</h1>
+            <p class="hero-text">
+                New Users, AD, Email &amp; Everyday Troubleshooting, Real-World Edition.
+                <span class="highlight">Practical admin, not certification training.</span>
+            </p>
+            <div class="buttons">
+                <a class="button button-primary" href="#course-outline">View the course outline</a>
+                <a class="button button-secondary" href="/everyday-it/">Back to Everyday IT</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Who this is for</h2>
+                <p>People who are already touching real systems and need a safe, understandable way to do the work.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><h3>Helpdesk &amp; junior IT admins</h3><p>Build confidence handling common work without relying on guesswork.</p></article>
+                <article class="card"><h3>MSP technicians</h3><p>Useful for L1 technicians growing toward L2 responsibility and stronger troubleshooting habits.</p></article>
+                <article class="card"><h3>Office admins who inherited IT</h3><p>Understand what you can safely handle and where the environment needs deeper technical support.</p></article>
+                <article class="card"><h3>Anyone afraid to break AD or M365</h3><p>Learn the mental models, checks, and boundaries that make routine changes less intimidating.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>The outcome</h2>
+                <p>By the end, a student should be able to onboard a new user, set up email, assign common access, work through routine office IT failures, and recognize when a change needs escalation.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="course-outline">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Course outline</h2>
+                <p>The first version is organized around common support work, then builds toward troubleshooting judgment and safe escalation.</p>
+            </div>
+            <div class="grid">
+                <article class="card"><p class="card-number">Module 0</p><h3>How Office IT Actually Works</h3><p>What this course is and is not, safe changes versus dangerous ones, how to use the material on the job, and the core Users → Groups → Access mental model.</p></article>
+                <article class="card"><p class="card-number">Module 1</p><h3>New Hires</h3><p>New employee checklist, creating users safely, naming conventions, copying a working user, AD properties, licensing, access, email, and what people forget.</p></article>
+                <article class="card"><p class="card-number">Module 2</p><h3>Active Directory &amp; Permissions</h3><p>OUs, users, groups, security groups, distribution lists, group-based access, NTFS versus share permissions, access denied, account lockouts, and logon issues.</p></article>
+                <article class="card"><p class="card-number">Module 3</p><h3>Microsoft 365 &amp; Email</h3><p>Licensing basics, user versus shared mailboxes, distribution lists, common license mistakes, mail-flow symptoms, and an introduction to message trace.</p></article>
+                <article class="card"><p class="card-number">Module 4</p><h3>Printers</h3><p>Finding the correct driver, PCL versus PS, universal drivers, fast installs, ports, test prints, common failures, and why a printer may work on one PC but not another.</p></article>
+                <article class="card"><p class="card-number">Module 5</p><h3>SharePoint &amp; OneDrive</h3><p>SharePoint versus OneDrive versus file servers, group-based access, adding users correctly, sync issues, and browser-versus-Explorer behavior.</p></article>
+                <article class="card"><p class="card-number">Module 6</p><h3>Passwords, MFA &amp; Authentication</h3><p>Password reset failures, cached credentials, lockouts, sync delays, common MFA problems, safe recovery concepts, mobile-versus-desktop symptoms, and Microsoft MFA/Duo basics.</p></article>
+                <article class="card"><p class="card-number">Module 7</p><h3>Everyday Troubleshooting Playbook</h3><p>What changed, one user versus everyone, account versus device versus network versus cloud, checking before changing, testing the result, and documenting what happened.</p></article>
+                <article class="card"><p class="card-number">Module 8</p><h3>When NOT to Touch It</h3><p>Red flags, blast radius, when to stop, and changes that should not be made casually, including domain controllers, DNS, Conditional Access, mail flow rules, firewall changes, mass permissions, backups, and production servers.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="mission">
+                <blockquote>Confidence comes from knowing what to check, not from pretending you know everything.</blockquote>
+                <p>This course is meant to shorten the gap between textbook knowledge and the first months of real IT work.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
+</body>
+</html>
