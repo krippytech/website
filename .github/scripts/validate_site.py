@@ -113,6 +113,21 @@ SOCIAL_METADATA = {
         "description": "Clear common Windows Temp locations safely, skip files that are in use, and avoid deleting the Temp folders themselves.",
         "type": "article",
     },
+    "/everyday-it/mapped-drives-access/": {
+        "title": "Mapped Drives & File Access | Everyday IT | KrippyTech",
+        "description": "A practical guide to missing mapped drives, UNC paths, SMB shares, permissions, SharePoint and OneDrive confusion, and safe file-access troubleshooting.",
+        "type": "article",
+    },
+    "/everyday-it/scan-to-folder/": {
+        "title": "Scan to Folder Troubleshooting | Everyday IT | KrippyTech",
+        "description": "A practical guide to setting up and troubleshooting scan-to-folder with SMB shares, UNC paths, permissions, service accounts, and copier testing.",
+        "type": "article",
+    },
+    "/everyday-it/vpn-mapped-drive/": {
+        "title": "VPN Works but the Drive Does Not | Everyday IT | KrippyTech",
+        "description": "A practical guide for troubleshooting mapped drives and internal file access after a VPN tunnel connects successfully.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
