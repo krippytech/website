@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import html
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -31,6 +32,56 @@ SOCIAL_METADATA = {
         "title": "KrippyTech | Practical IT. Real Solutions.",
         "description": "KrippyTech brings together MSP University, reviewed tutorials and documented cases, plus consulting for technical assessment, troubleshooting, planning, and defined implementation support.",
         "type": "website",
+    },
+    "/everyday-it/": {
+        "title": "Everyday IT | KrippyTech",
+        "description": "Real-world guidance for the IT work people actually get asked to do every day.",
+        "type": "website",
+    },
+    "/everyday-it/active-directory/": {
+        "title": "Active Directory Basics | Everyday IT | KrippyTech",
+        "description": "Practical Active Directory guidance for everyday IT work: OUs, users, groups, logon issues, lockouts, safe changes, and what not to touch casually.",
+        "type": "article",
+    },
+    "/everyday-it/groups-permissions/": {
+        "title": "Groups & Permissions | Everyday IT | KrippyTech",
+        "description": "Plain-English guidance for security groups, distribution lists, NTFS and share permissions, access denied troubleshooting, and role-based access.",
+        "type": "article",
+    },
+    "/everyday-it/microsoft-365-email/": {
+        "title": "Microsoft 365 & Email Basics | Everyday IT | KrippyTech",
+        "description": "Practical Microsoft 365 and email guidance for licensing, user and shared mailboxes, distribution lists, mail flow, and basic message trace troubleshooting.",
+        "type": "article",
+    },
+    "/everyday-it/new-user-setup/": {
+        "title": "New User Setup | Everyday IT | KrippyTech",
+        "description": "A practical new-user onboarding guide for office IT: Active Directory, Microsoft 365 licensing, groups, email, access, devices, verification, and common mistakes.",
+        "type": "article",
+    },
+    "/everyday-it/office-it-admin-survival-guide/": {
+        "title": "Office IT Admin Survival Guide | KrippyTech",
+        "description": "A practical real-world course outline covering new-user onboarding, Active Directory, permissions, Microsoft 365, printers, SharePoint, OneDrive, MFA, troubleshooting, and escalation.",
+        "type": "article",
+    },
+    "/everyday-it/passwords-mfa/": {
+        "title": "Passwords, Lockouts & MFA | Everyday IT | KrippyTech",
+        "description": "A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.",
+        "type": "article",
+    },
+    "/everyday-it/printers/": {
+        "title": "Printer Troubleshooting | Everyday IT | KrippyTech",
+        "description": "A practical office printer troubleshooting guide covering drivers, ports, queues, spooler issues, test prints, network checks, and safe escalation.",
+        "type": "article",
+    },
+    "/everyday-it/sharepoint-onedrive/": {
+        "title": "SharePoint & OneDrive Basics | Everyday IT | KrippyTech",
+        "description": "Practical SharePoint and OneDrive guidance for permissions, sync issues, browser-vs-Explorer problems, and common access complaints.",
+        "type": "article",
+    },
+    "/everyday-it/troubleshooting-escalation/": {
+        "title": "Troubleshooting & Escalation | Everyday IT | KrippyTech",
+        "description": "A practical troubleshooting framework for everyday IT: scope the issue, ask what changed, test one layer at a time, verify the fix, and know when to escalate.",
+        "type": "article",
     },
     "/about/": {
         "title": "About KrippyTech",
@@ -521,7 +572,7 @@ def validate_trust_and_sharing(
 
         source = parser.path.read_text(encoding="utf-8")
         title_match = re.search(r"<title>\s*(.*?)\s*</title>", source, flags=re.DOTALL)
-        title = re.sub(r"\s+", " ", title_match.group(1)).strip() if title_match else ""
+        title = html.unescape(re.sub(r"\s+", " ", title_match.group(1)).strip()) if title_match else ""
         if title != expected["title"]:
             failures.append(
                 f"{relative}: browser title must match approved sharing title {expected['title']!r}"
@@ -1782,6 +1833,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
     required_links = {
         "/": 1,
         "/consulting/": 2,
+        "/everyday-it/": 2,
         "/msp-university/": 2,
         "/azure-journey/": 2,
         "/tutorials/": 2,
@@ -1795,6 +1847,8 @@ def validate_grouped_navigation(failures: list[str]) -> None:
     def expected_active(route: str | None) -> str | None:
         if route == "/":
             return "/"
+        if route and route.startswith("/everyday-it/"):
+            return "/everyday-it/"
         if route in {"/msp-university/", "/microsoft-365/", "/windows-hybrid/"}:
             return "/msp-university/"
         if route and route.startswith("/azure-journey/labs/"):
@@ -1883,7 +1937,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             )
 
         expected_group = None
-        if expected in {"/msp-university/", "/azure-journey/"}:
+        if expected in {"/everyday-it/", "/msp-university/", "/azure-journey/"}:
             expected_group = "learn-menu"
         elif expected in {"/tutorials/", "/cases/"}:
             expected_group = "solutions-menu"
