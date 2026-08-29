@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/everyday-it/passwords-mfa/">
+
+    <title>Passwords, Lockouts &amp; MFA | Everyday IT | KrippyTech</title>
+    <meta name="description" content="A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.">
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="Passwords, Lockouts &amp; MFA | Everyday IT | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.">
+    <meta property="og:url" content="https://krippytech.com/everyday-it/passwords-mfa/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Passwords, Lockouts &amp; MFA | Everyday IT | KrippyTech">
+    <meta name="twitter:description" content="A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+
+
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="/navigation.js"></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home"><img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo"><span class="brand-text"><span class="brand-name">KrippyTech</span><span class="brand-tagline">Practical IT. Real Solutions.</span></span></a>
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">Learn <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="learn-menu"><li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li>
+                <li class="dropdown-group" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">Solutions <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="solutions-menu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/">Cases</a></li></ul></li>
+                <li class="dropdown-group" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">Tools <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="tools-menu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li>
+                <li><a class="nav-link" href="/about/">About</a></li><li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></button>
+        </nav>
+    </div>
+    <div class="mobile-panel" id="mobile-navigation"><ul class="mobile-nav-list"><li><a class="mobile-direct" href="/consulting/">Consulting</a></li><li class="mobile-group" aria-labelledby="mobile-learn-label"><span class="mobile-group-label" id="mobile-learn-label">Learn</span><ul class="mobile-submenu"><li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li><li class="mobile-group" aria-labelledby="mobile-solutions-label"><span class="mobile-group-label" id="mobile-solutions-label">Solutions</span><ul class="mobile-submenu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/">Cases</a></li></ul></li><li class="mobile-group" aria-labelledby="mobile-tools-label"><span class="mobile-group-label" id="mobile-tools-label">Tools</span><ul class="mobile-submenu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li><li><a class="mobile-direct" href="/about/">About</a></li><li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li></ul></div>
+</header>
+
+<main>
+    <section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Passwords, Lockouts &amp; MFA</p><h1>Stop treating every sign-in problem like a password problem.</h1><p class="hero-text">A reset can be correct and the user can still fail to sign in. Cached credentials, lockouts, stale mobile sessions, sync timing, MFA registration, and policy can all produce similar symptoms.<span class="highlight">First identify which authentication layer is actually failing.</span></p><div class="buttons"><a class="button button-primary" href="#quick-path">Start troubleshooting</a><a class="button button-secondary" href="/everyday-it/">Back to Everyday IT</a></div></div></section>
+
+    <section class="section" id="quick-path"><div class="container"><div class="section-heading"><h2>The quick troubleshooting path</h2><p>Use the symptom to narrow the problem before resetting everything.</p></div><div class="grid">
+        <article class="card"><p class="card-number">01</p><h3>What exactly is failing?</h3><p>Windows sign-in, Microsoft 365, Outlook, VPN, remote desktop, mobile email, an application, or the MFA prompt may each use a different path.</p></article>
+        <article class="card"><p class="card-number">02</p><h3>Does the current password work anywhere?</h3><p>Test one authoritative sign-in location when appropriate. A successful cloud sign-in but failed workstation login points you in a different direction than failure everywhere.</p></article>
+        <article class="card"><p class="card-number">03</p><h3>Is the account locked, disabled, expired, or risky?</h3><p>Check account state before performing repeated resets. A locked or disabled account does not become healthy just because the password changed.</p></article>
+        <article class="card"><p class="card-number">04</p><h3>Is MFA the failing layer?</h3><p>If the password is accepted and the failure occurs afterward, focus on authentication methods, registration, Conditional Access, device context, or the specific MFA provider.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>Password reset does not mean every device knows the new password</h2><p>This is one of the most common sources of confusion.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Workstation</p><h3>Cached Windows credentials</h3><p>A domain-joined laptop that cannot reach a domain controller may still accept the previously cached sign-in. The new domain password may not be usable locally until the device can contact the domain.</p></article>
+        <article class="card"><p class="card-number">Mobile</p><h3>Old credentials keep retrying</h3><p>Phones, tablets, native mail apps, VPN clients, mapped resources, and background services may continue submitting the old password and can contribute to repeated lockouts.</p></article>
+        <article class="card"><p class="card-number">Cloud</p><h3>Synchronization can matter</h3><p>In hybrid environments, password behavior depends on the organization's identity and authentication design. Know where the password was changed and which systems depend on synchronization.</p></article>
+        <article class="card"><p class="card-number">Applications</p><h3>Saved credentials live in many places</h3><p>Credential Manager, scheduled tasks, services, drive mappings, line-of-business apps, and remote-session clients may all retain older credentials.</p></article>
+    </div><div class="mission"><blockquote>A successful reset is the start of verification, not the end of the ticket.</blockquote><p>Confirm the account state, test the expected sign-in path, and identify any device or application still using the old credentials.</p></div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>Account lockouts: find the source, not just the symptom</h2><p>Unlocking the user repeatedly is not a fix if something immediately submits the wrong credentials again.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Pattern</p><h3>Ask when it locks again</h3><p>Immediately after unlock, when Outlook opens, when the user connects to VPN, when they arrive at another office, or overnight are useful clues.</p></article>
+        <article class="card"><p class="card-number">Devices</p><h3>Check forgotten endpoints</h3><p>Old phones, tablets, laptops, saved wireless or VPN profiles, and remote sessions are common places for stale credentials to survive.</p></article>
+        <article class="card"><p class="card-number">Services</p><h3>Look beyond interactive sign-in</h3><p>A service, scheduled task, mapped drive, script, application, or appliance configured with the user's credentials can create recurring lockouts.</p></article>
+        <article class="card"><p class="card-number">Evidence</p><h3>Use logs when the pattern is not obvious</h3><p>In managed environments, domain-controller security events and identity-provider sign-in information can help identify the source instead of guessing.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>MFA problems: separate password from second factor</h2><p>If the password works but authentication fails at the prompt, troubleshoot MFA as its own layer.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Registration</p><h3>Is the expected method registered?</h3><p>Confirm the user still has access to the registered phone, authenticator app, security key, or other approved method.</p></article>
+        <article class="card"><p class="card-number">Prompt</p><h3>Are they receiving the challenge?</h3><p>No prompt, repeated prompt, denied prompt, number-matching failure, and a prompt sent to an old device are different symptoms with different causes.</p></article>
+        <article class="card"><p class="card-number">Device</p><h3>Does the issue follow the user or one endpoint?</h3><p>If MFA works in a browser on one device but not Outlook or a mobile app elsewhere, investigate the affected application's session, token, or device state.</p></article>
+        <article class="card"><p class="card-number">Policy</p><h3>Do not bypass a policy you do not understand</h3><p>Conditional Access, trusted locations, device compliance, sign-in risk, and vendor-specific policies can intentionally block access even when the credentials are correct.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>Safely re-registering MFA</h2><p>Re-registration can be appropriate when a user replaced a phone, lost access to the old method, or has a clearly broken registration, but it should be deliberate.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Before</p><h3>Verify the user's identity</h3><p>Follow the organization's identity-verification procedure before changing authentication methods. MFA recovery is a security-sensitive action.</p></article>
+        <article class="card"><p class="card-number">Review</p><h3>Know what you are removing</h3><p>Determine which authentication methods are registered and whether another working method can be used before deleting anything.</p></article>
+        <article class="card"><p class="card-number">Recovery</p><h3>Use the approved bootstrap method</h3><p>Follow the organization's supported recovery process, which may include re-registration, a Temporary Access Pass, another approved factor, or vendor-specific enrollment.</p></article>
+        <article class="card"><p class="card-number">Verify</p><h3>Test the real application afterward</h3><p>Do not stop after successful registration. Confirm the user can sign in to the application or service that originally failed.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>Mobile works, desktop fails — or the reverse</h2><p>That difference is useful evidence.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Desktop only</p><h3>Check local session and token state</h3><p>Outlook, Teams, Windows account integration, browser profiles, saved credentials, or device registration can fail while the user's cloud account remains healthy.</p></article>
+        <article class="card"><p class="card-number">Mobile only</p><h3>Check stale app credentials and old registration</h3><p>Mobile mail profiles, Authenticator enrollment, device compliance, app protection, or an old account profile can cause failures isolated to the phone.</p></article>
+        <article class="card"><p class="card-number">Browser works</p><h3>The account may be fine</h3><p>If clean browser sign-in succeeds, focus on the failing client's cached session, local profile, token, or device-specific policy rather than changing the password again.</p></article>
+        <article class="card"><p class="card-number">Everything fails</p><h3>Move back toward identity and policy</h3><p>Check account status, password state, licensing where relevant, authentication methods, sign-in blocks, and service health before rebuilding individual applications.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>Common mistakes</h2><p>Authentication problems become messy when every credential and MFA setting gets changed at once.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Mistake</p><h3>Resetting the password repeatedly</h3><p>If the first reset was successful, another reset usually adds confusion unless there is evidence the password itself is still the issue.</p></article>
+        <article class="card"><p class="card-number">Mistake</p><h3>Deleting all MFA methods immediately</h3><p>Removing working recovery methods can make the user harder to recover and can increase security risk.</p></article>
+        <article class="card"><p class="card-number">Mistake</p><h3>Turning off security controls to test</h3><p>Do not disable MFA, Conditional Access, risk controls, or other protections casually just to see whether access starts working.</p></article>
+        <article class="card"><p class="card-number">Mistake</p><h3>Ignoring stale devices</h3><p>A forgotten phone or background application can keep causing lockouts after the user has successfully changed their password.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>When to escalate</h2><p>Basic recovery should stop when the problem involves policy, compromise, privileged access, or a larger identity failure.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Escalate</p><h3>Suspicious sign-ins or possible compromise</h3><p>Unexpected MFA prompts, impossible travel, unfamiliar devices, sign-in risk, or evidence of account takeover belongs in the organization's security response process.</p></article>
+        <article class="card"><p class="card-number">Escalate</p><h3>Conditional Access or identity policy changes</h3><p>Do not weaken tenant-wide or group-wide policy as a helpdesk shortcut. Escalate with the sign-in evidence and affected user context.</p></article>
+        <article class="card"><p class="card-number">Escalate</p><h3>Privileged or administrative accounts</h3><p>Recovery for administrative identities deserves stricter verification and change control than a routine end-user password reset.</p></article>
+        <article class="card"><p class="card-number">Escalate</p><h3>Many users fail at once</h3><p>Multiple simultaneous authentication failures can indicate identity-provider, synchronization, federation, network, or service-health problems rather than individual user mistakes.</p></article>
+    </div><div class="mission"><blockquote>Password → account state → cached credentials → MFA → policy.</blockquote><p>Follow the evidence through the authentication path and change only the layer that is actually broken.</p></div></div></section>
+</main>
+<footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
+</body>
+</html>
