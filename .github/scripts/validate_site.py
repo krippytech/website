@@ -83,6 +83,36 @@ SOCIAL_METADATA = {
         "description": "A practical troubleshooting framework for everyday IT: scope the issue, ask what changed, test one layer at a time, verify the fix, and know when to escalate.",
         "type": "article",
     },
+    "/everyday-it/onedrive-free-up-space/": {
+        "title": "Recover Disk Space with OneDrive Files On-Demand | Everyday IT | KrippyTech",
+        "description": "Use OneDrive Files On-Demand to release local cached copies without deleting the cloud files.",
+        "type": "article",
+    },
+    "/everyday-it/outlook-profile-rebuild/": {
+        "title": "Rebuild an Outlook Profile | Everyday IT | KrippyTech",
+        "description": "Rebuild a Classic Outlook profile safely when the desktop client is misbehaving but the mailbox itself is healthy.",
+        "type": "article",
+    },
+    "/everyday-it/scan-to-email/": {
+        "title": "Scan to Email Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Use timestamps and evidence to prove whether a scan-to-email delay occurred before or after Microsoft 365 received the message.",
+        "type": "article",
+    },
+    "/everyday-it/scanner-troubleshooting/": {
+        "title": "Scanner Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Troubleshoot a scanner by separating the physical connection, Windows detection, vendor software, and workstation performance layers.",
+        "type": "article",
+    },
+    "/everyday-it/vpn-troubleshooting/": {
+        "title": "VPN Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Prove where a VPN connection fails before reinstalling clients or changing firewall settings.",
+        "type": "article",
+    },
+    "/everyday-it/windows-temp-cleanup/": {
+        "title": "Clear Windows Temp Files Safely | Everyday IT | KrippyTech",
+        "description": "Clear common Windows Temp locations safely, skip files that are in use, and avoid deleting the Temp folders themselves.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
