@@ -114,9 +114,18 @@ Turns Everyday IT from a collection of good articles into a more connected troub
 2. `/everyday-it/scope-the-problem/`
    - scope-first troubleshooting method
    - one user, one device, one location, one resource, or everyone
-   - controlled comparison tests that change one variable at a time
+   - narrows the blast radius before repair work begins
 
-3. `/everyday-it/restrict-inherited-folder-permissions/`
+3. `/everyday-it/known-good-comparison/`
+   - known-good comparison as a troubleshooting method
+   - same user/different device
+   - same device/different user
+   - same account/different client
+   - same device/different network or location
+   - compare exact resource/configuration paths without blindly cloning a working user
+   - change one variable at a time so the result remains useful evidence
+
+4. `/everyday-it/restrict-inherited-folder-permissions/`
    - full safe-change workflow for inherited NTFS permissions
    - approved-user confirmation
    - current ACL capture/rollback
@@ -130,7 +139,7 @@ Turns Everyday IT from a collection of good articles into a more connected troub
    - verify both approved and denied users
    - explicit stop/escalation boundaries
 
-4. `/everyday-it/failing-disk-protect-data-first/`
+5. `/everyday-it/failing-disk-protect-data-first/`
    - data-protection-first response to suspected disk failure
    - identify data at risk
    - verify actual backup/sync state
@@ -144,7 +153,9 @@ Turns Everyday IT from a collection of good articles into a more connected troub
 
 `Do not ask which product is broken first. Ask which layer failed.`
 
-`Scope first. Layer second. Change third.`
+`Scope first. Compare second. Layer third. Change fourth.`
+
+`Known-good comparison is not make them identical. It is find the meaningful difference.`
 
 `Preserve a known-good access path before changing the permission model.`
 
@@ -162,13 +173,13 @@ Turns Everyday IT from a collection of good articles into a more connected troub
 ### Jazzy work for #46
 
 - add matching landing-page entries in established Everyday IT format
-- add validator route/social-metadata policy for all four routes
+- add validator route/social-metadata policy for all five routes
 - verify complete desktop/mobile navigation and favicon declarations
 - verify exact OG/Twitter metadata and canonicals
 - verify sitemap entries
 - verify all internal links and cross-layer tutorial links
 - verify headings, fragments, accessibility basics, encoded characters, final newlines
-- consider static Related Guides sections on high-value existing pages where the new hub identifies a natural troubleshooting chain
+- add static Related Guides / Next Test sections on the highest-value existing pages where the new hub identifies a natural troubleshooting chain
 - preserve approved content and symptom-first/layer-first intent
 - run full static-site validation
 - report blockers before merge
