@@ -20,6 +20,17 @@ KrippyTech content follows one reusable knowledge pipeline:
 
 The goal is to preserve the engineering value once, then reuse it many times without repeatedly mining the same ticket history.
 
+## Working Registers
+
+Content Architecture v1 is implemented through four working registers/standards:
+
+- `docs/vault/batch-intake-standard.md` defines how source material enters the system.
+- `docs/vault/content-ledger-standard.md` defines how extracted lessons are evaluated and tracked.
+- `docs/everyday-it-library-map.md` maps the published Everyday IT library into domains, tags, relationships, and coverage gaps.
+- `docs/vault/source-lineage-register.md` records where published and planned knowledge came from without exposing source clients.
+
+These documents turn the architecture into an operating workflow rather than a conceptual model only.
+
 ## Content Domains
 
 Every extracted lesson receives one primary domain.
@@ -247,6 +258,8 @@ Good examples:
 - SharePoint & OneDrive → SharePoint Sync Troubleshooting
 
 Avoid linking pages merely because they share a product name.
+
+Use `docs/everyday-it-library-map.md` as the current relationship register and update it whenever new Everyday IT routes are merged.
 
 ## Operating Principle
 
