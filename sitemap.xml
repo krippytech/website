@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url><loc>https://krippytech.com/</loc></url>
     <url><loc>https://krippytech.com/about/</loc></url>
     <url><loc>https://krippytech.com/consulting/</loc></url>
@@ -16,6 +16,7 @@
     <url><loc>https://krippytech.com/everyday-it/troubleshooting-escalation/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/troubleshooting-paths/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/scope-the-problem/</loc></url>
+    <url><loc>https://krippytech.com/everyday-it/known-good-comparison/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/restrict-inherited-folder-permissions/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/failing-disk-protect-data-first/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/outlook-profile-rebuild/</loc></url>
