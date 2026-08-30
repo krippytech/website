@@ -103,7 +103,7 @@ Adds the operating system behind KrippyTech content development without changing
 
 ### Purpose
 
-Turns Everyday IT from a collection of good articles into a more connected troubleshooting system while filling major practical gaps exposed by Content Architecture v1.
+Turns Everyday IT from a collection of good articles into a connected troubleshooting system while filling major practical gaps exposed by Content Architecture v1.
 
 ### New routes
 
@@ -114,18 +114,25 @@ Turns Everyday IT from a collection of good articles into a more connected troub
 2. `/everyday-it/scope-the-problem/`
    - scope-first troubleshooting method
    - one user, one device, one location, one resource, or everyone
-   - narrows the blast radius before repair work begins
 
 3. `/everyday-it/known-good-comparison/`
-   - known-good comparison as a troubleshooting method
-   - same user/different device
-   - same device/different user
-   - same account/different client
-   - same device/different network or location
-   - compare exact resource/configuration paths without blindly cloning a working user
-   - change one variable at a time so the result remains useful evidence
+   - changes one variable at a time
+   - compares known-good user/device/client/network/resource paths
+   - teaches that comparison means finding the meaningful difference, not making systems identical
 
-4. `/everyday-it/restrict-inherited-folder-permissions/`
+4. `/everyday-it/verify-before-close/`
+   - separates change verification, technical verification, workflow verification, and user validation
+   - distinguishes objective technical completion from situations where the user must confirm history, completeness, role-specific workflow, performance, or intermittent behavior
+   - supports a clear `validation pending` state rather than inventing confirmation
+   - closes with symptom, finding, action, verification, and pending validation evidence
+
+5. `/everyday-it/escalate-with-evidence/`
+   - teaches how to escalate without restarting the investigation
+   - hand off symptom/scope, proven evidence, changes/results, risk boundaries, rollback state, and the exact unresolved next question
+   - preserves useful failed tests and comparison results
+   - emphasizes signal over a wall of ticket history
+
+6. `/everyday-it/restrict-inherited-folder-permissions/`
    - full safe-change workflow for inherited NTFS permissions
    - approved-user confirmation
    - current ACL capture/rollback
@@ -139,7 +146,7 @@ Turns Everyday IT from a collection of good articles into a more connected troub
    - verify both approved and denied users
    - explicit stop/escalation boundaries
 
-5. `/everyday-it/failing-disk-protect-data-first/`
+7. `/everyday-it/failing-disk-protect-data-first/`
    - data-protection-first response to suspected disk failure
    - identify data at risk
    - verify actual backup/sync state
@@ -149,13 +156,19 @@ Turns Everyday IT from a collection of good articles into a more connected troub
    - protect/recover → replace → rebuild → restore/validate
    - escalation when unique data or critical workloads are involved
 
-### Strengthening principles established
+### Strengthening methodology established
 
 `Do not ask which product is broken first. Ask which layer failed.`
 
 `Scope first. Compare second. Layer third. Change fourth.`
 
 `Known-good comparison is not make them identical. It is find the meaningful difference.`
+
+`Make the smallest justified change.`
+
+`Do not close because the change succeeded. Close because the required outcome was verified.`
+
+`Escalate the investigation, not just the ticket.`
 
 `Preserve a known-good access path before changing the permission model.`
 
@@ -173,13 +186,14 @@ Turns Everyday IT from a collection of good articles into a more connected troub
 ### Jazzy work for #46
 
 - add matching landing-page entries in established Everyday IT format
-- add validator route/social-metadata policy for all five routes
+- add validator route/social-metadata policy for all seven routes
 - verify complete desktop/mobile navigation and favicon declarations
 - verify exact OG/Twitter metadata and canonicals
-- verify sitemap entries
+- verify all sitemap entries
 - verify all internal links and cross-layer tutorial links
 - verify headings, fragments, accessibility basics, encoded characters, final newlines
-- add static Related Guides / Next Test sections on the highest-value existing pages where the new hub identifies a natural troubleshooting chain
+- add static Related Guides / Next Test sections to the highest-value existing pages where these routes identify a natural troubleshooting chain
+- specifically consider linking `troubleshooting-escalation` to `scope-the-problem`, `known-good-comparison`, `verify-before-close`, and `escalate-with-evidence`
 - preserve approved content and symptom-first/layer-first intent
 - run full static-site validation
 - report blockers before merge
@@ -205,6 +219,7 @@ Priorities:
 - remote-access dependency mapping as advanced/KER material
 - stronger security/incident-response Everyday IT coverage
 - server/infrastructure Everyday IT bridge material where safe for the audience
+- change/rollback planning as a possible future methodology guide if not better handled as an enhancement
 - advanced SPF/DMARC/direct-send only after current Microsoft verification
 - SMTP AUTH identity guidance only after current Microsoft documentation verification
 
