@@ -1,6 +1,86 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="canonical" href="https://krippytech.com/everyday-it/calendar-sharing-troubleshooting/"><title>Calendar Sharing Troubleshooting | Everyday IT | KrippyTech</title><meta name="description" content="Troubleshoot Microsoft 365 calendar sharing by identifying the mailbox, tenant, sharing policy, domain relationship, and the exact sharing path."><meta property="og:site_name" content="KrippyTech"><meta property="og:title" content="Calendar Sharing Troubleshooting | Everyday IT | KrippyTech"><meta property="og:type" content="article"><meta property="og:description" content="Identify the mailbox, tenant, sharing policy, and recipient domain before changing calendar permissions."><meta property="og:url" content="https://krippytech.com/everyday-it/calendar-sharing-troubleshooting/"><meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions."><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Calendar Sharing Troubleshooting | Everyday IT | KrippyTech"><meta name="twitter:description" content="Identify the mailbox, tenant, sharing policy, and recipient domain before changing calendar permissions."><meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions."><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="../../styles.css"><script src="/navigation.js"></script></head><body>
-<header class="site-header"><div class="container"><nav class="site-nav" aria-label="Primary navigation"><a class="brand" href="/"><img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo"><span class="brand-text"><span class="brand-name">KrippyTech</span><span class="brand-tagline">Practical IT. Real Solutions.</span></span></a><ul class="desktop-nav"><li><a class="nav-link" href="/consulting/">Consulting</a></li><li class="dropdown-group has-current"><a class="nav-link" href="/everyday-it/" aria-current="page">Everyday IT</a></li><li><a class="nav-link" href="/about/">About</a></li><li><a class="nav-link contact-link" href="/contact/">Contact</a></li></ul></nav></div></header>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="canonical" href="https://krippytech.com/everyday-it/calendar-sharing-troubleshooting/"><title>Calendar Sharing Troubleshooting | Everyday IT | KrippyTech</title><meta name="description" content="Troubleshoot Microsoft 365 calendar sharing by identifying the mailbox, tenant, sharing policy, domain relationship, and the exact sharing path."><meta property="og:site_name" content="KrippyTech"><meta property="og:title" content="Calendar Sharing Troubleshooting | Everyday IT | KrippyTech"><meta property="og:type" content="article"><meta property="og:description" content="Identify the mailbox, tenant, sharing policy, and recipient domain before changing calendar permissions."><meta property="og:url" content="https://krippytech.com/everyday-it/calendar-sharing-troubleshooting/"><meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions."><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Calendar Sharing Troubleshooting | Everyday IT | KrippyTech"><meta name="twitter:description" content="Identify the mailbox, tenant, sharing policy, and recipient domain before changing calendar permissions."><meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions."><link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48"><link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"><link rel="stylesheet" href="../../styles.css"><script src="/navigation.js"></script></head><body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
 <main><section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Calendars</p><h1>Calendar sharing starts with the mailbox and tenant.</h1><p class="hero-text">Two addresses that look related can live in different Microsoft 365 tenants and follow different sharing policies.<span class="highlight">Identify the mailbox, identify the tenant, then check the sharing policy.</span></p></div></section>
 <section class="section"><div class="container"><div class="section-heading"><h2>What to check first</h2></div><div class="grid"><article class="card"><p class="card-number">01</p><h3>Which calendar is actually being shared?</h3><p>Confirm the exact mailbox address and calendar. Do not assume the user's other company address is in the same tenant.</p></article><article class="card"><p class="card-number">02</p><h3>Which tenant owns that mailbox?</h3><p>Find the mailbox in the correct Microsoft 365 tenant before changing policies or permissions.</p></article><article class="card"><p class="card-number">03</p><h3>Which sharing policy applies?</h3><p>Check the mailbox's assigned sharing policy and whether it allows calendar sharing to the recipient's domain.</p></article><article class="card"><p class="card-number">04</p><h3>Test with the exact external domain</h3><p>After the policy is confirmed, test the same sharing workflow with the intended domain and verify with the user.</p></article></div></div></section>
 <section class="section"><div class="container"><div class="mission"><blockquote>Do not troubleshoot the wrong tenant.</blockquote><p>If the mailbox belongs somewhere else, settings in the first tenant will never fix that calendar.</p></div></div></section></main><footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer></body></html>

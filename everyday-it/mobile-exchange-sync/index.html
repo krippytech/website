@@ -1,4 +1,84 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="canonical" href="https://krippytech.com/everyday-it/mobile-exchange-sync/"><title>Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech</title><meta name="description" content="Troubleshoot iPhone, iPad, and macOS Exchange sync after password, MFA, Conditional Access, or token changes without changing the mailbox first."><meta property="og:site_name" content="KrippyTech"><meta property="og:title" content="Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech"><meta property="og:type" content="article"><meta property="og:description" content="Separate mailbox health from stale Apple Mail authentication and token state after Microsoft security changes."><meta property="og:url" content="https://krippytech.com/everyday-it/mobile-exchange-sync/"><meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions."><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech"><meta name="twitter:description" content="Separate mailbox health from stale Apple Mail authentication and token state after Microsoft security changes."><meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions."><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="../../styles.css"><script src="/navigation.js"></script></head><body><header class="site-header"><div class="container"><nav class="site-nav" aria-label="Primary navigation"><a class="brand" href="/"><img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo"><span class="brand-text"><span class="brand-name">KrippyTech</span><span class="brand-tagline">Practical IT. Real Solutions.</span></span></a><ul class="desktop-nav"><li><a class="nav-link" href="/consulting/">Consulting</a></li><li><a class="nav-link" href="/everyday-it/" aria-current="page">Everyday IT</a></li><li><a class="nav-link" href="/about/">About</a></li><li><a class="nav-link contact-link" href="/contact/">Contact</a></li></ul></nav></div></header>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="canonical" href="https://krippytech.com/everyday-it/mobile-exchange-sync/"><title>Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech</title><meta name="description" content="Troubleshoot iPhone, iPad, and macOS Exchange sync after password, MFA, Conditional Access, or token changes without changing the mailbox first."><meta property="og:site_name" content="KrippyTech"><meta property="og:title" content="Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech"><meta property="og:type" content="article"><meta property="og:description" content="Separate mailbox health from stale Apple Mail authentication and token state after Microsoft security changes."><meta property="og:url" content="https://krippytech.com/everyday-it/mobile-exchange-sync/"><meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions."><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech"><meta name="twitter:description" content="Separate mailbox health from stale Apple Mail authentication and token state after Microsoft security changes."><meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions."><link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48"><link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"><link rel="stylesheet" href="../../styles.css"><script src="/navigation.js"></script></head><body><header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="KrippyTech home">
+                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                        <li><a href="/msp-university/">MSP University</a></li>
+                        <li><a href="/azure-journey/">Azure Journey</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/everyday-it/" aria-current="page">Everyday IT</a></li>
+                    <li><a href="/msp-university/">MSP University</a></li>
+                    <li><a href="/azure-journey/">Azure Journey</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
 <main><section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Mobile Email</p><h1>When Windows works but Apple Mail stops syncing.</h1><p class="hero-text">Password, MFA, and Conditional Access changes can leave a mobile mail client with stale authentication even while the Microsoft 365 mailbox is healthy.<span class="highlight">Prove the mailbox first, then refresh the device's Exchange relationship.</span></p></div></section>
 <section class="section"><div class="container"><div class="grid"><article class="card"><p class="card-number">01</p><h3>Prove the account elsewhere</h3><p>Confirm the user can sign in to Microsoft 365 or Outlook on the web before treating the problem as a mailbox failure.</p></article><article class="card"><p class="card-number">02</p><h3>Refresh iPhone or iPad Mail</h3><p>In the Exchange account settings, toggle Mail off, wait briefly, and turn it back on. If that does not recover sync, move to a controlled account re-add.</p></article><article class="card"><p class="card-number">03</p><h3>Re-add with Microsoft sign-in</h3><p>Remove the Exchange account, reboot, then add it back using the normal Microsoft sign-in flow so modern authentication and MFA can complete.</p></article><article class="card"><p class="card-number">04</p><h3>macOS follows the same logic</h3><p>Disable Mail for the Exchange account, quit Mail, re-enable it, and if necessary remove and re-add the account through Microsoft sign-in.</p></article></div><div class="mission"><blockquote>Do not reset a healthy mailbox because one device has stale authentication.</blockquote></div></div></section></main><footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer></body></html>
