@@ -1,273 +1,214 @@
 # Jazzy Handoff Log — September 5, 2026
 
-**Purpose:** Living handoff document for Codex/Jazzy when usage access resumes.
+**Purpose:** Canonical restart handoff for Codex/Jazzy when usage access resumes.
 
-This file should be updated as work continues before September 5 so Jazzy can resume production review without reconstructing prior context.
+This file should be updated as work continues before September 5 so production review can resume without reconstructing chat history.
 
-## Current State
+## Restart Order
 
-### PR #44 — Everyday IT Expansion #6
+1. Review this file first.
+2. Review PR #44 and complete Expansion #6 production integration.
+3. If green, Ready → Squash and merge → delete its branch.
+4. Review PR #45 for Content Architecture v1 consistency/privacy boundaries.
+5. If green, Ready → Squash and merge → delete its branch.
+6. Review PR #46 for Strengthening Phase 1 production integration.
+7. If green, Ready → Squash and merge → delete its branch.
+8. Pull latest `main` before the next build.
 
-Title: `Expand Everyday IT identity and access troubleshooting`
+Do not equate a merge with GitHub Pages deployment unless deployment is separately verified.
 
-Branch: `feature/everyday-it-expansion-6`
+## PR #44 — Everyday IT Expansion #6
 
-Status: Draft, awaiting Jazzy production integration/review.
+**Title:** `Expand Everyday IT identity and access troubleshooting`
 
-Content already authored:
+**Branch:** `feature/everyday-it-expansion-6`
+
+**Status:** Draft, awaiting Jazzy production integration/review.
+
+### Approved content
+
 - MFA Recovery Without Weakening Security
 - Recurring Account Lockout Troubleshooting
 - Shared Mailbox Not Showing in Outlook
 - Access Denied After a Group Change
 
-Expected Jazzy work:
+### Jazzy work
+
 - add validator route/social-metadata policy for all four routes
-- normalize the complete established desktop/mobile navigation
-- normalize required favicon declarations
-- verify exact OG/Twitter metadata and canonical URLs
+- normalize complete desktop/mobile navigation
+- normalize favicon declarations
+- verify OG/Twitter metadata and canonicals
 - verify sitemap entries
-- add four matching cards to the Everyday IT landing page using established formatting
-- verify internal links, headings, fragments, accessibility basics, encoded characters, and final newlines
-- preserve approved guide content and intent
-- run the full static-site validation workflow
+- add four landing-page cards in established Everyday IT format
+- verify internal links, headings, fragments, accessibility basics, encoded characters, final newlines
+- preserve approved content and intent
+- run full static-site validation
 - fix production/integration issues only
 - report blockers before merge
 
-If production-ready with no blockers:
-1. Mark Ready for review
-2. Squash and merge
-3. Delete `feature/everyday-it-expansion-6`
-
 ## PR #45 — KrippyTech Content Architecture v1
 
-Title: `Add KrippyTech content architecture v1`
+**Title:** `Add KrippyTech content architecture v1`
 
-Branch: `feature/content-architecture-v1`
+**Branch:** `feature/content-architecture-v1`
 
-Status: Draft, mergeable at last check, awaiting documentation/production review.
+**Status:** Draft, mergeable at last check.
 
-Purpose: Adds the internal operating layer behind KrippyTech content development without changing public site content.
+### Purpose
 
-Core additions:
+Adds the operating system behind KrippyTech content development without changing public site content.
+
+### Core additions
+
 - ten stable primary content domains
 - Raw → Sanitized Source → Extracted Lesson → Ledger → Asset → Published → Reuse pipeline
-- batch intake and naming standard
-- content ledger status and decision model
-- two-level KER taxonomy using Primary Domain + Tags
+- batch intake/naming standard
+- content ledger lifecycle and decision model
+- two-level KER taxonomy: Primary Domain + Tags
 - content-type decision rules
 - cross-linking guidance
 - published Everyday IT library map through Expansion #5
 - public-route domain/tag mapping
-- domain coverage and gap analysis
-- cross-link priorities
+- domain coverage/gap analysis
 - private source-lineage register
-- active Expansion #6 lineage tracking
-- strongest unpublished candidate tracking
-- explicit block on time-sensitive Microsoft/SMTP guidance until current vendor verification
+- Expansion #6 lineage tracking
+- high-value unpublished candidate tracking
+- block on time-sensitive Microsoft/SMTP guidance until current vendor verification
 
-Files added/updated:
+### Important files
+
 - `docs/content-architecture-v1.md`
 - `docs/vault/batch-intake-standard.md`
 - `docs/vault/content-ledger-standard.md`
 - `docs/vault/ker-taxonomy.md`
-- published library map/register files added during retrofit
+- published library map/register files
 - this handoff log
 
-Expected Jazzy review for #45:
-- review documentation consistency only
-- confirm no public-site regression or accidental public exposure of private/source-lineage information
-- confirm the architecture complements rather than conflicts with `docs/vault/vault-standard.md` and `docs/publishing-standard.md`
-- verify Markdown formatting and internal references
-- verify naming conventions are internally consistent
+### Jazzy work
+
+- review documentation consistency
+- confirm no public exposure of source-lineage/private data
+- confirm compatibility with `docs/vault/vault-standard.md` and `docs/publishing-standard.md`
+- verify Markdown formatting/internal references/naming consistency
 - preserve approved architecture intent
 - report blockers before merge
 
-If production-ready with no blockers:
-1. Mark Ready for review
-2. Squash and merge
-3. Delete `feature/content-architecture-v1`
+## PR #46 — Everyday IT Strengthening Phase 1
 
-## Strategic Direction After #44 and #45
+**Title:** `Strengthen Everyday IT troubleshooting paths and safety workflows`
 
-The next phase is not a reset. It is the **strengthening phase** for KrippyTech.
+**Branch:** `feature/everyday-it-strengthening-1`
 
-The objective is to improve and connect what already exists while continuing to add high-value practical content.
+**Status:** Draft, mergeable at last check.
 
-### Strengthening priorities
+### Purpose
 
-1. Retrofit all new Everyday IT content into Content Architecture v1 as it is created.
-2. Add natural cross-links between related troubleshooting flows so the site behaves more like a knowledge graph than a pile of articles.
-3. Keep Everyday IT as the approachable front door while advanced engineering remains the authority layer.
-4. Continue mining field-tested source material instead of producing generic certification-style content.
-5. Prefer enhancements when an existing page already serves the user intent.
-6. Use standalone pages only when the troubleshooting question is materially distinct and search-worthy.
-7. Keep client identity and credentials out of public content.
-8. Continue separating Everyday IT, KER/advanced, KT Cases, tutorials, checklists/downloads, course material, and future consulting references.
+Turns Everyday IT from a collection of good articles into a more connected troubleshooting system while filling major practical gaps exposed by Content Architecture v1.
 
-## Strong Next Content Candidates
+### New routes
 
-### Priority candidate: Restrict an Inherited Network Folder Safely
+1. `/everyday-it/troubleshooting-paths/`
+   - symptom-based routing hub across the existing Everyday IT library
+   - routes users by failing layer rather than product name
 
-Primary domain: `07 File Servers & SMB`
+2. `/everyday-it/scope-the-problem/`
+   - scope-first troubleshooting method
+   - one user, one device, one location, one resource, or everyone
+   - controlled comparison tests that change one variable at a time
 
-Why it matters:
-- high-value real-world permissions workflow
-- teaches preservation of known-good access before changing ACL design
-- covers Effective Access, inheritance, share + NTFS interaction, group-based access, token refresh, verification, rollback, and escalation
-- fills a major file-permissions gap in Everyday IT
+3. `/everyday-it/restrict-inherited-folder-permissions/`
+   - full safe-change workflow for inherited NTFS permissions
+   - approved-user confirmation
+   - current ACL capture/rollback
+   - preserve admin/SYSTEM/service identities
+   - group-based access before restriction
+   - Effective Access
+   - disable inheritance by converting inherited entries before cleanup
+   - avoid broad Deny shortcuts
+   - share + NTFS interaction
+   - token refresh after group changes
+   - verify both approved and denied users
+   - explicit stop/escalation boundaries
 
-Key lesson:
-`Preserve a known-good access path before changing the permission model, then prove both approved and denied access afterward.`
+4. `/everyday-it/failing-disk-protect-data-first/`
+   - data-protection-first response to suspected disk failure
+   - identify data at risk
+   - verify actual backup/sync state
+   - avoid unnecessary write-heavy activity before protection state is known
+   - collect storage/SMART/vendor evidence as appropriate
+   - repair-tool caution when hardware failure is plausible
+   - protect/recover → replace → rebuild → restore/validate
+   - escalation when unique data or critical workloads are involved
 
-### Priority candidate: Failing Disk — Protect Data Before Rebuilding
+### Strengthening principles established
 
-Primary domain: `04 Windows & Workstations` or `08 Servers & Infrastructure` depending final scope.
+`Do not ask which product is broken first. Ask which layer failed.`
 
-Why it matters:
-- teaches correct priority under hardware failure
-- data protection before repair/rebuild
-- backup-state verification
-- evidence-driven disk health checks
-- clear stop/escalation boundary
+`Scope first. Layer second. Change third.`
 
-Key lesson:
-`Do not begin repair or rebuild work until the data-protection state is understood.`
+`Preserve a known-good access path before changing the permission model.`
 
-### Possible companion material
+`Data protection comes before repair when the storage itself may be failing.`
 
-- stale credentials and lockout-source isolation if not fully covered by #44
-- deeper file-access/permissions edge cases
-- KER/advanced version of remote access dependency mapping
-- advanced SPF/DMARC/direct-send material only after current Microsoft behavior is verified
-- SMTP AUTH identity guidance only after current Microsoft documentation is verified
+### Existing guide chains represented by the hub
 
-## Existing Everyday IT Build History
+- VPN Troubleshooting → VPN Works but the Drive Does Not → Mapped Drives & File Access
+- Outlook vs Web → Outlook Profile Rebuild → Outlook Profile Creation Fails
+- Shared Mailbox Permissions → shared-mailbox visibility/deeper tutorial path
+- SharePoint & OneDrive → SharePoint Sync Troubleshooting → Free Up Space Safely
+- Scanner Troubleshooting → Scan to Folder / Scan to Email
+- Windows Temp Cleanup → When to Replace a Workstation → New PC Setup Checklist
 
-Confirmed merged prior to this handoff:
-- PR #38 Everyday IT foundation
-- PR #39 Expansion #1
-- PR #40 Expansion #2
-- PR #41 Expansion #3
-- PR #42 Expansion #4
-- PR #43 Expansion #5
+### Jazzy work for #46
 
-Active at handoff creation:
-- PR #44 Expansion #6
-- PR #45 Content Architecture v1
+- add matching landing-page entries in established Everyday IT format
+- add validator route/social-metadata policy for all four routes
+- verify complete desktop/mobile navigation and favicon declarations
+- verify exact OG/Twitter metadata and canonicals
+- verify sitemap entries
+- verify all internal links and cross-layer tutorial links
+- verify headings, fragments, accessibility basics, encoded characters, final newlines
+- consider static Related Guides sections on high-value existing pages where the new hub identifies a natural troubleshooting chain
+- preserve approved content and symptom-first/layer-first intent
+- run full static-site validation
+- report blockers before merge
 
-Do not claim GitHub Pages deployment merely because a PR merged. Merge state and live deployment are separate.
+## Strategic Direction
+
+This is the **KrippyTech strengthening phase**, not a reset.
+
+Priorities:
+
+1. Make Everyday IT behave like a knowledge graph rather than a flat article catalog.
+2. Teach troubleshooting judgment, not only click-by-click fixes.
+3. Keep Everyday IT as the approachable front door and advanced material as the authority layer.
+4. Mine field-tested support material and preserve real diagnostic decisions, dead ends, warnings, and escalation boundaries.
+5. Prefer enhancements when existing user intent is already served.
+6. Add standalone pages only when the troubleshooting question is materially distinct and search-worthy.
+7. Keep public material sanitized and client-independent.
+8. Separate Everyday IT, KER/advanced, KT Cases, tutorials, downloads/checklists, course material, and future consulting references.
+
+## Current High-Value Gaps / Future Candidates
+
+- deeper file-access/permissions edge cases after inherited-folder safe-change guide
+- remote-access dependency mapping as advanced/KER material
+- stronger security/incident-response Everyday IT coverage
+- server/infrastructure Everyday IT bridge material where safe for the audience
+- advanced SPF/DMARC/direct-send only after current Microsoft verification
+- SMTP AUTH identity guidance only after current Microsoft documentation verification
 
 ## Work Split
 
 ### Regular Chat / Ace
 
-Use for:
-- strategy
-- source mining
-- sanitization decisions
-- content architecture
-- ledger work
-- page-vs-enhancement decisions
-- drafting approved content
-- cross-link planning
-- next-expansion planning
+Use for strategy, source mining, sanitization, architecture, ledger work, page-vs-enhancement decisions, drafting, cross-link planning, and strengthening/content planning.
 
 ### Jazzy / Codex
 
-Use for:
-- production integration
-- static navigation normalization
-- validator/social metadata policy
-- sitemap consistency
-- landing-page integration
-- HTML/accessibility cleanup
-- repository-wide validation
-- production-readiness review
+Use for production integration, navigation normalization, validator/social metadata, landing-page integration, sitemap consistency, HTML/accessibility cleanup, repository-wide validation, and production-readiness review.
 
-This split is intentional to preserve Codex usage for work where it adds the most value.
-
-## September 5 Restart Sequence
-
-When Jazzy access returns:
-
-1. Review this handoff log first.
-2. Review PR #44 and complete production integration.
-3. If green, merge #44 and delete its branch.
-4. Review PR #45 for documentation/architecture consistency and privacy boundaries.
-5. If green, merge #45 and delete its branch.
-6. Review any strengthening PRs listed in Updates Before September 5.
-7. Pull latest `main` before creating the next content branch.
-8. Begin the next strengthening/content expansion from the updated architecture, prioritizing high-value gaps rather than raw volume.
+This split is intentional so Codex usage is reserved for work where it adds the most value.
 
 ## Living Log Rule
 
-Before September 5, append any important new work below this section.
-
-Record:
-- new branches/PRs
-- new architecture decisions
-- new source packs or ledger changes
-- pages drafted
-- existing pages enhanced
-- cross-link plans
-- blockers
-- items requiring current vendor verification
-
-Do not rely on memory alone. This file is the canonical restart handoff for Jazzy.
-
-## Updates Before September 5
-
-### PR #46 — Everyday IT Troubleshooting Paths Hub
-
-Title: `Add Everyday IT troubleshooting paths hub`
-
-Branch: `feature/everyday-it-strengthening-1`
-
-Status: Draft, awaiting September production integration/review.
-
-Purpose:
-- begins the public-library strengthening phase
-- adds a symptom-based routing hub so Everyday IT behaves like a connected troubleshooting system rather than a flat catalog
-- creates natural troubleshooting chains across existing guides without rewriting approved guide content
-
-New route:
-- `/everyday-it/troubleshooting-paths/`
-
-The hub currently routes common symptoms across:
-- identity/sign-in
-- Outlook vs web
-- mapped drives/file access
-- VPN/remote work
-- SharePoint/OneDrive sync
-- workstation health/replacement
-- scanner detection
-- scan-to-email and scan-to-folder workflows
-
-It also defines common next-step chains such as:
-- VPN Troubleshooting → VPN Works but the Drive Does Not → Mapped Drives & File Access
-- Outlook vs Web → Outlook Profile Rebuild → Outlook Profile Creation Fails
-- Shared Mailbox Permissions → Shared Mailbox Not Showing in Outlook tutorial
-- SharePoint & OneDrive → SharePoint Sync Troubleshooting → Free Up Space Safely
-- Scanner Troubleshooting → Scan to Folder / Scan to Email
-- Windows Temp Cleanup → When to Replace a Workstation → New PC Setup Checklist
-
-Expected Jazzy work for #46:
-- add validator route/social-metadata policy for the new route
-- verify full established desktop/mobile navigation and favicon declarations
-- verify exact OG/Twitter metadata and canonical URL
-- verify sitemap entry
-- add a matching high-visibility card or entry to the Everyday IT landing page
-- verify all internal links and cross-layer links to tutorials
-- verify headings, fragments, accessibility basics, encoded characters, and final newline
-- consider adding static related-guide sections to the highest-value existing pages where the new hub identifies a natural chain
-- preserve the symptom-first, failing-layer-first troubleshooting intent
-- run the full static-site validation workflow
-- report blockers before merge
-
-If production-ready with no blockers:
-1. Mark Ready for review
-2. Squash and merge
-3. Delete `feature/everyday-it-strengthening-1`
-
-Strengthening principle established here:
-`Do not ask which product is broken first. Ask which layer failed.`
+Append meaningful work completed before September 5 here or update the relevant PR section above. Record new branches/PRs, architecture decisions, source/ledger changes, pages, enhancements, cross-link plans, blockers, and vendor-verification dependencies.
