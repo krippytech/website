@@ -168,6 +168,26 @@ SOCIAL_METADATA = {
         "description": "Understand Full Access, Send As, Send on Behalf, propagation, and shared mailbox verification without guessing.",
         "type": "article",
     },
+    "/everyday-it/calendar-sharing-troubleshooting/": {
+        "title": "Calendar Sharing Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Identify the mailbox, tenant, sharing policy, and recipient domain before changing calendar permissions.",
+        "type": "article",
+    },
+    "/everyday-it/mobile-exchange-sync/": {
+        "title": "Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Separate mailbox health from stale Apple Mail authentication and token state after Microsoft security changes.",
+        "type": "article",
+    },
+    "/everyday-it/outlook-profile-creation-fails/": {
+        "title": "Outlook Profile Creation Fails | Everyday IT | KrippyTech",
+        "description": "Use web sign-in, connectivity, Office state, cached credentials, and Autodiscover evidence before repeatedly rebuilding Outlook.",
+        "type": "article",
+    },
+    "/everyday-it/sharepoint-sync-troubleshooting/": {
+        "title": "SharePoint Sync Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Separate SharePoint library sync, OneDrive shortcuts, browser access, and local File Explorer state before rebuilding anything.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
