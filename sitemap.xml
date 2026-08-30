@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/sitemap/0.9">
     <url><loc>https://krippytech.com/</loc></url>
     <url><loc>https://krippytech.com/about/</loc></url>
     <url><loc>https://krippytech.com/consulting/</loc></url>
@@ -14,6 +14,7 @@
     <url><loc>https://krippytech.com/everyday-it/printers/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/sharepoint-onedrive/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/troubleshooting-escalation/</loc></url>
+    <url><loc>https://krippytech.com/everyday-it/troubleshooting-paths/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/outlook-profile-rebuild/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/windows-temp-cleanup/</loc></url>
     <url><loc>https://krippytech.com/everyday-it/onedrive-free-up-space/</loc></url>
