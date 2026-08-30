@@ -120,19 +120,28 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
    - compares known-good user/device/client/network/resource paths
    - teaches that comparison means finding the meaningful difference, not making systems identical
 
-4. `/everyday-it/verify-before-close/`
+4. `/everyday-it/change-safety-rollback/`
+   - captures current state before remediation
+   - identifies blast radius and shared dependencies
+   - defines rollback before the change
+   - protects the recovery path during the change
+   - distinguishes rollback methods for permissions, profiles/clients, sync/data, and infrastructure
+   - reinforces smallest justified change, checkpoint/stop conditions, regression testing, and post-change verification
+   - core formula: `Current state + Blast radius + Rollback + Smallest justified action + Verification`
+
+5. `/everyday-it/verify-before-close/`
    - separates change verification, technical verification, workflow verification, and user validation
    - distinguishes objective technical completion from situations where the user must confirm history, completeness, role-specific workflow, performance, or intermittent behavior
    - supports a clear `validation pending` state rather than inventing confirmation
    - closes with symptom, finding, action, verification, and pending validation evidence
 
-5. `/everyday-it/escalate-with-evidence/`
+6. `/everyday-it/escalate-with-evidence/`
    - teaches how to escalate without restarting the investigation
    - hand off symptom/scope, proven evidence, changes/results, risk boundaries, rollback state, and the exact unresolved next question
    - preserves useful failed tests and comparison results
    - emphasizes signal over a wall of ticket history
 
-6. `/everyday-it/restrict-inherited-folder-permissions/`
+7. `/everyday-it/restrict-inherited-folder-permissions/`
    - full safe-change workflow for inherited NTFS permissions
    - approved-user confirmation
    - current ACL capture/rollback
@@ -146,7 +155,7 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
    - verify both approved and denied users
    - explicit stop/escalation boundaries
 
-7. `/everyday-it/failing-disk-protect-data-first/`
+8. `/everyday-it/failing-disk-protect-data-first/`
    - data-protection-first response to suspected disk failure
    - identify data at risk
    - verify actual backup/sync state
@@ -160,9 +169,11 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
 
 `Do not ask which product is broken first. Ask which layer failed.`
 
-`Scope first. Compare second. Layer third. Change fourth.`
+`Scope → Compare → Layer → Plan/Rollback → Change → Verify or Escalate.`
 
 `Known-good comparison is not make them identical. It is find the meaningful difference.`
+
+`Before you change it, know what it is, who depends on it, and how you will reverse it.`
 
 `Make the smallest justified change.`
 
@@ -186,14 +197,14 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
 ### Jazzy work for #46
 
 - add matching landing-page entries in established Everyday IT format
-- add validator route/social-metadata policy for all seven routes
+- add validator route/social-metadata policy for all eight routes
 - verify complete desktop/mobile navigation and favicon declarations
 - verify exact OG/Twitter metadata and canonicals
 - verify all sitemap entries
 - verify all internal links and cross-layer tutorial links
 - verify headings, fragments, accessibility basics, encoded characters, final newlines
 - add static Related Guides / Next Test sections to the highest-value existing pages where these routes identify a natural troubleshooting chain
-- specifically consider linking `troubleshooting-escalation` to `scope-the-problem`, `known-good-comparison`, `verify-before-close`, and `escalate-with-evidence`
+- specifically consider linking `troubleshooting-escalation` to `scope-the-problem`, `known-good-comparison`, `change-safety-rollback`, `verify-before-close`, and `escalate-with-evidence`
 - preserve approved content and symptom-first/layer-first intent
 - run full static-site validation
 - report blockers before merge
@@ -219,7 +230,6 @@ Priorities:
 - remote-access dependency mapping as advanced/KER material
 - stronger security/incident-response Everyday IT coverage
 - server/infrastructure Everyday IT bridge material where safe for the audience
-- change/rollback planning as a possible future methodology guide if not better handled as an enhancement
 - advanced SPF/DMARC/direct-send only after current Microsoft verification
 - SMTP AUTH identity guidance only after current Microsoft documentation verification
 
