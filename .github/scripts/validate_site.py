@@ -128,6 +128,26 @@ SOCIAL_METADATA = {
         "description": "A practical guide for troubleshooting mapped drives and internal file access after a VPN tunnel connects successfully.",
         "type": "article",
     },
+    "/everyday-it/new-pc-setup/": {
+        "title": "New PC Setup Checklist | Everyday IT | KrippyTech",
+        "description": "Set up a replacement workstation by validating identity, data, apps, peripherals, updates, and the user's real workflow.",
+        "type": "article",
+    },
+    "/everyday-it/office-account-licensing/": {
+        "title": "Office Account & Licensing Problems | Everyday IT | KrippyTech",
+        "description": "Separate Office activation, account ownership, and Microsoft 365 licensing before reinstalling applications.",
+        "type": "article",
+    },
+    "/everyday-it/outlook-vs-web/": {
+        "title": "Outlook vs Outlook on the Web | Everyday IT | KrippyTech",
+        "description": "Use Outlook on the web to prove whether an email problem is in Microsoft 365 or the local Outlook client.",
+        "type": "article",
+    },
+    "/everyday-it/when-to-replace-workstation/": {
+        "title": "When to Replace a Workstation | Everyday IT | KrippyTech",
+        "description": "Use repeat failures, severe slowness, failing storage, constant resource pressure, and repair history to decide when to stop troubleshooting.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
