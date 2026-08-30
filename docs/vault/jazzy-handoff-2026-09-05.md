@@ -195,8 +195,9 @@ When Jazzy access returns:
 3. If green, merge #44 and delete its branch.
 4. Review PR #45 for documentation/architecture consistency and privacy boundaries.
 5. If green, merge #45 and delete its branch.
-6. Pull latest `main` before creating the next content branch.
-7. Begin the next strengthening/content expansion from the updated architecture, prioritizing high-value gaps rather than raw volume.
+6. Review any strengthening PRs listed in Updates Before September 5.
+7. Pull latest `main` before creating the next content branch.
+8. Begin the next strengthening/content expansion from the updated architecture, prioritizing high-value gaps rather than raw volume.
 
 ## Living Log Rule
 
@@ -216,4 +217,57 @@ Do not rely on memory alone. This file is the canonical restart handoff for Jazz
 
 ## Updates Before September 5
 
-_Add new work here as it is completed._
+### PR #46 — Everyday IT Troubleshooting Paths Hub
+
+Title: `Add Everyday IT troubleshooting paths hub`
+
+Branch: `feature/everyday-it-strengthening-1`
+
+Status: Draft, awaiting September production integration/review.
+
+Purpose:
+- begins the public-library strengthening phase
+- adds a symptom-based routing hub so Everyday IT behaves like a connected troubleshooting system rather than a flat catalog
+- creates natural troubleshooting chains across existing guides without rewriting approved guide content
+
+New route:
+- `/everyday-it/troubleshooting-paths/`
+
+The hub currently routes common symptoms across:
+- identity/sign-in
+- Outlook vs web
+- mapped drives/file access
+- VPN/remote work
+- SharePoint/OneDrive sync
+- workstation health/replacement
+- scanner detection
+- scan-to-email and scan-to-folder workflows
+
+It also defines common next-step chains such as:
+- VPN Troubleshooting → VPN Works but the Drive Does Not → Mapped Drives & File Access
+- Outlook vs Web → Outlook Profile Rebuild → Outlook Profile Creation Fails
+- Shared Mailbox Permissions → Shared Mailbox Not Showing in Outlook tutorial
+- SharePoint & OneDrive → SharePoint Sync Troubleshooting → Free Up Space Safely
+- Scanner Troubleshooting → Scan to Folder / Scan to Email
+- Windows Temp Cleanup → When to Replace a Workstation → New PC Setup Checklist
+
+Expected Jazzy work for #46:
+- add validator route/social-metadata policy for the new route
+- verify full established desktop/mobile navigation and favicon declarations
+- verify exact OG/Twitter metadata and canonical URL
+- verify sitemap entry
+- add a matching high-visibility card or entry to the Everyday IT landing page
+- verify all internal links and cross-layer links to tutorials
+- verify headings, fragments, accessibility basics, encoded characters, and final newline
+- consider adding static related-guide sections to the highest-value existing pages where the new hub identifies a natural chain
+- preserve the symptom-first, failing-layer-first troubleshooting intent
+- run the full static-site validation workflow
+- report blockers before merge
+
+If production-ready with no blockers:
+1. Mark Ready for review
+2. Squash and merge
+3. Delete `feature/everyday-it-strengthening-1`
+
+Strengthening principle established here:
+`Do not ask which product is broken first. Ask which layer failed.`
