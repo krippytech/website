@@ -148,6 +148,26 @@ SOCIAL_METADATA = {
         "description": "Use repeat failures, severe slowness, failing storage, constant resource pressure, and repair history to decide when to stop troubleshooting.",
         "type": "article",
     },
+    "/everyday-it/former-employee-mailbox/": {
+        "title": "Former Employee Mailbox Handling | Everyday IT | KrippyTech",
+        "description": "Handle a departing employee's mailbox safely by separating account access, mailbox retention, shared-mailbox use, delegation, and verification.",
+        "type": "article",
+    },
+    "/everyday-it/message-trace-delivery/": {
+        "title": "Message Trace: Prove Delivery | Everyday IT | KrippyTech",
+        "description": "Use exact timestamps and message trace to prove whether Microsoft 365 received, delayed, delivered, rejected, or quarantined a message.",
+        "type": "article",
+    },
+    "/everyday-it/outlook-signature-troubleshooting/": {
+        "title": "Outlook Signature Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Use Outlook-versus-web comparison and a clean test signature to separate client formatting, roaming signature, and mail-flow causes.",
+        "type": "article",
+    },
+    "/everyday-it/shared-mailbox-permissions/": {
+        "title": "Shared Mailbox Permissions | Everyday IT | KrippyTech",
+        "description": "Understand Full Access, Send As, Send on Behalf, propagation, and shared mailbox verification without guessing.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
