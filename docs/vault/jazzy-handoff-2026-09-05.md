@@ -13,7 +13,10 @@ This file should be updated as work continues before September 5 so production r
 5. If green, Ready → Squash and merge → delete its branch.
 6. Review PR #46 for Strengthening Phase 1 production integration.
 7. If green, Ready → Squash and merge → delete its branch.
-8. Pull latest `main` before the next build.
+8. Pull latest `main`, then rebase/update PR #47 against the merged state before production integration because it was created from the same older `main` and touches shared integration surfaces such as `sitemap.xml`.
+9. Review PR #47 for Strengthening Phase 2 production integration.
+10. If green, Ready → Squash and merge → delete its branch.
+11. Pull latest `main` before the next build.
 
 Do not equate a merge with GitHub Pages deployment unless deployment is separately verified.
 
@@ -227,6 +230,71 @@ At any unsafe or unresolved point: `Escalate With Evidence.`
 - run full static-site validation
 - report blockers before merge
 
+## PR #47 — Everyday IT Strengthening Phase 2
+
+**Title:** `Strengthen Everyday IT security and infrastructure triage`
+
+**Branch:** `feature/everyday-it-strengthening-2`
+
+**Status:** Draft. Created from the same pre-integration `main` as the other active branches. Re-check mergeability and update/rebase after #44–#46 are merged.
+
+### Purpose
+
+Fills two thinner Everyday IT domains without turning approachable support guidance into deep incident-response or production-infrastructure runbooks.
+
+### New routes
+
+1. `/everyday-it/suspicious-signin-first-response/`
+   - unexpected MFA prompts, unfamiliar sign-ins, and suspicious mailbox/account behavior
+   - verify the person and event before changing authentication
+   - review sign-in evidence and suspicious account/mailbox changes
+   - use approved containment rather than weakening MFA or making broad tenant changes
+   - lower escalation threshold for privileged, finance, executive, and shared-service identities
+   - core lesson: `Unexpected authentication activity changes the ticket from make login work to prove who is signing in.`
+
+2. `/everyday-it/malware-alert-first-response/`
+   - confirm the endpoint, user, detection time, object/process, and platform mitigation state
+   - preserve evidence before cleanup removes context
+   - contain through approved tooling when role/policy permits
+   - verify whether quarantine/kill/isolation actually succeeded
+   - correlate related detections, identity activity, persistence, or repeat execution
+   - escalate unresolved risk with the detection and containment state, not just the alert email
+   - core flow: `Confirm → Preserve → Contain → Verify → Correlate → Escalate.`
+
+3. `/everyday-it/shared-service-outage-triage/`
+   - teaches first-line techs to move upstream when multiple users/devices share a symptom
+   - scope impact across users, devices, locations, departments, and workflows
+   - identify shared servers, apps, DNS, identity, firewall, circuits, databases, cloud services, or other dependencies
+   - test from more than one point and use known-good comparison
+   - collect service/reachability/monitoring evidence before making production changes
+   - explicit boundary against casual core-role or infrastructure redesign
+   - core lesson: `One user can be an endpoint problem. Ten users with the same symptom are telling you to look upstream.`
+
+4. `/everyday-it/server-restart-safety/`
+   - treats a server restart as a controlled production change, not a diagnostic shortcut
+   - identify server role and dependent users/apps/services/VMs first
+   - confirm recovery access such as console, hypervisor console, iDRAC/iLO, or another approved out-of-band path
+   - capture current evidence before a reboot clears transient state
+   - state the specific reason for restarting and define post-restart success criteria
+   - highlights higher-risk cases: single DC, hypervisor, firewall/remote-access dependency, unknown application dependencies
+   - core lesson: `Restarting is remediation. Treat it like a change, not a substitute for diagnosis.`
+
+### Jazzy work for #47
+
+- update/rebase the branch after #44–#46 merge so shared integration changes are preserved
+- normalize complete established desktop/mobile navigation on all four drafted pages
+- normalize favicon declarations and exact page metadata
+- add validator route/social-metadata policy for all four routes
+- verify sitemap against the merged route set rather than overwriting newer entries
+- add landing-page entries in established Everyday IT format
+- add Related Guides / Next Test links into the Phase 1 lifecycle
+- strongly consider security links from Passwords/MFA and Troubleshooting & Escalation
+- strongly consider infrastructure links from Troubleshooting & Escalation, VPN/file-access paths, and appropriate advanced tutorials
+- preserve Everyday IT safety boundaries and do not expand the pages into deep security remediation or infrastructure redesign procedures
+- verify headings, fragments, accessibility basics, encoded characters, final newlines, canonical/OG/Twitter metadata, and internal links
+- run full static-site validation
+- report blockers before merge
+
 ## Strategic Direction
 
 This is the **KrippyTech strengthening phase**, not a reset.
@@ -246,8 +314,8 @@ Priorities:
 
 - deeper file-access/permissions edge cases after inherited-folder safe-change guide
 - remote-access dependency mapping as advanced/KER material
-- stronger security/incident-response Everyday IT coverage
-- server/infrastructure Everyday IT bridge material where safe for the audience
+- deeper security/incident-response content only where it can remain safely scoped for Everyday IT
+- additional server/infrastructure bridge material only where it teaches observation, dependency mapping, verification, and escalation rather than casual production changes
 - advanced SPF/DMARC/direct-send only after current Microsoft verification
 - SMTP AUTH identity guidance only after current Microsoft documentation verification
 
