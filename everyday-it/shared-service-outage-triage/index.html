@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://krippytech.com/everyday-it/shared-service-outage-triage/">
+<title>Shared Service Outage Triage | Everyday IT | KrippyTech</title>
+<meta name="description" content="A practical bridge guide for recognizing when multiple user symptoms point to a shared server, service, network, identity, or infrastructure dependency.">
+<meta property="og:site_name" content="KrippyTech"><meta property="og:title" content="Shared Service Outage Triage | Everyday IT | KrippyTech"><meta property="og:type" content="article"><meta property="og:description" content="When several users fail together, stop repairing endpoints and identify the shared dependency."><meta property="og:url" content="https://krippytech.com/everyday-it/shared-service-outage-triage/"><meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Shared Service Outage Triage | Everyday IT | KrippyTech"><meta name="twitter:description" content="Scope the impact, identify the shared dependency, gather service evidence, and escalate safely."><meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="../../styles.css"><script src="/navigation.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="site-nav" aria-label="Primary navigation"><a class="brand" href="/">KrippyTech</a><a class="nav-link" href="/everyday-it/">Everyday IT</a><a class="nav-link" href="/contact/">Contact</a></nav></div></header>
+<main>
+<section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Infrastructure</p><h1>When several users fail together, stop fixing them one at a time.</h1><p class="hero-text">Multiple similar symptoms are evidence of a shared layer. The goal of first-line infrastructure triage is not to redesign the environment. It is to identify the common dependency and hand off a smaller, better-defined problem.<span class="highlight">Shared symptoms should move your attention upstream.</span></p></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>Find the common layer</h2></div><div class="grid">
+<article class="card"><p class="card-number">01</p><h3>Scope the impact</h3><p>Count affected users, devices, locations, departments, and workflows. Note whether unaffected users share anything different.</p></article>
+<article class="card"><p class="card-number">02</p><h3>Identify the common dependency</h3><p>Look for a shared server, application host, file share, DNS path, identity service, firewall, internet circuit, mail service, print server, database, or cloud service.</p></article>
+<article class="card"><p class="card-number">03</p><h3>Test from more than one point</h3><p>Use a known-good comparison from another user, workstation, location, or access path so one broken endpoint does not define the outage.</p></article>
+<article class="card"><p class="card-number">04</p><h3>Collect service evidence</h3><p>Capture reachability, service state, recent alerts, timing, resource pressure, dependency failures, and relevant monitoring without changing production yet.</p></article>
+<article class="card"><p class="card-number">05</p><h3>Separate symptom from cause</h3><p>Outlook failing may be identity, DNS, internet, Exchange, profile, or a wider service event. A mapped drive failure may be VPN, DNS, SMB, file server, or permissions.</p></article>
+<article class="card"><p class="card-number">06</p><h3>Escalate the shared layer</h3><p>State the affected scope, the common dependency you have isolated, what is still working, and the evidence that makes the issue infrastructure-wide.</p></article>
+</div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>Safe boundaries for first-line triage</h2></div><div class="grid">
+<article class="card"><h3>Observe before changing</h3><p>Service state, resource usage, alerts, logs, and reachability can often narrow the issue without changing production configuration.</p></article>
+<article class="card"><h3>Do not reboot because users are loud</h3><p>A restart can remove evidence, interrupt healthy dependencies, or make a partial outage worse. Establish a reason and rollback/recovery path first.</p></article>
+<article class="card"><h3>Do not touch core roles casually</h3><p>Domain controllers, DNS, DHCP, firewalls, hypervisors, databases, backup systems, and mail connectors deserve stronger change controls.</p></article>
+<article class="card"><h3>Use monitoring as evidence, not truth by itself</h3><p>An alert is a clue. Correlate it with the actual user symptom and other infrastructure signals.</p></article>
+</div><div class="mission"><blockquote>One user can be an endpoint problem. Ten users with the same symptom are telling you to look upstream.</blockquote></div></div></section>
+</main><footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
+</body></html>
