@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://krippytech.com/everyday-it/server-restart-safety/">
+<title>Server Restart Safety | Everyday IT | KrippyTech</title>
+<meta name="description" content="A practical guide for deciding when a server or service restart is justified, what to check first, how to understand dependencies and access risk, and when to escalate instead.">
+<meta property="og:site_name" content="KrippyTech"><meta property="og:title" content="Server Restart Safety | Everyday IT | KrippyTech"><meta property="og:type" content="article"><meta property="og:description" content="A restart is a change, not a diagnostic shortcut. Know what the server does, who depends on it, how you will get back in, and what success looks like."><meta property="og:url" content="https://krippytech.com/everyday-it/server-restart-safety/"><meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png"><meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Server Restart Safety | Everyday IT | KrippyTech"><meta name="twitter:description" content="Know the role, dependencies, access path, rollback, and verification before restarting a production server."><meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="../../styles.css"><script src="/navigation.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="site-nav" aria-label="Primary navigation"><a class="brand" href="/">KrippyTech</a><a class="nav-link" href="/everyday-it/">Everyday IT</a><a class="nav-link" href="/contact/">Contact</a></nav></div></header>
+<main>
+<section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Infrastructure</p><h1>A reboot can fix a stuck state. It can also remove your only access path.</h1><p class="hero-text">Restarting a server is sometimes the right move, but it should follow the same change discipline as any other production action.<span class="highlight">Know the role, dependencies, access path, expected outcome, and recovery plan before you click Restart.</span></p></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>Before you restart</h2></div><div class="grid">
+<article class="card"><p class="card-number">01</p><h3>Know what the system does</h3><p>Identify whether it is a domain controller, file server, application host, RDS server, database server, hypervisor, backup appliance, or another shared role.</p></article>
+<article class="card"><p class="card-number">02</p><h3>Scope who depends on it</h3><p>Determine which users, applications, sites, VMs, authentication paths, shares, or services will be interrupted.</p></article>
+<article class="card"><p class="card-number">03</p><h3>Confirm your recovery access</h3><p>Know how you will reconnect if RDP or the management agent does not return. Console, iDRAC/iLO, hypervisor console, or another approved out-of-band path can matter.</p></article>
+<article class="card"><p class="card-number">04</p><h3>Capture current evidence</h3><p>Record service state, resource pressure, alerts, recent errors, pending updates, and the original symptom before the reboot clears transient evidence.</p></article>
+<article class="card"><p class="card-number">05</p><h3>State the reason</h3><p>Restart because you have a specific stuck state, maintenance requirement, update dependency, or approved recovery step, not because it is the fastest button available.</p></article>
+<article class="card"><p class="card-number">06</p><h3>Define success</h3><p>Know what you will verify afterward: services running, dependent servers reachable, users able to sign in, shares opening, applications launching, VMs healthy, or monitoring restored.</p></article>
+</div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>When a restart should slow you down</h2></div><div class="grid">
+<article class="card"><h3>Single domain controller</h3><p>If the environment has only one domain controller, understand the authentication and DNS impact before taking it offline.</p></article>
+<article class="card"><h3>Hypervisor host</h3><p>Know which virtual machines are running and whether they need a controlled shutdown or migration before the host restarts.</p></article>
+<article class="card"><h3>Firewall or remote-access dependency</h3><p>Do not intentionally take down the device or service that provides your only remote management path unless an approved local or out-of-band recovery path exists.</p></article>
+<article class="card"><h3>Unknown application dependencies</h3><p>If you cannot explain what depends on the server or how it should recover, stop and get another set of eyes.</p></article>
+</div><div class="mission"><blockquote>Restarting is remediation. Treat it like a change, not a substitute for diagnosis.</blockquote></div></div></section>
+</main><footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
+</body></html>
