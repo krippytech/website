@@ -133,7 +133,6 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
    - separates change verification, technical verification, workflow verification, and user validation
    - distinguishes objective technical completion from situations where the user must confirm history, completeness, role-specific workflow, performance, or intermittent behavior
    - supports a clear `validation pending` state rather than inventing confirmation
-   - closes with symptom, finding, action, verification, and pending validation evidence
 
 6. `/everyday-it/escalate-with-evidence/`
    - teaches how to escalate without restarting the investigation
@@ -141,7 +140,19 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
    - preserves useful failed tests and comparison results
    - emphasizes signal over a wall of ticket history
 
-7. `/everyday-it/restrict-inherited-folder-permissions/`
+7. `/everyday-it/workaround-vs-resolution/`
+   - distinguishes workaround, containment, validation pending, and true resolution
+   - teaches that restoring productivity can be the correct immediate move without pretending the underlying cause is resolved
+   - requires an exit plan, risk statement, and follow-up owner for temporary paths
+   - core lesson: `A workaround restores productivity. A resolution restores the intended design or safely controls the cause.`
+
+8. `/everyday-it/prevent-recurrence/`
+   - asks whether the incident was preventable, detectable sooner, easier to diagnose, or evidence of a needed permanent change
+   - converts resolved incidents into documentation, monitoring, configuration, ownership, training, and reusable knowledge improvements
+   - keeps prevention proportional to recurrence, impact, and risk
+   - core lesson: `A good fix restores service. A great support system also keeps the lesson.`
+
+9. `/everyday-it/restrict-inherited-folder-permissions/`
    - full safe-change workflow for inherited NTFS permissions
    - approved-user confirmation
    - current ACL capture/rollback
@@ -155,7 +166,7 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
    - verify both approved and denied users
    - explicit stop/escalation boundaries
 
-8. `/everyday-it/failing-disk-protect-data-first/`
+10. `/everyday-it/failing-disk-protect-data-first/`
    - data-protection-first response to suspected disk failure
    - identify data at risk
    - verify actual backup/sync state
@@ -169,7 +180,9 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
 
 `Do not ask which product is broken first. Ask which layer failed.`
 
-`Scope → Compare → Layer → Plan/Rollback → Change → Verify or Escalate.`
+`Scope → Compare → Layer → Plan/Rollback → Change → Verify → Workaround/Resolution → Prevent Recurrence.`
+
+At any unsafe or unresolved point: `Escalate With Evidence.`
 
 `Known-good comparison is not make them identical. It is find the meaningful difference.`
 
@@ -179,7 +192,11 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
 
 `Do not close because the change succeeded. Close because the required outcome was verified.`
 
+`A workaround restores productivity. A resolution restores the intended design or safely controls the cause.`
+
 `Escalate the investigation, not just the ticket.`
+
+`A good fix restores service. A great support system also keeps the lesson.`
 
 `Preserve a known-good access path before changing the permission model.`
 
@@ -197,14 +214,15 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
 ### Jazzy work for #46
 
 - add matching landing-page entries in established Everyday IT format
-- add validator route/social-metadata policy for all eight routes
-- verify complete desktop/mobile navigation and favicon declarations
+- add validator route/social-metadata policy for all ten routes
+- normalize complete desktop/mobile navigation and favicon declarations on drafted pages
 - verify exact OG/Twitter metadata and canonicals
 - verify all sitemap entries
 - verify all internal links and cross-layer tutorial links
 - verify headings, fragments, accessibility basics, encoded characters, final newlines
 - add static Related Guides / Next Test sections to the highest-value existing pages where these routes identify a natural troubleshooting chain
-- specifically consider linking `troubleshooting-escalation` to `scope-the-problem`, `known-good-comparison`, `change-safety-rollback`, `verify-before-close`, and `escalate-with-evidence`
+- specifically connect the lifecycle across `scope-the-problem`, `known-good-comparison`, `change-safety-rollback`, `verify-before-close`, `workaround-vs-resolution`, `prevent-recurrence`, and `escalate-with-evidence`
+- wire `troubleshooting-paths` through the complete methodology, not just product paths
 - preserve approved content and symptom-first/layer-first intent
 - run full static-site validation
 - report blockers before merge
