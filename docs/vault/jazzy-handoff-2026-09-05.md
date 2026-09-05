@@ -9,10 +9,10 @@ Verified before execution:
 - PR #44: merged; feature branch deleted
 - PR #45: merged; feature branch deleted
 - PR #46: merged; feature branch deleted
-- PR #47: open, draft, rebased onto the post-#46 `main`; production integration and validation complete
-- PR #48: open, draft, mergeable
+- PR #47: merged; feature branch deleted
+- PR #48: open, draft, rebased onto the post-#47 `main`; positioning review, production integration, and validation complete
 
-PRs #44–#46 are merged. PRs #47 and #48 are not merged yet. Do not assume GitHub Pages deployment merely because a PR is merged; deployment must be verified separately.
+PRs #44–#47 are merged. PR #48 is not merged yet. Do not assume GitHub Pages deployment merely because a PR is merged; deployment must be verified separately.
 
 ## Execution Order
 
@@ -26,10 +26,10 @@ PRs #44–#46 are merged. PRs #47 and #48 are not merged yet. Do not assume GitH
 8. Complete PR #46 production integration and cross-link implementation. Run full static-site validation. If green, Ready → Squash and merge → delete branch. **Completed; PR #46 merged and its feature branch was deleted.**
 9. Pull latest `main`. **Completed after PR #46.**
 10. Update/rebase PR #47 against current `main`, preserving the complete Phase 1 route set and integration surfaces. **Completed; the sitemap conflict was resolved by retaining Phase 1 and adding all four Phase 2 routes.**
-11. Complete PR #47 production integration. Run full static-site validation. If green, Ready → Squash and merge → delete branch. **Integration and validation completed; awaiting Ready for Review.**
-12. Pull latest `main`.
-13. Update/rebase PR #48 against current `main` if needed.
-14. Review and production-integrate the consulting repositioning without reintroducing MSP-style messaging. Run full validation. If green, Ready → Squash and merge → delete branch.
+11. Complete PR #47 production integration. Run full static-site validation. If green, Ready → Squash and merge → delete branch. **Completed; PR #47 merged and its feature branch was deleted.**
+12. Pull latest `main`. **Completed after PR #47.**
+13. Update/rebase PR #48 against current `main` if needed. **Completed; rebased cleanly onto the post-#47 `main`.**
+14. Review and production-integrate the consulting repositioning without reintroducing MSP-style messaging. Run full validation. If green, Ready → Squash and merge → delete branch. **Positioning review, production integration, and validation completed; awaiting Ready for Review.**
 15. Pull latest `main` and verify the resulting site/deployment separately.
 
 ## Global Production Rules
@@ -283,7 +283,7 @@ Fills two thinner Everyday IT domains without turning approachable support guida
 
 **Branch:** `feature/consulting-positioning-v1`
 
-**Status:** Open, draft, mergeable as of September 5.
+**Status:** Open and draft; rebased onto the post-#47 `main`, positioning review and production integration completed, and full static-site validation passed on September 5.
 
 ### Purpose
 

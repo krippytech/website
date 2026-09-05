@@ -309,8 +309,8 @@ SOCIAL_METADATA = {
         "type": "article",
     },
     "/consulting/": {
-        "title": "KrippyTech Consulting | Practical IT Guidance",
-        "description": "Contact KrippyTech for an initial conversation about practical technical assessment, troubleshooting, planning, and implementation guidance.",
+        "title": "Small Business IT Consulting | KrippyTech",
+        "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
         "type": "website",
     },
     "/contact/": {
