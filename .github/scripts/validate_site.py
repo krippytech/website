@@ -208,6 +208,56 @@ SOCIAL_METADATA = {
         "description": "Prove the permission before rebuilding Outlook when a shared mailbox does not appear.",
         "type": "article",
     },
+    "/everyday-it/troubleshooting-paths/": {
+        "title": "Troubleshooting Paths | Everyday IT | KrippyTech",
+        "description": "Start with the symptom, identify the failing layer, and move into the right Everyday IT troubleshooting guide.",
+        "type": "article",
+    },
+    "/everyday-it/scope-the-problem/": {
+        "title": "Scope the Problem Before You Fix It | Everyday IT | KrippyTech",
+        "description": "Determine the blast radius first: one user, one device, one location, one resource, or everyone.",
+        "type": "article",
+    },
+    "/everyday-it/known-good-comparison/": {
+        "title": "Use a Known-Good Comparison | Everyday IT | KrippyTech",
+        "description": "Change one variable at a time and compare with something known to work.",
+        "type": "article",
+    },
+    "/everyday-it/change-safety-rollback/": {
+        "title": "Change Safety & Rollback Planning | Everyday IT | KrippyTech",
+        "description": "Before changing permissions, profiles, sync, servers, policies, or data, know what you are changing, what it can affect, and how to get back.",
+        "type": "article",
+    },
+    "/everyday-it/verify-before-close/": {
+        "title": "Verify Before You Close | Everyday IT | KrippyTech",
+        "description": "A command succeeding is not the same thing as the user's workflow being restored. Verify the original symptom before closing the work.",
+        "type": "article",
+    },
+    "/everyday-it/escalate-with-evidence/": {
+        "title": "Escalate With Evidence | Everyday IT | KrippyTech",
+        "description": "Good escalation preserves the investigation. Hand off scope, evidence, failed tests, risk, and the exact next question.",
+        "type": "article",
+    },
+    "/everyday-it/workaround-vs-resolution/": {
+        "title": "Workaround vs Resolution | Everyday IT | KrippyTech",
+        "description": "A workaround restores productivity. A resolution removes or controls the underlying cause.",
+        "type": "article",
+    },
+    "/everyday-it/prevent-recurrence/": {
+        "title": "Prevent Recurrence | Everyday IT | KrippyTech",
+        "description": "After the fix, decide whether anything should change so the same problem is easier to prevent or diagnose next time.",
+        "type": "article",
+    },
+    "/everyday-it/restrict-inherited-folder-permissions/": {
+        "title": "Restrict Inherited Folder Permissions Safely | Everyday IT | KrippyTech",
+        "description": "Preserve a known-good access path before changing inherited NTFS permissions, then prove both allowed and denied access afterward.",
+        "type": "article",
+    },
+    "/everyday-it/failing-disk-protect-data-first/": {
+        "title": "Failing Disk: Protect Data Before Rebuilding | Everyday IT | KrippyTech",
+        "description": "When a disk may be failing, understand the data-protection state before repair or rebuild work begins.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
