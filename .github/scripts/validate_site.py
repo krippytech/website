@@ -188,6 +188,26 @@ SOCIAL_METADATA = {
         "description": "Separate SharePoint library sync, OneDrive shortcuts, browser access, and local File Explorer state before rebuilding anything.",
         "type": "article",
     },
+    "/everyday-it/access-denied-after-group-change/": {
+        "title": "Access Denied After a Group Change | Everyday IT | KrippyTech",
+        "description": "Verify the permission path and refresh the user's access token before rebuilding ACLs.",
+        "type": "article",
+    },
+    "/everyday-it/mfa-recovery/": {
+        "title": "MFA Recovery Without Weakening Security | Everyday IT | KrippyTech",
+        "description": "Recover MFA safely without casually disabling security controls.",
+        "type": "article",
+    },
+    "/everyday-it/recurring-account-lockout/": {
+        "title": "Recurring Account Lockout Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Find the source of repeated lockouts instead of repeatedly unlocking the account.",
+        "type": "article",
+    },
+    "/everyday-it/shared-mailbox-not-showing/": {
+        "title": "Shared Mailbox Not Showing in Outlook | Everyday IT | KrippyTech",
+        "description": "Prove the permission before rebuilding Outlook when a shared mailbox does not appear.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
