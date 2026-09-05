@@ -107,6 +107,11 @@
         <article class="card"><p class="card-number">Escalate</p><h3>Privileged or administrative accounts</h3><p>Recovery for administrative identities deserves stricter verification and change control than a routine end-user password reset.</p></article>
         <article class="card"><p class="card-number">Escalate</p><h3>Many users fail at once</h3><p>Multiple simultaneous authentication failures can indicate identity-provider, synchronization, federation, network, or service-health problems rather than individual user mistakes.</p></article>
     </div><div class="mission"><blockquote>Password → account state → cached credentials → MFA → policy.</blockquote><p>Follow the evidence through the authentication path and change only the layer that is actually broken.</p></div></div></section>
+
+    <section class="section"><div class="container"><div class="section-heading"><h2>Next Test</h2><p>Change paths when the evidence changes the ticket.</p></div><div class="grid">
+        <article class="card"><p class="card-number">Unexpected activity</p><h3>The user did not initiate the prompt or sign-in</h3><p>Preserve the identity boundary, verify the person, capture the event, and move into approved security response instead of weakening MFA. <a class="card-link" href="/everyday-it/suspicious-signin-first-response/">Use suspicious sign-in first response <span aria-hidden="true">→</span></a></p></article>
+        <article class="card"><p class="card-number">Known recovery</p><h3>The user legitimately lost an approved factor</h3><p>When compromise is not suspected, use identity verification and the supported recovery path. <a class="card-link" href="/everyday-it/mfa-recovery/">Recover MFA safely <span aria-hidden="true">→</span></a></p></article>
+    </div></div></section>
 </main>
 <footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
 </body>

@@ -258,6 +258,26 @@ SOCIAL_METADATA = {
         "description": "When a disk may be failing, understand the data-protection state before repair or rebuild work begins.",
         "type": "article",
     },
+    "/everyday-it/suspicious-signin-first-response/": {
+        "title": "Suspicious Sign-In First Response | Everyday IT | KrippyTech",
+        "description": "Treat unexpected MFA prompts and unfamiliar sign-ins as evidence. Verify the user, preserve the security boundary, collect proof, and escalate when compromise is plausible.",
+        "type": "article",
+    },
+    "/everyday-it/malware-alert-first-response/": {
+        "title": "Malware Alert First Response | Everyday IT | KrippyTech",
+        "description": "Treat a malware alert as an evidence and containment problem before turning it into a cleanup exercise.",
+        "type": "article",
+    },
+    "/everyday-it/shared-service-outage-triage/": {
+        "title": "Shared Service Outage Triage | Everyday IT | KrippyTech",
+        "description": "When several users fail together, stop repairing endpoints and identify the shared dependency.",
+        "type": "article",
+    },
+    "/everyday-it/server-restart-safety/": {
+        "title": "Server Restart Safety | Everyday IT | KrippyTech",
+        "description": "A restart is a change, not a diagnostic shortcut. Know what the server does, who depends on it, how you will get back in, and what success looks like.",
+        "type": "article",
+    },
     "/about/": {
         "title": "About KrippyTech",
         "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
