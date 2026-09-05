@@ -25,11 +25,11 @@ Use these prefixes for new sanitized source packs:
 - `03 SharePoint & OneDrive`
 - `04 Windows & Workstations`
 - `05 Remote Access & VPN`
-- `06 Printers Scanners & MFP`
+- `06 Printers, Scanners & MFP`
 - `07 File Servers & SMB`
 - `08 Servers & Infrastructure`
 - `09 Security & Incident Response`
-- `10 Advanced & KER`
+- `10 Advanced / KER`
 
 A source may contain material for several domains. Place it in the domain representing the primary engineering lesson and create secondary ledger entries where needed.
 
@@ -72,8 +72,8 @@ If a technical value is necessary to understand the lesson, generalize it.
 
 Examples:
 - `SERVER01` → `FILE-SERVER`
-- `10.20.3.75` → `internal server IP`
-- `user@clientdomain.com` → `user@company.example`
+- `192.0.2.75` → `internal server IP`
+- `user@client.example` → `user@company.example`
 
 ### Stage C: Extraction
 

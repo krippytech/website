@@ -16,9 +16,21 @@ This architecture defines how material moves between them.
 
 KrippyTech content follows one reusable knowledge pipeline:
 
-`Raw case → Sanitized source → Extracted lesson → Content ledger → Content asset → Published → Reused`
+`Raw → Sanitized Source → Extracted Lesson → Ledger → Asset → Published → Reuse`
 
 The goal is to preserve the engineering value once, then reuse it many times without repeatedly mining the same ticket history.
+
+## Compatibility with Existing Standards
+
+Content Architecture v1 extends the existing standards without weakening or replacing them:
+
+- The Vault Standard remains authoritative for source preservation, sanitization, privacy, and the rule that nothing is published directly from KER.
+- `Sanitized Source` and `Extracted Lesson` are working stages within the Vault Standard's Engineering Extraction layer.
+- The ledger adds an internal decision record; it does not make a source safe to publish.
+- A KT Case remains an available permanent history asset, but a lesson does not require a public KT Case before it can become another approved asset type.
+- The Publishing Standard remains authoritative for public voice, accuracy, verification, and tutorial structure. The Everyday IT guide pattern below applies only when the asset is an Everyday IT guide rather than a full tutorial.
+
+If this architecture and either existing standard appear to conflict, apply the stricter privacy, review, and verification requirement.
 
 ## Working Registers
 

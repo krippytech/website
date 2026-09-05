@@ -17,6 +17,12 @@ A public guide should be able to answer internally:
 
 Do not place credentials, client names, domains, ticket numbers, phone numbers, or other identifying details in this register.
 
+## Privacy and Publication Boundary
+
+This is an internal operating register, not a public content asset. The repository's root `_config.yml` excludes `docs/vault` from the GitHub Pages build so this register and the other Vault working documents are not published as site pages.
+
+Repository access controls remain the security boundary for the source file. The Pages exclusion is not permission to store secrets or identifying source data here: record only sanitized lineage references, and keep raw material in its approved private storage location.
+
 ## Lineage Types
 
 ### Foundation
@@ -55,6 +61,9 @@ Built from a deeper engineering reference that was simplified into a safe public
 | Active Directory | Foundation | Approved AD basics curriculum | Foundation | Safe conceptual entry point |
 | Groups & Permissions | Mixed | Permissions source material and repeated access incidents | Strong | Later enhanced with Effective Access and token-refresh patterns |
 | Passwords, Lockouts & MFA | Mixed | Identity troubleshooting patterns across field material | Strong | Parent for dedicated recovery/lockout follow-ups |
+| Access Denied After a Group Change | Field-Derived | Effective Access, group membership, token refresh, and NTFS/SMB patterns | Strong | Verifies the permission path before rebuilding ACLs |
+| MFA Recovery Without Weakening Security | Field-Derived | MFA, Conditional Access, sign-in, and recovery patterns | Strong | Preserves identity verification and approved recovery boundaries |
+| Recurring Account Lockout Troubleshooting | Field-Derived | Repeated lockout and stale-credential patterns | Strong | Focuses on finding the source instead of repeated unlocks |
 | Microsoft 365 & Email | Foundation / Mixed | Approved M365 support curriculum plus field patterns | Foundation | Domain anchor |
 | Printers | Foundation / Mixed | Printer/scanner support material | Supporting | Broad printer workflow |
 | SharePoint & OneDrive | Foundation / Mixed | SharePoint/OneDrive source packs and sync cases | Strong | Later enhanced with OneDrive icon and disk-use concepts |
@@ -74,6 +83,7 @@ Built from a deeper engineering reference that was simplified into a safe public
 | When to Replace a Workstation | Field-Derived | Aging workstation / scanner support case | Strong | Repair vs replace boundary |
 | Former Employee Mailbox Handling | Field-Derived | Historical mailbox lifecycle and delegation cases | Strong | Preserve business data without preserving sign-in |
 | Shared Mailbox Permissions | Field-Derived | Delegation and shared-mailbox access cases | Strong | Full Access vs Send As vs Send on Behalf |
+| Shared Mailbox Not Showing in Outlook | Field-Derived | Delegation, propagation, auto-mapping, and Outlook visibility patterns | Strong | Proves permission state before client repair |
 | Message Trace: Prove Delivery | Field-Derived | Mail-delay and scanner-message trace cases | Strong | Evidence-first delivery isolation |
 | Outlook Signature Troubleshooting | Field-Derived | Outlook/OWA signature cases | Strong | Clean test signature and internal/external comparison |
 | SharePoint Sync Troubleshooting | Field-Derived | SharePoint/OneDrive sync cases | Strong | Shortcut vs true sync relationship |
@@ -81,16 +91,9 @@ Built from a deeper engineering reference that was simplified into a safe public
 | Mobile Exchange Sync Troubleshooting | Field-Derived | Apple Mail / Exchange token-reset cases | Strong | Modern-auth re-add workflow |
 | Outlook Profile Creation Fails | Field-Derived | Outlook connectivity / Autodiscover case | Strong | Step beyond normal profile rebuild |
 
-## Active Expansion #6 Lineage
+## Expansion #6 Publication Status
 
-These guides are not yet counted as published in the current library map. They are included here so their source relationship is not lost during the review/merge cycle.
-
-| Planned Asset | Primary Domain | Source Pattern | Strength |
-|---|---|---|---|
-| MFA Recovery Without Weakening Security | 01 Identity & Access | MFA, Conditional Access, sign-in, recovery patterns | Strong |
-| Recurring Account Lockout Troubleshooting | 01 Identity & Access | repeated lockout / stale credential patterns | Strong |
-| Shared Mailbox Not Showing in Outlook | 02 Microsoft 365 & Email | delegation, propagation, Outlook visibility patterns | Strong |
-| Access Denied After a Group Change | 01 Identity & Access | Effective Access, group membership, token refresh, NTFS/SMB | Strong |
+The four Expansion #6 guides were merged through PR #44 on September 5, 2026. Their lineage is now recorded in the published Everyday IT map above.
 
 ## Strong Unpublished Lineage
 
@@ -146,7 +149,7 @@ Recommended asset: KER / advanced reference first.
 
 ### SMTP Authentication Identity for Devices
 
-Primary domain: `10 Advanced / KER` with secondary relationship to `06 Printers Scanners & MFP`.
+Primary domain: `10 Advanced / KER` with secondary relationship to `06 Printers, Scanners & MFP`.
 
 Lineage: Scanner authentication incidents.
 

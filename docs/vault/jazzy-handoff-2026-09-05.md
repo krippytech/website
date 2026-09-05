@@ -6,21 +6,21 @@
 
 Verified before execution:
 
-- PR #44: open, draft, mergeable
-- PR #45: open, draft, mergeable
+- PR #44: merged; feature branch deleted
+- PR #45: open, draft, rebased onto the post-#44 `main`
 - PR #46: open, draft, mergeable
 - PR #47: open, draft, mergeable
 - PR #48: open, draft, mergeable
 
-None of these PRs are merged yet. Do not assume GitHub Pages deployment merely because a PR is merged later; deployment must be verified separately.
+PR #44 is merged. PRs #45–#48 are not merged yet. Do not assume GitHub Pages deployment merely because a PR is merged; deployment must be verified separately.
 
 ## Execution Order
 
-1. Review this file first.
-2. Complete production integration for PR #44.
-3. Run full static-site validation. If green, Ready → Squash and merge → delete branch.
-4. Pull latest `main`.
-5. Review PR #45 for Content Architecture v1 consistency and privacy boundaries. If green, Ready → Squash and merge → delete branch.
+1. Review this file first. **Completed for PR #45.**
+2. Complete production integration for PR #44. **Completed.**
+3. Run full static-site validation. If green, Ready → Squash and merge → delete branch. **Completed for PR #44.**
+4. Pull latest `main`. **Completed after PR #44.**
+5. Review PR #45 for Content Architecture v1 consistency and privacy boundaries. If green, Ready → Squash and merge → delete branch. **Review completed; awaiting Ready for Review.**
 6. Pull latest `main`.
 7. Update/rebase PR #46 against current `main` if needed, preserving all merged sitemap, landing, validator, and navigation work.
 8. Complete PR #46 production integration and cross-link implementation. Run full static-site validation. If green, Ready → Squash and merge → delete branch.
@@ -49,7 +49,7 @@ None of these PRs are merged yet. Do not assume GitHub Pages deployment merely b
 
 **Branch:** `feature/everyday-it-expansion-6`
 
-**Status:** Open, draft, mergeable as of September 5.
+**Status:** Merged on September 5; feature branch deleted.
 
 ### Approved content
 
@@ -78,7 +78,7 @@ None of these PRs are merged yet. Do not assume GitHub Pages deployment merely b
 
 **Branch:** `feature/content-architecture-v1`
 
-**Status:** Open, draft, mergeable as of September 5.
+**Status:** Open and draft; rebased onto the post-#44 `main` and production-readiness review completed on September 5.
 
 ### Purpose
 
@@ -93,11 +93,11 @@ Adds the operating system behind KrippyTech content development without changing
 - two-level KER taxonomy: Primary Domain + Tags
 - content-type decision rules
 - cross-linking guidance
-- published Everyday IT library map through Expansion #5
+- published Everyday IT library map through Expansion #6
 - public-route domain/tag mapping
 - domain coverage/gap analysis
 - private source-lineage register
-- Expansion #6 lineage tracking
+- published Expansion #6 lineage tracking
 - high-value unpublished candidate tracking
 - block on time-sensitive Microsoft/SMTP guidance until current vendor verification
 
