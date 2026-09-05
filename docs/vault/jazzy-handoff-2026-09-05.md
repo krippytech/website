@@ -1,24 +1,47 @@
 # Jazzy Handoff Log — September 5, 2026
 
-**Purpose:** Canonical restart handoff for Codex/Jazzy when usage access resumes.
+**Purpose:** Canonical restart handoff for Codex/Jazzy now that production integration can resume.
 
-This file should be updated as work continues before September 5 so production review can resume without reconstructing chat history.
+## September 5 Live State
 
-## Restart Order
+Verified before execution:
+
+- PR #44: open, draft, mergeable
+- PR #45: open, draft, mergeable
+- PR #46: open, draft, mergeable
+- PR #47: open, draft, mergeable
+- PR #48: open, draft, mergeable
+
+None of these PRs are merged yet. Do not assume GitHub Pages deployment merely because a PR is merged later; deployment must be verified separately.
+
+## Execution Order
 
 1. Review this file first.
-2. Review PR #44 and complete Expansion #6 production integration.
-3. If green, Ready → Squash and merge → delete its branch.
-4. Review PR #45 for Content Architecture v1 consistency/privacy boundaries.
-5. If green, Ready → Squash and merge → delete its branch.
-6. Review PR #46 for Strengthening Phase 1 production integration.
-7. If green, Ready → Squash and merge → delete its branch.
-8. Pull latest `main`, then rebase/update PR #47 against the merged state before production integration because it was created from the same older `main` and touches shared integration surfaces such as `sitemap.xml`.
-9. Review PR #47 for Strengthening Phase 2 production integration.
-10. If green, Ready → Squash and merge → delete its branch.
-11. Pull latest `main` before the next build.
+2. Complete production integration for PR #44.
+3. Run full static-site validation. If green, Ready → Squash and merge → delete branch.
+4. Pull latest `main`.
+5. Review PR #45 for Content Architecture v1 consistency and privacy boundaries. If green, Ready → Squash and merge → delete branch.
+6. Pull latest `main`.
+7. Update/rebase PR #46 against current `main` if needed, preserving all merged sitemap, landing, validator, and navigation work.
+8. Complete PR #46 production integration and cross-link implementation. Run full static-site validation. If green, Ready → Squash and merge → delete branch.
+9. Pull latest `main`.
+10. Update/rebase PR #47 against current `main`, preserving the complete Phase 1 route set and integration surfaces.
+11. Complete PR #47 production integration. Run full static-site validation. If green, Ready → Squash and merge → delete branch.
+12. Pull latest `main`.
+13. Update/rebase PR #48 against current `main` if needed.
+14. Review and production-integrate the consulting repositioning without reintroducing MSP-style messaging. Run full validation. If green, Ready → Squash and merge → delete branch.
+15. Pull latest `main` and verify the resulting site/deployment separately.
 
-Do not equate a merge with GitHub Pages deployment unless deployment is separately verified.
+## Global Production Rules
+
+- Preserve approved page intent and troubleshooting methodology. Fix integration and consistency issues without rewriting the strategy.
+- Never overwrite a newer `sitemap.xml`, landing page, validator policy, navigation block, or shared metadata surface with an older branch version.
+- Normalize every new public page to the current established desktop/mobile navigation and favicon pattern.
+- Verify canonical, OG, Twitter, internal links, headings, fragments, encoded characters, accessibility basics, and final newlines.
+- Add validator coverage for every new public route and social metadata requirement.
+- Run the repository’s full static-site validation workflow before recommending merge.
+- Report blockers rather than hiding uncertainty.
+- Keep public material sanitized and client-independent.
 
 ## PR #44 — Everyday IT Expansion #6
 
@@ -26,7 +49,7 @@ Do not equate a merge with GitHub Pages deployment unless deployment is separate
 
 **Branch:** `feature/everyday-it-expansion-6`
 
-**Status:** Draft, awaiting Jazzy production integration/review.
+**Status:** Open, draft, mergeable as of September 5.
 
 ### Approved content
 
@@ -35,7 +58,7 @@ Do not equate a merge with GitHub Pages deployment unless deployment is separate
 - Shared Mailbox Not Showing in Outlook
 - Access Denied After a Group Change
 
-### Jazzy work
+### Jazzy implementation work
 
 - add validator route/social-metadata policy for all four routes
 - normalize complete desktop/mobile navigation
@@ -55,7 +78,7 @@ Do not equate a merge with GitHub Pages deployment unless deployment is separate
 
 **Branch:** `feature/content-architecture-v1`
 
-**Status:** Draft, mergeable at last check.
+**Status:** Open, draft, mergeable as of September 5.
 
 ### Purpose
 
@@ -84,10 +107,11 @@ Adds the operating system behind KrippyTech content development without changing
 - `docs/vault/batch-intake-standard.md`
 - `docs/vault/content-ledger-standard.md`
 - `docs/vault/ker-taxonomy.md`
-- published library map/register files
+- `docs/everyday-it-library-map.md`
+- `docs/vault/source-lineage-register.md`
 - this handoff log
 
-### Jazzy work
+### Jazzy implementation work
 
 - review documentation consistency
 - confirm no public exposure of source-lineage/private data
@@ -102,7 +126,7 @@ Adds the operating system behind KrippyTech content development without changing
 
 **Branch:** `feature/everyday-it-strengthening-1`
 
-**Status:** Draft, mergeable at last check.
+**Status:** Open, draft, mergeable as of September 5.
 
 ### Purpose
 
@@ -121,65 +145,40 @@ Turns Everyday IT from a collection of good articles into a connected troublesho
 3. `/everyday-it/known-good-comparison/`
    - changes one variable at a time
    - compares known-good user/device/client/network/resource paths
-   - teaches that comparison means finding the meaningful difference, not making systems identical
+   - comparison means finding the meaningful difference, not making systems identical
 
 4. `/everyday-it/change-safety-rollback/`
    - captures current state before remediation
    - identifies blast radius and shared dependencies
    - defines rollback before the change
    - protects the recovery path during the change
-   - distinguishes rollback methods for permissions, profiles/clients, sync/data, and infrastructure
-   - reinforces smallest justified change, checkpoint/stop conditions, regression testing, and post-change verification
    - core formula: `Current state + Blast radius + Rollback + Smallest justified action + Verification`
 
 5. `/everyday-it/verify-before-close/`
    - separates change verification, technical verification, workflow verification, and user validation
-   - distinguishes objective technical completion from situations where the user must confirm history, completeness, role-specific workflow, performance, or intermittent behavior
-   - supports a clear `validation pending` state rather than inventing confirmation
+   - supports `validation pending` rather than inventing confirmation
 
 6. `/everyday-it/escalate-with-evidence/`
-   - teaches how to escalate without restarting the investigation
    - hand off symptom/scope, proven evidence, changes/results, risk boundaries, rollback state, and the exact unresolved next question
    - preserves useful failed tests and comparison results
-   - emphasizes signal over a wall of ticket history
 
 7. `/everyday-it/workaround-vs-resolution/`
    - distinguishes workaround, containment, validation pending, and true resolution
-   - teaches that restoring productivity can be the correct immediate move without pretending the underlying cause is resolved
-   - requires an exit plan, risk statement, and follow-up owner for temporary paths
-   - core lesson: `A workaround restores productivity. A resolution restores the intended design or safely controls the cause.`
+   - temporary paths require an exit plan, risk statement, and follow-up owner
 
 8. `/everyday-it/prevent-recurrence/`
    - asks whether the incident was preventable, detectable sooner, easier to diagnose, or evidence of a needed permanent change
    - converts resolved incidents into documentation, monitoring, configuration, ownership, training, and reusable knowledge improvements
-   - keeps prevention proportional to recurrence, impact, and risk
-   - core lesson: `A good fix restores service. A great support system also keeps the lesson.`
 
 9. `/everyday-it/restrict-inherited-folder-permissions/`
-   - full safe-change workflow for inherited NTFS permissions
-   - approved-user confirmation
-   - current ACL capture/rollback
-   - preserve admin/SYSTEM/service identities
-   - group-based access before restriction
-   - Effective Access
-   - disable inheritance by converting inherited entries before cleanup
-   - avoid broad Deny shortcuts
-   - share + NTFS interaction
-   - token refresh after group changes
-   - verify both approved and denied users
-   - explicit stop/escalation boundaries
+   - safe inherited NTFS permission-change workflow
+   - rollback, Effective Access, group-based access, token refresh, share + NTFS interaction, and verification
 
 10. `/everyday-it/failing-disk-protect-data-first/`
    - data-protection-first response to suspected disk failure
-   - identify data at risk
-   - verify actual backup/sync state
-   - avoid unnecessary write-heavy activity before protection state is known
-   - collect storage/SMART/vendor evidence as appropriate
-   - repair-tool caution when hardware failure is plausible
    - protect/recover → replace → rebuild → restore/validate
-   - escalation when unique data or critical workloads are involved
 
-### Strengthening methodology established
+### Strengthening methodology
 
 `Do not ask which product is broken first. Ask which layer failed.`
 
@@ -214,8 +213,9 @@ At any unsafe or unresolved point: `Escalate With Evidence.`
 - Scanner Troubleshooting → Scan to Folder / Scan to Email
 - Windows Temp Cleanup → When to Replace a Workstation → New PC Setup Checklist
 
-### Jazzy work for #46
+### Jazzy implementation work
 
+- update/rebase after prior merges as needed, preserving all current shared integration surfaces
 - add matching landing-page entries in established Everyday IT format
 - add validator route/social-metadata policy for all ten routes
 - normalize complete desktop/mobile navigation and favicon declarations on drafted pages
@@ -223,7 +223,8 @@ At any unsafe or unresolved point: `Escalate With Evidence.`
 - verify all sitemap entries
 - verify all internal links and cross-layer tutorial links
 - verify headings, fragments, accessibility basics, encoded characters, final newlines
-- add static Related Guides / Next Test sections to the highest-value existing pages where these routes identify a natural troubleshooting chain
+- implement static `Related Guides` / `Next Test` sections on the highest-value existing pages, based on actual troubleshooting outcomes rather than generic article dumping
+- prioritize cross-links from `troubleshooting-escalation`, `groups-permissions`, `mapped-drives-access`, `outlook-vs-web`, `sharepoint-onedrive`, `scanner-troubleshooting`, `when-to-replace-workstation`, and `windows-temp-cleanup`
 - specifically connect the lifecycle across `scope-the-problem`, `known-good-comparison`, `change-safety-rollback`, `verify-before-close`, `workaround-vs-resolution`, `prevent-recurrence`, and `escalate-with-evidence`
 - wire `troubleshooting-paths` through the complete methodology, not just product paths
 - preserve approved content and symptom-first/layer-first intent
@@ -236,7 +237,7 @@ At any unsafe or unresolved point: `Escalate With Evidence.`
 
 **Branch:** `feature/everyday-it-strengthening-2`
 
-**Status:** Draft. Created from the same pre-integration `main` as the other active branches. Re-check mergeability and update/rebase after #44–#46 are merged.
+**Status:** Open, draft, mergeable as of September 5. Still update/rebase after #44–#46 are merged because it shares integration surfaces with them.
 
 ### Purpose
 
@@ -245,41 +246,22 @@ Fills two thinner Everyday IT domains without turning approachable support guida
 ### New routes
 
 1. `/everyday-it/suspicious-signin-first-response/`
-   - unexpected MFA prompts, unfamiliar sign-ins, and suspicious mailbox/account behavior
-   - verify the person and event before changing authentication
-   - review sign-in evidence and suspicious account/mailbox changes
-   - use approved containment rather than weakening MFA or making broad tenant changes
-   - lower escalation threshold for privileged, finance, executive, and shared-service identities
+   - unexpected MFA prompts, unfamiliar sign-ins, suspicious mailbox/account behavior
    - core lesson: `Unexpected authentication activity changes the ticket from make login work to prove who is signing in.`
 
 2. `/everyday-it/malware-alert-first-response/`
-   - confirm the endpoint, user, detection time, object/process, and platform mitigation state
-   - preserve evidence before cleanup removes context
-   - contain through approved tooling when role/policy permits
-   - verify whether quarantine/kill/isolation actually succeeded
-   - correlate related detections, identity activity, persistence, or repeat execution
-   - escalate unresolved risk with the detection and containment state, not just the alert email
+   - confirm endpoint/user/detection, preserve evidence, contain through approved tooling, verify mitigation, correlate related activity, escalate unresolved risk
    - core flow: `Confirm → Preserve → Contain → Verify → Correlate → Escalate.`
 
 3. `/everyday-it/shared-service-outage-triage/`
-   - teaches first-line techs to move upstream when multiple users/devices share a symptom
-   - scope impact across users, devices, locations, departments, and workflows
-   - identify shared servers, apps, DNS, identity, firewall, circuits, databases, cloud services, or other dependencies
-   - test from more than one point and use known-good comparison
-   - collect service/reachability/monitoring evidence before making production changes
-   - explicit boundary against casual core-role or infrastructure redesign
+   - moves first-line troubleshooting upstream when several users/devices share a symptom
    - core lesson: `One user can be an endpoint problem. Ten users with the same symptom are telling you to look upstream.`
 
 4. `/everyday-it/server-restart-safety/`
-   - treats a server restart as a controlled production change, not a diagnostic shortcut
-   - identify server role and dependent users/apps/services/VMs first
-   - confirm recovery access such as console, hypervisor console, iDRAC/iLO, or another approved out-of-band path
-   - capture current evidence before a reboot clears transient state
-   - state the specific reason for restarting and define post-restart success criteria
-   - highlights higher-risk cases: single DC, hypervisor, firewall/remote-access dependency, unknown application dependencies
+   - treats a production restart as a controlled change rather than a diagnostic shortcut
    - core lesson: `Restarting is remediation. Treat it like a change, not a substitute for diagnosis.`
 
-### Jazzy work for #47
+### Jazzy implementation work
 
 - update/rebase the branch after #44–#46 merge so shared integration changes are preserved
 - normalize complete established desktop/mobile navigation on all four drafted pages
@@ -287,7 +269,7 @@ Fills two thinner Everyday IT domains without turning approachable support guida
 - add validator route/social-metadata policy for all four routes
 - verify sitemap against the merged route set rather than overwriting newer entries
 - add landing-page entries in established Everyday IT format
-- add Related Guides / Next Test links into the Phase 1 lifecycle
+- add `Related Guides` / `Next Test` links into the Phase 1 lifecycle
 - strongly consider security links from Passwords/MFA and Troubleshooting & Escalation
 - strongly consider infrastructure links from Troubleshooting & Escalation, VPN/file-access paths, and appropriate advanced tutorials
 - preserve Everyday IT safety boundaries and do not expand the pages into deep security remediation or infrastructure redesign procedures
@@ -295,9 +277,55 @@ Fills two thinner Everyday IT domains without turning approachable support guida
 - run full static-site validation
 - report blockers before merge
 
+## PR #48 — Consulting Positioning v1
+
+**Title:** `Reposition consulting around independent small-business IT guidance`
+
+**Branch:** `feature/consulting-positioning-v1`
+
+**Status:** Open, draft, mergeable as of September 5.
+
+### Purpose
+
+Repositions KrippyTech consulting away from managed-services/MSP language and toward independent small-business IT consulting.
+
+### Approved positioning
+
+- experienced technical help without the traditional MSP model
+- `Teach it. Handle it. Partner on it.` depending on what the business actually needs
+- do not create dependency for routine tasks that a business can safely handle internally
+- bring KrippyTech in when work becomes complicated, risky, specialized, or time-consuming
+- focus on troubleshooting, projects, modernization, planning, security improvement, simplification, second opinions, cost review, and documentation
+- avoid unlimited helpdesk, endpoint bundles, monitoring packages, per-user MSP pricing, 24/7 promises, and outsourced-IT-department language
+- speak as KrippyTech or `I` where a human voice is useful; do not imply a team or staff structure that does not exist
+
+### Primary message
+
+`I don’t need you to depend on me for every password reset. I’d rather help you understand the easy things and be there when the work becomes complicated, risky, or time-consuming.`
+
+Supporting principles:
+
+- learn what makes sense to learn
+- hand off what should not be guessed at
+- leave the environment easier to operate than it was before
+- technology should support the business, not exist to sell another subscription
+- independent recommendations should be based on need, risk, budget, and measurable value
+
+### Jazzy implementation work
+
+- update/rebase after prior merges if needed
+- preserve the approved independent-consultant voice and remove any residual MSP/team-oriented phrasing
+- normalize page HTML/navigation/metadata to the final current site standard
+- verify canonical, OG, Twitter, favicon, internal links, accessibility basics, encoded characters, and final newline
+- review CTA wording and contact path for clarity without adding unapproved availability/SLA promises
+- preserve the connection between consulting and Everyday IT: public teaching demonstrates the consulting philosophy rather than competing with it
+- do not add managed-service packages, unlimited helpdesk, endpoint pricing, monitoring bundles, or outsourced-IT-department language
+- run full static-site validation
+- report blockers before merge
+
 ## Strategic Direction
 
-This is the **KrippyTech strengthening phase**, not a reset.
+This is the KrippyTech strengthening phase, not a reset.
 
 Priorities:
 
@@ -308,9 +336,9 @@ Priorities:
 5. Prefer enhancements when existing user intent is already served.
 6. Add standalone pages only when the troubleshooting question is materially distinct and search-worthy.
 7. Keep public material sanitized and client-independent.
-8. Separate Everyday IT, KER/advanced, KT Cases, tutorials, downloads/checklists, course material, and future consulting references.
+8. Keep consulting independent, practical, and anti-dependency rather than drifting into MSP positioning.
 
-## Current High-Value Gaps / Future Candidates
+## Current High-Value Future Candidates
 
 - deeper file-access/permissions edge cases after inherited-folder safe-change guide
 - remote-access dependency mapping as advanced/KER material
@@ -323,14 +351,12 @@ Priorities:
 
 ### Regular Chat / Ace
 
-Use for strategy, source mining, sanitization, architecture, ledger work, page-vs-enhancement decisions, drafting, cross-link planning, and strengthening/content planning.
+Use for strategy, source mining, sanitization, architecture, ledger work, page-vs-enhancement decisions, drafting, cross-link planning, positioning, and strengthening/content planning.
 
 ### Jazzy / Codex
 
-Use for production integration, navigation normalization, validator/social metadata, landing-page integration, sitemap consistency, HTML/accessibility cleanup, repository-wide validation, and production-readiness review.
-
-This split is intentional so Codex usage is reserved for work where it adds the most value.
+Use for production integration, branch update/rebase work, navigation normalization, validator/social metadata, landing-page integration, sitemap consistency, HTML/accessibility cleanup, repository-wide validation, and production-readiness review.
 
 ## Living Log Rule
 
-Append meaningful work completed before September 5 here or update the relevant PR section above. Record new branches/PRs, architecture decisions, source/ledger changes, pages, enhancements, cross-link plans, blockers, and vendor-verification dependencies.
+Update this handoff with meaningful decisions or scope changes until the active PR queue is integrated. Record new branches/PRs, architecture decisions, source/ledger changes, pages, enhancements, cross-link plans, blockers, and vendor-verification dependencies.
