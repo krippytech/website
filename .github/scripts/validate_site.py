@@ -48,6 +48,11 @@ SOCIAL_METADATA = {
         "description": "Practical troubleshooting for groups, NTFS and share permissions, Effective Access, token refresh, inherited access, mapped drives, and access-denied symptoms.",
         "type": "article",
     },
+    "/everyday-it/conditional-access-signin-failure/": {
+        "title": "Conditional Access Sign-In Failure Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Match the exact Entra sign-in, identify which Conditional Access policy applied, prove which requirement failed, and avoid weakening tenant-wide security controls just to make a login work.",
+        "type": "article",
+    },
     "/everyday-it/microsoft-365-email/": {
         "title": "Microsoft 365 & Outlook Troubleshooting | Everyday IT | KrippyTech",
         "description": "Practical Microsoft 365 and Outlook troubleshooting for licensing, mailboxes, shared mailbox access, message trace, mail flow, Outlook symptoms, and safe escalation.",
