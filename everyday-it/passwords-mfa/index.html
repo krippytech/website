@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://krippytech.com/everyday-it/passwords-mfa/">
 
-    <title>Passwords, Lockouts &amp; MFA | Everyday IT | KrippyTech</title>
-    <meta name="description" content="A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.">
+    <title>Password, Account Lockout &amp; MFA Troubleshooting | Everyday IT | KrippyTech</title>
+    <meta name="description" content="Practical password, account lockout, and MFA troubleshooting across Windows, Microsoft 365, Entra ID, cached credentials, tokens, recovery, and safe escalation.">
     <meta property="og:site_name" content="KrippyTech">
-    <meta property="og:title" content="Passwords, Lockouts &amp; MFA | Everyday IT | KrippyTech">
+    <meta property="og:title" content="Password, Account Lockout &amp; MFA Troubleshooting | Everyday IT | KrippyTech">
     <meta property="og:type" content="article">
-    <meta property="og:description" content="A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.">
+    <meta property="og:description" content="Practical password, account lockout, and MFA troubleshooting across Windows, Microsoft 365, Entra ID, cached credentials, tokens, recovery, and safe escalation.">
     <meta property="og:url" content="https://krippytech.com/everyday-it/passwords-mfa/">
     <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
     <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
@@ -19,8 +19,8 @@
     <meta property="og:locale" content="en_US">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Passwords, Lockouts &amp; MFA | Everyday IT | KrippyTech">
-    <meta name="twitter:description" content="A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.">
+    <meta name="twitter:title" content="Password, Account Lockout &amp; MFA Troubleshooting | Everyday IT | KrippyTech">
+    <meta name="twitter:description" content="Practical password, account lockout, and MFA troubleshooting across Windows, Microsoft 365, Entra ID, cached credentials, tokens, recovery, and safe escalation.">
     <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
     <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
 
@@ -50,7 +50,7 @@
 </header>
 
 <main>
-    <section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Passwords, Lockouts &amp; MFA</p><h1>Stop treating every sign-in problem like a password problem.</h1><p class="hero-text">A reset can be correct and the user can still fail to sign in. Cached credentials, lockouts, stale mobile sessions, sync timing, MFA registration, and policy can all produce similar symptoms.<span class="highlight">First identify which authentication layer is actually failing.</span></p><div class="buttons"><a class="button button-primary" href="#quick-path">Start troubleshooting</a><a class="button button-secondary" href="/everyday-it/">Back to Everyday IT</a></div></div></section>
+    <section class="hero"><div class="container"><p class="eyebrow">Everyday IT · Passwords, Lockouts &amp; MFA</p><h1>Stop treating every sign-in problem like a password problem.</h1><p class="hero-text">A reset can be correct while Windows, Microsoft 365, Entra ID, a cached credential, a stale token, or an MFA registration still fails on a different authentication layer.<span class="highlight">First identify which authentication layer is actually failing.</span></p><div class="buttons"><a class="button button-primary" href="#quick-path">Start troubleshooting</a><a class="button button-secondary" href="/everyday-it/">Back to Everyday IT</a></div></div></section>
 
     <section class="section" id="quick-path"><div class="container"><div class="section-heading"><h2>The quick troubleshooting path</h2><p>Use the symptom to narrow the problem before resetting everything.</p></div><div class="grid">
         <article class="card"><p class="card-number">01</p><h3>What exactly is failing?</h3><p>Windows sign-in, Microsoft 365, Outlook, VPN, remote desktop, mobile email, an application, or the MFA prompt may each use a different path.</p></article>
@@ -112,6 +112,7 @@
         <article class="card"><p class="card-number">Unexpected activity</p><h3>The user did not initiate the prompt or sign-in</h3><p>Preserve the identity boundary, verify the person, capture the event, and move into approved security response instead of weakening MFA. <a class="card-link" href="/everyday-it/suspicious-signin-first-response/">Use suspicious sign-in first response <span aria-hidden="true">→</span></a></p></article>
         <article class="card"><p class="card-number">Known recovery</p><h3>The user legitimately lost an approved factor</h3><p>When compromise is not suspected, use identity verification and the supported recovery path. <a class="card-link" href="/everyday-it/mfa-recovery/">Recover MFA safely <span aria-hidden="true">→</span></a></p></article>
     </div></div></section>
+    <section class="section"><div class="container"><div class="section-heading"><h2>Authentication or authorization?</h2><p>If the user cannot prove identity, stay here. If the user can sign in but cannot reach the resource, move to the permissions authority.</p></div><div class="grid"><article class="card"><p class="card-number">Authentication</p><h3>Choose the narrow sign-in path</h3><p><a class="card-link" href="/everyday-it/mfa-recovery/">Recover MFA safely <span aria-hidden="true">→</span></a><br><a class="card-link" href="/everyday-it/recurring-account-lockout/">Find a recurring lockout source <span aria-hidden="true">→</span></a><br><a class="card-link" href="/everyday-it/mobile-exchange-sync/">Isolate mobile Exchange authentication <span aria-hidden="true">→</span></a><br><a class="card-link" href="/everyday-it/suspicious-signin-first-response/">Respond to a suspicious sign-in <span aria-hidden="true">→</span></a></p></article><article class="card"><p class="card-number">Authorization</p><h3>The user signs in, but access is denied</h3><p><a class="card-link" href="/everyday-it/groups-permissions/">Move to Groups, NTFS &amp; File Permissions <span aria-hidden="true">→</span></a></p></article><article class="card"><p class="card-number">Advanced proof</p><h3>Policy or Entra sign-in evidence is required</h3><p><a class="card-link" href="/tutorials/entra-signin-conditional-access-investigation/">Investigate Entra sign-in and Conditional Access <span aria-hidden="true">→</span></a></p></article></div><div class="mission"><blockquote>Routine recovery should preserve the identity boundary.</blockquote><p>When the environment has risky tenant-wide Conditional Access, unclear hybrid identity paths, privileged access, or repeated failures without a clear source, consider an <a href="/consulting/">independent identity review</a>.</p></div></div></section>
 </main>
 <footer><div class="container">© 2026 KrippyTech. Everyday IT. Real-world IT without the fluff.</div></footer>
 </body>

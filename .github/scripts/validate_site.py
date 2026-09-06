@@ -44,13 +44,13 @@ SOCIAL_METADATA = {
         "type": "article",
     },
     "/everyday-it/groups-permissions/": {
-        "title": "Groups & Permissions | Everyday IT | KrippyTech",
-        "description": "Plain-English guidance for security groups, distribution lists, NTFS and share permissions, access denied troubleshooting, and role-based access.",
+        "title": "Groups, NTFS & File Permission Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Practical troubleshooting for groups, NTFS and share permissions, Effective Access, token refresh, inherited access, mapped drives, and access-denied symptoms.",
         "type": "article",
     },
     "/everyday-it/microsoft-365-email/": {
-        "title": "Microsoft 365 & Email Basics | Everyday IT | KrippyTech",
-        "description": "Practical Microsoft 365 and email guidance for licensing, user and shared mailboxes, distribution lists, mail flow, and basic message trace troubleshooting.",
+        "title": "Microsoft 365 & Outlook Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Practical Microsoft 365 and Outlook troubleshooting for licensing, mailboxes, shared mailbox access, message trace, mail flow, Outlook symptoms, and safe escalation.",
         "type": "article",
     },
     "/everyday-it/new-user-setup/": {
@@ -64,8 +64,8 @@ SOCIAL_METADATA = {
         "type": "article",
     },
     "/everyday-it/passwords-mfa/": {
-        "title": "Passwords, Lockouts & MFA | Everyday IT | KrippyTech",
-        "description": "A practical guide to password resets, account lockouts, cached credentials, Microsoft MFA issues, device-specific symptoms, verification, and safe escalation.",
+        "title": "Password, Account Lockout & MFA Troubleshooting | Everyday IT | KrippyTech",
+        "description": "Practical password, account lockout, and MFA troubleshooting across Windows, Microsoft 365, Entra ID, cached credentials, tokens, recovery, and safe escalation.",
         "type": "article",
     },
     "/everyday-it/printers/": {
@@ -209,8 +209,8 @@ SOCIAL_METADATA = {
         "type": "article",
     },
     "/everyday-it/troubleshooting-paths/": {
-        "title": "Troubleshooting Paths | Everyday IT | KrippyTech",
-        "description": "Start with the symptom, identify the failing layer, and move into the right Everyday IT troubleshooting guide.",
+        "title": "IT Troubleshooting Method & Decision Paths | Everyday IT | KrippyTech",
+        "description": "Scope the symptom, compare known-good states, identify the failing layer, plan safe changes, verify the outcome, and escalate with evidence.",
         "type": "article",
     },
     "/everyday-it/scope-the-problem/": {
