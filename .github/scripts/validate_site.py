@@ -223,6 +223,11 @@ SOCIAL_METADATA = {
         "description": "Scope the symptom, compare known-good states, identify the failing layer, plan safe changes, verify the outcome, and escalate with evidence.",
         "type": "article",
     },
+    "/everyday-it/troubleshooting-first-10-minutes/": {
+        "title": "IT Troubleshooting First 10 Minutes Checklist | Everyday IT | KrippyTech",
+        "description": "Use the first ten minutes of an IT issue to reduce uncertainty: define the symptom, scope impact, compare known-good states, identify the likely layer, preserve evidence, and choose one safe next test.",
+        "type": "article",
+    },
     "/everyday-it/scope-the-problem/": {
         "title": "Scope the Problem Before You Fix It | Everyday IT | KrippyTech",
         "description": "Determine the blast radius first: one user, one device, one location, one resource, or everyone.",
