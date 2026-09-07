@@ -1,9 +1,8 @@
-%PDF-1.3
-%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
 <<
-/F1 2 0 R
-/F2 3 0 R
+/F1 2 0 R /F2 3 0 R
 >>
 endobj
 2 0 obj
@@ -18,8 +17,8 @@ endobj
 endobj
 4 0 obj
 <<
-/Contents 9 0 R /MediaBox [ 0 0 792 612 ] /Parent 8 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text ]
+/Contents 8 0 R /MediaBox [ 0 0 792 612 ] /Parent 7 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
 >> /Rotate 0 /Trans <<
 
 >> 
@@ -28,54 +27,350 @@ endobj
 endobj
 5 0 obj
 <<
-/Author (KrippyTech) /CreationDate (D:20260907015913+00'00') /Creator (ReportLab PDF Library - www.reportlab.com) /Keywords () /ModDate (D:20260907015913+00'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
-  /Subject (unspecified) /Title (KrippyTech First 10 Minutes IT Troubleshooting Worksheet) /Trapped /False
+/PageMode /UseNone /Pages 7 0 R /Type /Catalog
 >>
 endobj
 6 0 obj
 <<
-/Count 1 /Kids [ 4 0 R ] /Type /Pages
+/Author (KrippyTech) /CreationDate (D:20260906221113-04'00') /Creator (anonymous) /Keywords () /ModDate (D:20260906221113-04'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (unspecified) /Title (KrippyTech First 10 Minutes IT Troubleshooting Worksheet) /Trapped /False
 >>
 endobj
 7 0 obj
 <<
-/PageMode /UseNone /Pages 6 0 R /Type /Catalog
+/Count 1 /Kids [ 4 0 R ] /Type /Pages
 >>
 endobj
 8 0 obj
 <<
-/Count 1 /Kids [ 4 0 R ] /Type /Pages
->>
-endobj
-9 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 3405
+/Length 8087
 >>
 stream
-GapQh0E=F,0U\H3T\pNYT^QKk?tc>IP,;W#U1^23ihPEM_?CW4KISh/iIbsla^!4jct2B-^n8#yKH8pl1K>AG6IzF4#jOkxUdFjJh@RLTmYd&31G0l,]37Syj_jZm%cUMeop_)VV&#O(@oU<LNt2X4@foZFK7@H#59jIqRng&fMhLllNSOHLTbySCCfbc[g->2V+2MQ_b98r-GLX8lMHH#1=MS5QVZ2_@f%4H!aaLSEALbI&2e#T$O]d(0FyTbzZ4w,-1F_2geepl=Y@p_6t_b7V87Sore64@nhWBKI/j.lUJ:[!ce-<hMWNg3g[Vzl1&6Mc8.Y<F9h4ImDA-w[3pd-e@V$6)6v@lA_!0MWqYJA-hcu0$:\/uVu6i4rWvH@thIO#f0@uCMTQaT;he-_,SdIi_T.oV_HlVGAErDTXlHP!{eeP=WNaWC#(Wc%&!aV#WIFmW>qELsyX_JAgkKh_bPifPUHj(ibcaoq#esCt;1Ww/Eu#kj0_^@8ZJ&# ].3VdqgNA@_:n-NMf5Q!LONXbZWIm#R9>6$d5_qbgb>.#q9)<7uG.bO&dZQHbmbBv4Tt8FyJ`nqBa+P3qOw?3Nn/.CvLFdS6P>.=YJ?oGrtE$6hn>)axuBYL@ZWL)>Uu/k-T$HvQRC8jTcL#NDlV8,.1o$&J_YdFgQ>ICyQlq2:a^PA#>xn+YDk3)7gtUUMt4v\-H.g-Q/-][(A?Dh:\/g`]azU_v8+-e";V=>EFkfQz=6Q_#,=b8"PI+J=+@5U7ilT],k=])[2L+ow.am_OCB#iacfW>Vb;w/&c_FOD&v4mgKLzYd3v;gx++5CtP3o#oCKr\oAX*_NPoQ[+fhdcc5Bc3R3BE>?^_8mCE)8-G^,bb9<pGiaI>xm4,B*dE7N/hwalyC%JMWK`4pW%wYV#)JNL-mc-1W;IDJvJ#BF`S/>SX\XGqP_$54\/#%BhqogXZCd.4Lcq8YBMfnbI[{ypXIwcMwTH`LvGVJgR8%%`0,J?wYmV4_?OnFD*D~>
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.078431 .129412 .239216 rg
+n 0 540 792 72 re f*
+1 1 1 rg
+BT /F2 20 Tf 24 TL ET
+BT 1 0 0 1 30 581 Tm (THE FIRST 10 MINUTES) Tj T* ET
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 30 563 Tm (IT TROUBLESHOOTING WORKSHEET) Tj T* ET
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 719.0155 582 Tm (KrippyTech) Tj T* ET
+BT 1 0 0 1 657.603 566 Tm (Practical IT. Real Solutions.) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 30 520 Tm (The first 10 minutes should reduce uncertainty, not create more variables.) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 7.5 Tf 9 TL ET
+BT 1 0 0 1 30 506 Tm (Write down what is known. Preserve evidence. Choose one safe next test before making broad changes.) Tj T* ET
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+35 417 m
+385 417 l
+387.764 417 390 419.236 390 422 c
+390 481 l
+390 483.764 387.764 486 385 486 c
+35 486 l
+32.236 486 30 483.764 30 481 c
+30 422 l
+30 419.236 32.236 417 35 417 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 40 471 Tm (1  SYMPTOM) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 456 Tm (What exactly is failing?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 40 443 Tm (Expected result / actual result / exact error:) Tj T* ET
+.796078 .835294 .882353 RG
+n 40 432 m 380 432 l S
+n 40 422 m 380 422 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+35 341 m
+385 341 l
+387.764 341 390 343.236 390 346 c
+390 405 l
+390 407.764 387.764 410 385 410 c
+35 410 l
+32.236 410 30 407.764 30 405 c
+30 346 l
+30 343.236 32.236 341 35 341 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 40 395 Tm (2  TIME) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 380 Tm (When did it last work?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 40 367 Tm (Last known good / first known bad / recent change:) Tj T* ET
+.796078 .835294 .882353 RG
+n 40 356 m 380 356 l S
+n 40 346 m 380 346 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+35 265 m
+385 265 l
+387.764 265 390 267.236 390 270 c
+390 329 l
+390 331.764 387.764 334 385 334 c
+35 334 l
+32.236 334 30 331.764 30 329 c
+30 270 l
+30 267.236 32.236 265 35 265 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 40 319 Tm (3  SCOPE) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 304 Tm (Who and what are affected?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 40 291 Tm (Users / devices / locations / resources / impact:) Tj T* ET
+.796078 .835294 .882353 RG
+n 40 280 m 380 280 l S
+n 40 270 m 380 270 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+35 189 m
+385 189 l
+387.764 189 390 191.236 390 194 c
+390 253 l
+390 255.764 387.764 258 385 258 c
+35 258 l
+32.236 258 30 255.764 30 253 c
+30 194 l
+30 191.236 32.236 189 35 189 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 40 243 Tm (4  KNOWN-GOOD) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 228 Tm (What still works?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 40 215 Tm (Same user elsewhere / another user here / other path:) Tj T* ET
+.796078 .835294 .882353 RG
+n 40 204 m 380 204 l S
+n 40 194 m 380 194 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+35 113 m
+385 113 l
+387.764 113 390 115.236 390 118 c
+390 177 l
+390 179.764 387.764 182 385 182 c
+35 182 l
+32.236 182 30 179.764 30 177 c
+30 118 l
+30 115.236 32.236 113 35 113 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 40 167 Tm (5  LAYER) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 40 152 Tm (Which layer fits the evidence?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 40 139 Tm (Identity / client / network / service / policy / data:) Tj T* ET
+.796078 .835294 .882353 RG
+n 40 128 m 380 128 l S
+n 40 118 m 380 118 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+407 417 m
+757 417 l
+759.764 417 762 419.236 762 422 c
+762 481 l
+762 483.764 759.764 486 757 486 c
+407 486 l
+404.236 486 402 483.764 402 481 c
+402 422 l
+402 419.236 404.236 417 407 417 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 412 471 Tm (6  EVIDENCE) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 412 456 Tm (What must be preserved?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 412 443 Tm (Times / errors / IDs / logs / paths / current state:) Tj T* ET
+.796078 .835294 .882353 RG
+n 412 432 m 752 432 l S
+n 412 422 m 752 422 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+407 341 m
+757 341 l
+759.764 341 762 343.236 762 346 c
+762 405 l
+762 407.764 759.764 410 757 410 c
+407 410 l
+404.236 410 402 407.764 402 405 c
+402 346 l
+402 343.236 404.236 341 407 341 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 412 395 Tm (7  NEXT TEST) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 412 380 Tm (What single test reduces uncertainty?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 412 367 Tm (Test / success proves / failure proves:) Tj T* ET
+.796078 .835294 .882353 RG
+n 412 356 m 752 356 l S
+n 412 346 m 752 346 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+407 265 m
+757 265 l
+759.764 265 762 267.236 762 270 c
+762 329 l
+762 331.764 759.764 334 757 334 c
+407 334 l
+404.236 334 402 331.764 402 329 c
+402 270 l
+402 267.236 404.236 265 407 265 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 412 319 Tm (8  SAFETY / ROLLBACK) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 412 304 Tm (What could this change affect?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 412 291 Tm (Blast radius / approval / rollback path:) Tj T* ET
+.796078 .835294 .882353 RG
+n 412 280 m 752 280 l S
+n 412 270 m 752 270 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+407 189 m
+757 189 l
+759.764 189 762 191.236 762 194 c
+762 253 l
+762 255.764 759.764 258 757 258 c
+407 258 l
+404.236 258 402 255.764 402 253 c
+402 194 l
+402 191.236 404.236 189 407 189 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 412 243 Tm (9  VERIFY) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 412 228 Tm (What result will count as fixed?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 412 215 Tm (Required business workflow and expected result:) Tj T* ET
+.796078 .835294 .882353 RG
+n 412 204 m 752 204 l S
+n 412 194 m 752 194 l S
+.952941 .964706 .980392 rg
+.796078 .835294 .882353 RG
+n
+407 113 m
+757 113 l
+759.764 113 762 115.236 762 118 c
+762 177 l
+762 179.764 759.764 182 757 182 c
+407 182 l
+404.236 182 402 179.764 402 177 c
+402 118 l
+402 115.236 404.236 113 407 113 c
+h
+B*
+.113725 .372549 .654902 rg
+BT /F2 7.5 Tf 9 TL ET
+BT 1 0 0 1 412 167 Tm (10  ESCALATE) Tj T* ET
+.090196 .12549 .2 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 412 152 Tm (What makes you stop and hand off?) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 412 139 Tm (Trigger / evidence package / unresolved question:) Tj T* ET
+.796078 .835294 .882353 RG
+n 412 128 m 752 128 l S
+n 412 118 m 752 118 l S
+1 .945098 .94902 rg
+.607843 .109804 .109804 RG
+n
+35 28 m
+757 28 l
+759.764 28 762 30.236 762 33 c
+762 57 l
+762 59.764 759.764 62 757 62 c
+35 62 l
+32.236 62 30 59.764 30 57 c
+30 33 l
+30 30.236 32.236 28 35 28 c
+h
+B*
+.607843 .109804 .109804 rg
+BT /F2 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 40 48 Tm (STOP before changing a shared or high-risk system if you cannot explain the expected impact and rollback.) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.8 Tf 8.16 TL ET
+BT 1 0 0 1 40 36 Tm (Shared infrastructure \267 privileged access \267 security controls \267 production data \267 backups \267 mail flow \267 identity architecture) Tj T* ET
+.278431 .333333 .411765 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 30 14 Tm (Guide: krippytech.com/everyday-it/troubleshooting-first-10-minutes/) Tj T* ET
+BT 1 0 0 1 593.2925 14 Tm (Method: krippytech.com/everyday-it/troubleshooting-paths/) Tj T* ET
+ 
 endstream
 endobj
 xref
-0 10
+0 9
 0000000000 65535 f 
-0000000073 00000 n 
-0000000104 00000 n 
-0000000211 00000 n 
-0000000323 00000 n 
-0000000526 00000 n 
-0000000917 00000 n 
-0000000976 00000 n 
-0000001044 00000 n 
-0000001103 00000 n 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000514 00000 n 
+0000000582 00000 n 
+0000000892 00000 n 
+0000000951 00000 n 
 trailer
 <<
-/ID [<5534b76af41b8b1706a6626efb12c2c0><5534b76af41b8b1706a6626efb12c2c0>]
-% ReportLab generated PDF document -- digest (http://www.reportlab.com)
+/ID 
+[<c33f65975334fe42b07d802cf25d1360><c33f65975334fe42b07d802cf25d1360>]
+% ReportLab generated PDF document -- digest (opensource)
 
-/Info 5 0 R
-/Root 7 0 R
-/Size 10
+/Info 6 0 R
+/Root 5 0 R
+/Size 9
 >>
 startxref
-4598
+9089
 %%EOF

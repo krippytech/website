@@ -334,8 +334,8 @@ SOCIAL_METADATA = {
         "type": "website",
     },
     "/downloads/": {
-        "title": "Downloads | KrippyTech",
-        "description": "Download Test-KTDNS v1.0.0, KrippyTech's reviewed read-only DNS troubleshooting release for Windows PowerShell 5.1 and PowerShell 7.",
+        "title": "IT Troubleshooting Guides & PowerShell Downloads | KrippyTech",
+        "description": "Download practical KrippyTech IT troubleshooting guides and reviewed PowerShell tools, including the printable First 10 Minutes worksheet.",
         "type": "website",
     },
     "/msp-university/": {
@@ -453,6 +453,15 @@ GET_KTNETWORKCONFIG_ZIP_MEMBERS = {
     "SHA256SUMS.txt",
     "tests/Get-KTNetworkConfig.Tests.ps1",
 }
+
+FIRST_10_MINUTES_PDF_ROUTE = (
+    "/downloads/guides/first-10-minutes/"
+    "KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf"
+)
+FIRST_10_MINUTES_PDF = ROOT / FIRST_10_MINUTES_PDF_ROUTE.lstrip("/")
+FIRST_10_MINUTES_PDF_SHA256 = (
+    "e6a70cab62ddc1dfb481ffecca7303aa886fe542b8c4e1c475b513ad2355c319"
+)
 
 EXPECTED_HOME_JSON_LD = {
     "@context": "https://schema.org",
@@ -2166,6 +2175,45 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             )
 
 
+def validate_first_10_minutes_worksheet(failures: list[str]) -> None:
+    if not FIRST_10_MINUTES_PDF.is_file():
+        failures.append("First 10 Minutes worksheet: PDF is missing")
+        return
+
+    pdf_bytes = FIRST_10_MINUTES_PDF.read_bytes()
+    if not pdf_bytes.startswith(b"%PDF-") or b"%%EOF" not in pdf_bytes[-32:]:
+        failures.append("First 10 Minutes worksheet: file is not a complete PDF")
+    digest = hashlib.sha256(pdf_bytes).hexdigest()
+    if digest != FIRST_10_MINUTES_PDF_SHA256:
+        failures.append(
+            "First 10 Minutes worksheet: SHA-256 mismatch; expected "
+            f"{FIRST_10_MINUTES_PDF_SHA256}, found {digest}"
+        )
+
+    required_links = {
+        ROOT / "everyday-it/troubleshooting-first-10-minutes/index.html": (
+            FIRST_10_MINUTES_PDF_ROUTE,
+            "Download the worksheet",
+        ),
+        ROOT / "downloads/index.html": (
+            FIRST_10_MINUTES_PDF_ROUTE,
+            "/everyday-it/troubleshooting-first-10-minutes/",
+            "Printable troubleshooting guide",
+        ),
+    }
+    for page, required_values in required_links.items():
+        source = page.read_text(encoding="utf-8")
+        for required in required_values:
+            if required not in source:
+                failures.append(
+                    f"{page.relative_to(ROOT)}: missing worksheet integration {required!r}"
+                )
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if FIRST_10_MINUTES_PDF_ROUTE in sitemap_source:
+        failures.append("sitemap.xml: worksheet PDF must not be a canonical sitemap entry")
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -2208,6 +2256,7 @@ def main() -> int:
     validate_onedrive_sharepoint_sync_tutorial(failures)
     validate_azure_vm_connectivity_tutorial(failures)
     validate_azure_vm_network_path_lab(failures)
+    validate_first_10_minutes_worksheet(failures)
     validate_grouped_navigation(failures)
 
     if failures:
