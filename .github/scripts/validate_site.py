@@ -118,6 +118,11 @@ SOCIAL_METADATA = {
         "description": "Prove where a VPN connection fails before reinstalling clients or changing firewall settings.",
         "type": "article",
     },
+    "/everyday-it/vpn-connected-but-nothing-works/": {
+        "title": "VPN Connected But Nothing Works | Everyday IT | KrippyTech",
+        "description": "A green VPN status proves the tunnel came up. It does not prove the user can reach or use the internal resource they actually need.",
+        "type": "article",
+    },
     "/everyday-it/windows-temp-cleanup/": {
         "title": "Clear Windows Temp Files Safely | Everyday IT | KrippyTech",
         "description": "Clear common Windows Temp locations safely, skip files that are in use, and avoid deleting the Temp folders themselves.",
