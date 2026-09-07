@@ -383,6 +383,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe Microsoft 365 case showing how exact-time message trace, workstation connectivity, event correlation, and Outlook cache evidence separated Exchange delivery from a local Outlook symptom.",
         "type": "article",
     },
+    "/cases/KT-000010/": {
+        "title": "KT-000010 | Printer Test Page Worked but Application Printing Failed | KrippyTech",
+        "description": "A public-safe printer case showing why a successful Windows test page clears only part of the printing path and does not prove the user's application workflow.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -979,6 +984,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000009/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000010/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
