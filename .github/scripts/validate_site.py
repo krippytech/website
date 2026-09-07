@@ -48,6 +48,11 @@ SOCIAL_METADATA = {
         "description": "Practical troubleshooting for groups, NTFS and share permissions, Effective Access, token refresh, inherited access, mapped drives, and access-denied symptoms.",
         "type": "article",
     },
+    "/everyday-it/share-permissions-vs-ntfs-permissions/": {
+        "title": "Share Permissions vs NTFS Permissions | Everyday IT | KrippyTech",
+        "description": "A practical decision guide for separating SMB share permissions from NTFS permissions when a user can reach the server but still gets Access Denied.",
+        "type": "article",
+    },
     "/everyday-it/conditional-access-signin-failure/": {
         "title": "Conditional Access Sign-In Failure Troubleshooting | Everyday IT | KrippyTech",
         "description": "Match the exact Entra sign-in, identify which Conditional Access policy applied, prove which requirement failed, and avoid weakening tenant-wide security controls just to make a login work.",
