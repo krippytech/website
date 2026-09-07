@@ -378,6 +378,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe identity case showing how hosted desktop and Microsoft 365 sign-ins were tested separately before credential state was normalized across the required applications.",
         "type": "article",
     },
+    "/cases/KT-000009/": {
+        "title": "KT-000009 | Exchange Delivered Mail While Outlook Appeared Delayed | KrippyTech",
+        "description": "A public-safe Microsoft 365 case showing how exact-time message trace, workstation connectivity, event correlation, and Outlook cache evidence separated Exchange delivery from a local Outlook symptom.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -969,6 +974,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000008/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000009/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
