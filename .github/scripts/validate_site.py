@@ -173,6 +173,11 @@ SOCIAL_METADATA = {
         "description": "Use repeat failures, severe slowness, failing storage, constant resource pressure, and repair history to decide when to stop troubleshooting.",
         "type": "article",
     },
+    "/everyday-it/repair-rebuild-replace-workstation/": {
+        "title": "Repair, Rebuild, or Replace a Workstation | Everyday IT | KrippyTech",
+        "description": "Use evidence, repeat failures, hardware health, data risk, and business downtime to choose repair, rebuild, or replacement without turning one ticket into endless repair cycles.",
+        "type": "article",
+    },
     "/everyday-it/former-employee-mailbox/": {
         "title": "Former Employee Mailbox Handling | Everyday IT | KrippyTech",
         "description": "Handle a departing employee's mailbox safely by separating account access, mailbox retention, shared-mailbox use, delegation, and verification.",
