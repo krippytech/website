@@ -47,10 +47,10 @@ That includes shared infrastructure, privileged access, security controls, produ
 
 The GitHub version is intentionally compact. The canonical guides contain the deeper reasoning, examples, decision paths, and related troubleshooting links.
 
-- **First 10 Minutes guide:** https://krippytech.com/everyday-it/troubleshooting-first-10-minutes/
-- **Full troubleshooting method:** https://krippytech.com/everyday-it/troubleshooting-paths/
-- **Printable worksheet:** https://krippytech.com/downloads/guides/first-10-minutes/KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf
-- **KrippyTech Downloads:** https://krippytech.com/downloads/
+- **First 10 Minutes guide:** [Read the canonical guide](https://krippytech.com/everyday-it/troubleshooting-first-10-minutes/)
+- **Full troubleshooting method:** [Follow the complete method](https://krippytech.com/everyday-it/troubleshooting-paths/)
+- **Printable worksheet:** [Download the worksheet PDF](https://krippytech.com/downloads/guides/first-10-minutes/KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf)
+- **KrippyTech Downloads:** [Browse practical guides and reviewed tools](https://krippytech.com/downloads/)
 
 ## One rule to keep
 
