@@ -58,6 +58,11 @@ SOCIAL_METADATA = {
         "description": "Practical Microsoft 365 and Outlook troubleshooting for licensing, mailboxes, shared mailbox access, message trace, mail flow, Outlook symptoms, and safe escalation.",
         "type": "article",
     },
+    "/everyday-it/mailbox-restore-delegation-forwarding/": {
+        "title": "Mailbox Restore, Delegation or Forwarding? | Everyday IT | KrippyTech",
+        "description": "Choose the right Microsoft 365 mailbox action by separating recovery, access, future delivery, sending identity, and offboarding requirements.",
+        "type": "article",
+    },
     "/everyday-it/new-user-setup/": {
         "title": "New User Setup | Everyday IT | KrippyTech",
         "description": "A practical new-user onboarding guide for office IT: Active Directory, Microsoft 365 licensing, groups, email, access, devices, verification, and common mistakes.",
