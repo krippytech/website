@@ -363,6 +363,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe case showing how the exact permission layer was identified, inherited NTFS access was replaced safely, and both allowed and denied users were verified afterward.",
         "type": "article",
     },
+    "/cases/KT-000006/": {
+        "title": "KT-000006 | Malicious Outlook Attachment Was Already Quarantined | KrippyTech",
+        "description": "A public-safe security case showing how detection, quarantine state, reputation evidence, related detections, execution risk, and follow-up were separated before the alert was treated as resolved.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -939,6 +944,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000005/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000006/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
