@@ -388,6 +388,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe printer case showing why a successful Windows test page clears only part of the printing path and does not prove the user's application workflow.",
         "type": "article",
     },
+    "/cases/KT-000011/": {
+        "title": "KT-000011 | Office APPCRASH Survived Repair and Reinstall | KrippyTech",
+        "description": "A public-safe Windows and Office case showing why reinstall is evidence, not proof, when an exact faulting component continues to reproduce the crash.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -989,6 +994,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000010/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000011/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
