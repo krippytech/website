@@ -368,6 +368,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe security case showing how detection, quarantine state, reputation evidence, related detections, execution risk, and follow-up were separated before the alert was treated as resolved.",
         "type": "article",
     },
+    "/cases/KT-000007/": {
+        "title": "KT-000007 | Repeated Scanner Problems Exposed an Aging Workstation | KrippyTech",
+        "description": "A public-safe workstation case showing how recurrence, constant CPU saturation, severe UI delay, age, and failed scanner software shifted the decision from temporary repair toward replacement.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -949,6 +954,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000006/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000007/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
