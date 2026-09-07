@@ -2214,6 +2214,48 @@ def validate_first_10_minutes_worksheet(failures: list[str]) -> None:
         failures.append("sitemap.xml: worksheet PDF must not be a canonical sitemap entry")
 
 
+def validate_first_10_minutes_github_resource(failures: list[str]) -> None:
+    resource_path = ROOT / "resources/first-10-minutes-troubleshooting/README.md"
+    root_readme_path = ROOT / "README.md"
+    if not resource_path.is_file():
+        failures.append("First 10 Minutes GitHub resource: README.md is missing")
+        return
+
+    source = resource_path.read_text(encoding="utf-8")
+    required_text = (
+        "The first 10 minutes should reduce uncertainty, not create more variables.",
+        "1. **Symptom**",
+        "2. **Time**",
+        "3. **Scope**",
+        "4. **Known-good**",
+        "5. **Layer**",
+        "6. **Evidence**",
+        "7. **Next test**",
+        "8. **Safety / rollback**",
+        "9. **Verify**",
+        "10. **Escalate**",
+        "https://krippytech.com/everyday-it/troubleshooting-first-10-minutes/",
+        "https://krippytech.com/everyday-it/troubleshooting-paths/",
+        "https://krippytech.com/downloads/guides/first-10-minutes/"
+        "KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf",
+        "https://krippytech.com/downloads/",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(
+                f"{resource_path.relative_to(ROOT)}: missing required content {required!r}"
+            )
+
+    root_readme = root_readme_path.read_text(encoding="utf-8")
+    resource_link = "resources/first-10-minutes-troubleshooting/README.md"
+    if resource_link not in root_readme:
+        failures.append(f"README.md: missing GitHub resource link {resource_link!r}")
+
+    config_source = (ROOT / "_config.yml").read_text(encoding="utf-8")
+    if not re.search(r"(?m)^\s*-\s+resources/?\s*$", config_source):
+        failures.append("_config.yml: resources must be excluded from GitHub Pages")
+
+
 def main() -> int:
     parsers: dict[Path, SiteParser] = {}
     failures: list[str] = []
@@ -2257,6 +2299,7 @@ def main() -> int:
     validate_azure_vm_connectivity_tutorial(failures)
     validate_azure_vm_network_path_lab(failures)
     validate_first_10_minutes_worksheet(failures)
+    validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
 
     if failures:

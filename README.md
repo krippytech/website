@@ -4,6 +4,10 @@ Static source for [krippytech.com](https://krippytech.com), a practical IT
 knowledge and consulting site covering Microsoft 365, Azure, MSP operations,
 PowerShell, technical cases, and downloadable resources.
 
+## Practical GitHub resources
+
+- [First 10 Minutes IT Troubleshooting](resources/first-10-minutes-troubleshooting/README.md) — a compact, evidence-first field method with links to the full KrippyTech guide and printable worksheet.
+
 ## Architecture
 
 - Plain HTML and CSS; no application server or client-side build step.
