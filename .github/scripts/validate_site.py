@@ -88,6 +88,11 @@ SOCIAL_METADATA = {
         "description": "Practical SharePoint and OneDrive guidance for permissions, sync issues, browser-vs-Explorer problems, and common access complaints.",
         "type": "article",
     },
+    "/everyday-it/browser-works-onedrive-file-explorer-does-not/": {
+        "title": "Browser Works but OneDrive or File Explorer Does Not | Everyday IT | KrippyTech",
+        "description": "Use the browser as the known-good source, then isolate OneDrive account state, sync relationship, local path, and pending changes before rebuilding anything.",
+        "type": "article",
+    },
     "/everyday-it/troubleshooting-escalation/": {
         "title": "Troubleshooting & Escalation | Everyday IT | KrippyTech",
         "description": "A practical troubleshooting framework for everyday IT: scope the issue, ask what changed, test one layer at a time, verify the fix, and know when to escalate.",
