@@ -353,6 +353,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe case showing why a connected VPN does not prove the user's internal resource path works.",
         "type": "article",
     },
+    "/cases/KT-000004/": {
+        "title": "KT-000004 | SharePoint Worked in Browser but File Explorer Was Incomplete | KrippyTech",
+        "description": "A public-safe case showing how browser access proved cloud access while a stale OneDrive relationship caused File Explorer to show an incomplete SharePoint library.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -919,6 +924,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-08-21">August 21, 2026</time>'
         ),
         "/cases/KT-000003/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000004/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
