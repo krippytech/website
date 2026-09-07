@@ -298,6 +298,11 @@ SOCIAL_METADATA = {
         "description": "Treat a malware alert as an evidence and containment problem before turning it into a cleanup exercise.",
         "type": "article",
     },
+    "/everyday-it/quarantine-delivery-false-positive/": {
+        "title": "Quarantine, Delivery or False Positive? | Everyday IT | KrippyTech",
+        "description": "Separate detection from action, delivery state, user impact, and false-positive judgment before closing a security alert.",
+        "type": "article",
+    },
     "/everyday-it/shared-service-outage-triage/": {
         "title": "Shared Service Outage Triage | Everyday IT | KrippyTech",
         "description": "When several users fail together, stop repairing endpoints and identify the shared dependency.",
