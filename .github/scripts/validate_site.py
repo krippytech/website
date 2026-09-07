@@ -348,6 +348,11 @@ SOCIAL_METADATA = {
         "description": "KT-000002 documents an Exchange Online mailbox whose archive policy appeared correct but was not reducing the primary mailbox, including the evidence that identified a stale retention hold.",
         "type": "article",
     },
+    "/cases/KT-000003/": {
+        "title": "KT-000003 | VPN Connected but Internal Resource Still Failed | KrippyTech",
+        "description": "A public-safe case showing why a connected VPN does not prove the user's internal resource path works.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -912,6 +917,11 @@ def validate_trust_and_sharing(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-08-21">August 21, 2026</time>'
+        ),
+        "/cases/KT-000003/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
     }
     for route, parser in route_parsers.items():
