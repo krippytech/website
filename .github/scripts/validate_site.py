@@ -398,6 +398,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe infrastructure case showing when repeated performance fixes stop being repairs and start revealing a capacity and lifecycle problem.",
         "type": "article",
     },
+    "/cases/KT-000013/": {
+        "title": "KT-000013 | Event Logs Proved Unexpected Server Restarts | KrippyTech",
+        "description": "A public-safe server triage case showing why user-visible restart symptoms should be correlated with event evidence before hardware or power conclusions are made.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1009,6 +1014,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000012/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000013/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
