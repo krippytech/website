@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000021 | BitLocker Recovery Key Was Missing from One Console but Present in Entra ID | KrippyTech</title>
+  <meta name="description" content="A BitLocker recovery case showing why one empty management field does not prove the recovery key is unavailable. The correct device and approved escrow source must be verified before recovery.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000021/">
+</head>
+<body>
+  <main>
+    <article>
+      <header>
+        <p>KrippyTech Case KT-000021</p>
+        <h1>BitLocker Recovery Key Was Missing from One Console but Present in Entra ID</h1>
+        <p>A recently imaged endpoint entered BitLocker recovery, but the expected recovery-key field in the management platform was empty.</p>
+        <p><strong>The empty field did not prove the key was unavailable. The recovery path depended on checking the correct device against another approved escrow source.</strong></p>
+        <dl>
+          <dt>Category</dt><dd>Endpoint Security & Recovery</dd>
+          <dt>Status</dt><dd>Recovery Key Found / Boot Verified</dd>
+          <dt>Technologies</dt><dd>Windows / BitLocker / Microsoft Entra ID / Endpoint Management</dd>
+        </dl>
+      </header>
+
+      <section>
+        <h2>Locked lesson</h2>
+        <p><strong>An empty recovery-key field in one console does not prove the key is gone. Verify the device and check every approved escrow source.</strong></p>
+        <p><strong>Know the escrow hierarchy before a recovery event forces you to discover it under pressure.</strong></p>
+      </section>
+
+      <section>
+        <h2>Investigation path</h2>
+        <p>Recovery screen → Expected escrow source → Empty result → Device identity match → Alternate approved escrow → Key retrieval → Protected delivery → Successful boot → Escrow-gap review</p>
+      </section>
+
+      <section>
+        <h2>What the evidence showed</h2>
+        <p>The expected management-platform field did not contain the BitLocker recovery key. The endpoint was then located in Microsoft Entra ID, where the matching device record contained the recovery key. The key was retrieved from that approved source, delivered through a protected channel, and the user confirmed successful recovery.</p>
+      </section>
+
+      <section>
+        <h2>What this case does not prove</h2>
+        <ul>
+          <li>It does not prove Entra ID is always the authoritative recovery-key source.</li>
+          <li>It does not prove a missing key in one console means another system will contain it.</li>
+          <li>It does not support retrieving or disclosing a recovery key without matching the correct device and confirming authorization.</li>
+          <li>It does not expose any real recovery key, device identifier, user identity, or screenshot.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Verification</h2>
+        <ul>
+          <li>Match the recovery-key identifier or device before retrieving a key.</li>
+          <li>Confirm the requester is authorized.</li>
+          <li>Retrieve only from an approved escrow source.</li>
+          <li>Deliver the key through an approved protected channel.</li>
+          <li>Verify successful boot.</li>
+          <li>Review why the expected secondary escrow source lacked the key.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Related KrippyTech guidance</h2>
+        <ul>
+          <li><a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a></li>
+          <li><a href="/everyday-it/change-safety-rollback/">Change Safety and Rollback</a></li>
+          <li><a href="/everyday-it/verify-before-close/">Verify Before Close</a></li>
+          <li><a href="/everyday-it/malware-alert-first-response/">Malware Alert First Response</a></li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>Published <time datetime="2026-09-08">September 8, 2026</time></p>
+        <p>Author: KrippyTech</p>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
