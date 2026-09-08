@@ -443,6 +443,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe BitLocker recovery case showing why device identity and every approved escrow source must be checked before concluding a recovery key is unavailable.",
         "type": "article",
     },
+    "/cases/KT-000022/": {
+        "title": "KT-000022 | Dock and USB-C Instability Spanned Multiple Peripherals | KrippyTech",
+        "description": "A public-safe hardware isolation case showing why failures that move across unrelated peripherals should shift troubleshooting toward the shared dock, USB-C path, and endpoint hardware.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1099,6 +1104,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-08">September 8, 2026</time>'
         ),
         "/cases/KT-000021/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-08">September 8, 2026</time>'
+        ),
+        "/cases/KT-000022/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-08">September 8, 2026</time>'
@@ -2663,6 +2673,78 @@ def validate_kt_000021_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000022_case(failures: list[str]) -> None:
+    route = "/cases/KT-000022/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000022/index.html"
+    if not page.is_file():
+        failures.append("KT-000022: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "When failures move across unrelated peripherals, stop treating each symptom as a separate "
+        "device problem. Test the shared hardware path.",
+        "A changing symptom can be stronger evidence than a repeating one when several devices "
+        "depend on the same host connection.",
+        "Symptom spread → Windows and vendor updates → Known-good peripherals → Dock reconnection → "
+        "Shared-path comparison → Reduce USB-C load → Lifecycle evidence → Replacement decision",
+        "Stable Reduced-Load Path / Replacement Recommended",
+        "monitor resolution problems, mouse lag, keyboard loss, and intermittent recovery",
+        "missing vendor management/update software were addressed",
+        "Alternate keyboard and mouse devices were tested",
+        "symptoms shifted between display, mouse, and keyboard behavior",
+        "reducing USB-C load produced a usable state",
+        "Device age and battery degradation were lifecycle indicators, not proven causes",
+        "does not prove one exact failed component",
+        "dock alone or USB-C port alone was defective",
+        "a motherboard fault",
+        "battery degradation caused the peripheral failures",
+        "Replacement was recommended; it was not documented as completed",
+        "endpoint was not presented as permanently repaired",
+        "proof of shared-path hardware isolation and a replacement judgment, not a generic "
+        "docking-station reset guide",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/repair-rebuild-replace-workstation/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_21_position = case_sequence.index("KT-000021")
+    except ValueError:
+        kt_21_position = -1
+    if kt_21_position < 0 or case_sequence[kt_21_position + 1:kt_21_position + 2] != ["KT-000022"]:
+        failures.append("cases/index.html: KT-000022 must appear immediately after KT-000021")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000022 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "everyday-it/known-good-comparison/index.html",
+        ROOT / "everyday-it/repair-rebuild-replace-workstation/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000022 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -2965,6 +3047,7 @@ def main() -> int:
     validate_kt_000019_case(failures)
     validate_kt_000020_case(failures)
     validate_kt_000021_case(failures)
+    validate_kt_000022_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
