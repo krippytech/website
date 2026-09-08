@@ -418,6 +418,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe Microsoft 365 offboarding case showing why identity, mailbox, licensing, mail continuity, and endpoint actions must be sequenced deliberately.",
         "type": "article",
     },
+    "/cases/KT-000017/": {
+        "title": "KT-000017 | SharePoint Access Failed Because MFA State Was Broken | KrippyTech",
+        "description": "A public-safe identity troubleshooting case showing why correct SharePoint permissions do not prove the authentication path is healthy.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1049,6 +1054,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000016/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-08">September 8, 2026</time>'
+        ),
+        "/cases/KT-000017/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-08">September 8, 2026</time>'
@@ -2289,6 +2299,67 @@ def validate_kt_000016_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000017_case(failures: list[str]) -> None:
+    route = "/cases/KT-000017/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000017/index.html"
+    if not page.is_file():
+        failures.append("KT-000017: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "When permissions look correct, stop adding more permissions. The failure may be "
+        "occurring before authorization is even evaluated.",
+        "Correct authorization does not prove healthy authentication.",
+        "Permissions → Permission-change result → Authentication boundary → MFA state → "
+        "Authenticator registration → MFA retest → SharePoint verification",
+        "Authentication Repaired / Access Verified",
+        "does not justify resetting MFA without evidence that authentication is the failing layer",
+        "does not establish that Microsoft Authenticator was defective",
+        "or that Conditional Access caused the failure",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/passwords-mfa/",
+        "/everyday-it/sharepoint-onedrive/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_16_position = case_sequence.index("KT-000016")
+    except ValueError:
+        kt_16_position = -1
+    if kt_16_position < 0 or case_sequence[kt_16_position + 1:kt_16_position + 2] != ["KT-000017"]:
+        failures.append("cases/index.html: KT-000017 must appear immediately after KT-000016")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000017 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "everyday-it/passwords-mfa/index.html",
+        ROOT / "everyday-it/sharepoint-onedrive/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000017 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -2586,6 +2657,7 @@ def main() -> int:
     validate_azure_vm_network_path_lab(failures)
     validate_kt_000015_case(failures)
     validate_kt_000016_case(failures)
+    validate_kt_000017_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
