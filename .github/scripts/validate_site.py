@@ -408,6 +408,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe application lifecycle case showing why database-backed software upgrades must protect data, follow supported order, and verify real business workflows.",
         "type": "article",
     },
+    "/cases/KT-000015/": {
+        "title": "KT-000015 | Forwarded Mail Failed After Authentication Changed Across Security Layers | KrippyTech",
+        "description": "A public-safe mail-flow security case showing why forwarded messages must be traced hop by hop instead of judged only by the original sender.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1029,6 +1034,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-07">September 7, 2026</time>'
         ),
         "/cases/KT-000014/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-07">September 7, 2026</time>'
+        ),
+        "/cases/KT-000015/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-07">September 7, 2026</time>'
@@ -2148,6 +2158,66 @@ def validate_azure_vm_network_path_lab(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000015_case(failures: list[str]) -> None:
+    route = "/cases/KT-000015/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000015/index.html"
+    if not page.is_file():
+        failures.append("KT-000015: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "A message can be legitimate at hop one and look spoofed at hop four. "
+        "Troubleshoot the path, not just the sender.",
+        "Authentication results have to be evaluated at the hop that actually rejects the message.",
+        "NDR → Rejecting hop → Original authentication → Forwarded authentication → "
+        "Tracking identifiers → Matched policy → Scoped correction → End-to-end retest",
+        "Policy Path Identified / Scoped Correction Required",
+        "it does not prove that the original sender was malicious or had a poor sender reputation",
+        "the narrowest justified exception rather than applying a global allow",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/microsoft-365-email/",
+        "/everyday-it/message-trace-delivery/",
+        "/everyday-it/quarantine-delivery-false-positive/",
+        "/everyday-it/escalate-with-evidence/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_14_position = case_sequence.index("KT-000014")
+    except ValueError:
+        kt_14_position = -1
+    if kt_14_position < 0 or case_sequence[kt_14_position + 1:kt_14_position + 2] != ["KT-000015"]:
+        failures.append("cases/index.html: KT-000015 must appear immediately after KT-000014")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000015 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "everyday-it/message-trace-delivery/index.html",
+        ROOT / "everyday-it/quarantine-delivery-false-positive/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000015 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -2443,6 +2513,7 @@ def main() -> int:
     validate_onedrive_sharepoint_sync_tutorial(failures)
     validate_azure_vm_connectivity_tutorial(failures)
     validate_azure_vm_network_path_lab(failures)
+    validate_kt_000015_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
