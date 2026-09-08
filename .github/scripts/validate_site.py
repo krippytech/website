@@ -428,6 +428,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe Windows profile recovery case showing why SID-to-path verification comes before deleting a ProfileList registration.",
         "type": "article",
     },
+    "/cases/KT-000019/": {
+        "title": "KT-000019 | Remote Camera Failure Was Isolated Layer by Layer | KrippyTech",
+        "description": "A public-safe troubleshooting case showing how local hardware, Windows, remote-session redirection, and the conferencing application were tested as separate layers.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1069,6 +1074,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-08">September 8, 2026</time>'
         ),
         "/cases/KT-000018/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-08">September 8, 2026</time>'
+        ),
+        "/cases/KT-000019/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-08">September 8, 2026</time>'
@@ -2433,6 +2443,70 @@ def validate_kt_000018_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000019_case(failures: list[str]) -> None:
+    route = "/cases/KT-000019/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000019/index.html"
+    if not page.is_file():
+        failures.append("KT-000019: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        '"Zoom issue" is only the symptom. Prove the camera path before blaming the application.',
+        "The same symptom can exist at different layers. Test the layers in order.",
+        "Physical hardware → Local Windows detection → Local app test → Remote-session redirection → "
+        "Remote Windows detection → Conferencing app → Real workflow verification",
+        "Layers Isolated / Working Path Verified",
+        "Camera and audio were tested on the physical endpoint before the remote session",
+        "repeated incidents across local endpoints and remote sessions",
+        "not one universal fix",
+        "One incomplete incident was not treated as a fully proven root cause",
+        "proof of ordered remote-session fault isolation, not a generic Zoom guide",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    if "/everyday-it/remote-access/" in source:
+        failures.append(f"{page.relative_to(ROOT)}: obsolete Remote Access route must not be linked")
+
+    required_outbound_links = (
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/repair-rebuild-replace-workstation/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_18_position = case_sequence.index("KT-000018")
+    except ValueError:
+        kt_18_position = -1
+    if kt_18_position < 0 or case_sequence[kt_18_position + 1:kt_18_position + 2] != ["KT-000019"]:
+        failures.append("cases/index.html: KT-000019 must appear immediately after KT-000018")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000019 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "everyday-it/known-good-comparison/index.html",
+        ROOT / "everyday-it/repair-rebuild-replace-workstation/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000019 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -2732,6 +2806,7 @@ def main() -> int:
     validate_kt_000016_case(failures)
     validate_kt_000017_case(failures)
     validate_kt_000018_case(failures)
+    validate_kt_000019_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)

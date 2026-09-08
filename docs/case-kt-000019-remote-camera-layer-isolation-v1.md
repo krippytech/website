@@ -64,8 +64,7 @@ Keep the case centered on fault-domain isolation and ordered testing.
 ## Intent separation
 
 - `/cases/KT-000019/` is proof-layer content.
-- `/everyday-it/remote-access/` remains broad remote-access authority.
-- `/everyday-it/known-good-comparison/` remains comparison methodology.
+- `/everyday-it/known-good-comparison/` owns the local-vs-remote comparison methodology.
 - `/everyday-it/repair-rebuild-replace-workstation/` remains workstation decision guidance.
 - `/everyday-it/verify-before-close/` remains verification methodology.
 
@@ -73,7 +72,7 @@ Keep the case centered on fault-domain isolation and ordered testing.
 
 - Add KT-000019 immediately after KT-000018 on `/cases/`.
 - Add `/cases/KT-000019/` to `sitemap.xml` exactly once.
-- Add restrained inbound proof links from Remote Access and Known-Good Comparison, or another closely aligned route if the graph is cleaner.
-- Preserve outbound links to Remote Access, Known-Good Comparison, Repair/Rebuild/Replace a Workstation, and Verify Before Close.
+- Add a restrained inbound proof link from Known-Good Comparison and, if the graph remains clean, Repair/Rebuild/Replace a Workstation.
+- Preserve outbound links to Known-Good Comparison, Repair/Rebuild/Replace a Workstation, and Verify Before Close.
 - Add validator coverage for exact title/social description, canonical, article type, approved author, publication date, locked lesson, supporting principle, exact investigation path, exact status, Cases placement, sitemap uniqueness, inbound/outbound links, multi-layer boundary, non-universal-root-cause boundary, and proof-layer positioning.
 - No downloadable derivative.
