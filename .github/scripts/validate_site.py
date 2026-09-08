@@ -433,6 +433,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe troubleshooting case showing how local hardware, Windows, remote-session redirection, and the conferencing application were tested as separate layers.",
         "type": "article",
     },
+    "/cases/KT-000020/": {
+        "title": "KT-000020 | Public Website Failed Internally Because DNS Owned the Name | KrippyTech",
+        "description": "A public-safe infrastructure troubleshooting case showing why inside-versus-outside comparison can expose split-DNS failures before firewall or filtering changes help.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1079,6 +1084,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-08">September 8, 2026</time>'
         ),
         "/cases/KT-000019/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-08">September 8, 2026</time>'
+        ),
+        "/cases/KT-000020/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-08">September 8, 2026</time>'
@@ -2507,6 +2517,75 @@ def validate_kt_000019_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000020_case(failures: list[str]) -> None:
+    route = "/cases/KT-000020/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000020/index.html"
+    if not page.is_file():
+        failures.append("KT-000020: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "If a website works everywhere except inside the company, check split-brain or "
+        "split-horizon DNS before blaming filtering.",
+        "Works outside but not inside is a location boundary. Compare name resolution before "
+        "changing more security controls.",
+        "External test → Internal test → Filtering visibility → Whitelist result → Internal DNS → "
+        "Public resolver comparison → DNS correction → Internal retest",
+        "DNS Corrected / Internal Access Verified",
+        "confirmed reachable from outside the company network",
+        "Internal users reproduced the failure, creating a clear inside-versus-outside boundary",
+        "whitelisting did not change the result",
+        "local DNS was identified as the failure domain",
+        "correcting internal DNS restored access",
+        "does not prove that every inside-only website failure is split DNS",
+        "firewall or filter can never be responsible",
+        "every overlapping namespace is defective",
+        "one universal DNS correction",
+        "proof of one internal DNS failure domain, not a generic DNS correction guide",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/tutorials/dns-active-directory-domain-health/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/scope-the-problem/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_19_position = case_sequence.index("KT-000019")
+    except ValueError:
+        kt_19_position = -1
+    if kt_19_position < 0 or case_sequence[kt_19_position + 1:kt_19_position + 2] != ["KT-000020"]:
+        failures.append("cases/index.html: KT-000020 must appear immediately after KT-000019")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000020 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "tutorials/dns-active-directory-domain-health/index.html",
+        ROOT / "everyday-it/scope-the-problem/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000020 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -2807,6 +2886,7 @@ def main() -> int:
     validate_kt_000017_case(failures)
     validate_kt_000018_case(failures)
     validate_kt_000019_case(failures)
+    validate_kt_000020_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
