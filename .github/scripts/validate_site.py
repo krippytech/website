@@ -423,6 +423,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe identity troubleshooting case showing why correct SharePoint permissions do not prove the authentication path is healthy.",
         "type": "article",
     },
+    "/cases/KT-000018/": {
+        "title": "KT-000018 | Windows User Profile Was Rebuilt from the Correct SID Mapping | KrippyTech",
+        "description": "A public-safe Windows profile recovery case showing why SID-to-path verification comes before deleting a ProfileList registration.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1059,6 +1064,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-08">September 8, 2026</time>'
         ),
         "/cases/KT-000017/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-08">September 8, 2026</time>'
+        ),
+        "/cases/KT-000018/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-08">September 8, 2026</time>'
@@ -2360,6 +2370,69 @@ def validate_kt_000017_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000018_case(failures: list[str]) -> None:
+    route = "/cases/KT-000018/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000018/index.html"
+    if not page.is_file():
+        failures.append("KT-000018: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "When a Windows profile appears broken, prove the SID-to-path mapping before deleting anything.",
+        "The profile display name is not the source of truth. SID, LocalPath, and ProfileImagePath are.",
+        "Separate admin → Win32_UserProfile → SID + LocalPath → ProfileImagePath → "
+        "Data protection → Remove affected registration → Clean sign-in → Verify new mapping",
+        "Profile Rebuilt / Normal Sign-In Verified",
+        "every profile issue requires ProfileList deletion",
+        "does not support deleting a SID based only on its display name",
+        "deleting local profile data before deciding what must be preserved",
+        "Only the verified SID registration was removed",
+        "Other user, administrator, and system profile registrations were left untouched",
+        "proof of one controlled Windows profile recovery, not a generic registry tutorial",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/repair-rebuild-replace-workstation/",
+        "/everyday-it/change-safety-rollback/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_17_position = case_sequence.index("KT-000017")
+    except ValueError:
+        kt_17_position = -1
+    if kt_17_position < 0 or case_sequence[kt_17_position + 1:kt_17_position + 2] != ["KT-000018"]:
+        failures.append("cases/index.html: KT-000018 must appear immediately after KT-000017")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000018 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "everyday-it/repair-rebuild-replace-workstation/index.html",
+        ROOT / "everyday-it/change-safety-rollback/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000018 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -2658,6 +2731,7 @@ def main() -> int:
     validate_kt_000015_case(failures)
     validate_kt_000016_case(failures)
     validate_kt_000017_case(failures)
+    validate_kt_000018_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
