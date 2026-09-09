@@ -448,6 +448,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe hardware isolation case showing why failures that move across unrelated peripherals should shift troubleshooting toward the shared dock, USB-C path, and endpoint hardware.",
         "type": "article",
     },
+    "/cases/KT-000023/": {
+        "title": "KT-000023 | Intermittent Internet and RDP Drops Required Continuous Evidence | KrippyTech",
+        "description": "A public-safe networking case showing why intermittent WAN and RDP failures require evidence over time, source/destination comparison, and retesting after carrier remediation.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1112,6 +1117,11 @@ def validate_trust_and_sharing(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-08">September 8, 2026</time>'
+        ),
+        "/cases/KT-000023/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
     }
     for route, parser in route_parsers.items():
@@ -2745,6 +2755,80 @@ def validate_kt_000022_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000023_case(failures: list[str]) -> None:
+    route = "/cases/KT-000023/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000023/index.html"
+    if not page.is_file():
+        failures.append("KT-000023: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Intermittent network problems are not disproven by a clean five-minute test. "
+        "Measure the path over time.",
+        "Continuous evidence turns “the Internet feels slow” into something a carrier can act on.",
+        "User reports → Continuous monitoring → LAN/WAN comparison → Loss and latency evidence → "
+        "Carrier escalation → Transport repair → Retest → Cloud-path comparison → "
+        "Fault-domain reclassification",
+        "Carrier Fault Confirmed / Remaining Path Reclassified",
+        "Users reported recurring Internet instability and remote-session drops",
+        "many point-in-time tests looked normal",
+        "Continuous monitoring captured intermittent loss and outages",
+        "packet loss, outages, latency spikes, and restoration periods were documented",
+        "internal and Internet targets were compared",
+        "carrier escalation included source and destination information",
+        "ISP/NOC confirmed a transport-path issue during part of the incident",
+        "Testing continued after carrier remediation",
+        "healthy ISP delivery into a cloud provider network for one tested destination",
+        "Intermediate hops may not answer even when the final destination remains reachable",
+        "every RDP drop came from the same carrier fault",
+        "one universal root cause",
+        "did not prove that every upstream component or cloud path was healthy",
+        "proof layer for evidence-driven intermittent network troubleshooting",
+        "does not expose customer names, ISP names, cloud-provider names, IP addresses, hostnames, "
+        "circuit IDs, or ticket IDs",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/scope-the-problem/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_22_position = case_sequence.index("KT-000022")
+    except ValueError:
+        kt_22_position = -1
+    if kt_22_position < 0 or case_sequence[kt_22_position + 1:kt_22_position + 2] != ["KT-000023"]:
+        failures.append("cases/index.html: KT-000023 must appear immediately after KT-000022")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000023 canonical route must appear exactly once")
+
+    inbound_pages = (
+        ROOT / "everyday-it/scope-the-problem/index.html",
+        ROOT / "everyday-it/known-good-comparison/index.html",
+    )
+    for inbound_page in inbound_pages:
+        inbound_source = inbound_page.read_text(encoding="utf-8")
+        if inbound_source.count(f'href="{route}"') != 1:
+            failures.append(
+                f"{inbound_page.relative_to(ROOT)}: KT-000023 inbound proof link must appear exactly once"
+            )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3048,6 +3132,7 @@ def main() -> int:
     validate_kt_000020_case(failures)
     validate_kt_000021_case(failures)
     validate_kt_000022_case(failures)
+    validate_kt_000023_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
