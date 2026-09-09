@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000024/">
+  <title>KT-000024 | RMM Agent Failure Required Vendor Escalation on ARM Hardware | KrippyTech</title>
+  <meta name="description" content="KT-000024 documents an RMM installation failure on newer Windows-on-ARM hardware where logs and vendor confirmation proved the right next step was escalation, not more local changes.">
+  <meta property="og:site_name" content="KrippyTech">
+  <meta property="og:title" content="KT-000024 | RMM Agent Failure Required Vendor Escalation on ARM Hardware | KrippyTech">
+  <meta property="og:type" content="article">
+  <meta property="og:description" content="A public-safe case showing why a vendor-confirmed compatibility defect should stop repeated local remediation on an otherwise healthy ARM endpoint.">
+  <meta property="og:url" content="https://krippytech.com/cases/KT-000024/">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+<section class="hero"><div class="container"><p class="eyebrow">Technical Case · KT-000024</p><h1>RMM Agent Failure Required Vendor Escalation on ARM Hardware</h1><p class="hero-text">The endpoint could run the normal business workload, but the management agent repeatedly failed to install.<span class="highlight">Once the failure was isolated to the product and the vendor confirmed a known compatibility issue, more local changes would only add risk.</span></p><p class="article-meta">Documented by <a href="/about/" rel="author">Michael Miller</a> · Published <time datetime="2026-09-09">September 9, 2026</time></p></div></section>
+<section class="section"><div class="container"><div class="grid"><article class="card"><p class="card-number">Case ID</p><h3>KT-000024</h3></article><article class="card"><p class="card-number">Category</p><h3>Endpoint Management / Vendor Escalation</h3></article><article class="card"><p class="card-number">Status</p><h3>Vendor Defect Confirmed / Local Changes Stopped</h3></article><article class="card"><p class="card-number">Technologies</p><h3>Windows on ARM / Snapdragon / RMM / Endpoint Management</h3></article></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Problem</p><h2>What happened?</h2></div><div class="mission"><p>A newer Windows-on-ARM endpoint completed ordinary setup and could run the user’s normal business applications, but the RMM agent repeatedly failed to install.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Investigation</p><h2>How was the failure domain isolated?</h2></div><div class="mission"><p><strong>When one product fails on an otherwise healthy endpoint, prove the product boundary before changing more of the operating system.</strong></p><p><strong>Vendor confirmation is evidence. Once a known defect is confirmed, stop inventing local fixes.</strong></p><p><strong>Investigation path:</strong> Architecture → Reproduce → Endpoint health → Business-app comparison → Installer logs → Vendor escalation → Known-defect confirmation → Stop local changes → Retest after vendor release</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Finding</p><h2>What was actually proven?</h2></div><div class="callout callout-warning"><h3>The failure was isolated to the management agent on newer ARM hardware</h3><p>The endpoint architecture was confirmed, repeated installation attempts failed, ordinary endpoint setup and business applications remained functional, installer logs were collected, and vendor support confirmed a known issue affecting newer Snapdragon hardware.</p><p>No local fix was proven. The correct outcome was to preserve endpoint health and wait for a vendor software release rather than continue altering a healthy system.</p></div></div></section>
+<section class="section"><div class="container"><div class="callout callout-verification"><h3>Evidence boundary</h3><p>This case does not claim every ARM device fails, every Snapdragon model is affected, every RMM vendor has the same limitation, or that vendor documentation was universally wrong. It documents one vendor-confirmed compatibility defect on one class of newer hardware.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Related Resources</p><h2>Prove the boundary before changing the endpoint.</h2></div><div class="grid"><article class="card"><h3><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></h3></article><article class="card"><h3><a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a></h3></article><article class="card"><h3><a href="/everyday-it/repair-rebuild-replace-workstation/">Repair, Rebuild or Replace a Workstation</a></h3></article><article class="card"><h3><a href="/everyday-it/verify-before-close/">Verify Before Close</a></h3></article></div></div></section>
+</main>
+</body>
+</html>
