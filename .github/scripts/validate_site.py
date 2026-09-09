@@ -458,6 +458,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe case showing why a vendor-confirmed compatibility defect should stop repeated local remediation on an otherwise healthy ARM endpoint.",
         "type": "article",
     },
+    "/cases/KT-000025/": {
+        "title": "KT-000025 | External Repair Required a Data-Custody Plan | KrippyTech",
+        "description": "A public-safe endpoint-repair case showing why external repair requires data protection before custody changes hands.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1129,6 +1134,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000024/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000025/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -2913,6 +2923,79 @@ def validate_kt_000024_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000025_case(failures: list[str]) -> None:
+    route = "/cases/KT-000025/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000025/index.html"
+    if not page.is_file():
+        failures.append("KT-000025: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "External repair is a custody change. Protect the data before the hardware leaves "
+        "organizational control.",
+        "Removing an application is not proof that synchronized business data is gone.",
+        "Repair decision → Continuity check → Stop sync → Unlink cloud relationships → "
+        "Remove local cached data → Verify absence → Transfer custody → Factory-reset return → "
+        "Known-good rebuild → Reconnect required libraries",
+        "Data Protected / Repair Continuity Verified",
+        "user requested removal of access to sensitive shared libraries before shipment",
+        "separate endpoint preserved business continuity",
+        "Sync activity was allowed to stop before removal was treated as complete",
+        "OneDrive and SharePoint relationships were disconnected before custody transferred",
+        "Local synced content was cleared from the endpoint as intended",
+        "absence was checked separately from removal of the sync application",
+        "repaired device returned in a factory-reset state",
+        "known-good rebuild re-established required applications",
+        "reconnected only the required cloud libraries",
+        "Uninstalling OneDrive or another sync client alone does not prove local business data is gone",
+        "every repair depot uses the same custody procedure",
+        "repair provider was untrusted or malicious",
+        "every repair requires the same alternate-device continuity method",
+        "all browser data, local credentials, application caches, secrets, encryption state, "
+        "MDM controls, wipe operations, or remote-reset controls were addressed",
+        "hardware defect itself is not the lesson",
+        "proof layer for a documented custody change",
+        "does not publish customer, repair-provider, device, tenant, library, account, or "
+        "identifying system details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/change-safety-rollback/",
+        "/everyday-it/repair-rebuild-replace-workstation/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_24_position = case_sequence.index("KT-000024")
+    except ValueError:
+        kt_24_position = -1
+    if kt_24_position < 0 or case_sequence[kt_24_position + 1:kt_24_position + 2] != ["KT-000025"]:
+        failures.append("cases/index.html: KT-000025 must appear immediately after KT-000024")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000025 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/repair-rebuild-replace-workstation/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000025 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3218,6 +3301,7 @@ def main() -> int:
     validate_kt_000022_case(failures)
     validate_kt_000023_case(failures)
     validate_kt_000024_case(failures)
+    validate_kt_000025_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
