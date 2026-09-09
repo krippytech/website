@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000026 | Cloud-Synced Content Recreated a Removed Utility | KrippyTech</title>
+  <meta name="description" content="A recurring utility prompt survived local cleanup because application content remained in a cloud-synced location and could be restored during synchronization.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000026/">
+</head>
+<body>
+  <main>
+    <article>
+      <header>
+        <p>Case KT-000026</p>
+        <h1>Cloud-Synced Content Recreated a Removed Utility</h1>
+        <p><strong>Category:</strong> Windows / Cloud Sync / Application Persistence</p>
+        <p><strong>Status:</strong> Recurrence Path Removed / Extended Verification Limited</p>
+      </header>
+
+      <section>
+        <h2>What happened</h2>
+        <p>A recurring printer utility prompt continued after ordinary local troubleshooting. The printer itself was working, so the prompt was treated as a separate application problem rather than a printing failure.</p>
+        <p>The key finding was that application content still existed inside a OneDrive-synced location. That meant local cleanup could be undone when synchronization restored the same component.</p>
+      </section>
+
+      <section>
+        <h2>Locked lesson</h2>
+        <p><strong>When an unwanted component returns after local cleanup, find the source that can recreate it.</strong></p>
+      </section>
+
+      <section>
+        <h2>Supporting principle</h2>
+        <p><strong>Removing the local copy is temporary if a sync source can restore it.</strong></p>
+      </section>
+
+      <section>
+        <h2>Investigation path</h2>
+        <p><strong>Business function → Reproduce recurrence → Local traces → Synced content → Authoritative source → Remove cloud source → Remove local residue → Sign-in/sync/reboot retest</strong></p>
+      </section>
+
+      <section>
+        <h2>Evidence</h2>
+        <ul>
+          <li>The printer itself was confirmed functional before the prompt was investigated.</li>
+          <li>The prompt returned after earlier local changes.</li>
+          <li>Related application content existed inside the user's synced OneDrive data.</li>
+          <li>A related local AppData trace was found.</li>
+          <li>The cloud content and local residue were removed.</li>
+          <li>The known recurrence path was removed because the sync source could no longer restore that component.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Important boundary</h2>
+        <p>The source supports removal of the known cloud and local recurrence path, but it does not document a long-duration recurrence test. This case therefore does not claim a permanently proven cure.</p>
+        <p>It also does not claim that OneDrive itself was malfunctioning. The lesson is that synchronized content can act as the authoritative source for a component that local cleanup alone cannot remove durably.</p>
+      </section>
+
+      <section>
+        <h2>Why this mattered</h2>
+        <p>Repeatedly uninstalling or deleting local files would have treated the symptom, not the source. The durable troubleshooting move was to identify what could recreate the component and remove that source as well.</p>
+      </section>
+
+      <section>
+        <h2>Related methodology</h2>
+        <ul>
+          <li><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></li>
+          <li><a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a></li>
+          <li><a href="/everyday-it/verify-before-close/">Verify Before Close</a></li>
+        </ul>
+      </section>
+    </article>
+  </main>
+</body>
+</html>
