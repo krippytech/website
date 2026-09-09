@@ -468,6 +468,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe case showing why recurring components require cleanup of both the authoritative sync source and local residue.",
         "type": "article",
     },
+    "/cases/KT-000027/": {
+        "title": "KT-000027 | Security Symptoms Required Separate Evidence Paths | KrippyTech",
+        "description": "A public-safe security case showing why mail, sharing, identity, and endpoint symptoms require separate evidence paths before correlation.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1149,6 +1154,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000026/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000027/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3076,6 +3086,79 @@ def validate_kt_000026_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000027_case(failures: list[str]) -> None:
+    route = "/cases/KT-000027/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000027/index.html"
+    if not page.is_file():
+        failures.append("KT-000027: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Security-looking symptoms are not one incident until the evidence connects them.",
+        "Separate the layers first. Correlate only what the evidence can actually tie together.",
+        "Reported symptoms → Separate event types → Message trace → Mail-object inventory → "
+        "Sharing-event review → Identity review → Endpoint scan → Targeted controls → "
+        "Monitor recurrence → Classify what remains unproven",
+        "Threat Sources Reduced / Compromise Unconfirmed",
+        "Unexpected SharePoint anonymous-link notifications and a separate domain-spoofing report",
+        "Users denied intentionally creating the reported sharing changes",
+        "Message tracing was used instead of relying only on the visible sender",
+        "Mail-enabled objects were inventoried to identify obsolete or unexpected identities",
+        "anonymous-link notifications were reviewed as sharing events",
+        "Full-disk endpoint security scans completed without detecting a threat",
+        "targeted sender and source controls",
+        "Potentially abusive mail sources were blocked",
+        "obsolete mail-enabled object was removed",
+        "Users were asked to report further notifications or abnormal drive behavior",
+        "precise cause of every notification was not proven",
+        "clean findings are evidence, not proof that no event occurred",
+        "confirmed account compromise",
+        "confirmed endpoint compromise",
+        "one universal root cause across spoofing, sharing, identity, and endpoint symptoms",
+        "every suspicious sharing notification came from the same actor or mechanism",
+        "proof layer for disciplined security-symptom correlation",
+        "does not publish customer, domain, sender, mailbox, tenant, IP, device, ticket, or other "
+        "identifying information",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/quarantine-delivery-false-positive/",
+        "/everyday-it/scope-the-problem/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_26_position = case_sequence.index("KT-000026")
+    except ValueError:
+        kt_26_position = -1
+    if kt_26_position < 0 or case_sequence[kt_26_position + 1:kt_26_position + 2] != ["KT-000027"]:
+        failures.append("cases/index.html: KT-000027 must appear immediately after KT-000026")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000027 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/quarantine-delivery-false-positive/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000027 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3383,6 +3466,7 @@ def main() -> int:
     validate_kt_000024_case(failures)
     validate_kt_000025_case(failures)
     validate_kt_000026_case(failures)
+    validate_kt_000027_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
