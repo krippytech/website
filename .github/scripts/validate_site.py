@@ -453,6 +453,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe networking case showing why intermittent WAN and RDP failures require evidence over time, source/destination comparison, and retesting after carrier remediation.",
         "type": "article",
     },
+    "/cases/KT-000024/": {
+        "title": "KT-000024 | RMM Agent Failure Required Vendor Escalation on ARM Hardware | KrippyTech",
+        "description": "A public-safe case showing why a vendor-confirmed compatibility defect should stop repeated local remediation on an otherwise healthy ARM endpoint.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1119,6 +1124,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-08">September 8, 2026</time>'
         ),
         "/cases/KT-000023/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000024/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -2829,6 +2839,80 @@ def validate_kt_000023_case(failures: list[str]) -> None:
             )
 
 
+def validate_kt_000024_case(failures: list[str]) -> None:
+    route = "/cases/KT-000024/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000024/index.html"
+    if not page.is_file():
+        failures.append("KT-000024: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "When one product fails on an otherwise healthy endpoint, prove the product boundary "
+        "before changing more of the operating system.",
+        "Vendor confirmation is evidence. Once a known defect is confirmed, stop inventing local fixes.",
+        "Architecture → Reproduce → Endpoint health → Business-app comparison → Installer logs → "
+        "Vendor escalation → Known-defect confirmation → Stop local changes → "
+        "Retest after vendor release",
+        "Vendor Defect Confirmed / Local Changes Stopped",
+        "endpoint used ARM/Snapdragon hardware",
+        "RMM installation repeatedly failed",
+        "Broader endpoint-health checks were performed",
+        "Normal endpoint setup and business applications could be completed",
+        "Installer logs were collected",
+        "vendor support case was opened",
+        "Vendor support confirmed a known issue affecting newer Snapdragon hardware",
+        "No local fix was proven",
+        "correct outcome was vendor escalation and preserving endpoint health while waiting for a "
+        "product update",
+        "every ARM endpoint is affected",
+        "every Snapdragon generation is affected",
+        "every RMM platform has the same problem",
+        "endpoint itself was unhealthy",
+        "repeated OS remediation was required after vendor confirmation",
+        "vendor fix was already released or installed",
+        "Current compatibility guidance must be revalidated before publication",
+        "proof layer for a vendor-confirmed product boundary",
+        "does not publish customer, device, vendor-ticket, tenant, or identifying system details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/scope-the-problem/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/repair-rebuild-replace-workstation/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_23_position = case_sequence.index("KT-000023")
+    except ValueError:
+        kt_23_position = -1
+    if kt_23_position < 0 or case_sequence[kt_23_position + 1:kt_23_position + 2] != ["KT-000024"]:
+        failures.append("cases/index.html: KT-000024 must appear immediately after KT-000023")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000024 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/known-good-comparison/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000024 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3133,6 +3217,7 @@ def main() -> int:
     validate_kt_000021_case(failures)
     validate_kt_000022_case(failures)
     validate_kt_000023_case(failures)
+    validate_kt_000024_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
