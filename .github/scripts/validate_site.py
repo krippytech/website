@@ -463,6 +463,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe endpoint-repair case showing why external repair requires data protection before custody changes hands.",
         "type": "article",
     },
+    "/cases/KT-000026/": {
+        "title": "KT-000026 | Cloud-Synced Content Recreated a Removed Utility | KrippyTech",
+        "description": "A public-safe case showing why recurring components require cleanup of both the authoritative sync source and local residue.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1139,6 +1144,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000025/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000026/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -2996,6 +3006,76 @@ def validate_kt_000025_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000026_case(failures: list[str]) -> None:
+    route = "/cases/KT-000026/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000026/index.html"
+    if not page.is_file():
+        failures.append("KT-000026: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "When an unwanted component returns after local cleanup, find the source that can recreate it.",
+        "Removing the local copy is temporary if a sync source can restore it.",
+        "Business function → Reproduce recurrence → Local traces → Synced content → "
+        "Authoritative source → Remove cloud source → Remove local residue → "
+        "Sign-in/sync/reboot retest",
+        "Recurrence Path Removed / Extended Verification Limited",
+        "printer itself was confirmed functional before the prompt was investigated",
+        "prompt returned after earlier local changes",
+        "business function and recurring application symptom were treated as separate fault domains",
+        "Application content existed inside a OneDrive-synced location",
+        "related local AppData trace was found",
+        "cloud content and local residue were removed",
+        "known sync source could no longer restore that component",
+        "source does not document an extended recurrence-free period",
+        "Uninstalling the application alone was not sufficient",
+        "authoritative cloud source and related AppData residue",
+        "does not claim a permanently proven cure",
+        "OneDrive itself was defective",
+        "every recurring component comes from cloud sync",
+        "all startup entries, tasks, policy, registry persistence, management tooling, or "
+        "installer caches were absent",
+        "proof layer for source-aware recurrence troubleshooting",
+        "does not publish exact executable, vendor, user, tenant, path, or device identifiers",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/scope-the-problem/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_25_position = case_sequence.index("KT-000025")
+    except ValueError:
+        kt_25_position = -1
+    if kt_25_position < 0 or case_sequence[kt_25_position + 1:kt_25_position + 2] != ["KT-000026"]:
+        failures.append("cases/index.html: KT-000026 must appear immediately after KT-000025")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000026 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/known-good-comparison/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000026 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3302,6 +3382,7 @@ def main() -> int:
     validate_kt_000023_case(failures)
     validate_kt_000024_case(failures)
     validate_kt_000025_case(failures)
+    validate_kt_000026_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
