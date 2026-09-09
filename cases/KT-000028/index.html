@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000028 | SaaS License Rollout Required Recipient and Billing Control | KrippyTech</title>
+  <meta name="description" content="A KrippyTech proof case showing why SaaS rollout is not complete until recipients, functionality, and billed quantity all match the business requirement.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000028/">
+</head>
+<body>
+  <main>
+    <article>
+      <p><a href="/cases/">Cases</a></p>
+      <p>KT-000028</p>
+      <h1>SaaS License Rollout Required Recipient and Billing Control</h1>
+      <p><strong>Category:</strong> Microsoft 365 / SaaS Licensing</p>
+      <p><strong>Status:</strong> Access Verified / Billing Reconciled</p>
+      <p><strong>Technologies:</strong> Microsoft 365 / Copilot / SaaS Licensing</p>
+
+      <h2>The problem</h2>
+      <p>A broad request for team access did not define exactly which accounts should receive the paid SaaS feature. The tenant also contained shared identities, administrative identities, and resource-style accounts that were not all appropriate license targets.</p>
+
+      <h2>Locked lesson</h2>
+      <p><strong>Assigning a license is not the end of a SaaS rollout. Prove who needs it, prove it works, then prove billing matches the final requirement.</strong></p>
+
+      <h2>Supporting principle</h2>
+      <p><strong>License assignment and subscription quantity are separate controls.</strong></p>
+
+      <h2>Investigation path</h2>
+      <p><strong>Request → Account classification → Approved recipients → License assignment → Service propagation → In-app verification → Seat reconciliation → Subscription-window check → Billing cleanup</strong></p>
+
+      <h2>What the evidence showed</h2>
+      <p>The initial request was broader than the final approved recipient set. Accounts were classified before assignment so people were separated from shared, resource, service, and administrative identities. Licenses were assigned only to selected users, and those users confirmed the feature appeared in supported Office applications. Purchased, assigned, and required seat counts were then reconciled. Unneeded seats were removed while the subscription still permitted adjustment without continued billing.</p>
+
+      <h2>Why the first successful sign-in was not enough</h2>
+      <p>Functional access proved the selected users could use the feature. It did not prove that every paid seat was necessary or that removing an assignment automatically reduced the subscription quantity. The technical rollout and the commercial state had to be verified separately.</p>
+
+      <h2>Verification boundary</h2>
+      <p>This case supports the documented rollout and billing cleanup for the source incident. It does not claim every Microsoft 365 or SaaS subscription uses the same adjustment rules, that every seat can always be reduced immediately, or that removing a user assignment always changes billing. Current licensing and cancellation terms should be revalidated before publishing time-sensitive procedural guidance.</p>
+
+      <h2>Public-safe boundary</h2>
+      <p>No customer names, tenant identifiers, user identities, subscription identifiers, invoice details, pricing, account numbers, or billing records are included.</p>
+
+      <h2>Related methodology</h2>
+      <ul>
+        <li><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></li>
+        <li><a href="/everyday-it/verify-before-close/">Verify Before Close</a></li>
+        <li><a href="/consulting/">Independent IT Consulting</a></li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>
