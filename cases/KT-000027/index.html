@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000027 | Security Symptoms Required Separate Evidence Paths | KrippyTech</title>
+  <meta name="description" content="A KrippyTech proof case showing why suspicious sharing, spoofing, and endpoint concerns must be investigated separately until evidence connects them.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000027/">
+</head>
+<body>
+  <main>
+    <article>
+      <p>KrippyTech Case</p>
+      <h1>Security Symptoms Required Separate Evidence Paths</h1>
+      <p><strong>Category:</strong> Security Investigation / Microsoft 365</p>
+      <p><strong>Status:</strong> Threat Sources Reduced / Compromise Unconfirmed</p>
+      <p><strong>Technologies:</strong> SharePoint / Exchange Online / Microsoft 365 / Endpoint Security</p>
+
+      <h2>Situation</h2>
+      <p>Unexpected SharePoint anonymous-link notifications appeared around the same time as a separate domain-spoofing report. The combination created concern about a broader compromise, but the available evidence did not justify treating every symptom as one incident.</p>
+
+      <h2>Locked lesson</h2>
+      <p><strong>Security-looking symptoms are not one incident until the evidence connects them.</strong></p>
+
+      <h2>Supporting principle</h2>
+      <p><strong>Separate the layers first. Correlate only what the evidence can actually tie together.</strong></p>
+
+      <h2>Investigation path</h2>
+      <p><strong>Reported symptoms → Separate event types → Message trace → Mail-object inventory → Sharing-event review → Identity review → Endpoint scan → Targeted controls → Monitor recurrence → Classify what remains unproven</strong></p>
+
+      <h2>What the evidence showed</h2>
+      <ul>
+        <li>Users denied intentionally creating the reported sharing changes.</li>
+        <li>Message tracing was used instead of relying only on the visible sender.</li>
+        <li>Mail-enabled objects were inventoried to find obsolete or unexpected identities.</li>
+        <li>Targeted sender and source controls were applied during the investigation.</li>
+        <li>Full-disk endpoint security scans completed without detecting a threat.</li>
+        <li>Users were asked to report further sharing notifications or abnormal drive behavior.</li>
+      </ul>
+
+      <h2>Outcome</h2>
+      <p>Potentially abusive mail sources were blocked, an obsolete mail-enabled object was removed, endpoint scans were clean, and the environment was monitored. The precise cause of every anonymous-link notification was not proven and remains unconfirmed.</p>
+
+      <h2>Boundary</h2>
+      <p>A clean endpoint scan is evidence, not proof that no security event occurred. This case does not claim a confirmed account compromise, endpoint compromise, or single root cause across spoofing, sharing, identity, and endpoint symptoms.</p>
+    </article>
+  </main>
+</body>
+</html>
