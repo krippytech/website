@@ -478,6 +478,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe SaaS licensing case showing why recipient selection, functional access, seat reconciliation, and billing are separate proof points.",
         "type": "article",
     },
+    "/cases/KT-000029/": {
+        "title": "KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech",
+        "description": "A public-safe workstation case showing why recurrence after a known-good software baseline should change the next test toward hardware escalation.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1169,6 +1174,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000028/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000029/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3239,6 +3249,80 @@ def validate_kt_000028_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000029_case(failures: list[str]) -> None:
+    route = "/cases/KT-000029/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000029/index.html"
+    if not page.is_file():
+        failures.append("KT-000029: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "A clean re-image followed by the same full-system failure is evidence that the fault "
+        "domain may have moved beyond software.",
+        "Temporary improvement is not durable proof. Recurrence after a known-good software "
+        "baseline should change the next test.",
+        "Symptom scope → Cross-application comparison → Network comparison → Software remediation "
+        "history → Clean re-image → Recurrence → Hardware escalation → Vendor repair → Rebuild → "
+        "Stress and workflow verification",
+        "Hardware Repaired / Post-Repair Testing Passed",
+        "failure occurred in more than one meeting application",
+        "symptom was full-system freezing, not only a single application crash",
+        "network performance from other devices remained normal during reported incidents",
+        "issue persisted through operating-system and driver remediation",
+        "factory re-image produced only temporary improvement",
+        "failure was witnessed during a live meeting",
+        "endpoint was escalated to the hardware vendor",
+        "returned device appeared to have received a system-board replacement and was factory-reset",
+        "endpoint was rebuilt, patched, and equipped with required business applications",
+        "GPU load testing completed without observed visual artifacts or instability",
+        "Video-call use was included in post-repair verification",
+        "every Teams or Zoom freeze is hardware",
+        "clean re-image universally rules out software",
+        "exact failed component was not independently proven beyond the vendor repair outcome",
+        "does not claim permanent resolution or a long-duration recurrence-free period",
+        "proof layer for evidence-driven hardware escalation",
+        "does not publish customer, user, device, serial-number, vendor-ticket, tenant, or other "
+        "identifying details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = (
+        "/everyday-it/scope-the-problem/",
+        "/everyday-it/known-good-comparison/",
+        "/everyday-it/repair-rebuild-replace-workstation/",
+        "/everyday-it/verify-before-close/",
+    )
+    for href in required_outbound_links:
+        if source.count(f'href="{href}"') != 1:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound proof link {href!r} must appear exactly once"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_28_position = case_sequence.index("KT-000028")
+    except ValueError:
+        kt_28_position = -1
+    if kt_28_position < 0 or case_sequence[kt_28_position + 1:kt_28_position + 2] != ["KT-000029"]:
+        failures.append("cases/index.html: KT-000029 must appear immediately after KT-000028")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000029 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/repair-rebuild-replace-workstation/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000029 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3548,6 +3632,7 @@ def main() -> int:
     validate_kt_000026_case(failures)
     validate_kt_000027_case(failures)
     validate_kt_000028_case(failures)
+    validate_kt_000029_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
