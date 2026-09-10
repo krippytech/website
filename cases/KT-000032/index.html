@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000032 | Proprietary Surveillance Export Failed in Its Playback Chain | KrippyTech</title>
+  <meta name="description" content="A KrippyTech proof case showing how a proprietary surveillance export was isolated to its vendor playback chain without assuming the source export was corrupt.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000032/">
+</head>
+<body>
+  <main>
+    <article>
+      <p>Case KT-000032</p>
+      <h1>Proprietary Surveillance Export Failed in Its Playback Chain</h1>
+      <p><strong>Category:</strong> Evidence Handling / Application Dependencies</p>
+      <p><strong>Status:</strong> Playback Chain Isolated / Safer Re-Export Path Recommended</p>
+
+      <h2>Locked lesson</h2>
+      <p>A proprietary file that will not play is not automatically corrupt. Prove the format, viewer, dependencies, package completeness, and endpoint behavior before changing the evidence.</p>
+
+      <h2>Supporting principle</h2>
+      <p>Preserve the source first. Troubleshoot the playback chain around it before modifying, converting, or replacing the original evidence.</p>
+
+      <h2>Investigation path</h2>
+      <p>Preserve source → Identify proprietary format → Test standard players → Test bundled viewer → Capture dependency errors → Test another endpoint → Isolate playback chain → Recommend standard re-export or complete supported player package</p>
+
+      <h2>What the evidence showed</h2>
+      <p>The surveillance export could not be decoded by normal media players. The bundled viewer launched but produced runtime or dependency errors and blank video. Testing the viewer from multiple locations and on another endpoint narrowed the relevant fault domain to the vendor playback chain.</p>
+
+      <h2>Outcome</h2>
+      <p>The strongest supported recommendation was to obtain a fresh export in a standard format or a complete current standalone-player package. The available record did not prove that the original export itself was corrupt.</p>
+
+      <h2>Boundaries</h2>
+      <p>This case does not claim that every proprietary export failure is a codec problem, that the source file was corrupt, or that installing third-party codec packs is an appropriate evidence-handling step. No identifying case, customer, camera, location, filename, timestamp, or evidentiary details are published.</p>
+
+      <h2>Related methodology</h2>
+      <p><a href="/everyday-it/scope-the-problem/">Scope the Problem</a> · <a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a> · <a href="/everyday-it/verify-before-close/">Verify Before Close</a> · <a href="/consulting/">Consulting</a></p>
+    </article>
+  </main>
+</body>
+</html>
