@@ -473,6 +473,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe security case showing why mail, sharing, identity, and endpoint symptoms require separate evidence paths before correlation.",
         "type": "article",
     },
+    "/cases/KT-000028/": {
+        "title": "KT-000028 | SaaS License Rollout Required Recipient and Billing Control | KrippyTech",
+        "description": "A public-safe SaaS licensing case showing why recipient selection, functional access, seat reconciliation, and billing are separate proof points.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1159,6 +1164,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000027/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000028/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3159,6 +3169,76 @@ def validate_kt_000027_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000028_case(failures: list[str]) -> None:
+    route = "/cases/KT-000028/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000028/index.html"
+    if not page.is_file():
+        failures.append("KT-000028: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Assigning a license is not the end of a SaaS rollout. Prove who needs it, prove it works, "
+        "then prove billing matches the final requirement.",
+        "License assignment and subscription quantity are separate controls.",
+        "Request → Account classification → Approved recipients → License assignment → "
+        "Service propagation → In-app verification → Seat reconciliation → "
+        "Subscription-window check → Billing cleanup",
+        "Access Verified / Billing Reconciled",
+        "original request did not define the final approved recipient set",
+        "licensed users, shared identities, administrative identities, and resource-style accounts",
+        "final recipient set was approved",
+        "Selected users were assigned licenses",
+        "assigned users confirmed the feature appeared inside supported Office applications",
+        "Purchased, assigned, and required seat counts were reconciled",
+        "Access verification and billing reconciliation were treated as separate proof points",
+        "Unneeded seats were removed during an available subscription adjustment window",
+        "Removing a user assignment was not treated as proof that paid subscription quantity changed",
+        "every SaaS vendor uses the same billing or cancellation model",
+        "every Microsoft 365 subscription can always be reduced immediately",
+        "Current licensing and cancellation terms must be revalidated before time-sensitive "
+        "procedural publication",
+        "proof layer for a documented license rollout and billing reconciliation",
+        "does not publish customer, tenant, user, subscription, invoice, pricing, account, or "
+        "billing identifiers",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = {
+        "/everyday-it/scope-the-problem/": 1,
+        "/everyday-it/verify-before-close/": 1,
+        "/consulting/": 3,
+    }
+    for href, expected_count in required_outbound_links.items():
+        if source.count(f'href="{href}"') != expected_count:
+            failures.append(
+                f"{page.relative_to(ROOT)}: outbound link {href!r} count has drifted"
+            )
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_27_position = case_sequence.index("KT-000027")
+    except ValueError:
+        kt_27_position = -1
+    if kt_27_position < 0 or case_sequence[kt_27_position + 1:kt_27_position + 2] != ["KT-000028"]:
+        failures.append("cases/index.html: KT-000028 must appear immediately after KT-000027")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000028 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/verify-before-close/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000028 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3467,6 +3547,7 @@ def main() -> int:
     validate_kt_000025_case(failures)
     validate_kt_000026_case(failures)
     validate_kt_000027_case(failures)
+    validate_kt_000028_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
