@@ -1,70 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech</title>
-  <meta name="description" content="A KrippyTech proof case showing how recurrence after software remediation and a clean re-image shifted a full-system freeze investigation toward hardware escalation.">
-  <link rel="canonical" href="https://krippytech.com/cases/KT-000029/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/cases/KT-000029/">
+    <title>KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech</title>
+    <meta name="description" content="KT-000029 documents how recurring full-system freezes after software remediation and a clean re-image justified hardware escalation and post-repair testing.">
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="A public-safe workstation case showing why recurrence after a known-good software baseline should change the next test toward hardware escalation.">
+    <meta property="og:url" content="https://krippytech.com/cases/KT-000029/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech">
+    <meta name="twitter:description" content="A public-safe workstation case showing why recurrence after a known-good software baseline should change the next test toward hardware escalation.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/navigation.js"></script>
 </head>
 <body>
-  <header>
-    <a href="/">KrippyTech</a>
-  </header>
-  <main>
-    <article>
-      <p>Case KT-000029</p>
-      <h1>Repeated Full-System Freezes Justified Hardware Escalation</h1>
-      <p><strong>Category:</strong> Workstation Reliability / Hardware Escalation</p>
-      <p><strong>Status:</strong> Hardware Repaired / Post-Repair Testing Passed</p>
-
-      <h2>The problem</h2>
-      <p>A laptop repeatedly became fully unresponsive during Teams and Zoom meetings and required forced restarts. The failure returned after driver changes, operating-system repair attempts, firmware updates, peripheral isolation, and a factory re-image.</p>
-
-      <h2>Locked lesson</h2>
-      <p><strong>A clean re-image followed by the same full-system failure is evidence that the fault domain may have moved beyond software.</strong></p>
-
-      <h2>Supporting principle</h2>
-      <p><strong>Temporary improvement is not durable proof. Recurrence after a known-good software baseline should change the next test.</strong></p>
-
-      <h2>Investigation path</h2>
-      <p><strong>Symptom scope → Cross-application comparison → Network comparison → Software remediation history → Clean re-image → Recurrence → Hardware escalation → Vendor repair → Rebuild → Stress and workflow verification</strong></p>
-
-      <h2>What the evidence showed</h2>
-      <ul>
-        <li>The failure occurred in more than one meeting application.</li>
-        <li>The reported symptom was a full-system freeze, not only an application crash.</li>
-        <li>Network performance from other devices remained normal during reported incidents.</li>
-        <li>The issue persisted through operating-system and driver remediation.</li>
-        <li>A factory re-image produced only temporary improvement.</li>
-        <li>The failure was witnessed during a live meeting.</li>
-        <li>The endpoint was escalated to the hardware vendor.</li>
-        <li>The returned device appeared to have received a system-board replacement and was factory-reset.</li>
-        <li>The endpoint was rebuilt, patched, and tested under GPU load and video-call use.</li>
-        <li>Post-repair testing completed without observed visual artifacts or instability.</li>
-      </ul>
-
-      <h2>Evidence boundary</h2>
-      <p>The record supports successful post-repair testing, but it does not contain a long-duration recurrence study. This case does not claim that every meeting freeze is a hardware failure, that a re-image always rules out software, or that the exact failed hardware component was independently proven outside the vendor repair outcome.</p>
-
-      <h2>Engineering judgment</h2>
-      <p>The turning point was not simply that earlier fixes failed. It was that the same full-system behavior returned across applications after a clean software baseline. At that point, repeating broad software remediation would have added little information. Hardware escalation became the more evidence-based next step.</p>
-
-      <h2>Verification</h2>
-      <ul>
-        <li>Reproduce across more than one meeting platform when practical.</li>
-        <li>Confirm whether the operating system freezes or only one application.</li>
-        <li>Record what remediation has already been attempted and whether improvement was temporary.</li>
-        <li>Collect vendor diagnostics and event evidence before requesting hardware repair.</li>
-        <li>After repair, patch the device and validate required business applications.</li>
-        <li>Run a controlled stress test and a real meeting test.</li>
-      </ul>
-
-      <h2>Related KrippyTech methods</h2>
-      <p><a href="/everyday-it/scope-the-problem/">Scope the Problem</a> · <a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a> · <a href="/everyday-it/repair-rebuild-replace-workstation/">Repair, Rebuild, or Replace a Workstation</a> · <a href="/everyday-it/verify-before-close/">Verify Before Close</a></p>
-
-      <p>This public case is intentionally sanitized. Customer, user, device, vendor-ticket, serial-number, and other identifying details are omitted.</p>
-    </article>
-  </main>
+<header class="site-header">
+    <div class="container"><nav class="site-nav" aria-label="Primary navigation"><a class="brand" href="/" aria-label="KrippyTech home"><img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo"><span class="brand-text"><span class="brand-name">KrippyTech</span><span class="brand-tagline">Practical IT. Real Solutions.</span></span></a><ul class="desktop-nav"><li><a class="nav-link" href="/consulting/">Consulting</a></li><li class="dropdown-group" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">Learn <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="learn-menu"><li><a href="/everyday-it/">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li><li class="dropdown-group has-current" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">Solutions <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="solutions-menu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/" aria-current="page">Cases</a></li></ul></li><li class="dropdown-group" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">Tools <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="tools-menu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li><li><a class="nav-link" href="/about/">About</a></li><li><a class="nav-link contact-link" href="/contact/">Contact</a></li></ul><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></button></nav></div>
+    <div class="mobile-panel" id="mobile-navigation"><ul class="mobile-nav-list"><li><a class="mobile-direct" href="/consulting/">Consulting</a></li><li class="mobile-group" aria-labelledby="mobile-learn-label"><span class="mobile-group-label" id="mobile-learn-label">Learn</span><ul class="mobile-submenu"><li><a href="/everyday-it/">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li><li class="mobile-group" aria-labelledby="mobile-solutions-label"><span class="mobile-group-label" id="mobile-solutions-label">Solutions</span><ul class="mobile-submenu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/" aria-current="page">Cases</a></li></ul></li><li class="mobile-group" aria-labelledby="mobile-tools-label"><span class="mobile-group-label" id="mobile-tools-label">Tools</span><ul class="mobile-submenu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li><li><a class="mobile-direct" href="/about/">About</a></li><li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li></ul></div>
+</header>
+<main>
+<section class="hero"><div class="container"><p class="eyebrow">Technical Case · KT-000029</p><h1>Repeated Full-System Freezes Justified Hardware Escalation</h1><p class="hero-text">The endpoint froze across more than one meeting application, and the same full-system failure returned after a clean re-image.<span class="highlight">Recurrence after the known-good software baseline changed the next test from more software work to hardware escalation.</span></p><p class="article-meta">Documented by <a href="/about/" rel="author">Michael Miller</a> <span aria-hidden="true">·</span> Published <time datetime="2026-09-09">September 9, 2026</time></p></div></section>
+<section class="section"><div class="container"><div class="grid"><article class="card"><p class="card-number">Case ID</p><h3>KT-000029</h3></article><article class="card"><p class="card-number">Category</p><h3>Workstation Reliability / Hardware Escalation</h3></article><article class="card"><p class="card-number">Status</p><h3>Hardware Repaired / Post-Repair Testing Passed</h3></article><article class="card"><p class="card-number">Technologies</p><h3>Windows / Meeting Applications / GPU Stress Testing</h3></article></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Problem</p><h2>What kind of failure was occurring?</h2></div><div class="mission"><p>The failure occurred in more than one meeting application. The symptom was full-system freezing, not only a single application crash, and network performance from other devices remained normal during reported incidents.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Investigation</p><h2>Why did the next test move beyond software?</h2></div><div class="mission"><p><strong>A clean re-image followed by the same full-system failure is evidence that the fault domain may have moved beyond software.</strong></p><p><strong>Temporary improvement is not durable proof. Recurrence after a known-good software baseline should change the next test.</strong></p><p><strong>Investigation path:</strong> Symptom scope → Cross-application comparison → Network comparison → Software remediation history → Clean re-image → Recurrence → Hardware escalation → Vendor repair → Rebuild → Stress and workflow verification</p></div><div class="kt-step"><p class="kt-step-number">Step 1</p><h3>Compare applications, system behavior, and network health</h3><p>Cross-application recurrence and full-system freezing separated the symptom from one meeting client. Other devices retained normal network performance during reported incidents.</p></div><div class="kt-step"><p class="kt-step-number">Step 2</p><h3>Preserve the remediation history</h3><p>The issue persisted through operating-system and driver remediation. A factory re-image produced only temporary improvement.</p></div><div class="kt-step"><p class="kt-step-number">Step 3</p><h3>Witness recurrence and escalate hardware</h3><p>The failure was witnessed during a live meeting after the clean software baseline, and the endpoint was escalated to the hardware vendor.</p></div><div class="kt-step"><p class="kt-step-number">Step 4</p><h3>Rebuild and verify after vendor repair</h3><p>The returned device appeared to have received a system-board replacement and was factory-reset. The endpoint was rebuilt, patched, and equipped with required business applications.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Verification</p><h2>What passed after repair?</h2></div><div class="callout callout-verification"><p>GPU load testing completed without observed visual artifacts or instability. Video-call use was included in post-repair verification.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Finding</p><h2>What remains qualified?</h2></div><div class="callout callout-warning"><p>This case does not claim every Teams or Zoom freeze is hardware, or that a clean re-image universally rules out software.</p><p>The source says the device appeared to have received a system-board replacement; the exact failed component was not independently proven beyond the vendor repair outcome.</p><p>Post-repair testing passed, but this case does not claim permanent resolution or a long-duration recurrence-free period.</p><p>This page is the proof layer for evidence-driven hardware escalation, not a replacement for the linked symptom-boundary, comparison, workstation-decision, or verification methodologies.</p></div></div></section>
+<section class="section"><div class="container"><div class="callout callout-warning"><h3>Public-safe boundary</h3><p>This case does not publish customer, user, device, serial-number, vendor-ticket, tenant, or other identifying details.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Related Resources</p><h2>Scope, compare, escalate, and verify.</h2></div><div class="grid"><article class="card"><h3><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></h3></article><article class="card"><h3><a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a></h3></article><article class="card"><h3><a href="/everyday-it/repair-rebuild-replace-workstation/">Repair, Rebuild, or Replace a Workstation</a></h3></article><article class="card"><h3><a href="/everyday-it/verify-before-close/">Verify Before Close</a></h3></article></div></div></section>
+</main>
+<footer><div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div></footer>
 </body>
 </html>
