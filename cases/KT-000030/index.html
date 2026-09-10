@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech</title>
+  <meta name="description" content="A proof-layer case showing why external sharing should be designed around identity, traceability, sensitivity, and recipient workflow rather than treated as a simple toggle.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000030/">
+</head>
+<body>
+  <main>
+    <article>
+      <p>KT-000030</p>
+      <h1>Secure External Sharing Required a Risk-Model Decision</h1>
+      <p><strong>Category:</strong> Microsoft 365 / SharePoint / Security Architecture</p>
+      <p><strong>Status:</strong> Controlled Sharing Workflow Established / Recipient Experience Verified</p>
+
+      <section>
+        <h2>The lesson</h2>
+        <p><strong>External sharing is not just a permissions setting. Choose the sharing model from the business risk, identity, traceability, and recipient workflow.</strong></p>
+        <p><strong>Convenience and traceability are different security properties. Do not pretend one automatically gives you the other.</strong></p>
+      </section>
+
+      <section>
+        <h2>What made the request tricky</h2>
+        <p>The business wanted a reusable way to send sensitive documents externally with password protection and minimal friction. The Microsoft 365 environment favored authenticated external sharing, which provided stronger identity and audit controls but required more interaction from recipients.</p>
+      </section>
+
+      <section>
+        <h2>Investigation path</h2>
+        <p><strong>Business workflow → Data sensitivity → Recipient identity requirement → Anonymous vs authenticated sharing → Tenant/site policy → Alternate protected workflow → Recipient test → Cleanup and expiration</strong></p>
+      </section>
+
+      <section>
+        <h2>Evidence used</h2>
+        <ul>
+          <li>The desired recipient workflow was defined before tenant settings were changed.</li>
+          <li>Anonymous links were distinguished from authenticated guest sharing.</li>
+          <li>SharePoint external-sharing policy and site behavior were reviewed.</li>
+          <li>The security implications of more permissive sharing were considered.</li>
+          <li>An alternate workflow using encrypted archives, SharePoint links, separate password delivery, and cleanup after receipt was tested.</li>
+          <li>The recipient experience was validated.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Outcome</h2>
+        <p>A workable sharing process was established without treating convenience and traceability as equivalent security models. The design kept the business workflow usable while preserving a deliberate security boundary.</p>
+      </section>
+
+      <section>
+        <h2>Verification</h2>
+        <ul>
+          <li>Confirm tenant and site sharing policy.</li>
+          <li>Test with a non-privileged external recipient.</li>
+          <li>Confirm protected content can be opened as intended.</li>
+          <li>Deliver passwords through a separate channel when that workflow is used.</li>
+          <li>Remove links or staged content after the business need ends.</li>
+          <li>Reassess whether anonymous sharing is appropriate for the data class.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Evidence boundary</h2>
+        <p>This case does not claim that anonymous links are always wrong, authenticated sharing is always required, encrypted archives are universally preferred, or current SharePoint capabilities and UI are unchanged. Time-sensitive procedural guidance should be revalidated against current Microsoft 365 capabilities before publication.</p>
+      </section>
+
+      <section>
+        <h2>Related methodology</h2>
+        <p><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></p>
+        <p><a href="/everyday-it/change-safety-rollback/">Change Safety and Rollback</a></p>
+        <p><a href="/everyday-it/verify-before-close/">Verify Before Close</a></p>
+        <p><a href="/consulting/">Independent IT Consulting</a></p>
+      </section>
+    </article>
+  </main>
+</body>
+</html>
