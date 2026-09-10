@@ -488,6 +488,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe sharing case showing why convenience, identity, traceability, policy, recipient experience, and cleanup require an explicit risk-model decision.",
         "type": "article",
     },
+    "/cases/KT-000031/": {
+        "title": "KT-000031 | Microsoft 365 Admin Consent Required a Controlled Approval Path | KrippyTech",
+        "description": "A public-safe Microsoft 365 case showing how a missing consent request became a controlled evidence-first administrator approval workflow.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1189,6 +1194,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000030/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000031/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3407,6 +3417,83 @@ def validate_kt_000030_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000031_case(failures: list[str]) -> None:
+    route = "/cases/KT-000031/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000031/index.html"
+    if not page.is_file():
+        failures.append("KT-000031: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "“Grant access to Microsoft 365” is not an approval decision. Verify the application, "
+        "the requested permissions, and the tenant consent path before granting access.",
+        "Consent should follow evidence: app identity, requested scopes, tenant policy, "
+        "administrator review, least necessary approval, then functional testing.",
+        "Integration request → Pending-request check → Consent-policy review → Request-path "
+        "correction → Publisher/app review → Scope review → Administrator approval → "
+        "Connector login → Functional retest",
+        "Consent Workflow Established / Integration Verified",
+        "attempted to connect third-party SaaS/AI applications to Microsoft 365",
+        "expected consent request did not initially appear",
+        "No pending request had arrived through the request path being used",
+        "administrative consent policy was reviewed",
+        "requesting user was added to the appropriate consent workflow",
+        "request was then verified as appearing for administrator review",
+        "application and publisher identity were reviewed",
+        "publisher verification is not proof an app is risk-free",
+        "requested scopes were reviewed to confirm the application actually required those permissions",
+        "approval was limited to the necessary scopes",
+        "Consent/login for required connectors completed",
+        "Functional testing after approval",
+        "integration succeeded after the tenant consent workflow was configured and retried",
+        "original integration failure is not claimed as an application defect",
+        "every third-party integration uses the same consent path",
+        "every tenant should use the same admin-consent configuration",
+        "every requested permission should be approved",
+        "Current Microsoft Entra and Microsoft 365 consent capabilities, terminology, and UI "
+        "must be revalidated",
+        "proof layer for a documented administrator-consent workflow",
+        "Conditional Access methodology, not application-consent guidance",
+        "does not publish customer, tenant, user, application-registration, publisher, object, "
+        "consent-request, token, connector, or other identifying details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = {
+        "/everyday-it/scope-the-problem/": 1,
+        "/everyday-it/verify-before-close/": 1,
+        "/everyday-it/conditional-access-signin-failure/": 1,
+        "/consulting/": 3,
+    }
+    for href, expected_count in required_outbound_links.items():
+        if source.count(f'href="{href}"') != expected_count:
+            failures.append(f"{page.relative_to(ROOT)}: outbound link {href!r} count has drifted")
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_30_position = case_sequence.index("KT-000030")
+    except ValueError:
+        kt_30_position = -1
+    if kt_30_position < 0 or case_sequence[kt_30_position + 1:kt_30_position + 2] != ["KT-000031"]:
+        failures.append("cases/index.html: KT-000031 must appear immediately after KT-000030")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000031 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "consulting/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000031 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3718,6 +3805,7 @@ def main() -> int:
     validate_kt_000028_case(failures)
     validate_kt_000029_case(failures)
     validate_kt_000030_case(failures)
+    validate_kt_000031_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
