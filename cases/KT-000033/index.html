@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000033 | Legacy Management Residue Kept Microsoft Store Blocked | KrippyTech</title>
+  <meta name="description" content="A KrippyTech proof case showing how an old endpoint-management setting continued blocking Microsoft Store after the original management intent was gone.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000033/">
+</head>
+<body>
+  <main>
+    <article>
+      <p>KrippyTech Case KT-000033</p>
+      <h1>Legacy Management Residue Kept Microsoft Store Blocked</h1>
+      <p><strong>Category:</strong> Windows / Endpoint Management / Configuration Residue</p>
+      <p><strong>Status:</strong> Blocking Policy State Corrected / Application Workflow Reopened</p>
+
+      <h2>Locked lesson</h2>
+      <p><strong>Removing an old management tool does not prove its configuration disappeared. Read the effective state, change only the controlling setting, then prove the state changed.</strong></p>
+
+      <h2>Supporting principle</h2>
+      <p><strong>Configuration residue can outlive the platform or process that created it.</strong></p>
+
+      <h2>Investigation path</h2>
+      <p><strong>Required workflow → Reproduce block → Identify management layer → Read effective value → Change controlling setting → Re-read value → Launch Store → Validate required application workflow</strong></p>
+
+      <h2>What the evidence supports</h2>
+      <ul>
+        <li>A required remote-desktop client could not be installed because Microsoft Store closed immediately.</li>
+        <li>Earlier management tooling had left a policy or registry value that continued blocking Microsoft Store after the original management intent was no longer desired.</li>
+        <li>The effective value remained enabled after an earlier attempt.</li>
+        <li>An administrative PowerShell or registry change set the blocking value to the desired state.</li>
+        <li>The effective value was rechecked after the change.</li>
+        <li>The block value changed from enabled to disabled so Microsoft Store could be used for the required application workflow.</li>
+        <li>The source record supports the policy-state correction, while final application-installation details are less complete.</li>
+      </ul>
+
+      <h2>Evidence boundaries</h2>
+      <ul>
+        <li>Do not publish an exact registry or policy path unless it is revalidated from the original technical notes or a current lab.</li>
+        <li>Do not claim every Microsoft Store failure is caused by management residue.</li>
+        <li>Do not claim uninstalling an endpoint-management platform always leaves policy behind.</li>
+        <li>Do not claim the required application installation was fully verified beyond what the source supports.</li>
+        <li>Do not publish customer, tenant, user, device, policy, registry, management-platform, application, or other identifying details.</li>
+      </ul>
+
+      <h2>Method links</h2>
+      <p><a href="/everyday-it/scope-the-problem/">Scope the Problem</a> · <a href="/everyday-it/change-safety-rollback/">Change Safety and Rollback</a> · <a href="/everyday-it/verify-before-close/">Verify Before Close</a> · <a href="/consulting/">Consulting</a></p>
+    </article>
+  </main>
+</body>
+</html>
