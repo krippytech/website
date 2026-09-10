@@ -1,78 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech</title>
-  <meta name="description" content="A proof-layer case showing why external sharing should be designed around identity, traceability, sensitivity, and recipient workflow rather than treated as a simple toggle.">
-  <link rel="canonical" href="https://krippytech.com/cases/KT-000030/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://krippytech.com/cases/KT-000030/">
+    <title>KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech</title>
+    <meta name="description" content="KT-000030 documents how business risk, identity, traceability, recipient workflow, tenant policy, testing, and cleanup shaped external sharing.">
+    <meta property="og:site_name" content="KrippyTech">
+    <meta property="og:title" content="KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="A public-safe sharing case showing why convenience, identity, traceability, policy, recipient experience, and cleanup require an explicit risk-model decision.">
+    <meta property="og:url" content="https://krippytech.com/cases/KT-000030/">
+    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech">
+    <meta name="twitter:description" content="A public-safe sharing case showing why convenience, identity, traceability, policy, recipient experience, and cleanup require an explicit risk-model decision.">
+    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/navigation.js"></script>
 </head>
 <body>
-  <main>
-    <article>
-      <p>KT-000030</p>
-      <h1>Secure External Sharing Required a Risk-Model Decision</h1>
-      <p><strong>Category:</strong> Microsoft 365 / SharePoint / Security Architecture</p>
-      <p><strong>Status:</strong> Controlled Sharing Workflow Established / Recipient Experience Verified</p>
-
-      <section>
-        <h2>The lesson</h2>
-        <p><strong>External sharing is not just a permissions setting. Choose the sharing model from the business risk, identity, traceability, and recipient workflow.</strong></p>
-        <p><strong>Convenience and traceability are different security properties. Do not pretend one automatically gives you the other.</strong></p>
-      </section>
-
-      <section>
-        <h2>What made the request tricky</h2>
-        <p>The business wanted a reusable way to send sensitive documents externally with password protection and minimal friction. The Microsoft 365 environment favored authenticated external sharing, which provided stronger identity and audit controls but required more interaction from recipients.</p>
-      </section>
-
-      <section>
-        <h2>Investigation path</h2>
-        <p><strong>Business workflow → Data sensitivity → Recipient identity requirement → Anonymous vs authenticated sharing → Tenant/site policy → Alternate protected workflow → Recipient test → Cleanup and expiration</strong></p>
-      </section>
-
-      <section>
-        <h2>Evidence used</h2>
-        <ul>
-          <li>The desired recipient workflow was defined before tenant settings were changed.</li>
-          <li>Anonymous links were distinguished from authenticated guest sharing.</li>
-          <li>SharePoint external-sharing policy and site behavior were reviewed.</li>
-          <li>The security implications of more permissive sharing were considered.</li>
-          <li>An alternate workflow using encrypted archives, SharePoint links, separate password delivery, and cleanup after receipt was tested.</li>
-          <li>The recipient experience was validated.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Outcome</h2>
-        <p>A workable sharing process was established without treating convenience and traceability as equivalent security models. The design kept the business workflow usable while preserving a deliberate security boundary.</p>
-      </section>
-
-      <section>
-        <h2>Verification</h2>
-        <ul>
-          <li>Confirm tenant and site sharing policy.</li>
-          <li>Test with a non-privileged external recipient.</li>
-          <li>Confirm protected content can be opened as intended.</li>
-          <li>Deliver passwords through a separate channel when that workflow is used.</li>
-          <li>Remove links or staged content after the business need ends.</li>
-          <li>Reassess whether anonymous sharing is appropriate for the data class.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Evidence boundary</h2>
-        <p>This case does not claim that anonymous links are always wrong, authenticated sharing is always required, encrypted archives are universally preferred, or current SharePoint capabilities and UI are unchanged. Time-sensitive procedural guidance should be revalidated against current Microsoft 365 capabilities before publication.</p>
-      </section>
-
-      <section>
-        <h2>Related methodology</h2>
-        <p><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></p>
-        <p><a href="/everyday-it/change-safety-rollback/">Change Safety and Rollback</a></p>
-        <p><a href="/everyday-it/verify-before-close/">Verify Before Close</a></p>
-        <p><a href="/consulting/">Independent IT Consulting</a></p>
-      </section>
-    </article>
-  </main>
+<header class="site-header">
+    <div class="container"><nav class="site-nav" aria-label="Primary navigation"><a class="brand" href="/" aria-label="KrippyTech home"><img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo"><span class="brand-text"><span class="brand-name">KrippyTech</span><span class="brand-tagline">Practical IT. Real Solutions.</span></span></a><ul class="desktop-nav"><li><a class="nav-link" href="/consulting/">Consulting</a></li><li class="dropdown-group" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">Learn <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="learn-menu"><li><a href="/everyday-it/">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li><li class="dropdown-group has-current" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">Solutions <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="solutions-menu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/" aria-current="page">Cases</a></li></ul></li><li class="dropdown-group" data-dropdown><button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">Tools <span class="chevron" aria-hidden="true"></span></button><ul class="dropdown-menu" id="tools-menu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li><li><a class="nav-link" href="/about/">About</a></li><li><a class="nav-link contact-link" href="/contact/">Contact</a></li></ul><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></button></nav></div>
+    <div class="mobile-panel" id="mobile-navigation"><ul class="mobile-nav-list"><li><a class="mobile-direct" href="/consulting/">Consulting</a></li><li class="mobile-group" aria-labelledby="mobile-learn-label"><span class="mobile-group-label" id="mobile-learn-label">Learn</span><ul class="mobile-submenu"><li><a href="/everyday-it/">Everyday IT</a></li><li><a href="/msp-university/">MSP University</a></li><li><a href="/azure-journey/">Azure Journey</a></li></ul></li><li class="mobile-group" aria-labelledby="mobile-solutions-label"><span class="mobile-group-label" id="mobile-solutions-label">Solutions</span><ul class="mobile-submenu"><li><a href="/tutorials/">Tutorials</a></li><li><a href="/cases/" aria-current="page">Cases</a></li></ul></li><li class="mobile-group" aria-labelledby="mobile-tools-label"><span class="mobile-group-label" id="mobile-tools-label">Tools</span><ul class="mobile-submenu"><li><a href="/powershell/">PowerShell Library</a></li><li><a href="/downloads/">Downloads</a></li></ul></li><li><a class="mobile-direct" href="/about/">About</a></li><li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li></ul></div>
+</header>
+<main>
+<section class="hero"><div class="container"><p class="eyebrow">Technical Case · KT-000030</p><h1>Secure External Sharing Required a Risk-Model Decision</h1><p class="hero-text">Users wanted reusable password-protected delivery for sensitive documents, while the Microsoft 365 environment favored authenticated external sharing.<span class="highlight">The business workflow and security properties had to be defined before changing tenant settings.</span></p><p class="article-meta">Documented by <a href="/about/" rel="author">Michael Miller</a> <span aria-hidden="true">·</span> Published <time datetime="2026-09-09">September 9, 2026</time></p></div></section>
+<section class="section"><div class="container"><div class="grid"><article class="card"><p class="card-number">Case ID</p><h3>KT-000030</h3></article><article class="card"><p class="card-number">Category</p><h3>Microsoft 365 / SharePoint / Security Architecture</h3></article><article class="card"><p class="card-number">Status</p><h3>Controlled Sharing Workflow Established / Recipient Experience Verified</h3></article><article class="card"><p class="card-number">Technologies</p><h3>Microsoft 365 / SharePoint / Protected Archives</h3></article></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Investigation</p><h2>How was the sharing model chosen?</h2></div><div class="mission"><p><strong>External sharing is not just a permissions setting. Choose the sharing model from the business risk, identity, traceability, and recipient workflow.</strong></p><p><strong>Convenience and traceability are different security properties. Do not pretend one automatically gives you the other.</strong></p><p><strong>Investigation path:</strong> Business workflow → Data sensitivity → Recipient identity requirement → Anonymous vs authenticated sharing → Tenant/site policy → Alternate protected workflow → Recipient test → Cleanup and expiration</p></div><div class="kt-step"><p class="kt-step-number">Step 1</p><h3>Define the workflow before changing policy</h3><p>The desired workflow was defined before changing tenant settings, including data sensitivity and whether recipient identity and traceability were required.</p></div><div class="kt-step"><p class="kt-step-number">Step 2</p><h3>Separate anonymous and authenticated sharing</h3><p>Anonymous links and authenticated guest sharing were distinguished. Authenticated external sharing offered stronger identity and audit controls with more user interaction.</p></div><div class="kt-step"><p class="kt-step-number">Step 3</p><h3>Review tenant and site boundaries</h3><p>SharePoint external-sharing policy and site behavior were reviewed, along with the security implications of more permissive sharing.</p></div><div class="kt-step"><p class="kt-step-number">Step 4</p><h3>Test an alternate protected workflow</h3><p>An alternate workflow using encrypted archives, SharePoint links, separate password delivery, and cleanup after receipt was tested. Password delivery used a separate channel for that workflow.</p></div><div class="kt-step"><p class="kt-step-number">Step 5</p><h3>Verify recipients and end-of-need cleanup</h3><p>The recipient experience was validated and a workable process was established. Links or staged content were removed after the business need ended, preserving cleanup and expiration as part of the model.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Finding</p><h2>What remains context-dependent?</h2></div><div class="callout callout-warning"><p>This case does not claim anonymous links are universally wrong or insecure, or that authenticated guest sharing is always required.</p><p>Encrypted archives are not presented as a universal best practice, and reusable password-protected SharePoint links are not claimed as the delivered solution. Separate-channel password delivery describes the tested alternate workflow, not every recipient workflow.</p><p>Current Microsoft 365 sharing capabilities, terminology, and UI must be revalidated before any time-sensitive procedural publication.</p><p>This page is the proof layer for a documented external-sharing risk decision, not a replacement for the linked scope, change-safety, or verification methodologies or the consulting bridge.</p></div></div></section>
+<section class="section"><div class="container"><div class="callout callout-warning"><h3>Public-safe boundary</h3><p>This case does not publish customer, tenant, recipient, domain, mailbox, file, site, link, password, or other identifying details.</p></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Related Resources</p><h2>Scope, control, test, and verify sharing.</h2></div><div class="grid"><article class="card"><h3><a href="/everyday-it/scope-the-problem/">Scope the Problem</a></h3></article><article class="card"><h3><a href="/everyday-it/change-safety-rollback/">Change Safety and Rollback</a></h3></article><article class="card"><h3><a href="/everyday-it/verify-before-close/">Verify Before Close</a></h3></article><article class="card"><h3><a href="/consulting/">Independent IT Consulting</a></h3></article></div></div></section>
+</main>
+<footer><div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div></footer>
 </body>
 </html>
