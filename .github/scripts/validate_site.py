@@ -498,6 +498,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe evidence-handling case showing why proprietary playback failure does not by itself prove that the source export is corrupt.",
         "type": "article",
     },
+    "/cases/KT-000033/": {
+        "title": "KT-000033 | Legacy Management Residue Kept Microsoft Store Blocked | KrippyTech",
+        "description": "A public-safe Windows case showing how effective-state evidence isolated and corrected legacy management residue without becoming a universal registry fix.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1209,6 +1214,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000032/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000033/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3577,6 +3587,78 @@ def validate_kt_000032_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000033_case(failures: list[str]) -> None:
+    route = "/cases/KT-000033/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000033/index.html"
+    if not page.is_file():
+        failures.append("KT-000033: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "Removing an old management tool does not prove its configuration disappeared. Read the "
+        "effective state, change only the controlling setting, then prove the state changed.",
+        "Configuration residue can outlive the platform or process that created it.",
+        "Required workflow → Reproduce block → Identify management layer → Read effective value → "
+        "Change controlling setting → Re-read value → Launch Store → Validate required application workflow",
+        "Blocking Policy State Corrected / Application Workflow Reopened",
+        "required remote-desktop client could not be installed because Microsoft Store closed immediately",
+        "Microsoft Store was confirmed blocked and closing immediately",
+        "policy/registry value that continued blocking Microsoft Store",
+        "distinguished whether the effective control was policy, registry, MDM, or another management layer",
+        "legacy management setting was identified as the likely control",
+        "effective value remained enabled after an earlier attempt",
+        "administrative PowerShell/registry change set the blocking value to the desired state",
+        "No unrelated settings were changed",
+        "effective value was rechecked after the change",
+        "block value changed from enabled to disabled",
+        "Microsoft Store could then be launched for the required application workflow",
+        "final application-installation details are less complete and are not claimed as fully verified",
+        "source strongly supports the policy-state correction",
+        "does not prove every Microsoft Store failure is caused by management residue",
+        "removing an endpoint-management platform always leaves policy behind",
+        "must be revalidated from the original technical notes or a current lab",
+        "not a universal registry-fix article",
+        "proof layer for one effective-state correction",
+        "does not publish customer, tenant, user, device, policy, registry, management-platform, "
+        "application, or other identifying details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = {
+        "/everyday-it/scope-the-problem/": 1,
+        "/everyday-it/change-safety-rollback/": 1,
+        "/everyday-it/verify-before-close/": 1,
+        "/consulting/": 3,
+    }
+    for href, expected_count in required_outbound_links.items():
+        if source.count(f'href="{href}"') != expected_count:
+            failures.append(f"{page.relative_to(ROOT)}: outbound link {href!r} count has drifted")
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_32_position = case_sequence.index("KT-000032")
+    except ValueError:
+        kt_32_position = -1
+    if kt_32_position < 0 or case_sequence[kt_32_position + 1:kt_32_position + 2] != ["KT-000033"]:
+        failures.append("cases/index.html: KT-000033 must appear immediately after KT-000032")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000033 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/change-safety-rollback/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000033 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3890,6 +3972,7 @@ def main() -> int:
     validate_kt_000030_case(failures)
     validate_kt_000031_case(failures)
     validate_kt_000032_case(failures)
+    validate_kt_000033_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
