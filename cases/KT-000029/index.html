@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech</title>
+  <meta name="description" content="A KrippyTech proof case showing how recurrence after software remediation and a clean re-image shifted a full-system freeze investigation toward hardware escalation.">
+  <link rel="canonical" href="https://krippytech.com/cases/KT-000029/">
+</head>
+<body>
+  <header>
+    <a href="/">KrippyTech</a>
+  </header>
+  <main>
+    <article>
+      <p>Case KT-000029</p>
+      <h1>Repeated Full-System Freezes Justified Hardware Escalation</h1>
+      <p><strong>Category:</strong> Workstation Reliability / Hardware Escalation</p>
+      <p><strong>Status:</strong> Hardware Repaired / Post-Repair Testing Passed</p>
+
+      <h2>The problem</h2>
+      <p>A laptop repeatedly became fully unresponsive during Teams and Zoom meetings and required forced restarts. The failure returned after driver changes, operating-system repair attempts, firmware updates, peripheral isolation, and a factory re-image.</p>
+
+      <h2>Locked lesson</h2>
+      <p><strong>A clean re-image followed by the same full-system failure is evidence that the fault domain may have moved beyond software.</strong></p>
+
+      <h2>Supporting principle</h2>
+      <p><strong>Temporary improvement is not durable proof. Recurrence after a known-good software baseline should change the next test.</strong></p>
+
+      <h2>Investigation path</h2>
+      <p><strong>Symptom scope → Cross-application comparison → Network comparison → Software remediation history → Clean re-image → Recurrence → Hardware escalation → Vendor repair → Rebuild → Stress and workflow verification</strong></p>
+
+      <h2>What the evidence showed</h2>
+      <ul>
+        <li>The failure occurred in more than one meeting application.</li>
+        <li>The reported symptom was a full-system freeze, not only an application crash.</li>
+        <li>Network performance from other devices remained normal during reported incidents.</li>
+        <li>The issue persisted through operating-system and driver remediation.</li>
+        <li>A factory re-image produced only temporary improvement.</li>
+        <li>The failure was witnessed during a live meeting.</li>
+        <li>The endpoint was escalated to the hardware vendor.</li>
+        <li>The returned device appeared to have received a system-board replacement and was factory-reset.</li>
+        <li>The endpoint was rebuilt, patched, and tested under GPU load and video-call use.</li>
+        <li>Post-repair testing completed without observed visual artifacts or instability.</li>
+      </ul>
+
+      <h2>Evidence boundary</h2>
+      <p>The record supports successful post-repair testing, but it does not contain a long-duration recurrence study. This case does not claim that every meeting freeze is a hardware failure, that a re-image always rules out software, or that the exact failed hardware component was independently proven outside the vendor repair outcome.</p>
+
+      <h2>Engineering judgment</h2>
+      <p>The turning point was not simply that earlier fixes failed. It was that the same full-system behavior returned across applications after a clean software baseline. At that point, repeating broad software remediation would have added little information. Hardware escalation became the more evidence-based next step.</p>
+
+      <h2>Verification</h2>
+      <ul>
+        <li>Reproduce across more than one meeting platform when practical.</li>
+        <li>Confirm whether the operating system freezes or only one application.</li>
+        <li>Record what remediation has already been attempted and whether improvement was temporary.</li>
+        <li>Collect vendor diagnostics and event evidence before requesting hardware repair.</li>
+        <li>After repair, patch the device and validate required business applications.</li>
+        <li>Run a controlled stress test and a real meeting test.</li>
+      </ul>
+
+      <h2>Related KrippyTech methods</h2>
+      <p><a href="/everyday-it/scope-the-problem/">Scope the Problem</a> · <a href="/everyday-it/known-good-comparison/">Known-Good Comparison</a> · <a href="/everyday-it/repair-rebuild-replace-workstation/">Repair, Rebuild, or Replace a Workstation</a> · <a href="/everyday-it/verify-before-close/">Verify Before Close</a></p>
+
+      <p>This public case is intentionally sanitized. Customer, user, device, vendor-ticket, serial-number, and other identifying details are omitted.</p>
+    </article>
+  </main>
+</body>
+</html>
