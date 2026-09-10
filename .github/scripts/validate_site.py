@@ -483,6 +483,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe workstation case showing why recurrence after a known-good software baseline should change the next test toward hardware escalation.",
         "type": "article",
     },
+    "/cases/KT-000030/": {
+        "title": "KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech",
+        "description": "A public-safe sharing case showing why convenience, identity, traceability, policy, recipient experience, and cleanup require an explicit risk-model decision.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1179,6 +1184,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000029/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000030/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3323,6 +3333,80 @@ def validate_kt_000029_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000030_case(failures: list[str]) -> None:
+    route = "/cases/KT-000030/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000030/index.html"
+    if not page.is_file():
+        failures.append("KT-000030: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "External sharing is not just a permissions setting. Choose the sharing model from the "
+        "business risk, identity, traceability, and recipient workflow.",
+        "Convenience and traceability are different security properties. Do not pretend one "
+        "automatically gives you the other.",
+        "Business workflow → Data sensitivity → Recipient identity requirement → Anonymous vs "
+        "authenticated sharing → Tenant/site policy → Alternate protected workflow → "
+        "Recipient test → Cleanup and expiration",
+        "Controlled Sharing Workflow Established / Recipient Experience Verified",
+        "wanted reusable password-protected delivery for sensitive documents",
+        "Microsoft 365 environment favored authenticated external sharing",
+        "desired workflow was defined before changing tenant settings",
+        "Anonymous links and authenticated guest sharing were distinguished",
+        "Authenticated external sharing offered stronger identity and audit controls with more "
+        "user interaction",
+        "SharePoint external-sharing policy and site behavior were reviewed",
+        "security implications of more permissive sharing",
+        "encrypted archives, SharePoint links, separate password delivery, and cleanup after receipt",
+        "Password delivery used a separate channel for that workflow",
+        "recipient experience was validated and a workable process was established",
+        "cleanup and expiration as part of the model",
+        "anonymous links are universally wrong or insecure",
+        "authenticated guest sharing is always required",
+        "Encrypted archives are not presented as a universal best practice",
+        "reusable password-protected SharePoint links are not claimed as the delivered solution",
+        "Current Microsoft 365 sharing capabilities, terminology, and UI must be revalidated",
+        "proof layer for a documented external-sharing risk decision",
+        "does not publish customer, tenant, recipient, domain, mailbox, file, site, link, password, "
+        "or other identifying details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = {
+        "/everyday-it/scope-the-problem/": 1,
+        "/everyday-it/change-safety-rollback/": 1,
+        "/everyday-it/verify-before-close/": 1,
+        "/consulting/": 3,
+    }
+    for href, expected_count in required_outbound_links.items():
+        if source.count(f'href="{href}"') != expected_count:
+            failures.append(f"{page.relative_to(ROOT)}: outbound link {href!r} count has drifted")
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_29_position = case_sequence.index("KT-000029")
+    except ValueError:
+        kt_29_position = -1
+    if kt_29_position < 0 or case_sequence[kt_29_position + 1:kt_29_position + 2] != ["KT-000030"]:
+        failures.append("cases/index.html: KT-000030 must appear immediately after KT-000029")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000030 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/change-safety-rollback/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000030 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3633,6 +3717,7 @@ def main() -> int:
     validate_kt_000027_case(failures)
     validate_kt_000028_case(failures)
     validate_kt_000029_case(failures)
+    validate_kt_000030_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
