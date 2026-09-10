@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KT-000031 | Microsoft 365 Admin Consent Required a Controlled Approval Path</title>
+  <meta name="description" content="A proof-layer KrippyTech case showing why a third-party Microsoft 365 integration should follow a controlled admin-consent workflow instead of blind approval.">
+</head>
+<body>
+  <main>
+    <article>
+      <p>Case KT-000031</p>
+      <h1>Microsoft 365 Admin Consent Required a Controlled Approval Path</h1>
+      <p><strong>Status:</strong> Consent Workflow Established / Integration Verified</p>
+
+      <h2>Locked lesson</h2>
+      <p><strong>“Grant access to Microsoft 365” is not an approval decision. Verify the application, the requested permissions, and the tenant consent path before granting access.</strong></p>
+
+      <h2>Supporting principle</h2>
+      <p><strong>Consent should follow evidence: app identity, requested scopes, tenant policy, administrator review, least necessary approval, then functional testing.</strong></p>
+
+      <h2>Investigation path</h2>
+      <p><strong>Integration request → Pending-request check → Consent-policy review → Request-path correction → Publisher/app review → Scope review → Administrator approval → Connector login → Functional retest</strong></p>
+
+      <h2>What happened</h2>
+      <p>A user attempted to connect a third-party SaaS or AI application to Microsoft 365. The expected administrative consent request did not appear. Rather than treating the absence of a prompt as permission to bypass review, the tenant consent workflow was examined.</p>
+      <p>No pending request had arrived through the path being used. The administrative consent policy and request workflow were reviewed, the requesting user was placed into the appropriate consent path, and the integration was retried. The required consent and connector login then completed successfully.</p>
+
+      <h2>What was verified</h2>
+      <ul>
+        <li>The requested integration actually required Microsoft 365 permissions.</li>
+        <li>The application and publisher identity were reviewed before approval.</li>
+        <li>The requested scopes were reviewed instead of treating consent as all-or-nothing.</li>
+        <li>The tenant consent policy and administrator-review path were checked.</li>
+        <li>The request appeared for administrative review after the workflow was corrected.</li>
+        <li>Only the permissions needed for the integration were approved.</li>
+        <li>The integration was tested after consent and connector sign-in completed.</li>
+      </ul>
+
+      <h2>Evidence boundaries</h2>
+      <p>This case does not claim every third-party integration requires the same Microsoft 365 consent path, that every publisher is trustworthy once verified, or that every requested scope should be approved. It also does not publish customer, tenant, user, application-registration, publisher, object, consent-request, token, connector, or other identifying information.</p>
+      <p>Current Microsoft Entra and Microsoft 365 admin-consent capabilities, terminology, and UI should be revalidated before publishing time-sensitive step-by-step instructions.</p>
+    </article>
+  </main>
+</body>
+</html>
