@@ -493,6 +493,11 @@ SOCIAL_METADATA = {
         "description": "A public-safe Microsoft 365 case showing how a missing consent request became a controlled evidence-first administrator approval workflow.",
         "type": "article",
     },
+    "/cases/KT-000032/": {
+        "title": "KT-000032 | Proprietary Surveillance Export Failed in Its Playback Chain | KrippyTech",
+        "description": "A public-safe evidence-handling case showing why proprietary playback failure does not by itself prove that the source export is corrupt.",
+        "type": "article",
+    },
     "/consulting/": {
         "title": "Small Business IT Consulting | KrippyTech",
         "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
@@ -1199,6 +1204,11 @@ def validate_trust_and_sharing(
             r'<time datetime="2026-09-09">September 9, 2026</time>'
         ),
         "/cases/KT-000031/": re.compile(
+            r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
+            r'<span aria-hidden="true">·</span>\s*Published\s*'
+            r'<time datetime="2026-09-09">September 9, 2026</time>'
+        ),
+        "/cases/KT-000032/": re.compile(
             r'Documented by\s*<a href="/about/" rel="author">Michael Miller</a>\s*'
             r'<span aria-hidden="true">·</span>\s*Published\s*'
             r'<time datetime="2026-09-09">September 9, 2026</time>'
@@ -3494,6 +3504,79 @@ def validate_kt_000031_case(failures: list[str]) -> None:
         )
 
 
+def validate_kt_000032_case(failures: list[str]) -> None:
+    route = "/cases/KT-000032/"
+    canonical = f"{SITE_ORIGIN}{route}"
+    page = ROOT / "cases/KT-000032/index.html"
+    if not page.is_file():
+        failures.append("KT-000032: case page is missing")
+        return
+
+    source = page.read_text(encoding="utf-8")
+    required_text = (
+        "A proprietary file that will not play is not automatically corrupt. Prove the format, "
+        "viewer, dependencies, package completeness, and endpoint behavior before changing the evidence.",
+        "Preserve the source first. Troubleshoot the playback chain around it before modifying, "
+        "converting, or replacing the original evidence.",
+        "Preserve source → Identify proprietary format → Test standard players → Test bundled "
+        "viewer → Capture dependency errors → Test another endpoint → Isolate playback chain → "
+        "Recommend standard re-export or complete supported player package",
+        "Playback Chain Isolated / Safer Re-Export Path Recommended",
+        "proprietary surveillance-video export could not be played with normal media players",
+        "complete export folder was preserved before troubleshooting",
+        "original evidence was not modified, converted, or replaced",
+        "proprietary format was identified",
+        "Standard media players could not decode it",
+        "bundled viewer was tested from multiple locations",
+        "produced runtime/dependency errors and blank video",
+        "missing/incompatible runtime dependency error was captured",
+        "complete package was tested on another endpoint",
+        "proprietary vendor playback chain",
+        "fresh export in a standard format or a complete current standalone-player package",
+        "standard-format re-export was not claimed to be always possible",
+        "does not prove the original export itself was corrupt",
+        "exact failed dependency is not claimed as independently proven",
+        "does not claim all proprietary playback failures share the same root cause",
+        "Random codec packs are not recommended for proprietary evidence formats",
+        "proof layer for one playback-chain investigation",
+        "does not publish customer, case, camera, location, filename, timestamp, chain-of-custody, "
+        "or other identifying or evidentiary details",
+    )
+    for required in required_text:
+        if required not in source:
+            failures.append(f"{page.relative_to(ROOT)}: missing locked case language {required!r}")
+
+    required_outbound_links = {
+        "/everyday-it/scope-the-problem/": 1,
+        "/everyday-it/known-good-comparison/": 1,
+        "/everyday-it/verify-before-close/": 1,
+        "/consulting/": 3,
+    }
+    for href, expected_count in required_outbound_links.items():
+        if source.count(f'href="{href}"') != expected_count:
+            failures.append(f"{page.relative_to(ROOT)}: outbound link {href!r} count has drifted")
+
+    cases_index = (ROOT / "cases/index.html").read_text(encoding="utf-8")
+    case_sequence = re.findall(r'href="/cases/(KT-[0-9]{6})/"', cases_index)
+    try:
+        kt_31_position = case_sequence.index("KT-000031")
+    except ValueError:
+        kt_31_position = -1
+    if kt_31_position < 0 or case_sequence[kt_31_position + 1:kt_31_position + 2] != ["KT-000032"]:
+        failures.append("cases/index.html: KT-000032 must appear immediately after KT-000031")
+
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    if sitemap_source.count(canonical) != 1:
+        failures.append("sitemap.xml: KT-000032 canonical route must appear exactly once")
+
+    inbound_page = ROOT / "everyday-it/known-good-comparison/index.html"
+    inbound_source = inbound_page.read_text(encoding="utf-8")
+    if inbound_source.count(f'href="{route}"') != 1:
+        failures.append(
+            f"{inbound_page.relative_to(ROOT)}: KT-000032 inbound proof link must appear exactly once"
+        )
+
+
 def validate_grouped_navigation(failures: list[str]) -> None:
     navigation_script = ROOT / "navigation.js"
     stylesheet = ROOT / "styles.css"
@@ -3806,6 +3889,7 @@ def main() -> int:
     validate_kt_000029_case(failures)
     validate_kt_000030_case(failures)
     validate_kt_000031_case(failures)
+    validate_kt_000032_case(failures)
     validate_first_10_minutes_worksheet(failures)
     validate_first_10_minutes_github_resource(failures)
     validate_grouped_navigation(failures)
