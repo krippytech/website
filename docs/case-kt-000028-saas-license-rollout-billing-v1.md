@@ -1,7 +1,7 @@
 # KT-000028 Case Handoff
 
 ## Public title
-KT-000028 | SaaS License Rollout Required Recipient and Billing Control | KrippyTech
+KT-000028 | SaaS License Rollout Required Recipient and Billing Control | Aki Inu Tech
 
 ## H1
 SaaS License Rollout Required Recipient and Billing Control

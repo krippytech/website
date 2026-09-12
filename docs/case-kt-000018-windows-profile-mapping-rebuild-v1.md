@@ -6,7 +6,7 @@ Create a public-safe proof-layer case showing a controlled Windows user-profile 
 
 ## Source basis
 
-Sanitized KrippyTech KER: `KrippyTech_KER_Rebuild_Corrupt_Windows_User_Profile.docx`.
+Sanitized Aki Inu Tech KER: `KrippyTech_KER_Rebuild_Corrupt_Windows_User_Profile.docx`.
 
 The source supports:
 

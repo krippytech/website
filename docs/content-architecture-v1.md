@@ -1,10 +1,10 @@
-# KrippyTech Content Architecture v1
+# Aki Inu Tech Content Architecture v1
 
 **Version:** 1.0
 
 ## Purpose
 
-This document defines how KrippyTech organizes, evaluates, develops, and reuses technical knowledge across Everyday IT, KER, tutorials, cases, downloads, Practical IT Library, and future consulting material.
+This document defines how Aki Inu Tech organizes, evaluates, develops, and reuses technical knowledge across Everyday IT, KER, tutorials, cases, downloads, Practical IT Library, and future consulting material.
 
 It does not replace the Vault Standard or Publishing Standard.
 
@@ -14,7 +14,7 @@ This architecture defines how material moves between them.
 
 ## Core Model
 
-KrippyTech content follows one reusable knowledge pipeline:
+Aki Inu Tech content follows one reusable knowledge pipeline:
 
 `Raw → Sanitized Source → Extracted Lesson → Ledger → Asset → Published → Reuse`
 
@@ -178,7 +178,7 @@ Do not force every lesson into a standalone page.
 
 Published assets should link into the rest of the library whenever the connection is useful.
 
-A page should not become an isolated dead end if another KrippyTech resource naturally continues the troubleshooting path.
+A page should not become an isolated dead end if another Aki Inu Tech resource naturally continues the troubleshooting path.
 
 ### Layer 7: Reuse
 
@@ -191,7 +191,7 @@ Strong published material can later feed:
 - consulting playbooks
 - assessment frameworks
 
-The public library is therefore not the end of the pipeline. It becomes structured source material for larger KrippyTech products.
+The public library is therefore not the end of the pipeline. It becomes structured source material for larger Aki Inu Tech products.
 
 ## Content Type Decision Rules
 
@@ -275,7 +275,7 @@ Use `docs/everyday-it-library-map.md` as the current relationship register and u
 
 ## Operating Principle
 
-KrippyTech should increasingly behave like a knowledge graph, not a pile of articles.
+Aki Inu Tech should increasingly behave like a knowledge graph, not a pile of articles.
 
 A real incident creates lessons.
 Lessons create multiple assets.

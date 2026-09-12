@@ -85,7 +85,7 @@ Authority relationship:
 This page should not compete with Troubleshooting Paths for broad ownership. It should own the actionable worksheet/checklist intent.
 
 Recommended production title:
-`IT Troubleshooting First 10 Minutes Checklist | Everyday IT | KrippyTech`
+`IT Troubleshooting First 10 Minutes Checklist | Everyday IT | Aki Inu Tech`
 
 Recommended H1:
 `The first 10 minutes should reduce uncertainty, not create more variables.`
@@ -97,7 +97,7 @@ Recommended meta description:
 
 After the web asset is merged and stable, it can be reused as:
 - a printable one-page or two-page worksheet/download;
-- a GitHub Markdown checklist or field template that points back to the canonical KrippyTech guide;
+- a GitHub Markdown checklist or field template that points back to the canonical Aki Inu Tech guide;
 - a LinkedIn field lesson built around the locked principle;
 - an internal KER/ticket triage worksheet.
 

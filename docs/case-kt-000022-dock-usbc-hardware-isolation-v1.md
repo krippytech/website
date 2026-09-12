@@ -6,7 +6,7 @@
 
 ## Browser / Social Title
 
-`KT-000022 | Dock and USB-C Instability Spanned Multiple Peripherals | KrippyTech`
+`KT-000022 | Dock and USB-C Instability Spanned Multiple Peripherals | Aki Inu Tech`
 
 ## H1
 

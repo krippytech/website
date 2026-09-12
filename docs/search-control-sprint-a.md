@@ -1,4 +1,4 @@
-# KrippyTech Search Control Sprint A
+# Aki Inu Tech Search Control Sprint A
 
 **Status:** Internal execution audit
 
@@ -32,11 +32,11 @@ Sprint A is an authority-page tune-up, not a page-count expansion. It focuses on
 
 Current:
 
-`Microsoft 365 & Email Basics | Everyday IT | KrippyTech`
+`Microsoft 365 & Email Basics | Everyday IT | Aki Inu Tech`
 
 Recommended:
 
-`Microsoft 365 & Outlook Troubleshooting | Everyday IT | KrippyTech`
+`Microsoft 365 & Outlook Troubleshooting | Everyday IT | Aki Inu Tech`
 
 Reason: “Basics” undersells the actual page and does not clearly claim the broader troubleshooting family.
 
@@ -127,11 +127,11 @@ The search family is too broad to force into one page without making the page wo
 
 **Current title**
 
-`Passwords, Lockouts & MFA | Everyday IT | KrippyTech`
+`Passwords, Lockouts & MFA | Everyday IT | Aki Inu Tech`
 
 Recommended title:
 
-`Password, Account Lockout & MFA Troubleshooting | Everyday IT | KrippyTech`
+`Password, Account Lockout & MFA Troubleshooting | Everyday IT | Aki Inu Tech`
 
 Reason: preserves the user-language topics while making the page’s troubleshooting intent explicit.
 
@@ -159,11 +159,11 @@ Add a return link from those narrow routes when natural.
 
 **Current title**
 
-`Groups & Permissions | Everyday IT | KrippyTech`
+`Groups & Permissions | Everyday IT | Aki Inu Tech`
 
 Recommended title:
 
-`Groups, NTFS & File Permission Troubleshooting | Everyday IT | KrippyTech`
+`Groups, NTFS & File Permission Troubleshooting | Everyday IT | Aki Inu Tech`
 
 This better communicates the practical access problem family while retaining group-based design.
 
@@ -173,7 +173,7 @@ Current:
 
 `Give access without creating a mess.`
 
-Keep it. It is memorable and fits the KrippyTech voice.
+Keep it. It is memorable and fits the Aki Inu Tech voice.
 
 Strengthen nearby copy to state that this page owns group-based access, NTFS/share permission layers, Effective Access, token refresh, and access-denied troubleshooting.
 
@@ -193,7 +193,7 @@ Suggested logic:
 
 `If the user cannot prove identity, stay in Passwords, Lockouts & MFA. If the user can sign in but cannot reach the resource, move to Groups & Permissions.`
 
-This distinction should become one of the defining KrippyTech identity/access concepts.
+This distinction should become one of the defining Aki Inu Tech identity/access concepts.
 
 ### Consulting bridge
 
@@ -228,7 +228,7 @@ This should bridge the Everyday IT authority page to the existing Entra investig
 
 - Already behaves like a real routing hub rather than a generic troubleshooting article.
 - Strong core message: symptom first, failing layer second, product third.
-- Existing lifecycle gives KrippyTech a distinct methodology:
+- Existing lifecycle gives Aki Inu Tech a distinct methodology:
 
 `Scope → Compare → Layer → Plan/Rollback → Change → Verify → Workaround/Resolution → Prevent Recurrence`
 
@@ -242,11 +242,11 @@ At an unsafe or unresolved point:
 
 Current:
 
-`Troubleshooting Paths | Everyday IT | KrippyTech`
+`Troubleshooting Paths | Everyday IT | Aki Inu Tech`
 
 Recommended:
 
-`IT Troubleshooting Method & Decision Paths | Everyday IT | KrippyTech`
+`IT Troubleshooting Method & Decision Paths | Everyday IT | Aki Inu Tech`
 
 Reason: the current title is clean but vague. The recommended version claims the methodology/decision-intent family without turning it into keyword stuffing.
 
@@ -256,7 +256,7 @@ Current:
 
 `Start with the symptom. Find the failing layer.`
 
-Keep exactly. This is one of the strongest KrippyTech lines on the site.
+Keep exactly. This is one of the strongest Aki Inu Tech lines on the site.
 
 **Hero / opening**
 
@@ -303,7 +303,7 @@ High-value support pages:
 
 Begin connecting sanitized Cases to specific lifecycle decisions as Cases grow.
 
-The goal is not to say “KrippyTech uses a methodology.” The goal is to prove it through real examples where scope or comparison changed the investigation.
+The goal is not to say “Aki Inu Tech uses a methodology.” The goal is to prove it through real examples where scope or comparison changed the investigation.
 
 **Consulting bridge**
 
@@ -323,7 +323,7 @@ Recommended format:
 
 - printable/downloadable checklist
 - optional GitHub Markdown version
-- page on KrippyTech explaining how to use it
+- page on Aki Inu Tech explaining how to use it
 - prompts for scope, known-good comparison, recent change, business impact, risky next step, evidence captured, and verification target
 
 This is the most reusable external-reinforcement asset in the first three families.
@@ -346,7 +346,7 @@ Sprint A is complete when:
 
 - each of the three target families has an unmistakable authority page or paired authority
 - title/meta language clearly matches the broad search intent
-- distinctive KrippyTech H1/field language is preserved where already strong
+- distinctive Aki Inu Tech H1/field language is preserved where already strong
 - narrow guides link naturally into and back from the authority page
 - advanced Tutorials/Cases provide a proof path where appropriate
 - Consulting appears only at a credible risk/complexity boundary

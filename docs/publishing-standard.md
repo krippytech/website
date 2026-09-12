@@ -1,4 +1,4 @@
-# KrippyTech Publishing Standard
+# Aki Inu Tech Publishing Standard
 
 **Version:** 1.0
 
@@ -6,7 +6,7 @@
 
 ## Mission
 
-KrippyTech exists to teach practical IT through real-world experience.
+Aki Inu Tech exists to teach practical IT through real-world experience.
 
 We are not trying to replace Microsoft Learn.
 
@@ -20,7 +20,7 @@ Every tutorial should help an IT professional solve a real problem with confiden
 
 Microsoft Learn explains how a feature works.
 
-KrippyTech explains how it works in the real world.
+Aki Inu Tech explains how it works in the real world.
 
 Every tutorial should answer five questions:
 
@@ -66,7 +66,7 @@ Every tutorial should contain the following sections:
 
 ---
 
-## The KrippyTech Difference
+## The Aki Inu Tech Difference
 
 Every tutorial should include information that only comes from real production experience.
 
@@ -78,7 +78,7 @@ Examples include:
 - Best practices learned over time
 - Production recommendations
 
-These notes are what make KrippyTech unique.
+These notes are what make Aki Inu Tech unique.
 
 ---
 

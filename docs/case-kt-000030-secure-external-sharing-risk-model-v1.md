@@ -10,7 +10,7 @@ Sanitized engineering extraction EX-006-06.
 Preserve the engineering lesson. Do not publish customer, tenant, recipient, domain, mailbox, file, link, password, site, or other identifying details.
 
 ## Title
-KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech
+KT-000030 | Secure External Sharing Required a Risk-Model Decision | Aki Inu Tech
 
 ## H1
 Secure External Sharing Required a Risk-Model Decision

@@ -1,10 +1,10 @@
-# KrippyTech Content Ledger Standard
+# Aki Inu Tech Content Ledger Standard
 
 **Version:** 1.0
 
 ## Purpose
 
-The content ledger is the control plane for KrippyTech knowledge development.
+The content ledger is the control plane for Aki Inu Tech knowledge development.
 
 It prevents duplicate work, shows what has already been captured, identifies the strongest next builds, and connects source material to published assets.
 

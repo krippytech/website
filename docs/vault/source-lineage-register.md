@@ -1,10 +1,10 @@
-# KrippyTech Source Lineage Register
+# Aki Inu Tech Source Lineage Register
 
 **Version:** 1.0
 
 ## Purpose
 
-This register records where published and planned KrippyTech knowledge came from without storing client-identifying material in public-facing content.
+This register records where published and planned Aki Inu Tech knowledge came from without storing client-identifying material in public-facing content.
 
 The goal is traceability, not exposure.
 
@@ -27,7 +27,7 @@ Repository access controls remain the security boundary for the source file. The
 
 ### Foundation
 
-Built primarily from KrippyTech's approved teaching model and standard IT operating principles.
+Built primarily from Aki Inu Tech's approved teaching model and standard IT operating principles.
 
 Use for broad orientation pages such as Active Directory basics, new-user setup, or the Office IT Admin Survival Guide.
 
@@ -39,7 +39,7 @@ The public guide is sanitized and generalized, but its diagnostic path is ground
 
 ### Mixed
 
-Combines the approved KrippyTech teaching model with one or more field-derived patterns.
+Combines the approved Aki Inu Tech teaching model with one or more field-derived patterns.
 
 ### Advanced / KER-Derived
 

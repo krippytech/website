@@ -1,4 +1,4 @@
-# KrippyTech Engineering Repository
+# Aki Inu Tech Engineering Repository
 
 (KER)
 
@@ -8,8 +8,8 @@ Version 1.0
 
 # Purpose
 
-The KrippyTech Engineering Repository (KER) is the private engineering
-knowledge system behind KrippyTech.
+The Aki Inu Tech Engineering Repository (KER) is the private engineering
+knowledge system behind Aki Inu Tech.
 
 KER preserves real-world technical experience while protecting customer
 privacy.
@@ -150,7 +150,7 @@ One engineering problem may create multiple published resources.
 
 # Ethical Standards
 
-KrippyTech protects customer privacy.
+Aki Inu Tech protects customer privacy.
 
 Published material must never reveal:
 

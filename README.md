@@ -1,12 +1,12 @@
-# KrippyTech website
+# Aki Inu Tech website
 
-Static source for [krippytech.com](https://krippytech.com), a practical IT
+Static source for [akiinutech.com](https://akiinutech.com), a practical IT
 knowledge and consulting site covering Microsoft 365, Azure, MSP operations,
 PowerShell, technical cases, and downloadable resources.
 
 ## Practical GitHub resources
 
-- [First 10 Minutes IT Troubleshooting](resources/first-10-minutes-troubleshooting/README.md) — a compact, evidence-first field method with links to the full KrippyTech guide and printable worksheet.
+- [First 10 Minutes IT Troubleshooting](resources/first-10-minutes-troubleshooting/README.md) — a compact, evidence-first field method with links to the full Aki Inu Tech guide and printable worksheet.
 
 ## Architecture
 
@@ -20,7 +20,7 @@ PowerShell, technical cases, and downloadable resources.
 ## Deployment
 
 GitHub Pages deploys the root of the `main` branch. The `CNAME` file configures
-the custom domain `krippytech.com`, and GitHub Pages enforces HTTPS.
+the custom domain `akiinutech.com`, and GitHub Pages enforces HTTPS.
 
 Changes merged to `main` are production changes. Use a pull request and wait
 for the static-site validation check before merging.

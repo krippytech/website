@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://krippytech.com/tutorials/azure-vm-connectivity-investigation/">
+    <link rel="canonical" href="https://akiinutech.com/tutorials/azure-vm-connectivity-investigation/">
 
-    <title>Investigating Azure VM Connectivity | KrippyTech</title>
+    <title>Investigating Azure VM Connectivity | Aki Inu Tech</title>
     <meta name="description" content="An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.">
 
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
     <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
-    <meta property="og:site_name" content="KrippyTech">
-    <meta property="og:title" content="Investigating Azure VM Connectivity | KrippyTech">
+    <meta property="og:site_name" content="Aki Inu Tech">
+    <meta property="og:title" content="Investigating Azure VM Connectivity | Aki Inu Tech">
     <meta property="og:type" content="article">
     <meta property="og:description" content="An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.">
-    <meta property="og:url" content="https://krippytech.com/tutorials/azure-vm-connectivity-investigation/">
-    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
-    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:url" content="https://akiinutech.com/tutorials/azure-vm-connectivity-investigation/">
+    <meta property="og:image" content="https://akiinutech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="Aki Inu Tech — Practical IT. Real Solutions.">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Investigating Azure VM Connectivity | KrippyTech">
+    <meta name="twitter:title" content="Investigating Azure VM Connectivity | Aki Inu Tech">
     <meta name="twitter:description" content="An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.">
-    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
-    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta name="twitter:image" content="https://akiinutech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="Aki Inu Tech — Practical IT. Real Solutions.">
 
     <link rel="stylesheet" href="/styles.css">
     <script src="/navigation.js"></script>
@@ -37,10 +37,10 @@
 <header class="site-header">
     <div class="container">
         <nav class="site-nav" aria-label="Primary navigation">
-            <a class="brand" href="/" aria-label="KrippyTech home">
-                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+            <a class="brand" href="/" aria-label="Aki Inu Tech home">
+                <img src="/assets/images/krippytech-logo.png" alt="Aki Inu Tech logo" width="58" height="46" class="brand-logo">
                 <span class="brand-text">
-                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-name">Aki Inu Tech</span>
                     <span class="brand-tagline">Practical IT. Real Solutions.</span>
                 </span>
             </a>
@@ -133,7 +133,7 @@
             <div class="grid">
                 <article class="card"><p class="card-number">Purpose</p><h3>Locate the failed layer</h3><p>Determine whether evidence first diverges at Azure resource state, addressing, policy, routing, an intermediary, DNS, the guest firewall, or the application listener.</p></article>
                 <article class="card"><p class="card-number">Boundary</p><h3>Observe before changing</h3><p>No NSG, route, IP, firewall, load balancer, DNS, appliance, guest, credential, or Azure role is changed by this guide.</p></article>
-                <article class="card"><p class="card-number">Example</p><h3>Synthetic lab only</h3><p><code>KrippyTech Lab</code>, <code>rg-krippytech-lab</code>, and <code>LAB-VM-01</code> are documentation-safe placeholders.</p></article>
+                <article class="card"><p class="card-number">Example</p><h3>Synthetic lab only</h3><p><code>Aki Inu Tech Lab</code>, <code>rg-akiinutech-lab</code>, and <code>LAB-VM-01</code> are documentation-safe placeholders.</p></article>
                 <article class="card"><p class="card-number">Method</p><h3>One flow at one time</h3><p>Record source, destination, protocol, port, direction, UTC time, and expected path before interpreting any control.</p></article>
             </div>
         </div>
@@ -221,7 +221,7 @@
                 <h2>Build a minimum Azure record before interpreting controls.</h2>
             </div>
             <div class="grid">
-                <article class="card"><p class="card-number">Scope</p><h3>Resource identity</h3><p>Record subscription <code>KrippyTech Lab</code>, resource group <code>rg-krippytech-lab</code>, VM <code>LAB-VM-01</code>, region, guest OS, and accountable workload owner.</p></article>
+                <article class="card"><p class="card-number">Scope</p><h3>Resource identity</h3><p>Record subscription <code>Aki Inu Tech Lab</code>, resource group <code>rg-akiinutech-lab</code>, VM <code>LAB-VM-01</code>, region, guest OS, and accountable workload owner.</p></article>
                 <article class="card"><p class="card-number">Compute</p><h3>State and health</h3><p>Record resource existence, provisioning state, power state, Resource Health or platform-health evidence, guest responsiveness, expected service, and port.</p></article>
                 <article class="card"><p class="card-number">Interface</p><h3>Address placement</h3><p>Record <code>nic-lab-vm-01</code>, primary and secondary IP configurations, private IP allocation, public IP association if present, accelerated networking, and IP forwarding state.</p></article>
                 <article class="card"><p class="card-number">Network</p><h3>VNet and subnet</h3><p>Record <code>vnet-lab</code>, <code>subnet-workloads</code>, address prefixes, peering, route-table association, custom DNS, VPN, ExpressRoute, and private-endpoint involvement.</p></article>
@@ -532,15 +532,15 @@ Get-NetFirewallRule -PolicyStore ActiveStore -Enabled True -Direction Inbound |
         <div class="container">
             <div class="section-heading">
                 <p class="eyebrow">21 · Related resources</p>
-                <h2>Continue through the appropriate KrippyTech path.</h2>
+                <h2>Continue through the appropriate Aki Inu Tech path.</h2>
             </div>
             <div class="grid">
                 <article class="card"><p class="card-number">Practice lab</p><h3>Map the Network Path to an Azure VM</h3><p>Apply this investigation method to a complete synthetic evidence packet, identify the earliest supported point of failure, and write an escalation-quality finding.</p><a class="card-link" href="/azure-journey/labs/map-azure-vm-network-path/">Open the companion lab <span aria-hidden="true">→</span></a></article>
-                <article class="card"><p class="card-number">Topic hub</p><h3>Azure Journey</h3><p>Place this evidence-first investigation within KrippyTech’s developing Azure foundations, identity, networking, and hybrid learning path.</p><a class="card-link" href="/azure-journey/">Open Azure Journey <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Topic hub</p><h3>Azure Journey</h3><p>Place this evidence-first investigation within Aki Inu Tech’s developing Azure foundations, identity, networking, and hybrid learning path.</p><a class="card-link" href="/azure-journey/">Open Azure Journey <span aria-hidden="true">→</span></a></article>
                 <article class="card"><p class="card-number">Learning method</p><h3>Practical IT Library</h3><p>Use the understand, investigate, resolve, and verify sequence while keeping this guide in the investigation phase.</p><a class="card-link" href="/practical-it-library/#learning-path">Review the learning path <span aria-hidden="true">→</span></a></article>
                 <article class="card"><p class="card-number">Related investigation</p><h3>DNS, Active Directory, and domain health</h3><p>Use the domain-health guide when Azure VM connectivity overlaps domain discovery, secure channels, replication, time, or service evidence.</p><a class="card-link" href="/tutorials/dns-active-directory-domain-health/">Open the domain-health guide <span aria-hidden="true">→</span></a></article>
                 <article class="card"><p class="card-number">Focused DNS method</p><h3>Test-KTDNS tutorial</h3><p>Use the published read-only DNS resource for a bounded query after recording the resolver, expected address, and path.</p><a class="card-link" href="/tutorials/test-ktdns-v1.0.0/">Open the Test-KTDNS tutorial <span aria-hidden="true">→</span></a></article>
-                <article class="card"><p class="card-number">Read-only tooling</p><h3>PowerShell Library</h3><p>Review KrippyTech’s published tooling standards and current read-only release without treating a DNS result as complete network health.</p><a class="card-link" href="/powershell/">Open the PowerShell Library <span aria-hidden="true">→</span></a></article>
+                <article class="card"><p class="card-number">Read-only tooling</p><h3>PowerShell Library</h3><p>Review Aki Inu Tech’s published tooling standards and current read-only release without treating a DNS result as complete network health.</p><a class="card-link" href="/powershell/">Open the PowerShell Library <span aria-hidden="true">→</span></a></article>
                 <article class="card"><p class="card-number">First-line bridge</p><h3>Shared Service Outage Triage</h3><p>Use the Everyday IT path when several users or workflows fail together and the immediate need is safe dependency mapping and escalation rather than Azure redesign.</p><a class="card-link" href="/everyday-it/shared-service-outage-triage/">Open the triage guide <span aria-hidden="true">→</span></a></article>
             </div>
         </div>
@@ -583,7 +583,7 @@ Get-NetFirewallRule -PolicyStore ActiveStore -Enabled True -Direction Inbound |
 </main>
 
 <footer>
-    <div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div>
+    <div class="container">© 2026 Aki Inu Tech. Practical IT. Real Solutions.</div>
 </footer>
 </body>
 </html>
