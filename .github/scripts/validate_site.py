@@ -31,7 +31,7 @@ NOINDEX_ROUTES = {
 SOCIAL_METADATA = {
     "/": {
         "title": "KrippyTech | Practical IT. Real Solutions.",
-        "description": "KrippyTech brings together Practical IT Library, reviewed tutorials and documented cases, plus consulting for technical assessment, troubleshooting, planning, and defined implementation support.",
+        "description": "KrippyTech brings together consulting for technical assessment, troubleshooting, planning, and defined implementation support, plus Practical IT Library, reviewed tutorials, and documented cases.",
         "type": "website",
     },
     "/everyday-it/": {
