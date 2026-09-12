@@ -24,13 +24,14 @@ SOCIAL_IMAGE_ALT = "KrippyTech — Practical IT. Real Solutions."
 NOINDEX_ROUTES = {
     "/azure-journey/",
     "/downloads/",
+    "/msp-university/",
     "/powershell/",
     "/tutorials/shared-mailbox/",
 }
 SOCIAL_METADATA = {
     "/": {
         "title": "KrippyTech | Practical IT. Real Solutions.",
-        "description": "KrippyTech brings together MSP University, reviewed tutorials and documented cases, plus consulting for technical assessment, troubleshooting, planning, and defined implementation support.",
+        "description": "KrippyTech brings together Practical IT Library, reviewed tutorials and documented cases, plus consulting for technical assessment, troubleshooting, planning, and defined implementation support.",
         "type": "website",
     },
     "/everyday-it/": {
@@ -518,9 +519,14 @@ SOCIAL_METADATA = {
         "description": "Download practical KrippyTech IT troubleshooting guides and reviewed PowerShell tools, including the printable First 10 Minutes worksheet.",
         "type": "website",
     },
-    "/msp-university/": {
-        "title": "MSP University | KrippyTech",
+    "/practical-it-library/": {
+        "title": "Practical IT Library | KrippyTech",
         "description": "Practical KrippyTech learning for technicians, solo IT administrators, and MSP professionals working in Microsoft environments.",
+        "type": "website",
+    },
+    "/msp-university/": {
+        "title": "MSP University Has Moved | KrippyTech",
+        "description": "MSP University is now Practical IT Library. Update your links and bookmarks to the new address.",
         "type": "website",
     },
     "/microsoft-365/": {
@@ -1746,7 +1752,7 @@ def validate_get_ktnetworkconfig_tutorial(failures: list[str]) -> None:
         "/tutorials/test-ktdns-v1.0.0/",
         "/tutorials/dns-active-directory-domain-health/",
         "/windows-hybrid/",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "https://learn.microsoft.com/en-us/powershell/module/nettcpip/get-netipconfiguration?view=windowsserver2025-ps",
         "https://learn.microsoft.com/en-us/powershell/module/netadapter/get-netadapter?view=windowsserver2022-ps",
         "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.6",
@@ -1829,7 +1835,7 @@ def validate_dns_ad_domain_health_tutorial(failures: list[str]) -> None:
         "/downloads/powershell/test-ktdns/v1.0.0/Test-KTDNS.ps1",
         "/powershell/#test-ktdns-v1",
         "/windows-hybrid/",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
     )
     for required in required_text:
         if required not in source:
@@ -1888,7 +1894,7 @@ def validate_entra_signin_ca_tutorial(failures: list[str]) -> None:
         "What it does not prove",
         "Safest next investigation step",
         "Excluded actions include disabling users",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "/microsoft-365/",
         "/tutorials/shared-mailbox-not-showing-outlook/",
         "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/",
@@ -1954,7 +1960,7 @@ def validate_windows_server_low_disk_tutorial(failures: list[str]) -> None:
         "What it does not prove",
         "Safest next investigation step",
         "This guide does not provide cleanup or remediation procedures",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "/windows-hybrid/",
         "/tutorials/dns-active-directory-domain-health/",
         "/tutorials/test-ktdns-v1.0.0/",
@@ -2025,7 +2031,7 @@ def validate_dhcp_scope_capacity_tutorial(failures: list[str]) -> None:
         "/tutorials/get-ktnetworkconfig-v1.0.0/",
         "/tutorials/test-ktdns-v1.0.0/",
         "/windows-hybrid/",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/?view=windowsserver2025-ps",
         "https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-scopes",
         "https://learn.microsoft.com/en-us/powershell/module/dhcpserver/get-dhcpserverv4scope?view=windowsserver2025-ps",
@@ -2125,7 +2131,7 @@ def validate_onedrive_sharepoint_sync_tutorial(failures: list[str]) -> None:
         "What it does not prove",
         "Safest next investigation step",
         "This guide does not provide repair or reconciliation procedures",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "/microsoft-365/",
         "/tutorials/entra-signin-conditional-access-investigation/",
         "https://support.microsoft.com/en-us/onedrive/save-disk-space-with-onedrive-files-on-demand-for-windows",
@@ -2197,7 +2203,7 @@ def validate_azure_vm_connectivity_tutorial(failures: list[str]) -> None:
         "Get-NetFirewallRule -PolicyStore ActiveStore -Enabled True -Direction Inbound",
         "198.51.100.24",
         "/azure-journey/",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing",
         "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
         "https://learn.microsoft.com/en-us/azure/network-watcher/effective-security-rules-overview",
@@ -2283,7 +2289,7 @@ def validate_azure_vm_network_path_lab(failures: list[str]) -> None:
         "earliest demonstrated point blocking the defined flow",
         "/tutorials/azure-vm-connectivity-investigation/",
         "/azure-journey/",
-        "/msp-university/#learning-path",
+        "/practical-it-library/#learning-path",
         "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing",
         "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
         "https://learn.microsoft.com/en-us/azure/network-watcher/effective-security-rules-overview",
@@ -3709,7 +3715,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
         "/": 1,
         "/consulting/": 2,
         "/everyday-it/": 2,
-        "/msp-university/": 2,
+        "/practical-it-library/": 2,
         "/azure-journey/": 2,
         "/tutorials/": 2,
         "/cases/": 2,
@@ -3724,8 +3730,8 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             return "/"
         if route and route.startswith("/everyday-it/"):
             return "/everyday-it/"
-        if route in {"/msp-university/", "/microsoft-365/", "/windows-hybrid/"}:
-            return "/msp-university/"
+        if route in {"/practical-it-library/", "/microsoft-365/", "/windows-hybrid/"}:
+            return "/practical-it-library/"
         if route and route.startswith("/azure-journey/labs/"):
             return "/azure-journey/"
         if route and route.startswith("/tutorials/"):
@@ -3812,7 +3818,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             )
 
         expected_group = None
-        if expected in {"/everyday-it/", "/msp-university/", "/azure-journey/"}:
+        if expected in {"/everyday-it/", "/practical-it-library/", "/azure-journey/"}:
             expected_group = "learn-menu"
         elif expected in {"/tutorials/", "/cases/"}:
             expected_group = "solutions-menu"

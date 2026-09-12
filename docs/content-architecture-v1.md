@@ -4,7 +4,7 @@
 
 ## Purpose
 
-This document defines how KrippyTech organizes, evaluates, develops, and reuses technical knowledge across Everyday IT, KER, tutorials, cases, downloads, MSP University, and future consulting material.
+This document defines how KrippyTech organizes, evaluates, develops, and reuses technical knowledge across Everyday IT, KER, tutorials, cases, downloads, Practical IT Library, and future consulting material.
 
 It does not replace the Vault Standard or Publishing Standard.
 
@@ -168,7 +168,7 @@ An extracted lesson may become one or more assets:
 - PowerShell tool
 - Checklist
 - Download
-- MSP University lesson
+- Practical IT Library lesson
 - Azure lab
 - Consulting reference
 
@@ -231,7 +231,7 @@ Use when:
 - the value is repeatable execution
 - a technician benefits from carrying the steps into live work
 
-### MSP University / Course Material
+### Practical IT Library / Course Material
 
 Use when:
 - several related lessons form a teachable progression
