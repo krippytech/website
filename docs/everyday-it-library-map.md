@@ -4,7 +4,7 @@
 
 ## Purpose
 
-This register maps the existing Everyday IT library into KrippyTech Content Architecture v1.
+This register maps the existing Everyday IT library into Aki Inu Tech Content Architecture v1.
 
 It is the working inventory for published guides. It answers:
 

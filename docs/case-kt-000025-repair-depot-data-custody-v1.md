@@ -4,7 +4,7 @@
 `/cases/KT-000025/`
 
 ## Browser/social title
-**KT-000025 | External Repair Required a Data-Custody Plan | KrippyTech**
+**KT-000025 | External Repair Required a Data-Custody Plan | Aki Inu Tech**
 
 ## H1
 **External Repair Required a Data-Custody Plan**

@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://krippytech.com/azure-journey/labs/map-azure-vm-network-path/">
+    <link rel="canonical" href="https://akiinutech.com/azure-journey/labs/map-azure-vm-network-path/">
 
-    <title>Map the Network Path to an Azure VM | KrippyTech</title>
+    <title>Map the Network Path to an Azure VM | Aki Inu Tech</title>
     <meta name="description" content="A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.">
 
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
     <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
-    <meta property="og:site_name" content="KrippyTech">
-    <meta property="og:title" content="Map the Network Path to an Azure VM | KrippyTech">
+    <meta property="og:site_name" content="Aki Inu Tech">
+    <meta property="og:title" content="Map the Network Path to an Azure VM | Aki Inu Tech">
     <meta property="og:type" content="article">
     <meta property="og:description" content="A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.">
-    <meta property="og:url" content="https://krippytech.com/azure-journey/labs/map-azure-vm-network-path/">
-    <meta property="og:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
-    <meta property="og:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta property="og:url" content="https://akiinutech.com/azure-journey/labs/map-azure-vm-network-path/">
+    <meta property="og:image" content="https://akiinutech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="Aki Inu Tech — Practical IT. Real Solutions.">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Map the Network Path to an Azure VM | KrippyTech">
+    <meta name="twitter:title" content="Map the Network Path to an Azure VM | Aki Inu Tech">
     <meta name="twitter:description" content="A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.">
-    <meta name="twitter:image" content="https://krippytech.com/assets/images/krippytech-social-card.png">
-    <meta name="twitter:image:alt" content="KrippyTech — Practical IT. Real Solutions.">
+    <meta name="twitter:image" content="https://akiinutech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="Aki Inu Tech — Practical IT. Real Solutions.">
 
     <link rel="stylesheet" href="/styles.css">
     <script src="/navigation.js"></script>
@@ -37,10 +37,10 @@
 <header class="site-header">
     <div class="container">
         <nav class="site-nav" aria-label="Primary navigation">
-            <a class="brand" href="/" aria-label="KrippyTech home">
-                <img src="/assets/images/krippytech-logo.png" alt="KrippyTech logo" width="58" height="46" class="brand-logo">
+            <a class="brand" href="/" aria-label="Aki Inu Tech home">
+                <img src="/assets/images/krippytech-logo.png" alt="Aki Inu Tech logo" width="58" height="46" class="brand-logo">
                 <span class="brand-text">
-                    <span class="brand-name">KrippyTech</span>
+                    <span class="brand-name">Aki Inu Tech</span>
                     <span class="brand-tagline">Practical IT. Real Solutions.</span>
                 </span>
             </a>
@@ -173,8 +173,8 @@
         <div class="container">
             <div class="section-heading"><p class="eyebrow">4 · Synthetic environment</p><h2>Two VMs, one VNet, one defined application flow.</h2></div>
             <div class="grid">
-                <article class="card"><p class="card-number">Source</p><h3>LAB-ADMIN-01</h3><p>Private IP <code>10.20.1.4</code><br>Subnet <code>subnet-admin</code><br>VNet <code>vnet-krippytech-lab</code></p></article>
-                <article class="card"><p class="card-number">Destination</p><h3>LAB-WEB-01</h3><p>Private IP <code>10.20.2.4</code><br>Subnet <code>subnet-app</code><br>VNet <code>vnet-krippytech-lab</code></p></article>
+                <article class="card"><p class="card-number">Source</p><h3>LAB-ADMIN-01</h3><p>Private IP <code>10.20.1.4</code><br>Subnet <code>subnet-admin</code><br>VNet <code>vnet-akiinutech-lab</code></p></article>
+                <article class="card"><p class="card-number">Destination</p><h3>LAB-WEB-01</h3><p>Private IP <code>10.20.2.4</code><br>Subnet <code>subnet-app</code><br>VNet <code>vnet-akiinutech-lab</code></p></article>
                 <article class="card"><p class="card-number">Service</p><h3>app.lab.example</h3><p>Required protocol <code>TCP</code><br>Required port <code>443</code><br>Path type: private, same VNet</p></article>
                 <article class="card"><p class="card-number">Time</p><h3>Investigation window</h3><p><code>2026-08-22T15:30:00Z</code><br>Symptom: constant from the defined source during the supplied window.</p></article>
             </div>
@@ -225,7 +225,7 @@
                 <article class="card"><p class="card-number">DNS result</p><h3>app.lab.example</h3><p><code>Name: app.lab.example<br>Type: A<br>IPAddress: 10.20.2.4<br>Response: Success</code></p><p>This identifies an address; it does not test TCP 443.</p></article>
                 <article class="card"><p class="card-number">Source VM</p><h3>LAB-ADMIN-01</h3><p>Provisioning: <code>Succeeded</code><br>Power: <code>Running</code><br>NIC: <code>nic-lab-admin-01</code><br>Private IP: <code>10.20.1.4</code></p></article>
                 <article class="card"><p class="card-number">Destination VM</p><h3>LAB-WEB-01</h3><p>Provisioning: <code>Succeeded</code><br>Power: <code>Running</code><br>NIC: <code>nic-lab-web-01</code><br>Private IP: <code>10.20.2.4</code></p></article>
-                <article class="card"><p class="card-number">Subnet placement</p><h3>Expected associations</h3><p><code>nic-lab-admin-01</code> → <code>subnet-admin</code><br><code>nic-lab-web-01</code> → <code>subnet-app</code><br>Both subnets → <code>vnet-krippytech-lab</code></p></article>
+                <article class="card"><p class="card-number">Subnet placement</p><h3>Expected associations</h3><p><code>nic-lab-admin-01</code> → <code>subnet-admin</code><br><code>nic-lab-web-01</code> → <code>subnet-app</code><br>Both subnets → <code>vnet-akiinutech-lab</code></p></article>
             </div>
 
             <h3>Attached network security groups</h3>
@@ -406,6 +406,6 @@
     </section>
 </main>
 
-<footer><div class="container">© 2026 KrippyTech. Practical IT. Real Solutions.</div></footer>
+<footer><div class="container">© 2026 Aki Inu Tech. Practical IT. Real Solutions.</div></footer>
 </body>
 </html>

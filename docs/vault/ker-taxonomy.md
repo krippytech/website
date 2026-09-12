@@ -1,4 +1,4 @@
-# KrippyTech KER Taxonomy
+# Aki Inu Tech KER Taxonomy
 
 **Version:** 2.0
 

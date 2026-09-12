@@ -1,12 +1,12 @@
-# KrippyTech Search Control Map v1
+# Aki Inu Tech Search Control Map v1
 
 **Status:** Internal strategy document
 
-**Purpose:** Define the search topics KrippyTech wants to own, identify the primary authority page for each topic, map the supporting content already published, expose content gaps, connect relevant consulting intent, and identify external footprints that can reinforce the same subject without creating duplicate or competing pages.
+**Purpose:** Define the search topics Aki Inu Tech wants to own, identify the primary authority page for each topic, map the supporting content already published, expose content gaps, connect relevant consulting intent, and identify external footprints that can reinforce the same subject without creating duplicate or competing pages.
 
 ## Core Search Strategy
 
-KrippyTech should not try to rank for every IT phrase. The goal is to build authority around a smaller set of practical problem families where the site already has real depth, troubleshooting judgment, and hands-on credibility.
+Aki Inu Tech should not try to rank for every IT phrase. The goal is to build authority around a smaller set of practical problem families where the site already has real depth, troubleshooting judgment, and hands-on credibility.
 
 Each search family should have:
 
@@ -37,7 +37,7 @@ Do not create a second broad page when an existing page can be strengthened into
 | Security first response for small-business IT | `/everyday-it/suspicious-signin-first-response/` as initial authority with `/everyday-it/malware-alert-first-response/` paired | Passwords & MFA, MFA Recovery, Entra Sign-In & Conditional Access Investigation, Escalate With Evidence, Verify Before Close | Quarantine vs delivery vs false-positive guide, safe endpoint containment checklist, privileged-account first-response guide | Security assessment, identity hardening, incident triage/second opinion, remediation planning | LinkedIn first-response guidance, GitHub evidence/checklist templates, security community participation without publishing unsafe remediation detail |
 | Shared-service and server/infrastructure triage | `/everyday-it/shared-service-outage-triage/` | Server Restart Safety, DNS/AD Domain Health, DHCP Scope Capacity, Windows Server Low Disk Space, Azure VM Connectivity, Troubleshooting Paths | Service dependency mapping, server-role identification, safe maintenance/restart planning checklist, RDP/session-host isolation | Infrastructure assessment, outage troubleshooting, modernization, server/cloud planning | LinkedIn infrastructure troubleshooting posts, GitHub diagnostic tools, technical case studies |
 | Azure and hybrid connectivity/infrastructure investigation | `/azure-journey/` plus `/tutorials/azure-vm-connectivity-investigation/` | Azure VM Network Path lab, DNS/AD Domain Health, Entra Sign-In investigation, Windows & Hybrid hub | Azure network troubleshooting hub, hybrid identity troubleshooting map, VM access/RDP dependency guide, practical Azure cost/cleanup review | Azure/hybrid assessment, migrations, connectivity troubleshooting, architecture review | GitHub scripts/labs, LinkedIn Azure investigation posts, Microsoft/Azure community contributions |
-| Small-business independent IT consulting | `/consulting/` | About, Contact, Everyday IT, Tutorials, Cases | Defined project examples, independent technology review, migration/project examples, technology planning examples, eventual local/service-intent pages only when substantively different | This is the commercial destination | LinkedIn profile/company presence, GitHub profile/repository, consistent KrippyTech entity/profile descriptions, selected local/business profiles if maintained accurately |
+| Small-business independent IT consulting | `/consulting/` | About, Contact, Everyday IT, Tutorials, Cases | Defined project examples, independent technology review, migration/project examples, technology planning examples, eventual local/service-intent pages only when substantively different | This is the commercial destination | LinkedIn profile/company presence, GitHub profile/repository, consistent Aki Inu Tech entity/profile descriptions, selected local/business profiles if maintained accurately |
 
 ## Phase 2 Prioritization Model
 
@@ -45,9 +45,9 @@ The twelve families are scored on six practical dimensions. Each dimension is sc
 
 | Dimension | What a high score means |
 |---|---|
-| Existing depth | KrippyTech already has several useful, distinct supporting pages |
+| Existing depth | Aki Inu Tech already has several useful, distinct supporting pages |
 | Search-intent breadth | The family contains many legitimate symptom/task/decision searches |
-| Differentiation | KrippyTech can say something more useful than generic vendor-summary content |
+| Differentiation | Aki Inu Tech can say something more useful than generic vendor-summary content |
 | Internal graph | Existing pages can reinforce each other naturally through links and next-step paths |
 | Consulting fit | The family creates a legitimate path to paid help without forcing a sales pitch |
 | Build efficiency | The cluster can become meaningfully stronger with relatively few new assets |
@@ -69,7 +69,7 @@ The twelve families are scored on six practical dimensions. Each dimension is sc
 | 11 | Azure and hybrid connectivity/infrastructure investigation | 3 | 4 | 5 | 3 | 5 | 2 | **22** | Build deeper authority first |
 | 12 | Printer, scanner, scan-to-folder, and scan-to-email troubleshooting | 4 | 4 | 4 | 4 | 3 | 3 | **22** | Maintain, then expand selectively |
 
-The first three topics are intentionally not chosen only by raw search breadth. They combine strong existing content, clear search intent, real troubleshooting judgment, internal linking potential, and realistic consulting relevance. That gives KrippyTech the best chance to look authoritative quickly rather than spreading effort across twelve clusters at once.
+The first three topics are intentionally not chosen only by raw search breadth. They combine strong existing content, clear search intent, real troubleshooting judgment, internal linking potential, and realistic consulting relevance. That gives Aki Inu Tech the best chance to look authoritative quickly rather than spreading effort across twelve clusters at once.
 
 ## Locked Initial Search-Control Targets
 
@@ -150,7 +150,7 @@ These remain a deliberate paired-authority cluster because authentication and au
 
 **Why this goes third:**
 
-- this is the strongest KrippyTech differentiator
+- this is the strongest Aki Inu Tech differentiator
 - competitors can reproduce click-by-click fixes more easily than a coherent diagnostic method
 - the site already has the full lifecycle and enough supporting pages to behave like a true knowledge graph
 - almost every future technical cluster can reinforce this one
@@ -223,8 +223,8 @@ After the authority page and at least one supporting asset are strong:
 
 - publish concise LinkedIn field lessons tied to the cluster
 - add GitHub utilities/checklists only where there is genuine reusable value
-- keep KrippyTech profile language consistent
-- answer community questions when there is a real opportunity, linking only when the KrippyTech page materially expands the answer
+- keep Aki Inu Tech profile language consistent
+- answer community questions when there is a real opportunity, linking only when the Aki Inu Tech page materially expands the answer
 
 Do not launch an external promotion push before the internal cluster is ready to receive traffic.
 
@@ -290,11 +290,11 @@ Avoid turning every guide into a sales page. The educational content should rema
 
 Preferred message:
 
-> Learn what makes sense to learn. Hand off what should not be guessed at. Bring KrippyTech in when the work becomes complicated, risky, specialized, or time-consuming.
+> Learn what makes sense to learn. Hand off what should not be guessed at. Bring Aki Inu Tech in when the work becomes complicated, risky, specialized, or time-consuming.
 
 ## External Search Reinforcement
 
-External activity should reinforce KrippyTech's topic clusters rather than become a separate content universe.
+External activity should reinforce Aki Inu Tech's topic clusters rather than become a separate content universe.
 
 ### GitHub
 
@@ -304,7 +304,7 @@ Use GitHub for technical proof and reusable tools:
 - diagnostic scripts
 - checklists/templates
 - lab material
-- small technical examples that naturally reference a deeper KrippyTech article
+- small technical examples that naturally reference a deeper Aki Inu Tech article
 
 Do not duplicate entire site articles into repository READMEs.
 
@@ -316,17 +316,17 @@ Use LinkedIn for concise field lessons and recognizable problem statements:
 - before/after lessons from sanitized work
 - common mistakes
 - decision frameworks
-- links to the canonical KrippyTech guide when readers need the complete workflow
+- links to the canonical Aki Inu Tech guide when readers need the complete workflow
 
 ### Community participation
 
-When participating in legitimate technical communities, answer the question first. Link to KrippyTech only when the linked page materially expands the answer.
+When participating in legitimate technical communities, answer the question first. Link to Aki Inu Tech only when the linked page materially expands the answer.
 
 Do not create low-value backlinks, mass-post links, or duplicate keyword-stuffed profiles.
 
 ### Entity consistency
 
-Keep the same basic KrippyTech description, website, service model, and topic language across maintained profiles. The public identity should consistently communicate:
+Keep the same basic Aki Inu Tech description, website, service model, and topic language across maintained profiles. The public identity should consistently communicate:
 
 - practical IT guidance
 - independent consulting
@@ -384,7 +384,7 @@ Each target family can be reviewed using five questions:
 | Proof | Is there deeper material showing real technical experience rather than generic summaries? |
 | Commercial bridge | Is there a natural, non-pushy path to Consulting when the work exceeds DIY scope? |
 
-A topic should not be considered controlled simply because KrippyTech has one article about it.
+A topic should not be considered controlled simply because Aki Inu Tech has one article about it.
 
 ## Phase 1 Execution Plan
 
@@ -395,7 +395,7 @@ A topic should not be considered controlled simply because KrippyTech has one ar
 5. Review title/H1/meta phrasing on the three locked Tier 1 authority clusters for clear search intent without keyword stuffing.
 6. Strengthen internal links from narrow guides back to their authority page where missing.
 7. Add Consulting bridges only at appropriate risk/complexity boundaries.
-8. Establish consistent external KrippyTech descriptions before expanding external profiles.
+8. Establish consistent external Aki Inu Tech descriptions before expanding external profiles.
 9. Use future search-performance data to adjust priority, not to create duplicate pages for every keyword variation.
 
 ## Maintenance Rule
@@ -410,4 +410,4 @@ Whenever a new page, tutorial, Case, or consulting asset is proposed:
 6. identify any external reinforcement opportunity
 7. update the gap queue and ownership map when the cluster materially changes
 
-The objective is not more pages. The objective is a smaller number of subjects where KrippyTech becomes unusually useful, connected, and recognizable.
+The objective is not more pages. The objective is a smaller number of subjects where Aki Inu Tech becomes unusually useful, connected, and recognizable.

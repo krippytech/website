@@ -2,7 +2,7 @@
 
 > **The first 10 minutes should reduce uncertainty, not create more variables.**
 
-This is the compact GitHub version of KrippyTech’s troubleshooting method for the opening minutes of an incident.
+This is the compact GitHub version of Aki Inu Tech’s troubleshooting method for the opening minutes of an incident.
 
 The goal is not to guess the final fix immediately. The goal is to narrow the problem safely, preserve useful evidence, and choose the next test that teaches you something.
 
@@ -43,14 +43,14 @@ Stop before changing a shared or high-risk system if you cannot explain the expe
 
 That includes shared infrastructure, privileged access, security controls, production data, backups, mail flow, identity architecture, and other changes where one troubleshooting step can affect many users or destroy evidence.
 
-## Full KrippyTech resources
+## Full Aki Inu Tech resources
 
 The GitHub version is intentionally compact. The canonical guides contain the deeper reasoning, examples, decision paths, and related troubleshooting links.
 
-- **First 10 Minutes guide:** [Read the canonical guide](https://krippytech.com/everyday-it/troubleshooting-first-10-minutes/)
-- **Full troubleshooting method:** [Follow the complete method](https://krippytech.com/everyday-it/troubleshooting-paths/)
-- **Printable worksheet:** [Download the worksheet PDF](https://krippytech.com/downloads/guides/first-10-minutes/KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf)
-- **KrippyTech Downloads:** [Browse practical guides and reviewed tools](https://krippytech.com/downloads/)
+- **First 10 Minutes guide:** [Read the canonical guide](https://akiinutech.com/everyday-it/troubleshooting-first-10-minutes/)
+- **Full troubleshooting method:** [Follow the complete method](https://akiinutech.com/everyday-it/troubleshooting-paths/)
+- **Printable worksheet:** [Download the worksheet PDF](https://akiinutech.com/downloads/guides/first-10-minutes/KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf)
+- **Aki Inu Tech Downloads:** [Browse practical guides and reviewed tools](https://akiinutech.com/downloads/)
 
 ## One rule to keep
 

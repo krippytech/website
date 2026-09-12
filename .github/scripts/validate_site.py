@@ -16,11 +16,11 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SITE_ORIGIN = "https://krippytech.com"
+SITE_ORIGIN = "https://akiinutech.com"
 SITEMAP_URL = f"{SITE_ORIGIN}/sitemap.xml"
 SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9"
 SOCIAL_IMAGE_URL = f"{SITE_ORIGIN}/assets/images/krippytech-social-card.png"
-SOCIAL_IMAGE_ALT = "KrippyTech — Practical IT. Real Solutions."
+SOCIAL_IMAGE_ALT = "Aki Inu Tech — Practical IT. Real Solutions."
 NOINDEX_ROUTES = {
     "/azure-journey/",
     "/downloads/",
@@ -30,578 +30,578 @@ NOINDEX_ROUTES = {
 }
 SOCIAL_METADATA = {
     "/": {
-        "title": "KrippyTech | Practical IT. Real Solutions.",
-        "description": "KrippyTech brings together consulting for technical assessment, troubleshooting, planning, and defined implementation support, plus Practical IT Library, reviewed tutorials, and documented cases.",
+        "title": "Aki Inu Tech | Practical IT. Real Solutions.",
+        "description": "Aki Inu Tech brings together consulting for technical assessment, troubleshooting, planning, and defined implementation support, plus Practical IT Library, reviewed tutorials, and documented cases.",
         "type": "website",
     },
     "/everyday-it/": {
-        "title": "Everyday IT | KrippyTech",
+        "title": "Everyday IT | Aki Inu Tech",
         "description": "Real-world guidance for the IT work people actually get asked to do every day.",
         "type": "website",
     },
     "/everyday-it/active-directory/": {
-        "title": "Active Directory Basics | Everyday IT | KrippyTech",
+        "title": "Active Directory Basics | Everyday IT | Aki Inu Tech",
         "description": "Practical Active Directory guidance for everyday IT work: OUs, users, groups, logon issues, lockouts, safe changes, and what not to touch casually.",
         "type": "article",
     },
     "/everyday-it/groups-permissions/": {
-        "title": "Groups, NTFS & File Permission Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Groups, NTFS & File Permission Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Practical troubleshooting for groups, NTFS and share permissions, Effective Access, token refresh, inherited access, mapped drives, and access-denied symptoms.",
         "type": "article",
     },
     "/everyday-it/share-permissions-vs-ntfs-permissions/": {
-        "title": "Share Permissions vs NTFS Permissions | Everyday IT | KrippyTech",
+        "title": "Share Permissions vs NTFS Permissions | Everyday IT | Aki Inu Tech",
         "description": "A practical decision guide for separating SMB share permissions from NTFS permissions when a user can reach the server but still gets Access Denied.",
         "type": "article",
     },
     "/everyday-it/conditional-access-signin-failure/": {
-        "title": "Conditional Access Sign-In Failure Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Conditional Access Sign-In Failure Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Match the exact Entra sign-in, identify which Conditional Access policy applied, prove which requirement failed, and avoid weakening tenant-wide security controls just to make a login work.",
         "type": "article",
     },
     "/everyday-it/microsoft-365-email/": {
-        "title": "Microsoft 365 & Outlook Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Microsoft 365 & Outlook Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Practical Microsoft 365 and Outlook troubleshooting for licensing, mailboxes, shared mailbox access, message trace, mail flow, Outlook symptoms, and safe escalation.",
         "type": "article",
     },
     "/everyday-it/mailbox-restore-delegation-forwarding/": {
-        "title": "Mailbox Restore, Delegation or Forwarding? | Everyday IT | KrippyTech",
+        "title": "Mailbox Restore, Delegation or Forwarding? | Everyday IT | Aki Inu Tech",
         "description": "Choose the right Microsoft 365 mailbox action by separating recovery, access, future delivery, sending identity, and offboarding requirements.",
         "type": "article",
     },
     "/everyday-it/new-user-setup/": {
-        "title": "New User Setup | Everyday IT | KrippyTech",
+        "title": "New User Setup | Everyday IT | Aki Inu Tech",
         "description": "A practical new-user onboarding guide for office IT: Active Directory, Microsoft 365 licensing, groups, email, access, devices, verification, and common mistakes.",
         "type": "article",
     },
     "/everyday-it/office-it-admin-survival-guide/": {
-        "title": "Office IT Admin Survival Guide | KrippyTech",
+        "title": "Office IT Admin Survival Guide | Aki Inu Tech",
         "description": "A practical real-world course outline covering new-user onboarding, Active Directory, permissions, Microsoft 365, printers, SharePoint, OneDrive, MFA, troubleshooting, and escalation.",
         "type": "article",
     },
     "/everyday-it/passwords-mfa/": {
-        "title": "Password, Account Lockout & MFA Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Password, Account Lockout & MFA Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Practical password, account lockout, and MFA troubleshooting across Windows, Microsoft 365, Entra ID, cached credentials, tokens, recovery, and safe escalation.",
         "type": "article",
     },
     "/everyday-it/printers/": {
-        "title": "Printer Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Printer Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "A practical office printer troubleshooting guide covering drivers, ports, queues, spooler issues, test prints, network checks, and safe escalation.",
         "type": "article",
     },
     "/everyday-it/sharepoint-onedrive/": {
-        "title": "SharePoint & OneDrive Basics | Everyday IT | KrippyTech",
+        "title": "SharePoint & OneDrive Basics | Everyday IT | Aki Inu Tech",
         "description": "Practical SharePoint and OneDrive guidance for permissions, sync issues, browser-vs-Explorer problems, and common access complaints.",
         "type": "article",
     },
     "/everyday-it/browser-works-onedrive-file-explorer-does-not/": {
-        "title": "Browser Works but OneDrive or File Explorer Does Not | Everyday IT | KrippyTech",
+        "title": "Browser Works but OneDrive or File Explorer Does Not | Everyday IT | Aki Inu Tech",
         "description": "Use the browser as the known-good source, then isolate OneDrive account state, sync relationship, local path, and pending changes before rebuilding anything.",
         "type": "article",
     },
     "/everyday-it/troubleshooting-escalation/": {
-        "title": "Troubleshooting & Escalation | Everyday IT | KrippyTech",
+        "title": "Troubleshooting & Escalation | Everyday IT | Aki Inu Tech",
         "description": "A practical troubleshooting framework for everyday IT: scope the issue, ask what changed, test one layer at a time, verify the fix, and know when to escalate.",
         "type": "article",
     },
     "/everyday-it/onedrive-free-up-space/": {
-        "title": "Recover Disk Space with OneDrive Files On-Demand | Everyday IT | KrippyTech",
+        "title": "Recover Disk Space with OneDrive Files On-Demand | Everyday IT | Aki Inu Tech",
         "description": "Use OneDrive Files On-Demand to release local cached copies without deleting the cloud files.",
         "type": "article",
     },
     "/everyday-it/outlook-profile-rebuild/": {
-        "title": "Rebuild an Outlook Profile | Everyday IT | KrippyTech",
+        "title": "Rebuild an Outlook Profile | Everyday IT | Aki Inu Tech",
         "description": "Rebuild a Classic Outlook profile safely when the desktop client is misbehaving but the mailbox itself is healthy.",
         "type": "article",
     },
     "/everyday-it/scan-to-email/": {
-        "title": "Scan to Email Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Scan to Email Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Use timestamps and evidence to prove whether a scan-to-email delay occurred before or after Microsoft 365 received the message.",
         "type": "article",
     },
     "/everyday-it/scanner-troubleshooting/": {
-        "title": "Scanner Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Scanner Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Troubleshoot a scanner by separating the physical connection, Windows detection, vendor software, and workstation performance layers.",
         "type": "article",
     },
     "/everyday-it/vpn-troubleshooting/": {
-        "title": "VPN Troubleshooting | Everyday IT | KrippyTech",
+        "title": "VPN Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Prove where a VPN connection fails before reinstalling clients or changing firewall settings.",
         "type": "article",
     },
     "/everyday-it/vpn-connected-but-nothing-works/": {
-        "title": "VPN Connected But Nothing Works | Everyday IT | KrippyTech",
+        "title": "VPN Connected But Nothing Works | Everyday IT | Aki Inu Tech",
         "description": "A green VPN status proves the tunnel came up. It does not prove the user can reach or use the internal resource they actually need.",
         "type": "article",
     },
     "/everyday-it/windows-temp-cleanup/": {
-        "title": "Clear Windows Temp Files Safely | Everyday IT | KrippyTech",
+        "title": "Clear Windows Temp Files Safely | Everyday IT | Aki Inu Tech",
         "description": "Clear common Windows Temp locations safely, skip files that are in use, and avoid deleting the Temp folders themselves.",
         "type": "article",
     },
     "/everyday-it/mapped-drives-access/": {
-        "title": "Mapped Drives & File Access | Everyday IT | KrippyTech",
+        "title": "Mapped Drives & File Access | Everyday IT | Aki Inu Tech",
         "description": "A practical guide to missing mapped drives, UNC paths, SMB shares, permissions, SharePoint and OneDrive confusion, and safe file-access troubleshooting.",
         "type": "article",
     },
     "/everyday-it/scan-to-folder/": {
-        "title": "Scan to Folder Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Scan to Folder Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "A practical guide to setting up and troubleshooting scan-to-folder with SMB shares, UNC paths, permissions, service accounts, and copier testing.",
         "type": "article",
     },
     "/everyday-it/vpn-mapped-drive/": {
-        "title": "VPN Works but the Drive Does Not | Everyday IT | KrippyTech",
+        "title": "VPN Works but the Drive Does Not | Everyday IT | Aki Inu Tech",
         "description": "A practical guide for troubleshooting mapped drives and internal file access after a VPN tunnel connects successfully.",
         "type": "article",
     },
     "/everyday-it/new-pc-setup/": {
-        "title": "New PC Setup Checklist | Everyday IT | KrippyTech",
+        "title": "New PC Setup Checklist | Everyday IT | Aki Inu Tech",
         "description": "Set up a replacement workstation by validating identity, data, apps, peripherals, updates, and the user's real workflow.",
         "type": "article",
     },
     "/everyday-it/office-account-licensing/": {
-        "title": "Office Account & Licensing Problems | Everyday IT | KrippyTech",
+        "title": "Office Account & Licensing Problems | Everyday IT | Aki Inu Tech",
         "description": "Separate Office activation, account ownership, and Microsoft 365 licensing before reinstalling applications.",
         "type": "article",
     },
     "/everyday-it/outlook-vs-web/": {
-        "title": "Outlook vs Outlook on the Web | Everyday IT | KrippyTech",
+        "title": "Outlook vs Outlook on the Web | Everyday IT | Aki Inu Tech",
         "description": "Use Outlook on the web to prove whether an email problem is in Microsoft 365 or the local Outlook client.",
         "type": "article",
     },
     "/everyday-it/when-to-replace-workstation/": {
-        "title": "When to Replace a Workstation | Everyday IT | KrippyTech",
+        "title": "When to Replace a Workstation | Everyday IT | Aki Inu Tech",
         "description": "Use repeat failures, severe slowness, failing storage, constant resource pressure, and repair history to decide when to stop troubleshooting.",
         "type": "article",
     },
     "/everyday-it/repair-rebuild-replace-workstation/": {
-        "title": "Repair, Rebuild, or Replace a Workstation | Everyday IT | KrippyTech",
+        "title": "Repair, Rebuild, or Replace a Workstation | Everyday IT | Aki Inu Tech",
         "description": "Use evidence, repeat failures, hardware health, data risk, and business downtime to choose repair, rebuild, or replacement without turning one ticket into endless repair cycles.",
         "type": "article",
     },
     "/everyday-it/former-employee-mailbox/": {
-        "title": "Former Employee Mailbox Handling | Everyday IT | KrippyTech",
+        "title": "Former Employee Mailbox Handling | Everyday IT | Aki Inu Tech",
         "description": "Handle a departing employee's mailbox safely by separating account access, mailbox retention, shared-mailbox use, delegation, and verification.",
         "type": "article",
     },
     "/everyday-it/message-trace-delivery/": {
-        "title": "Message Trace: Prove Delivery | Everyday IT | KrippyTech",
+        "title": "Message Trace: Prove Delivery | Everyday IT | Aki Inu Tech",
         "description": "Use exact timestamps and message trace to prove whether Microsoft 365 received, delayed, delivered, rejected, or quarantined a message.",
         "type": "article",
     },
     "/everyday-it/outlook-signature-troubleshooting/": {
-        "title": "Outlook Signature Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Outlook Signature Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Use Outlook-versus-web comparison and a clean test signature to separate client formatting, roaming signature, and mail-flow causes.",
         "type": "article",
     },
     "/everyday-it/shared-mailbox-permissions/": {
-        "title": "Shared Mailbox Permissions | Everyday IT | KrippyTech",
+        "title": "Shared Mailbox Permissions | Everyday IT | Aki Inu Tech",
         "description": "Understand Full Access, Send As, Send on Behalf, propagation, and shared mailbox verification without guessing.",
         "type": "article",
     },
     "/everyday-it/calendar-sharing-troubleshooting/": {
-        "title": "Calendar Sharing Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Calendar Sharing Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Identify the mailbox, tenant, sharing policy, and recipient domain before changing calendar permissions.",
         "type": "article",
     },
     "/everyday-it/mobile-exchange-sync/": {
-        "title": "Mobile Exchange Sync Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Mobile Exchange Sync Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Separate mailbox health from stale Apple Mail authentication and token state after Microsoft security changes.",
         "type": "article",
     },
     "/everyday-it/outlook-profile-creation-fails/": {
-        "title": "Outlook Profile Creation Fails | Everyday IT | KrippyTech",
+        "title": "Outlook Profile Creation Fails | Everyday IT | Aki Inu Tech",
         "description": "Use web sign-in, connectivity, Office state, cached credentials, and Autodiscover evidence before repeatedly rebuilding Outlook.",
         "type": "article",
     },
     "/everyday-it/sharepoint-sync-troubleshooting/": {
-        "title": "SharePoint Sync Troubleshooting | Everyday IT | KrippyTech",
+        "title": "SharePoint Sync Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Separate SharePoint library sync, OneDrive shortcuts, browser access, and local File Explorer state before rebuilding anything.",
         "type": "article",
     },
     "/everyday-it/access-denied-after-group-change/": {
-        "title": "Access Denied After a Group Change | Everyday IT | KrippyTech",
+        "title": "Access Denied After a Group Change | Everyday IT | Aki Inu Tech",
         "description": "Verify the permission path and refresh the user's access token before rebuilding ACLs.",
         "type": "article",
     },
     "/everyday-it/mfa-recovery/": {
-        "title": "MFA Recovery Without Weakening Security | Everyday IT | KrippyTech",
+        "title": "MFA Recovery Without Weakening Security | Everyday IT | Aki Inu Tech",
         "description": "Recover MFA safely without casually disabling security controls.",
         "type": "article",
     },
     "/everyday-it/recurring-account-lockout/": {
-        "title": "Recurring Account Lockout Troubleshooting | Everyday IT | KrippyTech",
+        "title": "Recurring Account Lockout Troubleshooting | Everyday IT | Aki Inu Tech",
         "description": "Find the source of repeated lockouts instead of repeatedly unlocking the account.",
         "type": "article",
     },
     "/everyday-it/shared-mailbox-not-showing/": {
-        "title": "Shared Mailbox Not Showing in Outlook | Everyday IT | KrippyTech",
+        "title": "Shared Mailbox Not Showing in Outlook | Everyday IT | Aki Inu Tech",
         "description": "Prove the permission before rebuilding Outlook when a shared mailbox does not appear.",
         "type": "article",
     },
     "/everyday-it/troubleshooting-paths/": {
-        "title": "IT Troubleshooting Method & Decision Paths | Everyday IT | KrippyTech",
+        "title": "IT Troubleshooting Method & Decision Paths | Everyday IT | Aki Inu Tech",
         "description": "Scope the symptom, compare known-good states, identify the failing layer, plan safe changes, verify the outcome, and escalate with evidence.",
         "type": "article",
     },
     "/everyday-it/troubleshooting-first-10-minutes/": {
-        "title": "IT Troubleshooting First 10 Minutes Checklist | Everyday IT | KrippyTech",
+        "title": "IT Troubleshooting First 10 Minutes Checklist | Everyday IT | Aki Inu Tech",
         "description": "Use the first ten minutes of an IT issue to reduce uncertainty: define the symptom, scope impact, compare known-good states, identify the likely layer, preserve evidence, and choose one safe next test.",
         "type": "article",
     },
     "/everyday-it/scope-the-problem/": {
-        "title": "Scope the Problem Before You Fix It | Everyday IT | KrippyTech",
+        "title": "Scope the Problem Before You Fix It | Everyday IT | Aki Inu Tech",
         "description": "Determine the blast radius first: one user, one device, one location, one resource, or everyone.",
         "type": "article",
     },
     "/everyday-it/known-good-comparison/": {
-        "title": "Use a Known-Good Comparison | Everyday IT | KrippyTech",
+        "title": "Use a Known-Good Comparison | Everyday IT | Aki Inu Tech",
         "description": "Change one variable at a time and compare with something known to work.",
         "type": "article",
     },
     "/everyday-it/change-safety-rollback/": {
-        "title": "Change Safety & Rollback Planning | Everyday IT | KrippyTech",
+        "title": "Change Safety & Rollback Planning | Everyday IT | Aki Inu Tech",
         "description": "Before changing permissions, profiles, sync, servers, policies, or data, know what you are changing, what it can affect, and how to get back.",
         "type": "article",
     },
     "/everyday-it/verify-before-close/": {
-        "title": "Verify Before You Close | Everyday IT | KrippyTech",
+        "title": "Verify Before You Close | Everyday IT | Aki Inu Tech",
         "description": "A command succeeding is not the same thing as the user's workflow being restored. Verify the original symptom before closing the work.",
         "type": "article",
     },
     "/everyday-it/escalate-with-evidence/": {
-        "title": "Escalate With Evidence | Everyday IT | KrippyTech",
+        "title": "Escalate With Evidence | Everyday IT | Aki Inu Tech",
         "description": "Good escalation preserves the investigation. Hand off scope, evidence, failed tests, risk, and the exact next question.",
         "type": "article",
     },
     "/everyday-it/workaround-vs-resolution/": {
-        "title": "Workaround vs Resolution | Everyday IT | KrippyTech",
+        "title": "Workaround vs Resolution | Everyday IT | Aki Inu Tech",
         "description": "A workaround restores productivity. A resolution removes or controls the underlying cause.",
         "type": "article",
     },
     "/everyday-it/prevent-recurrence/": {
-        "title": "Prevent Recurrence | Everyday IT | KrippyTech",
+        "title": "Prevent Recurrence | Everyday IT | Aki Inu Tech",
         "description": "After the fix, decide whether anything should change so the same problem is easier to prevent or diagnose next time.",
         "type": "article",
     },
     "/everyday-it/restrict-inherited-folder-permissions/": {
-        "title": "Restrict Inherited Folder Permissions Safely | Everyday IT | KrippyTech",
+        "title": "Restrict Inherited Folder Permissions Safely | Everyday IT | Aki Inu Tech",
         "description": "Preserve a known-good access path before changing inherited NTFS permissions, then prove both allowed and denied access afterward.",
         "type": "article",
     },
     "/everyday-it/failing-disk-protect-data-first/": {
-        "title": "Failing Disk: Protect Data Before Rebuilding | Everyday IT | KrippyTech",
+        "title": "Failing Disk: Protect Data Before Rebuilding | Everyday IT | Aki Inu Tech",
         "description": "When a disk may be failing, understand the data-protection state before repair or rebuild work begins.",
         "type": "article",
     },
     "/everyday-it/suspicious-signin-first-response/": {
-        "title": "Suspicious Sign-In First Response | Everyday IT | KrippyTech",
+        "title": "Suspicious Sign-In First Response | Everyday IT | Aki Inu Tech",
         "description": "Treat unexpected MFA prompts and unfamiliar sign-ins as evidence. Verify the user, preserve the security boundary, collect proof, and escalate when compromise is plausible.",
         "type": "article",
     },
     "/everyday-it/malware-alert-first-response/": {
-        "title": "Malware Alert First Response | Everyday IT | KrippyTech",
+        "title": "Malware Alert First Response | Everyday IT | Aki Inu Tech",
         "description": "Treat a malware alert as an evidence and containment problem before turning it into a cleanup exercise.",
         "type": "article",
     },
     "/everyday-it/quarantine-delivery-false-positive/": {
-        "title": "Quarantine, Delivery or False Positive? | Everyday IT | KrippyTech",
+        "title": "Quarantine, Delivery or False Positive? | Everyday IT | Aki Inu Tech",
         "description": "Separate detection from action, delivery state, user impact, and false-positive judgment before closing a security alert.",
         "type": "article",
     },
     "/everyday-it/shared-service-outage-triage/": {
-        "title": "Shared Service Outage Triage | Everyday IT | KrippyTech",
+        "title": "Shared Service Outage Triage | Everyday IT | Aki Inu Tech",
         "description": "When several users fail together, stop repairing endpoints and identify the shared dependency.",
         "type": "article",
     },
     "/everyday-it/server-restart-safety/": {
-        "title": "Server Restart Safety | Everyday IT | KrippyTech",
+        "title": "Server Restart Safety | Everyday IT | Aki Inu Tech",
         "description": "A restart is a change, not a diagnostic shortcut. Know what the server does, who depends on it, how you will get back in, and what success looks like.",
         "type": "article",
     },
     "/about/": {
-        "title": "About KrippyTech",
-        "description": "Learn why KrippyTech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
+        "title": "About Aki Inu Tech",
+        "description": "Learn why Aki Inu Tech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
         "type": "website",
     },
     "/azure-journey/": {
-        "title": "Azure Journey | KrippyTech",
-        "description": "Azure Journey connects KrippyTech's published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.",
+        "title": "Azure Journey | Aki Inu Tech",
+        "description": "Azure Journey connects Aki Inu Tech's published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.",
         "type": "website",
     },
     "/azure-journey/labs/map-azure-vm-network-path/": {
-        "title": "Map the Network Path to an Azure VM | KrippyTech",
+        "title": "Map the Network Path to an Azure VM | Aki Inu Tech",
         "description": "A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.",
         "type": "article",
     },
     "/cases/": {
-        "title": "KrippyTech Case Library",
-        "description": "Browse KrippyTech technical cases documenting real-world IT problems, investigation paths, root causes, resolutions, and lessons learned.",
+        "title": "Aki Inu Tech Case Library",
+        "description": "Browse Aki Inu Tech technical cases documenting real-world IT problems, investigation paths, root causes, resolutions, and lessons learned.",
         "type": "website",
     },
     "/cases/KT-000001/": {
-        "title": "KT-000001 | Shared Mailbox Not Showing in Outlook | KrippyTech",
+        "title": "KT-000001 | Shared Mailbox Not Showing in Outlook | Aki Inu Tech",
         "description": "KT-000001 documents a Microsoft 365 shared mailbox that did not appear in Outlook after access was assigned, including investigation, resolution, and lessons learned.",
         "type": "article",
     },
     "/cases/KT-000002/": {
-        "title": "KT-000002 | Exchange Online Archive Not Reducing Primary Mailbox | KrippyTech",
+        "title": "KT-000002 | Exchange Online Archive Not Reducing Primary Mailbox | Aki Inu Tech",
         "description": "KT-000002 documents an Exchange Online mailbox whose archive policy appeared correct but was not reducing the primary mailbox, including the evidence that identified a stale retention hold.",
         "type": "article",
     },
     "/cases/KT-000003/": {
-        "title": "KT-000003 | VPN Connected but Internal Resource Still Failed | KrippyTech",
+        "title": "KT-000003 | VPN Connected but Internal Resource Still Failed | Aki Inu Tech",
         "description": "A public-safe case showing why a connected VPN does not prove the user's internal resource path works.",
         "type": "article",
     },
     "/cases/KT-000004/": {
-        "title": "KT-000004 | SharePoint Worked in Browser but File Explorer Was Incomplete | KrippyTech",
+        "title": "KT-000004 | SharePoint Worked in Browser but File Explorer Was Incomplete | Aki Inu Tech",
         "description": "A public-safe case showing how browser access proved cloud access while a stale OneDrive relationship caused File Explorer to show an incomplete SharePoint library.",
         "type": "article",
     },
     "/cases/KT-000005/": {
-        "title": "KT-000005 | Folder Access Was Wrong Because NTFS Inheritance | KrippyTech",
+        "title": "KT-000005 | Folder Access Was Wrong Because NTFS Inheritance | Aki Inu Tech",
         "description": "A public-safe case showing how the exact permission layer was identified, inherited NTFS access was replaced safely, and both allowed and denied users were verified afterward.",
         "type": "article",
     },
     "/cases/KT-000006/": {
-        "title": "KT-000006 | Malicious Outlook Attachment Was Already Quarantined | KrippyTech",
+        "title": "KT-000006 | Malicious Outlook Attachment Was Already Quarantined | Aki Inu Tech",
         "description": "A public-safe security case showing how detection, quarantine state, reputation evidence, related detections, execution risk, and follow-up were separated before the alert was treated as resolved.",
         "type": "article",
     },
     "/cases/KT-000007/": {
-        "title": "KT-000007 | Repeated Scanner Problems Exposed an Aging Workstation | KrippyTech",
+        "title": "KT-000007 | Repeated Scanner Problems Exposed an Aging Workstation | Aki Inu Tech",
         "description": "A public-safe workstation case showing how recurrence, constant CPU saturation, severe UI delay, age, and failed scanner software shifted the decision from temporary repair toward replacement.",
         "type": "article",
     },
     "/cases/KT-000008/": {
-        "title": "KT-000008 | Different Systems Accepted Different Password States | KrippyTech",
+        "title": "KT-000008 | Different Systems Accepted Different Password States | Aki Inu Tech",
         "description": "A public-safe identity case showing how hosted desktop and Microsoft 365 sign-ins were tested separately before credential state was normalized across the required applications.",
         "type": "article",
     },
     "/cases/KT-000009/": {
-        "title": "KT-000009 | Exchange Delivered Mail While Outlook Appeared Delayed | KrippyTech",
+        "title": "KT-000009 | Exchange Delivered Mail While Outlook Appeared Delayed | Aki Inu Tech",
         "description": "A public-safe Microsoft 365 case showing how exact-time message trace, workstation connectivity, event correlation, and Outlook cache evidence separated Exchange delivery from a local Outlook symptom.",
         "type": "article",
     },
     "/cases/KT-000010/": {
-        "title": "KT-000010 | Printer Test Page Worked but Application Printing Failed | KrippyTech",
+        "title": "KT-000010 | Printer Test Page Worked but Application Printing Failed | Aki Inu Tech",
         "description": "A public-safe printer case showing why a successful Windows test page clears only part of the printing path and does not prove the user's application workflow.",
         "type": "article",
     },
     "/cases/KT-000011/": {
-        "title": "KT-000011 | Office APPCRASH Survived Repair and Reinstall | KrippyTech",
+        "title": "KT-000011 | Office APPCRASH Survived Repair and Reinstall | Aki Inu Tech",
         "description": "A public-safe Windows and Office case showing why reinstall is evidence, not proof, when an exact faulting component continues to reproduce the crash.",
         "type": "article",
     },
     "/cases/KT-000012/": {
-        "title": "KT-000012 | Aging Server Capacity Became Lifecycle Debt | KrippyTech",
+        "title": "KT-000012 | Aging Server Capacity Became Lifecycle Debt | Aki Inu Tech",
         "description": "A public-safe infrastructure case showing when repeated performance fixes stop being repairs and start revealing a capacity and lifecycle problem.",
         "type": "article",
     },
     "/cases/KT-000013/": {
-        "title": "KT-000013 | Event Logs Proved Unexpected Server Restarts | KrippyTech",
+        "title": "KT-000013 | Event Logs Proved Unexpected Server Restarts | Aki Inu Tech",
         "description": "A public-safe server triage case showing why user-visible restart symptoms should be correlated with event evidence before hardware or power conclusions are made.",
         "type": "article",
     },
     "/cases/KT-000014/": {
-        "title": "KT-000014 | Legacy Application Upgrade Required Database Validation and Sequencing | KrippyTech",
+        "title": "KT-000014 | Legacy Application Upgrade Required Database Validation and Sequencing | Aki Inu Tech",
         "description": "A public-safe application lifecycle case showing why database-backed software upgrades must protect data, follow supported order, and verify real business workflows.",
         "type": "article",
     },
     "/cases/KT-000015/": {
-        "title": "KT-000015 | Forwarded Mail Failed After Authentication Changed Across Security Layers | KrippyTech",
+        "title": "KT-000015 | Forwarded Mail Failed After Authentication Changed Across Security Layers | Aki Inu Tech",
         "description": "A public-safe mail-flow security case showing why forwarded messages must be traced hop by hop instead of judged only by the original sender.",
         "type": "article",
     },
     "/cases/KT-000016/": {
-        "title": "KT-000016 | Microsoft 365 Offboarding Required the Right Order | KrippyTech",
+        "title": "KT-000016 | Microsoft 365 Offboarding Required the Right Order | Aki Inu Tech",
         "description": "A public-safe Microsoft 365 offboarding case showing why identity, mailbox, licensing, mail continuity, and endpoint actions must be sequenced deliberately.",
         "type": "article",
     },
     "/cases/KT-000017/": {
-        "title": "KT-000017 | SharePoint Access Failed Because MFA State Was Broken | KrippyTech",
+        "title": "KT-000017 | SharePoint Access Failed Because MFA State Was Broken | Aki Inu Tech",
         "description": "A public-safe identity troubleshooting case showing why correct SharePoint permissions do not prove the authentication path is healthy.",
         "type": "article",
     },
     "/cases/KT-000018/": {
-        "title": "KT-000018 | Windows User Profile Was Rebuilt from the Correct SID Mapping | KrippyTech",
+        "title": "KT-000018 | Windows User Profile Was Rebuilt from the Correct SID Mapping | Aki Inu Tech",
         "description": "A public-safe Windows profile recovery case showing why SID-to-path verification comes before deleting a ProfileList registration.",
         "type": "article",
     },
     "/cases/KT-000019/": {
-        "title": "KT-000019 | Remote Camera Failure Was Isolated Layer by Layer | KrippyTech",
+        "title": "KT-000019 | Remote Camera Failure Was Isolated Layer by Layer | Aki Inu Tech",
         "description": "A public-safe troubleshooting case showing how local hardware, Windows, remote-session redirection, and the conferencing application were tested as separate layers.",
         "type": "article",
     },
     "/cases/KT-000020/": {
-        "title": "KT-000020 | Public Website Failed Internally Because DNS Owned the Name | KrippyTech",
+        "title": "KT-000020 | Public Website Failed Internally Because DNS Owned the Name | Aki Inu Tech",
         "description": "A public-safe infrastructure troubleshooting case showing why inside-versus-outside comparison can expose split-DNS failures before firewall or filtering changes help.",
         "type": "article",
     },
     "/cases/KT-000021/": {
-        "title": "KT-000021 | BitLocker Recovery Key Was Missing from One Console but Present in Entra ID | KrippyTech",
+        "title": "KT-000021 | BitLocker Recovery Key Was Missing from One Console but Present in Entra ID | Aki Inu Tech",
         "description": "A public-safe BitLocker recovery case showing why device identity and every approved escrow source must be checked before concluding a recovery key is unavailable.",
         "type": "article",
     },
     "/cases/KT-000022/": {
-        "title": "KT-000022 | Dock and USB-C Instability Spanned Multiple Peripherals | KrippyTech",
+        "title": "KT-000022 | Dock and USB-C Instability Spanned Multiple Peripherals | Aki Inu Tech",
         "description": "A public-safe hardware isolation case showing why failures that move across unrelated peripherals should shift troubleshooting toward the shared dock, USB-C path, and endpoint hardware.",
         "type": "article",
     },
     "/cases/KT-000023/": {
-        "title": "KT-000023 | Intermittent Internet and RDP Drops Required Continuous Evidence | KrippyTech",
+        "title": "KT-000023 | Intermittent Internet and RDP Drops Required Continuous Evidence | Aki Inu Tech",
         "description": "A public-safe networking case showing why intermittent WAN and RDP failures require evidence over time, source/destination comparison, and retesting after carrier remediation.",
         "type": "article",
     },
     "/cases/KT-000024/": {
-        "title": "KT-000024 | RMM Agent Failure Required Vendor Escalation on ARM Hardware | KrippyTech",
+        "title": "KT-000024 | RMM Agent Failure Required Vendor Escalation on ARM Hardware | Aki Inu Tech",
         "description": "A public-safe case showing why a vendor-confirmed compatibility defect should stop repeated local remediation on an otherwise healthy ARM endpoint.",
         "type": "article",
     },
     "/cases/KT-000025/": {
-        "title": "KT-000025 | External Repair Required a Data-Custody Plan | KrippyTech",
+        "title": "KT-000025 | External Repair Required a Data-Custody Plan | Aki Inu Tech",
         "description": "A public-safe endpoint-repair case showing why external repair requires data protection before custody changes hands.",
         "type": "article",
     },
     "/cases/KT-000026/": {
-        "title": "KT-000026 | Cloud-Synced Content Recreated a Removed Utility | KrippyTech",
+        "title": "KT-000026 | Cloud-Synced Content Recreated a Removed Utility | Aki Inu Tech",
         "description": "A public-safe case showing why recurring components require cleanup of both the authoritative sync source and local residue.",
         "type": "article",
     },
     "/cases/KT-000027/": {
-        "title": "KT-000027 | Security Symptoms Required Separate Evidence Paths | KrippyTech",
+        "title": "KT-000027 | Security Symptoms Required Separate Evidence Paths | Aki Inu Tech",
         "description": "A public-safe security case showing why mail, sharing, identity, and endpoint symptoms require separate evidence paths before correlation.",
         "type": "article",
     },
     "/cases/KT-000028/": {
-        "title": "KT-000028 | SaaS License Rollout Required Recipient and Billing Control | KrippyTech",
+        "title": "KT-000028 | SaaS License Rollout Required Recipient and Billing Control | Aki Inu Tech",
         "description": "A public-safe SaaS licensing case showing why recipient selection, functional access, seat reconciliation, and billing are separate proof points.",
         "type": "article",
     },
     "/cases/KT-000029/": {
-        "title": "KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | KrippyTech",
+        "title": "KT-000029 | Repeated Full-System Freezes Justified Hardware Escalation | Aki Inu Tech",
         "description": "A public-safe workstation case showing why recurrence after a known-good software baseline should change the next test toward hardware escalation.",
         "type": "article",
     },
     "/cases/KT-000030/": {
-        "title": "KT-000030 | Secure External Sharing Required a Risk-Model Decision | KrippyTech",
+        "title": "KT-000030 | Secure External Sharing Required a Risk-Model Decision | Aki Inu Tech",
         "description": "A public-safe sharing case showing why convenience, identity, traceability, policy, recipient experience, and cleanup require an explicit risk-model decision.",
         "type": "article",
     },
     "/cases/KT-000031/": {
-        "title": "KT-000031 | Microsoft 365 Admin Consent Required a Controlled Approval Path | KrippyTech",
+        "title": "KT-000031 | Microsoft 365 Admin Consent Required a Controlled Approval Path | Aki Inu Tech",
         "description": "A public-safe Microsoft 365 case showing how a missing consent request became a controlled evidence-first administrator approval workflow.",
         "type": "article",
     },
     "/cases/KT-000032/": {
-        "title": "KT-000032 | Proprietary Surveillance Export Failed in Its Playback Chain | KrippyTech",
+        "title": "KT-000032 | Proprietary Surveillance Export Failed in Its Playback Chain | Aki Inu Tech",
         "description": "A public-safe evidence-handling case showing why proprietary playback failure does not by itself prove that the source export is corrupt.",
         "type": "article",
     },
     "/cases/KT-000033/": {
-        "title": "KT-000033 | Legacy Management Residue Kept Microsoft Store Blocked | KrippyTech",
+        "title": "KT-000033 | Legacy Management Residue Kept Microsoft Store Blocked | Aki Inu Tech",
         "description": "A public-safe Windows case showing how effective-state evidence isolated and corrected legacy management residue without becoming a universal registry fix.",
         "type": "article",
     },
     "/consulting/": {
-        "title": "Independent IT Consulting | KrippyTech",
+        "title": "Independent IT Consulting | Aki Inu Tech",
         "description": "Senior-level IT consulting for small businesses, engaged on your terms: teach it, handle it, or partner on it, without a standing managed-services contract.",
         "type": "website",
     },
     "/contact/": {
-        "title": "Contact KrippyTech",
-        "description": "Contact KrippyTech with general questions, corrections, collaboration ideas, or an initial consulting inquiry.",
+        "title": "Contact Aki Inu Tech",
+        "description": "Contact Aki Inu Tech with general questions, corrections, collaboration ideas, or an initial consulting inquiry.",
         "type": "website",
     },
     "/downloads/": {
-        "title": "IT Troubleshooting Guides & PowerShell Downloads | KrippyTech",
-        "description": "Download practical KrippyTech IT troubleshooting guides and reviewed PowerShell tools, including the printable First 10 Minutes worksheet.",
+        "title": "IT Troubleshooting Guides & PowerShell Downloads | Aki Inu Tech",
+        "description": "Download practical Aki Inu Tech IT troubleshooting guides and reviewed PowerShell tools, including the printable First 10 Minutes worksheet.",
         "type": "website",
     },
     "/practical-it-library/": {
-        "title": "Practical IT Library | KrippyTech",
-        "description": "Practical KrippyTech learning for technicians, solo IT administrators, and MSP professionals working in Microsoft environments.",
+        "title": "Practical IT Library | Aki Inu Tech",
+        "description": "Practical Aki Inu Tech learning for technicians, solo IT administrators, and MSP professionals working in Microsoft environments.",
         "type": "website",
     },
     "/msp-university/": {
-        "title": "MSP University Has Moved | KrippyTech",
+        "title": "MSP University Has Moved | Aki Inu Tech",
         "description": "MSP University is now Practical IT Library. Update your links and bookmarks to the new address.",
         "type": "website",
     },
     "/microsoft-365/": {
-        "title": "Microsoft 365 & Identity | KrippyTech",
-        "description": "Explore KrippyTech's published Microsoft 365 tutorials and anonymized cases across Exchange Online, identity, permissions, collaboration, and PowerShell.",
+        "title": "Microsoft 365 & Identity | Aki Inu Tech",
+        "description": "Explore Aki Inu Tech's published Microsoft 365 tutorials and anonymized cases across Exchange Online, identity, permissions, collaboration, and PowerShell.",
         "type": "website",
     },
     "/powershell/": {
-        "title": "PowerShell Library | KrippyTech",
-        "description": "Download Test-KTDNS v1.0.0, KrippyTech's first public PowerShell release for read-only DNS troubleshooting on Windows.",
+        "title": "PowerShell Library | Aki Inu Tech",
+        "description": "Download Test-KTDNS v1.0.0, Aki Inu Tech's first public PowerShell release for read-only DNS troubleshooting on Windows.",
         "type": "website",
     },
     "/tutorials/": {
-        "title": "Tutorials | KrippyTech",
-        "description": "Practical KrippyTech tutorials for Microsoft 365, Windows, and Azure troubleshooting, including reviewed procedures and clearly labeled drafts.",
+        "title": "Tutorials | Aki Inu Tech",
+        "description": "Practical Aki Inu Tech tutorials for Microsoft 365, Windows, and Azure troubleshooting, including reviewed procedures and clearly labeled drafts.",
         "type": "website",
     },
     "/tutorials/azure-vm-connectivity-investigation/": {
-        "title": "Investigating Azure VM Connectivity | KrippyTech",
+        "title": "Investigating Azure VM Connectivity | Aki Inu Tech",
         "description": "An evidence-first guide for investigating Azure virtual-machine connectivity before changing network, platform, or guest configuration.",
         "type": "article",
     },
     "/tutorials/exchange-online-archive-not-reducing-primary-mailbox/": {
-        "title": "Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | KrippyTech",
+        "title": "Diagnose an Exchange Online Archive Not Reducing Primary Mailbox Usage | Aki Inu Tech",
         "description": "A repeatable Exchange Online PowerShell procedure for diagnosing why an archive mailbox is not reducing primary mailbox usage.",
         "type": "article",
     },
     "/tutorials/dns-active-directory-domain-health/": {
-        "title": "Investigating DNS, Active Directory, and Domain Health | KrippyTech",
+        "title": "Investigating DNS, Active Directory, and Domain Health | Aki Inu Tech",
         "description": "An evidence-first Windows domain investigation guide covering DNS, domain-controller discovery, secure channels, replication, time, services, and event logs.",
         "type": "article",
     },
     "/tutorials/dhcp-scope-capacity-investigation/": {
-        "title": "Investigating DHCP Scope Capacity and Address Exhaustion | KrippyTech",
+        "title": "Investigating DHCP Scope Capacity and Address Exhaustion | Aki Inu Tech",
         "description": "Investigate DHCP scope utilization, leases, reservations, exclusions, failover, and monitoring evidence before planning a capacity change.",
         "type": "article",
     },
     "/tutorials/entra-signin-conditional-access-investigation/": {
-        "title": "Investigating Microsoft Entra Sign-ins and Conditional Access Results | KrippyTech",
+        "title": "Investigating Microsoft Entra Sign-ins and Conditional Access Results | Aki Inu Tech",
         "description": "An evidence-first guide for investigating Microsoft Entra sign-ins, authentication details, device signals, and Conditional Access results without changing tenant configuration.",
         "type": "article",
     },
     "/tutorials/onedrive-sharepoint-sync-investigation/": {
-        "title": "Investigating OneDrive and SharePoint Sync Problems | KrippyTech",
+        "title": "Investigating OneDrive and SharePoint Sync Problems | Aki Inu Tech",
         "description": "An evidence-first guide for investigating OneDrive and SharePoint synchronization problems before changing accounts, relationships, files, or permissions.",
         "type": "article",
     },
     "/tutorials/windows-server-low-disk-space-investigation/": {
-        "title": "Investigating Low Disk Space on Windows Server | KrippyTech",
+        "title": "Investigating Low Disk Space on Windows Server | Aki Inu Tech",
         "description": "An evidence-first guide for investigating low disk space on Windows Server before deleting data, changing retention, or expanding storage.",
         "type": "article",
     },
     "/tutorials/shared-mailbox/": {
-        "title": "Create a Microsoft 365 Shared Mailbox — Draft | KrippyTech",
+        "title": "Create a Microsoft 365 Shared Mailbox — Draft | Aki Inu Tech",
         "description": "Draft status for a Microsoft 365 shared-mailbox tutorial that is not approved for production use.",
         "type": "website",
     },
     "/tutorials/shared-mailbox-not-showing-outlook/": {
-        "title": "Shared Mailbox Not Showing in Outlook | KrippyTech",
+        "title": "Shared Mailbox Not Showing in Outlook | Aki Inu Tech",
         "description": "How to troubleshoot a shared mailbox that does not appear in Outlook after permissions have already been assigned.",
         "type": "article",
     },
     "/tutorials/test-ktdns-v1.0.0/": {
-        "title": "Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting | KrippyTech",
+        "title": "Use Test-KTDNS v1.0.0 for Read-Only DNS Troubleshooting | Aki Inu Tech",
         "description": "Learn how to download, verify, review, and run Test-KTDNS v1.0.0 for read-only DNS troubleshooting on Windows.",
         "type": "article",
     },
     "/tutorials/get-ktnetworkconfig-v1.0.0/": {
-        "title": "Inspecting Local Windows Network Configuration with Get-KTNetworkConfig | KrippyTech",
+        "title": "Inspecting Local Windows Network Configuration with Get-KTNetworkConfig | Aki Inu Tech",
         "description": "Learn how to verify, run, and interpret Get-KTNetworkConfig v1.0.0 before choosing the next Windows network diagnostic step.",
         "type": "article",
     },
     "/windows-hybrid/": {
-        "title": "Windows & Hybrid | KrippyTech",
-        "description": "Explore KrippyTech's Windows and hybrid learning lanes and the published Test-KTDNS read-only DNS troubleshooting tool.",
+        "title": "Windows & Hybrid | Aki Inu Tech",
+        "description": "Explore Aki Inu Tech's Windows and hybrid learning lanes and the published Test-KTDNS read-only DNS troubleshooting tool.",
         "type": "website",
     },
 }
@@ -655,7 +655,7 @@ EXPECTED_HOME_JSON_LD = {
         {
             "@type": "Organization",
             "@id": f"{SITE_ORIGIN}/#organization",
-            "name": "KrippyTech",
+            "name": "Aki Inu Tech",
             "url": f"{SITE_ORIGIN}/",
             "logo": {
                 "@type": "ImageObject",
@@ -668,13 +668,16 @@ EXPECTED_HOME_JSON_LD = {
                 "name": "Michael Miller",
                 "url": f"{SITE_ORIGIN}/about/",
             },
+            # REBRAND TODO: intentionally still the real github.com/krippytech account/org.
+            # Only change this (and index.html's matching JSON-LD) if an akiinutech GitHub
+            # identity actually exists - keep the two in sync either way.
             "sameAs": ["https://github.com/krippytech"],
         },
         {
             "@type": "WebSite",
             "@id": f"{SITE_ORIGIN}/#website",
             "url": f"{SITE_ORIGIN}/",
-            "name": "KrippyTech",
+            "name": "Aki Inu Tech",
             "publisher": {"@id": f"{SITE_ORIGIN}/#organization"},
             "inLanguage": "en-US",
         },
@@ -809,7 +812,7 @@ def canonical_url(route: str) -> str:
 
 def sitemap_target(raw_url: str) -> Path | None:
     parsed = urlsplit(raw_url)
-    if parsed.scheme != "https" or parsed.netloc != "krippytech.com":
+    if parsed.scheme != "https" or parsed.netloc != "akiinutech.com":
         return None
     if parsed.query or parsed.fragment or not parsed.path.endswith("/"):
         return None
@@ -928,7 +931,7 @@ def validate_trust_and_sharing(
             continue
         relative = parser.path.relative_to(ROOT)
         expected_properties = {
-            "og:site_name": "KrippyTech",
+            "og:site_name": "Aki Inu Tech",
             "og:title": expected["title"],
             "og:type": expected["type"],
             "og:description": expected["description"],
@@ -970,8 +973,8 @@ def validate_trust_and_sharing(
 
         image_url = parser.meta_properties.get("og:image", [""])[0]
         parsed_image = urlsplit(image_url)
-        if parsed_image.scheme != "https" or parsed_image.netloc != "krippytech.com":
-            failures.append(f"{relative}: social image must be an absolute KrippyTech HTTPS URL")
+        if parsed_image.scheme != "https" or parsed_image.netloc != "akiinutech.com":
+            failures.append(f"{relative}: social image must be an absolute Aki Inu Tech HTTPS URL")
         elif ROOT / parsed_image.path.lstrip("/") != social_image_path:
             failures.append(f"{relative}: social image URL does not map to the approved asset")
 
@@ -1330,8 +1333,8 @@ def validate_crawl_baseline(
         target = sitemap_target(url)
         if parsed.scheme != "https":
             failures.append(f"sitemap.xml: URL must use HTTPS: {url!r}")
-        if parsed.netloc != "krippytech.com":
-            failures.append(f"sitemap.xml: URL must use apex domain krippytech.com: {url!r}")
+        if parsed.netloc != "akiinutech.com":
+            failures.append(f"sitemap.xml: URL must use apex domain akiinutech.com: {url!r}")
         if parsed.query or parsed.fragment:
             failures.append(f"sitemap.xml: URL must not contain a query or fragment: {url!r}")
         if not parsed.path.endswith("/"):
@@ -1683,7 +1686,7 @@ def validate_get_ktnetworkconfig_release(failures: list[str]) -> None:
             "/downloads/powershell/get-ktnetworkconfig/v1.0.0/SHA256SUMS.txt",
         ),
         ROOT / "downloads/index.html": (
-            "Get-KTNetworkConfig v1.0.0 is KrippyTech’s second downloadable PowerShell release.",
+            "Get-KTNetworkConfig v1.0.0 is Aki Inu Tech’s second downloadable PowerShell release.",
             "Verify the package. Review the script. Run only what you understand.",
             "This release is not Authenticode-signed.",
             "use Unblock-File only on Get-KTNetworkConfig.ps1",
@@ -1789,7 +1792,7 @@ def validate_get_ktnetworkconfig_tutorial(failures: list[str]) -> None:
     integrations = {
         ROOT / "tutorials/index.html": "get-ktnetworkconfig-v1.0.0/",
         ROOT / "windows-hybrid/index.html": "/tutorials/get-ktnetworkconfig-v1.0.0/",
-        ROOT / "sitemap.xml": "https://krippytech.com/tutorials/get-ktnetworkconfig-v1.0.0/",
+        ROOT / "sitemap.xml": "https://akiinutech.com/tutorials/get-ktnetworkconfig-v1.0.0/",
     }
     for integration, required in integrations.items():
         if required not in integration.read_text(encoding="utf-8"):
@@ -3896,11 +3899,11 @@ def validate_first_10_minutes_github_resource(failures: list[str]) -> None:
         "8. **Safety / rollback**",
         "9. **Verify**",
         "10. **Escalate**",
-        "https://krippytech.com/everyday-it/troubleshooting-first-10-minutes/",
-        "https://krippytech.com/everyday-it/troubleshooting-paths/",
-        "https://krippytech.com/downloads/guides/first-10-minutes/"
+        "https://akiinutech.com/everyday-it/troubleshooting-first-10-minutes/",
+        "https://akiinutech.com/everyday-it/troubleshooting-paths/",
+        "https://akiinutech.com/downloads/guides/first-10-minutes/"
         "KrippyTech-First-10-Minutes-Troubleshooting-Worksheet.pdf",
-        "https://krippytech.com/downloads/",
+        "https://akiinutech.com/downloads/",
     )
     for required in required_text:
         if required not in source:

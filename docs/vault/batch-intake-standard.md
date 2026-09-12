@@ -1,4 +1,4 @@
-# KrippyTech Batch Intake Standard
+# Aki Inu Tech Batch Intake Standard
 
 **Version:** 1.0
 

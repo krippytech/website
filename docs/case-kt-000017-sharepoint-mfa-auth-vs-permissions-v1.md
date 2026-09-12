@@ -4,7 +4,7 @@
 `/cases/KT-000017/`
 
 ## Title
-`KT-000017 | SharePoint Access Failed Because MFA State Was Broken | KrippyTech`
+`KT-000017 | SharePoint Access Failed Because MFA State Was Broken | Aki Inu Tech`
 
 ## H1
 `SharePoint Access Failed Because MFA State Was Broken`
