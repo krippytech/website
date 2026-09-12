@@ -36,7 +36,7 @@ Use one primary candidate type:
 - PowerShell
 - Checklist
 - Download
-- MSP University
+- Practical IT Library
 - Azure Lab
 - Consulting reference
 - Duplicate / supporting evidence

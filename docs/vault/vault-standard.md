@@ -16,7 +16,7 @@ privacy.
 
 Its purpose is to transform production engineering work into reusable,
 vendor-neutral technical knowledge that can become KT Cases, tutorials,
-PowerShell scripts, build guides, MSP University lessons, consulting
+PowerShell scripts, build guides, Practical IT Library lessons, consulting
 references, and future educational content.
 
 Nothing is published directly from KER.
@@ -63,7 +63,7 @@ Downloads
 
 ↓
 
-MSP University
+Practical IT Library
 
 ↓
 
@@ -141,7 +141,7 @@ A KT Case may produce:
 - Build Guide
 - Checklist
 - Download
-- MSP University Lesson
+- Practical IT Library Lesson
 - Consulting Reference
 
 One engineering problem may create multiple published resources.
