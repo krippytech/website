@@ -464,6 +464,38 @@ footer {
     font-size: 0.9rem;
 }
 
+/* ---------- Consulting page identity ---------- */
+
+.page-consulting {
+    --accent: #d99a3d;
+    --accent-light: #f0b955;
+}
+
+.page-consulting .eyebrow-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    padding: 7px 14px;
+    border: 1px solid rgba(240, 185, 85, 0.35);
+    border-radius: 999px;
+    background: rgba(217, 154, 61, 0.12);
+    color: var(--accent-light);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-consulting .mission {
+    border-color: rgba(240, 185, 85, 0.25);
+}
+
+.page-consulting .card {
+    border-color: rgba(240, 185, 85, 0.14);
+}
+
+
 /* ---------- Tutorial pages ---------- */
 
 .tutorial-content {
