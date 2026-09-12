@@ -505,8 +505,8 @@ SOCIAL_METADATA = {
         "type": "article",
     },
     "/consulting/": {
-        "title": "Small Business IT Consulting | KrippyTech",
-        "description": "Independent IT consulting for small businesses that want practical technical help without a traditional managed-services relationship.",
+        "title": "Independent IT Consulting | KrippyTech",
+        "description": "Senior-level IT consulting for small businesses, engaged on your terms: teach it, handle it, or partner on it, without a standing managed-services contract.",
         "type": "website",
     },
     "/contact/": {
