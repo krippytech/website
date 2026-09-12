@@ -668,6 +668,9 @@ EXPECTED_HOME_JSON_LD = {
                 "name": "Michael Miller",
                 "url": f"{SITE_ORIGIN}/about/",
             },
+            # REBRAND TODO: intentionally still the real github.com/krippytech account/org.
+            # Only change this (and index.html's matching JSON-LD) if an akiinutech GitHub
+            # identity actually exists - keep the two in sync either way.
             "sameAs": ["https://github.com/krippytech"],
         },
         {
