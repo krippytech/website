@@ -29,8 +29,6 @@ for the static-site validation check before merging.
 
 Left as-is on purpose during the rebrand; confirm before the new domain goes live:
 
-- **Contact email** — still `hello@krippytech.com` (see `contact/index.html`).
-  Switch to `hello@akiinutech.com` once that mailbox is live in Cloudflare.
 - **GitHub link** — still `github.com/krippytech` (see `contact/index.html` and
   the JSON-LD `sameAs` in `index.html` / `.github/scripts/validate_site.py`).
   Only repoint if an `akiinutech` GitHub account/org actually exists; the repo
