@@ -7,18 +7,18 @@
 /* ---------- Design variables ---------- */
 
 :root {
-    --background: #07111f;
-    --surface: #0d1a2b;
-    --surface-light: #132238;
-    --border: #1d3048;
+    --background: #ffffff;
+    --surface: #f5f7fb;
+    --surface-light: #eef1f7;
+    --border: #dde3ee;
 
-    --text: #e8eef7;
-    --muted: #9fb0c7;
+    --text: #101828;
+    --muted: #47536b;
 
-    --accent: #2f81f7;
-    --accent-light: #58a6ff;
+    --accent: #2f6fed;
+    --accent-light: #1450b8;
 
-    --content-width: 1100px;   
+    --content-width: 1100px;
 }
 
 
@@ -70,9 +70,9 @@ img {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(10, 23, 39, 0.97);
-    border-bottom: 1px solid rgba(144, 174, 210, 0.18);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
     backdrop-filter: blur(14px);
 }
 
@@ -154,7 +154,7 @@ img {
     min-height: 42px;
     border: 1px solid transparent;
     border-radius: 999px;
-    color: #dce7f5;
+    color: #1f2a3d;
     background: transparent;
     font-size: 0.91rem;
     font-weight: 700;
@@ -177,15 +177,15 @@ img {
 .nav-link:hover,
 .nav-trigger:hover,
 .dropdown-group.is-open > .nav-trigger {
-    color: #ffffff;
-    background: rgba(88, 166, 255, 0.11);
-    border-color: rgba(121, 184, 255, 0.16);
+    color: #05070c;
+    background: rgba(47, 111, 237, 0.10);
+    border-color: rgba(47, 111, 237, 0.20);
 }
 
 .nav-link[aria-current="page"] {
-    color: #ffffff;
-    background: rgba(47, 129, 247, 0.17);
-    border-color: rgba(88, 166, 255, 0.33);
+    color: #05070c;
+    background: rgba(47, 111, 237, 0.14);
+    border-color: rgba(47, 111, 237, 0.30);
     box-shadow: inset 0 -2px 0 var(--accent-light);
 }
 
@@ -194,15 +194,15 @@ img {
     padding-inline: 17px;
     color: #ffffff;
     background: var(--accent);
-    box-shadow: 0 7px 18px rgba(47, 129, 247, 0.22);
+    box-shadow: 0 7px 18px rgba(47, 111, 237, 0.24);
 }
 
 .contact-link:hover,
 .contact-link[aria-current="page"] {
     color: #ffffff;
-    background: #3d8bfa;
-    border-color: rgba(255, 255, 255, 0.14);
-    box-shadow: 0 10px 22px rgba(47, 129, 247, 0.30);
+    background: #2359cf;
+    border-color: rgba(16, 24, 40, 0.10);
+    box-shadow: 0 10px 22px rgba(47, 111, 237, 0.32);
     transform: translateY(-2px);
 }
 
@@ -226,10 +226,10 @@ img {
     width: max-content;
     min-width: 190px;
     padding: 8px;
-    border: 1px solid rgba(144, 174, 210, 0.18);
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background: rgba(13, 26, 43, 0.99);
-    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+    background: rgba(255, 255, 255, 0.99);
+    box-shadow: 0 18px 38px rgba(16, 24, 40, 0.16);
     opacity: 0;
     visibility: hidden;
     transform: translate(-50%, -5px);
@@ -251,7 +251,7 @@ html:not(.js) .dropdown-group:focus-within .dropdown-menu,
     display: block;
     padding: 10px 12px;
     border-radius: 9px;
-    color: #dce7f5;
+    color: #1f2a3d;
     font-size: 0.89rem;
     font-weight: 700;
     white-space: nowrap;
@@ -263,12 +263,12 @@ html:not(.js) .dropdown-group:focus-within .dropdown-menu,
 .dropdown-menu a:hover,
 .dropdown-menu a:focus-visible,
 .dropdown-menu a[aria-current="page"] {
-    color: #ffffff;
-    background: rgba(88, 166, 255, 0.13);
+    color: #05070c;
+    background: rgba(47, 111, 237, 0.12);
 }
 
 :where(a, button):focus-visible {
-    outline: 3px solid #9ac8ff;
+    outline: 3px solid #2f6fed;
     outline-offset: 3px;
     box-shadow: 0 0 0 2px var(--background);
 }
@@ -308,7 +308,7 @@ h1 {
 
 .hero-text {
     max-width: 760px;
-    color: #b8c5d6;
+    color: #39445a;
     font-size: 1.2rem;
     margin-bottom: 34px;
 }
@@ -329,7 +329,7 @@ h1 {
 }
 
 .highlight {
-    color: white;
+    color: var(--text);
     font-weight: 700;
 }
 
@@ -362,8 +362,8 @@ h1 {
 }
 
 .button-secondary {
-    border: 1px solid #41536c;
-    color: #dce7f5;
+    border: 1px solid #c7d0de;
+    color: #1f2a3d;
 }
 
 
@@ -428,7 +428,7 @@ h1 {
 
 .card-link:hover,
 .card-link:focus-visible {
-    color: white;
+    color: var(--text);
 }
 
 
@@ -459,16 +459,16 @@ h1 {
 footer {
     margin-top: 40px;
     padding: 32px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.10);
-    color: #8496ad;
+    border-top: 1px solid rgba(16, 24, 40, 0.10);
+    color: #5b6b82;
     font-size: 0.9rem;
 }
 
 /* ---------- Consulting page identity ---------- */
 
 .page-consulting {
-    --accent: #d99a3d;
-    --accent-light: #f0b955;
+    --accent: #a8650f;
+    --accent-light: #8a5a17;
 }
 
 .page-consulting .eyebrow-badge {
@@ -477,9 +477,9 @@ footer {
     gap: 8px;
     margin-bottom: 22px;
     padding: 7px 14px;
-    border: 1px solid rgba(240, 185, 85, 0.35);
+    border: 1px solid rgba(168, 101, 15, 0.35);
     border-radius: 999px;
-    background: rgba(217, 154, 61, 0.12);
+    background: rgba(168, 101, 15, 0.10);
     color: var(--accent-light);
     font-size: 0.78rem;
     font-weight: 800;
@@ -488,11 +488,11 @@ footer {
 }
 
 .page-consulting .mission {
-    border-color: rgba(240, 185, 85, 0.25);
+    border-color: rgba(168, 101, 15, 0.25);
 }
 
 .page-consulting .card {
-    border-color: rgba(240, 185, 85, 0.14);
+    border-color: rgba(168, 101, 15, 0.16);
 }
 
 
@@ -585,7 +585,7 @@ footer {
         padding: 0 13px;
         border-color: var(--border);
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.035);
+        background: rgba(16, 24, 40, 0.04);
     }
 
     .menu-icon,
@@ -631,7 +631,7 @@ footer {
     .mobile-panel {
         display: block;
         border-top: 1px solid var(--border);
-        background: rgba(8, 20, 35, 0.99);
+        background: rgba(255, 255, 255, 0.99);
     }
 
     .js .mobile-panel {
@@ -660,29 +660,29 @@ footer {
     .mobile-direct,
     .mobile-submenu a {
         padding: 10px 12px;
-        color: #dce7f5;
+        color: #1f2a3d;
         font-weight: 700;
     }
 
     .mobile-direct:hover,
     .mobile-submenu a:hover {
-        color: #ffffff;
-        background: rgba(88, 166, 255, 0.11);
+        color: #05070c;
+        background: rgba(47, 111, 237, 0.10);
     }
 
     .mobile-direct[aria-current="page"],
     .mobile-submenu a[aria-current="page"] {
-        color: #ffffff;
-        background: rgba(47, 129, 247, 0.17);
+        color: #05070c;
+        background: rgba(47, 111, 237, 0.14);
         box-shadow: inset 3px 0 0 var(--accent-light);
     }
 
     .mobile-group {
         margin-block: 6px;
         padding: 10px 8px 8px;
-        border: 1px solid rgba(144, 174, 210, 0.12);
+        border: 1px solid rgba(16, 24, 40, 0.10);
         border-radius: 13px;
-        background: rgba(255, 255, 255, 0.025);
+        background: rgba(16, 24, 40, 0.02);
     }
 
     .mobile-group-label {
@@ -740,12 +740,12 @@ footer {
 ========================================================= */
 
 .callout {
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(16, 24, 40, 0.12);
     border-left-width: 4px;
     border-radius: 10px;
     padding: 18px 20px;
     margin: 24px 0;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(16, 24, 40, 0.03);
 }
 
 .callout h3 {
@@ -758,29 +758,33 @@ footer {
 }
 
 .callout-info {
-    border-left-color: #4da3ff;
+    border-left-color: #2f6fed;
 }
 
 .callout-warning {
-    border-left-color: #f0b429;
+    border-left-color: #b5790a;
 }
 
 .callout-realworld {
-    border-left-color: #8b5cf6;
+    border-left-color: #7c3aed;
 }
 
 .callout-verification {
-    border-left-color: #34d399;
+    border-left-color: #0e9f6e;
 }
 .callout-tip {
-    border-left-color: #00d4ff;
+    border-left-color: #0891b2;
 }
 /* =========================================================
    Aki Inu Tech Code Blocks
+   Code blocks intentionally stay dark regardless of the
+   page theme, so their own text color is set explicitly
+   rather than inherited from body.
 ========================================================= */
 
 .code-block {
     background: #0d1117;
+    color: #e6edf7;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 10px;
     margin: 24px 0;
@@ -823,8 +827,8 @@ footer {
     width: 100%;
     max-width: 1000px;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,.12);
-    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    border: 1px solid rgba(16,24,40,.14);
+    box-shadow: 0 10px 30px rgba(16,24,40,.18);
 }
 
 .screenshot figcaption {
@@ -847,7 +851,7 @@ footer {
 .kt-table td {
     padding: 14px 16px;
     text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,.10);
+    border-bottom: 1px solid rgba(16,24,40,.12);
 }
 
 .kt-table th {
@@ -855,7 +859,7 @@ footer {
 }
 
 .kt-table tr:hover {
-    background: rgba(255,255,255,.03);
+    background: rgba(16,24,40,.03);
 }
 /* =========================================================
    Aki Inu Tech Tutorial Steps
@@ -864,9 +868,9 @@ footer {
 .kt-step {
     margin: 28px 0;
     padding: 20px;
-    border: 1px solid rgba(255,255,255,.10);
+    border: 1px solid rgba(16,24,40,.12);
     border-radius: 10px;
-    background: rgba(255,255,255,.025);
+    background: rgba(16,24,40,.025);
 }
 
 .kt-step-number {
