@@ -192,17 +192,18 @@ img {
 .contact-link {
     margin-left: 3px;
     padding-inline: 17px;
+    border-radius: 8px;
     color: #ffffff;
-    background: var(--accent);
-    box-shadow: 0 7px 18px rgba(47, 111, 237, 0.24);
+    background: #a8650f;
+    box-shadow: 0 7px 18px rgba(168, 101, 15, 0.24);
 }
 
 .contact-link:hover,
 .contact-link[aria-current="page"] {
     color: #ffffff;
-    background: #2359cf;
+    background: #a8650f;
     border-color: rgba(16, 24, 40, 0.10);
-    box-shadow: 0 10px 22px rgba(47, 111, 237, 0.32);
+    box-shadow: 0 10px 22px rgba(168, 101, 15, 0.32);
     transform: translateY(-2px);
 }
 
@@ -703,7 +704,7 @@ footer {
         justify-content: center;
         margin-top: 12px;
         color: #ffffff;
-        background: var(--accent);
+        background: #a8650f;
     }
 }
 
