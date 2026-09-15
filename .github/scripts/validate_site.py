@@ -509,6 +509,11 @@ SOCIAL_METADATA = {
         "description": "Senior-level IT consulting for small businesses, engaged on your terms: teach it, handle it, or partner on it, without a standing managed-services contract.",
         "type": "website",
     },
+    "/mentorship/": {
+        "title": "1-on-1 IT Mentorship | Aki Inu Tech",
+        "description": "Ongoing 1-on-1 mentorship for early-career IT techs: real troubleshooting help, career guidance, and cert prep support from a senior engineer who's mentored techs for years.",
+        "type": "website",
+    },
     "/contact/": {
         "title": "Contact Aki Inu Tech",
         "description": "Contact Aki Inu Tech with general questions, corrections, collaboration ideas, or an initial consulting inquiry.",
@@ -3717,6 +3722,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
     required_links = {
         "/": 1,
         "/consulting/": 2,
+        "/mentorship/": 2,
         "/everyday-it/": 2,
         "/practical-it-library/": 2,
         "/azure-journey/": 2,
@@ -3743,6 +3749,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             return "/cases/"
         if route in {
             "/consulting/",
+            "/mentorship/",
             "/azure-journey/",
             "/powershell/",
             "/downloads/",
