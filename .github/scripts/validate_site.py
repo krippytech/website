@@ -22,7 +22,9 @@ SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9"
 SOCIAL_IMAGE_URL = f"{SITE_ORIGIN}/assets/images/krippytech-social-card.png"
 SOCIAL_IMAGE_ALT = "Aki Inu Tech — Practical IT. Real Solutions."
 NOINDEX_ROUTES = {
+    "/azure/",
     "/azure-journey/",
+    "/azure-journey/labs/map-azure-vm-network-path/",
     "/downloads/",
     "/msp-university/",
     "/powershell/",
@@ -324,15 +326,25 @@ SOCIAL_METADATA = {
         "description": "Learn why Aki Inu Tech exists: practical, reviewed IT guidance for technicians, IT administrators, and MSP professionals.",
         "type": "website",
     },
-    "/azure-journey/": {
-        "title": "Azure Journey | Aki Inu Tech",
-        "description": "Azure Journey connects Aki Inu Tech's published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.",
+    "/azure/": {
+        "title": "Azure | Aki Inu Tech",
+        "description": "Azure connects Aki Inu Tech's published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.",
         "type": "website",
     },
-    "/azure-journey/labs/map-azure-vm-network-path/": {
+    "/azure/labs/map-azure-vm-network-path/": {
         "title": "Map the Network Path to an Azure VM | Aki Inu Tech",
         "description": "A self-contained synthetic lab for mapping an Azure VM network path, correlating evidence, and writing an escalation-quality finding.",
         "type": "article",
+    },
+    "/azure-journey/": {
+        "title": "Azure Journey Has Moved | Aki Inu Tech",
+        "description": "Azure Journey is now Azure. Update your links and bookmarks to the new address.",
+        "type": "website",
+    },
+    "/azure-journey/labs/map-azure-vm-network-path/": {
+        "title": "This Lab Has Moved | Aki Inu Tech",
+        "description": "This lab is now under /azure/. Update your links and bookmarks to the new address.",
+        "type": "website",
     },
     "/cases/": {
         "title": "Aki Inu Tech Case Library",
@@ -2210,7 +2222,7 @@ def validate_azure_vm_connectivity_tutorial(failures: list[str]) -> None:
         "Get-NetFirewallProfile -PolicyStore ActiveStore",
         "Get-NetFirewallRule -PolicyStore ActiveStore -Enabled True -Direction Inbound",
         "198.51.100.24",
-        "/azure-journey/",
+        "/azure/",
         "/practical-it-library/#learning-path",
         "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing",
         "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
@@ -2248,7 +2260,7 @@ def validate_azure_vm_connectivity_tutorial(failures: list[str]) -> None:
 
     integrations = {
         ROOT / "tutorials/index.html": "azure-vm-connectivity-investigation/",
-        ROOT / "azure-journey/index.html": route,
+        ROOT / "azure/index.html": route,
         ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
     }
     for integration, required in integrations.items():
@@ -2259,8 +2271,8 @@ def validate_azure_vm_connectivity_tutorial(failures: list[str]) -> None:
 
 
 def validate_azure_vm_network_path_lab(failures: list[str]) -> None:
-    route = "/azure-journey/labs/map-azure-vm-network-path/"
-    page = ROOT / "azure-journey/labs/map-azure-vm-network-path/index.html"
+    route = "/azure/labs/map-azure-vm-network-path/"
+    page = ROOT / "azure/labs/map-azure-vm-network-path/index.html"
     if not page.is_file():
         failures.append(f"{route}: lab page is missing")
         return
@@ -2296,7 +2308,7 @@ def validate_azure_vm_network_path_lab(failures: list[str]) -> None:
         "Supported / Contradicted / Unknown",
         "earliest demonstrated point blocking the defined flow",
         "/tutorials/azure-vm-connectivity-investigation/",
-        "/azure-journey/",
+        "/azure/",
         "/practical-it-library/#learning-path",
         "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing",
         "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
@@ -2341,7 +2353,7 @@ def validate_azure_vm_network_path_lab(failures: list[str]) -> None:
         failures.append(f"{page.relative_to(ROOT)}: Azure subscription resource path found in synthetic lab")
 
     integrations = {
-        ROOT / "azure-journey/index.html": route,
+        ROOT / "azure/index.html": route,
         ROOT / "tutorials/azure-vm-connectivity-investigation/index.html": route,
         ROOT / "sitemap.xml": f"{SITE_ORIGIN}{route}",
     }
@@ -3725,7 +3737,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
         "/mentorship/": 2,
         "/everyday-it/": 2,
         "/practical-it-library/": 2,
-        "/azure-journey/": 2,
+        "/azure/": 2,
         "/tutorials/": 2,
         "/cases/": 2,
         "/powershell/": 2,
@@ -3741,8 +3753,8 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             return "/everyday-it/"
         if route in {"/practical-it-library/", "/microsoft-365/", "/windows-hybrid/"}:
             return "/practical-it-library/"
-        if route and route.startswith("/azure-journey/labs/"):
-            return "/azure-journey/"
+        if route and route.startswith("/azure/labs/"):
+            return "/azure/"
         if route and route.startswith("/tutorials/"):
             return "/tutorials/"
         if route and route.startswith("/cases/"):
@@ -3750,7 +3762,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
         if route in {
             "/consulting/",
             "/mentorship/",
-            "/azure-journey/",
+            "/azure/",
             "/powershell/",
             "/downloads/",
             "/about/",
@@ -3828,7 +3840,7 @@ def validate_grouped_navigation(failures: list[str]) -> None:
             )
 
         expected_group = None
-        if expected in {"/everyday-it/", "/practical-it-library/", "/azure-journey/"}:
+        if expected in {"/everyday-it/", "/practical-it-library/", "/azure/"}:
             expected_group = "learn-menu"
         elif expected in {"/tutorials/", "/cases/"}:
             expected_group = "solutions-menu"

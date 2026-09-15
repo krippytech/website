@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, follow">
+    <title>Azure | Aki Inu Tech</title>
+    <meta name="description" content="Azure connects Aki Inu Tech's published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.">
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" href="/assets/images/krippytech-icon-512.png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+    <meta property="og:site_name" content="Aki Inu Tech">
+    <meta property="og:title" content="Azure | Aki Inu Tech">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Azure connects Aki Inu Tech&#x27;s published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.">
+    <meta property="og:url" content="https://akiinutech.com/azure/">
+    <meta property="og:image" content="https://akiinutech.com/assets/images/krippytech-social-card.png">
+    <meta property="og:image:alt" content="Aki Inu Tech — Practical IT. Real Solutions.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Azure | Aki Inu Tech">
+    <meta name="twitter:description" content="Azure connects Aki Inu Tech&#x27;s published Azure VM connectivity guide and companion lab with developing Azure foundations, identity, networking, and hybrid learning.">
+    <meta name="twitter:image" content="https://akiinutech.com/assets/images/krippytech-social-card.png">
+    <meta name="twitter:image:alt" content="Aki Inu Tech — Practical IT. Real Solutions.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="/navigation.js"></script>
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="/" aria-label="Aki Inu Tech home">
+                <img src="/assets/images/krippytech-logo.png" alt="Aki Inu Tech logo" width="58" height="46" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-name">Aki Inu Tech</span>
+                    <span class="brand-tagline">Practical IT. Real Solutions.</span>
+                </span>
+            </a>
+
+            <ul class="desktop-nav">
+                <li><a class="nav-link" href="/consulting/">Consulting</a></li>
+                <li><a class="nav-link" href="/mentorship/">Mentorship</a></li>
+                <li class="dropdown-group has-current" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="learn-menu">
+                        Learn <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="learn-menu">
+                        <li><a href="/everyday-it/">Everyday IT</a></li>
+                        <li><a href="/practical-it-library/">Practical IT Library</a></li>
+                        <li><a href="/azure/" aria-current="page">Azure</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="solutions-menu">
+                        Solutions <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="solutions-menu">
+                        <li><a href="/tutorials/">Tutorials</a></li>
+                        <li><a href="/cases/">Cases</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown-group" data-dropdown>
+                    <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="tools-menu">
+                        Tools <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="tools-menu">
+                        <li><a href="/powershell/">PowerShell Library</a></li>
+                        <li><a href="/downloads/">Downloads</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="/about/">About</a></li>
+                <li><a class="nav-link contact-link" href="/contact/">Contact</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="mobile-panel" id="mobile-navigation">
+        <ul class="mobile-nav-list">
+            <li><a class="mobile-direct" href="/consulting/">Consulting</a></li>
+            <li><a class="mobile-direct" href="/mentorship/">Mentorship</a></li>
+            <li class="mobile-group" aria-labelledby="mobile-learn-label">
+                <span class="mobile-group-label" id="mobile-learn-label">Learn</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/everyday-it/">Everyday IT</a></li>
+                    <li><a href="/practical-it-library/">Practical IT Library</a></li>
+                    <li><a href="/azure/" aria-current="page">Azure</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-solutions-label">
+                <span class="mobile-group-label" id="mobile-solutions-label">Solutions</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/tutorials/">Tutorials</a></li>
+                    <li><a href="/cases/">Cases</a></li>
+                </ul>
+            </li>
+            <li class="mobile-group" aria-labelledby="mobile-tools-label">
+                <span class="mobile-group-label" id="mobile-tools-label">Tools</span>
+                <ul class="mobile-submenu">
+                    <li><a href="/powershell/">PowerShell Library</a></li>
+                    <li><a href="/downloads/">Downloads</a></li>
+                </ul>
+            </li>
+            <li><a class="mobile-direct" href="/about/">About</a></li>
+            <li><a class="mobile-direct mobile-contact" href="/contact/">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <p class="eyebrow">Cloud skills built from practical IT work</p>
+            <h1>Azure</h1>
+            <p class="hero-text">
+                Azure is where Aki Inu Tech will turn real infrastructure and Microsoft 365 experience into practical Azure learning.
+                The focus is not memorizing portal clicks. It is understanding how identity, networking, compute, security, and hybrid systems fit together.
+                <span class="highlight">The reviewed Azure connectivity guide and its self-contained companion lab are now published; the remaining Azure learning lanes are still in development.</span>
+            </p>
+            <div class="buttons">
+                <a class="button button-primary" href="#learning-path">Explore the learning path</a>
+                <a class="button button-secondary" href="/powershell/">PowerShell Library</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Published Azure guidance</h2>
+                <p>
+                    A reviewed Azure investigation and its self-contained evidence-analysis lab are available now. The other Azure learning lanes remain in development and are not presented as published procedures.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Reviewed · Azure connectivity investigation</p>
+                    <h3>Investigating Azure VM Connectivity</h3>
+                    <p>
+                        Define the intended traffic flow, then correlate platform, effective-security, route, intermediary, DNS, guest-firewall, and listener evidence before changing configuration.
+                    </p>
+                    <a class="card-link" href="/tutorials/azure-vm-connectivity-investigation/">Open Tutorial <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Practice lab · Azure network-path analysis</p>
+                    <h3>Map the Network Path to an Azure VM</h3>
+                    <p>
+                        Analyze a complete synthetic evidence packet, identify the earliest supported point of failure, and write an escalation-quality finding without accessing Azure.
+                    </p>
+                    <a class="card-link" href="/azure/labs/map-azure-vm-network-path/">Open Lab <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="learning-path">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Three learning lanes</h2>
+                <p>
+                    Azure will grow around the parts of cloud work that matter most in day-to-day administration and troubleshooting.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">01 · Azure foundations</p>
+                    <h3>Build the cloud mental model</h3>
+                    <p>
+                        Subscriptions, resource groups, regions, virtual networks, compute, storage, RBAC, monitoring, and the operational choices behind them.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">02 · Identity crossover</p>
+                    <h3>Entra ID meets Azure</h3>
+                    <p>
+                        Identity, Conditional Access, app registrations, service principals, permissions, Microsoft 365 integration, and the security decisions that connect cloud services.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">03 · Hybrid reality</p>
+                    <h3>Connect cloud to existing infrastructure</h3>
+                    <p>
+                        Active Directory, DNS, VPNs, hybrid identity, server workloads, migration planning, and troubleshooting when Azure is only one part of the environment.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>How the material will be built</h2>
+                <p>
+                    The goal is to turn study and lab work into reusable technical understanding instead of publishing a pile of disconnected notes.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Concept</p>
+                    <h3>Understand what the service is doing</h3>
+                    <p>
+                        Start with the architecture, purpose, dependencies, permissions, and failure points before reaching for a configuration screen.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Lab</p>
+                    <h3>Build it and verify it</h3>
+                    <p>
+                        Future labs should include prerequisites, build steps, validation checks, expected results, cleanup, and notes about cost or production risk where relevant.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Troubleshoot</p>
+                    <h3>Break the happy path</h3>
+                    <p>
+                        Useful cloud knowledge includes knowing what to inspect when authentication fails, traffic does not flow, permissions are wrong, or a deployment behaves differently than expected.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="mission">
+                <blockquote>Learn the service. Build the lab. Prove what happened.</blockquote>
+                <p>
+                    Azure is intended to document understanding, not just successful screenshots. Public material will be separated from private study notes and published only after the steps and technical claims are reviewed.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Where this connects to Aki Inu Tech</h2>
+                <p>
+                    Azure is not a separate island. The strongest material will connect cloud concepts to the identity, PowerShell, troubleshooting, and infrastructure work already represented across Aki Inu Tech.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Identity &amp; administration</p>
+                    <h3>Practical IT Library</h3>
+                    <p>
+                        Broader technician learning, Microsoft administration, troubleshooting habits, and operational thinking live in Practical IT Library.
+                    </p>
+                    <a class="card-link" href="/practical-it-library/">Visit Practical IT Library <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Automation</p>
+                    <h3>PowerShell Library</h3>
+                    <p>
+                        Read-only-first discovery and triage tooling provides a natural bridge into Azure and Microsoft Graph administration.
+                    </p>
+                    <a class="card-link" href="/powershell/">Explore PowerShell <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="card">
+                    <p class="card-number">Applied troubleshooting</p>
+                    <h3>Cases &amp; Tutorials</h3>
+                    <p>
+                        As Azure material matures, real troubleshooting lessons can become reviewed tutorials and documented technical cases instead of remaining isolated lab notes.
+                    </p>
+                    <a class="card-link" href="/cases/">Browse Cases <span aria-hidden="true">→</span></a>
+                    <a class="card-link" href="/tutorials/">Browse Tutorials <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Release status</h2>
+                <p>
+                    The reviewed connectivity guide and its companion lab are published, but Azure remains a work in progress. The page stays noindex and does not claim that certification guides or broader production Azure procedures are currently available.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <p class="card-number">Now</p>
+                    <h3>Learning framework established</h3>
+                    <p>
+                        Azure now has a clear direction for foundations, identity crossover, hybrid infrastructure, labs, and troubleshooting.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Next</p>
+                    <h3>Extend the reviewed learning path</h3>
+                    <p>
+                        Future resources should remain small enough to test completely and useful enough to extend the standard established by the guide and lab.
+                    </p>
+                </article>
+                <article class="card">
+                    <p class="card-number">Published now</p>
+                    <h3>Guide and companion lab</h3>
+                    <p>
+                        The Azure VM connectivity guide and synthetic network-path lab are available now. Additional resources will appear only after deliberate adaptation, technical review, and public-readiness checks.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">© 2026 Aki Inu Tech. Practical IT. Real Solutions.</div>
+</footer>
+</body>
+</html>
